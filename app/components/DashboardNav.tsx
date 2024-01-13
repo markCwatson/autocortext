@@ -7,25 +7,19 @@ import { VariantProps, cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { Dialog, Transition } from '@headlessui/react';
 import {
-  ArchiveBoxArrowDownIcon,
   Bars3Icon,
   DocumentDuplicateIcon,
   HomeIcon,
   XMarkIcon,
-  CreditCardIcon,
 } from '@heroicons/react/24/outline';
 import {
-  AdjustmentsHorizontalIcon,
   CubeTransparentIcon,
   NewspaperIcon,
-  PhoneIcon,
   PresentationChartBarIcon,
   QuestionMarkCircleIcon,
   ShoppingCartIcon,
-  SparklesIcon,
   UserCircleIcon,
   UserGroupIcon,
-  UsersIcon,
   WrenchScrewdriverIcon,
 } from '@heroicons/react/20/solid';
 import { buttonVariants } from './Button';

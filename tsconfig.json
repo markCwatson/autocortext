@@ -36,6 +36,12 @@
       "@/components/*": [
         "./app/components/*"
       ],
+      "@/errors/*": [
+        "./app/errors/*"
+      ],
+      "@/repos/*": [
+        "./app/repos/*"
+      ],
       "@/db/*": [
         "./db/*"
       ]

@@ -1,20 +1,36 @@
-import { PrismaClient } from '@prisma/client';
+import { MongoClient, ServerApiVersion, Db } from 'mongodb';
 
-declare global {
-  // eslint-disable-next-line no-var, no-unused-vars
-  var cachedPrisma: PrismaClient;
+interface DatabaseConnection {
+  client: MongoClient;
+  db: Db;
 }
 
-let prisma: PrismaClient;
+const client = new MongoClient(process.env.DATABASE_URI!, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  },
+});
 
-// if (process.env.NODE_ENV === 'production') {
-//   prisma = new PrismaClient();
-// } else {
-//   if (!global.cachedPrisma) {
-//     global.cachedPrisma = new PrismaClient();
-//   }
+const connectToDatabase = async (): Promise<DatabaseConnection> => {
+  try {
+    console.log(`Connecting to database at url '${process.env.DATABASE_URI}'`);
+    await client.connect();
+    console.log('Successful Database connection');
+  } catch (error) {
+    console.error('Failed to connect to database:', error);
+  }
 
-//   prisma = global.cachedPrisma;
-// }
+  return { client, db: client.db('admin') };
+};
 
-export const db = prisma;
+export default {
+  connection: null as DatabaseConnection | null,
+  async getClient(): Promise<MongoClient> {
+    if (this.connection == null) {
+      this.connection = await connectToDatabase();
+    }
+    return this.connection.client;
+  },
+};

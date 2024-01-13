@@ -1,99 +1,42 @@
-import { db } from '@/lib/db';
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { NextAuthOptions } from 'next-auth';
-import GoogleProvider from 'next-auth/providers/google';
-import FacebookProvider from 'next-auth/providers/facebook';
-
-function getGoogleCredentials(): { clientId: string; clientSecret: string } {
-  const clientId = process.env.GOOGLE_CLIENT_ID;
-  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-  if (!clientId || clientId.length === 0) {
-    throw new Error('Missing GOOGLE_CLIENT_ID');
-  }
-
-  if (!clientSecret || clientSecret.length === 0) {
-    throw new Error('Missing GOOGLE_CLIENT_SECRET');
-  }
-
-  return { clientId, clientSecret };
-}
-
-function getFacebookCredentials(): { clientId: string; clientSecret: string } {
-  const clientId = process.env.FACEBOOK_CLIENT_ID;
-  const clientSecret = process.env.FACEBOOK_CLIENT_SECRET;
-  if (!clientId || clientId.length === 0) {
-    throw new Error('Missing FACEBOOK_CLIENT_ID');
-  }
-
-  if (!clientSecret || clientSecret.length === 0) {
-    throw new Error('Missing FACEBOOK_CLIENT_SECRET');
-  }
-
-  return { clientId, clientSecret };
-}
+import { MongoDBAdapter } from '@auth/mongodb-adapter';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import Database from '@/lib/db';
+import bcrypt from 'bcryptjs';
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db),
-  session: {
-    strategy: 'jwt',
-  },
-  pages: {
-    signIn: '/api/auth/login',
-    signOut: '/',
-  },
+  /** @ts-ignore */
+  adapter: MongoDBAdapter(Database.getClient()),
   providers: [
-    GoogleProvider({
-      clientId: getGoogleCredentials().clientId,
-      clientSecret: getGoogleCredentials().clientSecret,
-    }),
-    FacebookProvider({
-      clientId: getFacebookCredentials().clientId,
-      clientSecret: getFacebookCredentials().clientSecret,
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        email: { label: 'Email', type: 'email', placeholder: 'your@email.com' },
+        password: {
+          label: 'Password',
+          type: 'password',
+          placeholder: '********',
+        },
+      },
+      async authorize(credentials, req) {
+        if (!credentials || !credentials.email || !credentials.password) {
+          return null;
+        }
+
+        const { email, password } = credentials;
+        const client = await Database.getClient();
+        const user = await client.db().collection('users').findOne({ email });
+
+        if (user && bcrypt.compareSync(password, user.passwordHash)) {
+          return {
+            id: user._id.toString(),
+            name: user.name,
+            email: user.email,
+          };
+        } else {
+          return null;
+        }
+      },
     }),
   ],
-  callbacks: {
-    async jwt({ token, user }) {
-      const dbUser = await db.user.findFirst({
-        where: {
-          email: token.email,
-        },
-      });
-
-      if (!dbUser) {
-        // Create a new user in the database using the user object.
-        const newUser = await db.user.create({
-          data: {
-            id: user!.id,
-            name: user!.name,
-            email: user!.email,
-            image: user!.image,
-          },
-        });
-
-        // Set the token's id property to the new user's id and return the modified token.
-        token.id = newUser.id;
-        return token;
-      }
-
-      return {
-        id: dbUser.id,
-        name: dbUser.name,
-        email: dbUser.email,
-        image: dbUser.image,
-      };
-    },
-    async session({ token, session }) {
-      if (token) {
-        session.user.id = token.id;
-        session.user.name = token.name;
-        session.user.email = token.email;
-        session.user.image = token.picture;
-      }
-
-      return session;
-    },
-    async redirect({ url, baseUrl }) {
-      return Promise.resolve('/dashboard')
-    },
-  },
 };

@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import Login from './components/Login';
 
 export const metadata: Metadata = {
-  title: 'quickObit',
-  description: 'Generate custom obituaries using ObitsAI',
+  title: 'AscendAI',
+  description: 'AscendAI demo application',
 };
 
 export default function Home() {
