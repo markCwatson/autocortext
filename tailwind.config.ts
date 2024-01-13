@@ -1,20 +1,44 @@
-import type { Config } from 'tailwindcss'
+const { colors } = require('tailwindcss/colors');
+const { fontFamily } = require('tailwindcss/defaultTheme');
 
-const config: Config = {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: ['class'],
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx}',
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
+    container: {
+      center: true,
+      padding: '1.5rem',
+      screens: {
+        '2xl': '1360px',
+      },
+    },
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      fontFamily: {
+        sans: ['var(--font-inter)', ...fontFamily.sans],
+      },
+      colors: {
+        ...colors,
+        'my-color1': '#f5f5f4', //stone
+        'my-color2': '#e7e5e4',
+        'my-color3': '#d6d3d1',
+        'my-color4': '#a8a29e',
+        'my-color5': '#78716c',
+        'my-color6': '#57534e',
+        'my-color7': '#44403c',
+        'my-color8': '#292524',
+        'my-color9': '#1c1917',
+        'my-color10': '#0c0a09',
       },
     },
   },
-  plugins: [],
-}
-export default config
+  plugins: [
+    require('tailwindcss-animate'),
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/forms'),
+  ],
+};

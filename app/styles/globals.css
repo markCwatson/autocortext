@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.dark .img-shadow {
+  width: 250px;
+  -webkit-filter: drop-shadow(5px 10px 5px #090a01e2);
+  filter: drop-shadow(5px 10px 5px #090a01e2);
+}
+
+.img-shadow {
+  width: 250px;
+  -webkit-filter: drop-shadow(5px 10px 5px #28281487);
+  filter: drop-shadow(5px 10px 5px #28281487);
+}
+
+.dark .simplebar-scrollbar::before {
+  background-color: white;
+}
+
+.dark .three-d {
+  text-shadow: 0px 5px 0px #533519;
+}
+
+.three-d {
+  text-shadow: none;
+}
+
+@keyframes grow-shrink {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-grow-shrink {
+  animation: grow-shrink 0.5s ease-out;
+}
