@@ -17,9 +17,5 @@ export default async function MainDashboard() {
   //   );
   // }
 
-  return (
-    <DashboardPage>
-      <div className='text-center'>This will be the dashboard</div>
-    </DashboardPage>
-  );
+  return <div className="text-center">This will be the dashboard</div>;
 }

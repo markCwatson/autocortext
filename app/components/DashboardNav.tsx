@@ -16,6 +16,7 @@ import {
 } from '@heroicons/react/24/outline';
 import {
   AdjustmentsHorizontalIcon,
+  CubeTransparentIcon,
   NewspaperIcon,
   PhoneIcon,
   PresentationChartBarIcon,
@@ -49,7 +50,6 @@ export const dashboardVariants = cva(
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
-  { name: 'Purchase', href: '/dashboard/purchase', icon: CreditCardIcon },
   {
     name: 'Admin',
     href: '/dashboard/admin',
@@ -57,7 +57,7 @@ const navigation = [
   },
   {
     name: 'Data',
-    href: '/dashboard/output',
+    href: '/dashboard/data',
     icon: PresentationChartBarIcon,
   },
   {
@@ -71,9 +71,9 @@ const navigation = [
     icon: DocumentDuplicateIcon,
   },
   {
-    name: 'Chat',
-    href: '/dashboard/chat',
-    icon: PhoneIcon,
+    name: 'AI',
+    href: '/dashboard/ai',
+    icon: CubeTransparentIcon,
   },
   {
     name: 'Shop',

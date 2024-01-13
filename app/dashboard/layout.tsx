@@ -3,6 +3,7 @@ import DashboardNav from '@/components/DashboardNav';
 import { getCurrentUser } from '@/lib/session';
 import Preview from '@/components/Preview';
 import Navbar from '@/components/NavBar';
+import DashboardPage from '@/components/DashboardPage';
 
 export default async function DashboardLayout({
   children,
@@ -24,9 +25,11 @@ export default async function DashboardLayout({
               email: user?.email,
             }}
           />
-          <main className="flex w-full flex-1 flex-col overflow-hidden">
-            {children}
-          </main>
+          <DashboardPage>
+            <main className="flex w-full flex-1 flex-col overflow-hidden">
+              {children}
+            </main>
+          </DashboardPage>
         </div>
       </div>
     </>
