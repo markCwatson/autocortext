@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import AnimatedText from '@/components/AnimatedText';
-
-// todo: replace with real AI response
 import AiPrompt from '@/components/AiPrompt';
 
-const Ai = () => {
+export default function Ai() {
   const [answer, setAnswer] = useState('');
+  const session = useSession();
 
   useEffect(() => {
     const handleStorageUpdate = () => {
@@ -36,7 +36,12 @@ const Ai = () => {
         }}
       >
         <AnimatedText
-          text={answer || 'Nothing to show yet...'}
+          text={
+            answer ||
+            `${
+              session.data ? `Hello ${session.data?.user.name}.` : 'Hello.'
+            } I am ready to assist you. Let me know if you need anything.`
+          }
           show={true}
           animated={true}
           animationDelay={250}
@@ -55,6 +60,4 @@ const Ai = () => {
       </div>
     </>
   );
-};
-
-export default Ai;
+}

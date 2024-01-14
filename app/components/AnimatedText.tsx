@@ -9,12 +9,12 @@ interface AnimatedTextProps {
   animated?: boolean;
 }
 
-const AnimatedText = ({
+export default function AnimatedText({
   text,
   show,
   animated,
   animationDelay,
-}: AnimatedTextProps) => {
+}: AnimatedTextProps) {
   const [displayText, setDisplayText] = useState(animated ? '' : text);
 
   useEffect(() => {
@@ -41,6 +41,4 @@ const AnimatedText = ({
   ));
 
   return <div>{renderedText}</div>;
-};
-
-export default AnimatedText;
+}

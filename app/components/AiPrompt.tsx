@@ -42,7 +42,7 @@ export default function AiPrompt() {
   }
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} className="w-full md:max-w-xl mx-auto">
       <Tab.Group>
         {({ selectedIndex }) => (
           <>
