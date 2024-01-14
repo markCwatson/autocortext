@@ -15,7 +15,7 @@ export default function Login() {
 
     try {
       await signIn('credentials', {
-        redirect: false,
+        redirect: true,
         ...info,
       });
     } catch (error) {

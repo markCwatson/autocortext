@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Login from './components/Login';
+import Login from '@/components/Login';
 
 export const metadata: Metadata = {
   title: 'AscendAI',
@@ -7,9 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return (
-    <>
-      <Login />
-    </>
-  );
+  return <Login />;
 }
