@@ -26,7 +26,7 @@ const SignInButton: FC<SignInButtonProps> = ({ text }) => {
     }
 
     setIsLoading(true);
-    router.push('/login');
+    router.push('/');
   };
 
   return (
