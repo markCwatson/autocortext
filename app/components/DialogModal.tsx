@@ -29,7 +29,14 @@ export default function DialogModal(props: Props) {
     <div className="flex justify-center items-center h-screen">
       <div className="rounded-md bg-my-color3 dark:bg-my-color10 text-my-color5 hover:bg-my-color8 h-11">
         <Transition.Root show={open} as={Fragment}>
-          <Dialog as="div" className="relative z-10" onClose={setOpen}>
+          <Dialog
+            as="div"
+            className="relative z-10"
+            onClose={() => {
+              router.push('/');
+              setOpen(false);
+            }}
+          >
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"

@@ -136,10 +136,6 @@ const Dashboard = React.forwardRef<HTMLDivElement, DashboardProps>(
       })();
     }, []);
 
-    // if (session.status !== 'authenticated' && session.status !== 'loading') {
-    //   return <></>;
-    // }
-
     return (
       <>
         <div
