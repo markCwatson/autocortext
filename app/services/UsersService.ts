@@ -6,19 +6,22 @@ import UsersRepository, { UserModel } from '@/repos/UsersRepository';
 interface CreateUserInput {
   password: string;
   email: string;
-  firstName: string;
-  lastName: string;
+  name: string;
 }
 
 export type User = UserModel;
 
 class UsersService {
   static async create(body: CreateUserInput): Promise<any> {
-    const { password, email, firstName, lastName } = body;
+    const { password, email, name } = body;
+    const user = await UsersRepository.selectByEmail(email);
+    if (user) {
+      return null;
+    }
+
     const hashedPassword = await AuthService.geHashedPassword(password);
     return UsersRepository.create({
-      firstName,
-      lastName,
+      name,
       email,
       password: hashedPassword,
     });

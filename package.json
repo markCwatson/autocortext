@@ -17,6 +17,7 @@
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.309.0",
     "mongodb": "^6.3.0",
     "next": "14.0.4",
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@auth/mongodb-adapter": "^2.0.12",
     "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
