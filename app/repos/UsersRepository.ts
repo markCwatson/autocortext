@@ -3,7 +3,7 @@ import Database from '@/lib/db';
 import ApiError from '@/errors/ApiError';
 
 export interface UserModel {
-  _id: ObjectId;
+  _id?: ObjectId;
   name: string;
   email: string;
   password: string;
