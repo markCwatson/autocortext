@@ -31,7 +31,9 @@ interface ToastIconProps extends Partial<React.SVGProps<SVGSVGElement>> {
 }
 
 Toast.Icon = function ToastIcon({ name, className, ...props }: ToastIconProps) {
-  const Icon = Icons[name];
+  const Icon = Icons[name] as React.ComponentType<
+    React.SVGProps<SVGSVGElement>
+  >;
 
   if (!Icon) {
     return null;

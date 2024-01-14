@@ -25,8 +25,6 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        console.log('authorizing');
-
         if (!credentials || !credentials.email || !credentials.password) {
           return null;
         }
@@ -41,8 +39,6 @@ export const authOptions: NextAuthOptions = {
           .db()
           .collection('users')
           .findOne({ email })) as UserModel;
-
-        console.log(user);
 
         if (user && bcrypt.compareSync(password, user.password)) {
           return {
