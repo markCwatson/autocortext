@@ -1,23 +1,22 @@
-import { Configuration, OpenAIApi } from 'openai';
+import { OpenAI } from 'openai';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Person } from '@/types';
 
-const configuration = new Configuration({
+const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const openai = new OpenAIApi(configuration);
-
 export default async function (req: NextApiRequest, res: NextApiResponse) {
-  const completion = await openai.createCompletion({
+  const stream = await openai.completions.create({
     model: 'gpt-3.5-turbo-instruct',
     prompt: reviewPrompt(req.body.person),
     max_tokens: 1000,
     temperature: 0.8,
   });
+
   res
     .status(200)
-    .json({ person: req.body.person, obit: completion.data.choices[0].text });
+    .json({ person: req.body.person, obit: stream.choices[0].text });
 }
 
 function reviewPrompt({
