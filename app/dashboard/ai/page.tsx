@@ -4,9 +4,15 @@ import React, { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import AnimatedText from '@/components/AnimatedText';
 import AiPrompt from '@/components/AiPrompt';
-import { ClipboardDocumentCheckIcon } from '@heroicons/react/20/solid';
+import {
+  ArrowDownOnSquareIcon,
+  ClipboardDocumentCheckIcon,
+} from '@heroicons/react/20/solid';
 import { toast } from '@/components/Toast';
 import DropdownButton from '@/components/DropdownButton';
+import MyDocument from '@/components/MyDocument';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { Button, buttonVariants } from '@/components/Button';
 
 export default function Ai() {
   const [answer, setAnswer] = useState('');
@@ -72,27 +78,45 @@ export default function Ai() {
           ]}
           color="ghost"
         />
-        {isCopied ? (
-          <button
-            type="button"
-            className="p-3 animate-grow-shrink"
-            onClick={copyToClipboard}
-          >
-            <span className="sr-only">Copy to clipboard</span>
-            <ClipboardDocumentCheckIcon
-              className="h-6 w-6 text-green-500"
-              aria-hidden="true"
-            />
-          </button>
-        ) : (
-          <button type="button" className="p-3" onClick={copyToClipboard}>
-            <span className="sr-only">Copy to clipboard</span>
-            <ClipboardDocumentCheckIcon
-              className="h-6 w-6 text-my-color10 dark:text-my-color2"
-              aria-hidden="true"
-            />
-          </button>
-        )}
+        <div className="flex items-center">
+          <div className="flex items-center gap-2 md:gap-4">
+            {isCopied ? (
+              <button
+                type="button"
+                className="p-3 animate-grow-shrink"
+                onClick={copyToClipboard}
+              >
+                <span className="sr-only">Copy to clipboard</span>
+                <ClipboardDocumentCheckIcon
+                  className="h-6 w-6 text-green-500"
+                  aria-hidden="true"
+                />
+              </button>
+            ) : (
+              <button type="button" className="p-3" onClick={copyToClipboard}>
+                <span className="sr-only">Copy to clipboard</span>
+                <ClipboardDocumentCheckIcon
+                  className="h-6 w-6 text-my-color10 dark:text-my-color2"
+                  aria-hidden="true"
+                />
+              </button>
+            )}
+            <div>
+              <PDFDownloadLink
+                document={<MyDocument report={answer} />}
+                fileName="ascendai-report.pdf"
+              >
+                <Button className={buttonVariants({ variant: 'outline' })}>
+                  <ArrowDownOnSquareIcon
+                    className="h-6 w-6 shrink-0"
+                    aria-hidden="true"
+                  />
+                  <p className="pl-4">Download as PDF</p>
+                </Button>
+              </PDFDownloadLink>
+            </div>
+          </div>
+        </div>
       </div>
       <div
         style={{
