@@ -17,7 +17,13 @@ export default function OrgNavBar() {
           <div className="flex h-14 justify-between">
             <div className="flex items-center">
               <div className="flex-shrink-0 md:flex md:items-center">
-                <DropdownButton />
+                <DropdownButton
+                  title="Organization: Ace Manufacturing, Hamilton"
+                  listItems={[
+                    'Ace Manufacturing, Hamilton',
+                    'Ace Manufacturing, Regina',
+                  ]}
+                />
               </div>
             </div>
 

@@ -1,17 +1,52 @@
 import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
+import { VariantProps, cva } from 'class-variance-authority';
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function DropdownButton() {
+const dropdownButtonVariants = cva(
+  'inline-flex w-full justify-center gap-x-1.5 px-2 py-1 text-sm font-semibold shadow-sm',
+  {
+    variants: {
+      size: {
+        sm: 'text-xs',
+        md: 'text-sm',
+        lg: 'text-lg',
+      },
+      color: {
+        default:
+          'bg-white rounded-md ring-1 ring-inset ring-gray-300 text-gray-900 hover:bg-gray-50',
+        ghost: 'bg-transparent text-my-color1',
+        outline: 'bg-transparent text-gray-900 border border-gray-300',
+      },
+    },
+    defaultVariants: {
+      size: 'md',
+      color: 'default',
+    },
+  },
+);
+
+interface DropdownButtonProps
+  extends VariantProps<typeof dropdownButtonVariants> {
+  title: string;
+  listItems: string[];
+}
+
+export default function DropdownButton({
+  title,
+  listItems,
+  size,
+  color,
+}: DropdownButtonProps) {
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu as="div" className={'relative inline-block text-left'}>
       <div>
-        <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-          Organization
+        <Menu.Button className={dropdownButtonVariants({ size, color })}>
+          {title}
           <ChevronDownIcon
             className="-mr-1 h-5 w-5 text-gray-600"
             aria-hidden="true"
@@ -30,32 +65,25 @@ export default function DropdownButton() {
       >
         <Menu.Items className="absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm',
-                  )}
-                >
-                  Acer Manufacturing, NY
-                </a>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm',
-                  )}
-                >
-                  Acer Manufacturing, CA
-                </a>
-              )}
-            </Menu.Item>
+            {listItems
+              ? listItems.map((item) => (
+                  <Menu.Item key={item}>
+                    {({ active }) => (
+                      <a
+                        href="#"
+                        className={classNames(
+                          active
+                            ? 'bg-gray-100 text-gray-900'
+                            : 'text-gray-700',
+                          'block px-4 py-2 text-sm',
+                        )}
+                      >
+                        {item}
+                      </a>
+                    )}
+                  </Menu.Item>
+                ))
+              : null}
           </div>
         </Menu.Items>
       </Transition>
