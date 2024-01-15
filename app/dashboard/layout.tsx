@@ -6,6 +6,7 @@ import Navbar from '@/components/NavBar';
 import DashboardPage from '@/components/DashboardPage';
 import DialogModal from '@/components/DialogModal';
 import SignInButton from '@/components/SignInButton';
+import OrgNavBar from '@/components/OrgBar';
 
 export default async function DashboardLayout({
   children,
@@ -27,12 +28,15 @@ export default async function DashboardLayout({
 
   return (
     <>
-      <Navbar />
       <Preview />
+      <Navbar />
+      <OrgNavBar />
       <div className="mx-auto flex flex-col space-y-6">
         <div
           className="p-0 grid gap-12 md:grid-cols-[200px_1fr]"
-          style={{ maxWidth: '100%', marginLeft: 10, marginRight: 10 }}
+          style={{
+            maxWidth: '100%',
+          }}
         >
           <DashboardNav
             user={{

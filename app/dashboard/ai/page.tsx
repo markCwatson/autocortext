@@ -10,6 +10,14 @@ export default function Ai() {
   const session = useSession();
 
   useEffect(() => {
+    if (session.data?.user.name) {
+      setAnswer(
+        `Hello ${session.data.user.name}. I am ready to assist you. Let me know if you need anything.`,
+      );
+    }
+  }, [session]);
+
+  useEffect(() => {
     const handleStorageUpdate = () => {
       const answer = sessionStorage.getItem('answer');
       if (answer) {
@@ -36,15 +44,10 @@ export default function Ai() {
         }}
       >
         <AnimatedText
-          text={
-            answer ||
-            `${
-              session.data ? `Hello ${session.data?.user.name}.` : 'Hello.'
-            } I am ready to assist you. Let me know if you need anything.`
-          }
+          text={answer}
           show={true}
           animated={true}
-          animationDelay={250}
+          animationDelay={500}
         />
       </div>
       <div

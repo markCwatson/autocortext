@@ -12,10 +12,6 @@ import { useState } from 'react';
 import { Logo } from '@/components/Logo';
 import { useRouter } from 'next/navigation';
 
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ');
-}
-
 interface ClientNavbarProps {
   session: Session | null;
 }
@@ -97,8 +93,7 @@ const ClientNavbar: React.FC<ClientNavbarProps> = ({ session }) => {
                     <SignInButton text="Sign In" />
                   )}
                 </div>
-                <div className="flex items-center">
-                </div>
+                <div className="flex items-center"></div>
               </div>
             </div>
           </Disclosure.Panel>
