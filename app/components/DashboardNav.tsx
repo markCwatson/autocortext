@@ -262,9 +262,9 @@ const Dashboard = React.forwardRef<HTMLDivElement, DashboardProps>(
             </Link>
           </div>
 
-          <div className="flex flex-row">
+          <div className="flex flex-row ">
             {/* Static sidebar for desktop */}
-            <div className="hidden md:z-1 md:flex md:w-56 md:flex-col md:h-auto">
+            <div className="hidden md:z-1 md:flex md:w-56 md:flex-col md:flex-grow">
               <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-my-color8 px-6">
                 <div className="flex mt-8">
                   <a
@@ -284,7 +284,7 @@ const Dashboard = React.forwardRef<HTMLDivElement, DashboardProps>(
                     <span aria-hidden="true">{user.name}</span>
                   </a>
                 </div>
-                <nav className="flex flex-1 flex-col ">
+                <nav className="flex flex-1 flex-col">
                   <ul role="list" className="flex flex-1 flex-col gap-y-7">
                     <li>
                       <ul role="list" className="-mx-2 space-y-1">

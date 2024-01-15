@@ -31,9 +31,9 @@ export default async function DashboardLayout({
       <Preview />
       <Navbar />
       <OrgNavBar />
-      <div className="mx-auto flex flex-col space-y-6">
+      <div className="mx-auto flex flex-col space-y-6 ">
         <div
-          className="p-0 grid gap-12 md:grid-cols-[200px_1fr]"
+          className="p-0 grid gap-12 md:grid-cols-[200px_1fr] bg-my-color8"
           style={{
             maxWidth: '100%',
           }}
