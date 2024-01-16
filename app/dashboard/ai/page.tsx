@@ -70,7 +70,7 @@ export default function Ai() {
         }}
       >
         <DropdownButton
-          title="AI Model: gpt-3.5-turbo-instruct"
+          title="gpt-3.5-turbo-instruct"
           listItems={[
             'gpt-3.5-turbo-instruct',
             'gpt-3.5-turbo-1106',

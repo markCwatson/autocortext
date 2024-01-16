@@ -18,7 +18,7 @@ export default function OrgNavBar() {
             <div className="flex items-center">
               <div className="flex-shrink-0 md:flex md:items-center">
                 <DropdownButton
-                  title="Organization: Ace Manufacturing, Hamilton"
+                  title="Ace Manufacturing, Hamilton"
                   listItems={[
                     'Ace Manufacturing, Hamilton',
                     'Ace Manufacturing, Regina',
