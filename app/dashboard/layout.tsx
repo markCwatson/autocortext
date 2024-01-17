@@ -31,7 +31,7 @@ export default async function DashboardLayout({
       <Preview />
       <Navbar />
       <OrgNavBar />
-      <div className="mx-auto flex flex-col space-y-6 ">
+      <div className="mx-auto flex flex-col space-y-6">
         <div
           className="p-0 grid gap-12 md:grid-cols-[200px_1fr] bg-my-color8"
           style={{
@@ -46,7 +46,7 @@ export default async function DashboardLayout({
             }}
           />
           <DashboardPage>
-            <main className="flex w-full flex-1 flex-col overflow-hidden">
+            <main className="flex w-full flex-1 flex-col overflow-hidden mt-10">
               {children}
             </main>
           </DashboardPage>

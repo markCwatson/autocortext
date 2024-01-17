@@ -6,7 +6,7 @@ type Props = {
 
 export default function DashboardPage({ children }: Props) {
   return (
-    <div className="bg-my-color8 h-full w-full flex justify-center items-center">
+    <div className="bg-my-color8 h-full w-full flex justify-center">
       {children}
     </div>
   );

@@ -40,15 +40,17 @@ export const authOptions: NextAuthOptions = {
           .collection('users')
           .findOne({ email })) as UserModel;
 
+        let ret = null;
         if (user && bcrypt.compareSync(password, user.password)) {
-          return {
+          ret = {
             id: user._id!.toString(),
             name: user.name,
             email: user.email,
           };
-        } else {
-          return null;
         }
+
+        Database.dropClient();
+        return ret;
       },
     }),
   ],
