@@ -44,7 +44,7 @@ function Documentation() {
                 <TreeItem label="/tmp" showIcons={true} />
                 <TreeItem label="/documents" showIcons={true}>
                   <TreeItem
-                    label="example-pdf"
+                    label="manual.pdf"
                     showIcons={false}
                     onSelect={() => handleSelectDocument('/example.pdf')}
                   />
