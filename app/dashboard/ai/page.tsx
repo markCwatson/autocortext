@@ -118,22 +118,14 @@ export default function Ai() {
           </div>
         </div>
       </div>
-      <div
-        style={{
-          display: 'flex',
-          textAlign: 'left',
-          border: '1px solid white',
-          margin: 4,
-          padding: 50,
-        }}
-      >
+      <p className="my-8 border p-8 rounded">
         <AnimatedText
           text={answer}
           show={true}
           animated={true}
           animationDelay={500}
         />
-      </div>
+      </p>
       <div
         style={{
           display: 'flex',
