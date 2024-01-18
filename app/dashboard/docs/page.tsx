@@ -25,15 +25,20 @@ function Documentation() {
   const [query, setQuery] = useState('');
   const [result, setResult] = useState('');
   const [loading, setLoading] = useState(false);
+  const [selectedDocument, setSelectedDocument] = useState<string>('');
   const session = useSession();
 
   useEffect(() => {
     if (session.data?.user.name) {
-      setResult(
-        `Hello ${session.data.user.name}. Ask me about the Fervi Bench Lathe.`,
-      );
+      if (selectedDocument) {
+        setResult(`Perfect. Ask me about the Fervi Bench Lathe.`);
+      } else {
+        setResult(
+          `Hello ${session.data.user.name}. Select a document so we can get started.`,
+        );
+      }
     }
-  }, [session]);
+  }, [session, selectedDocument]);
 
   async function createIndexAndEmbeddings() {
     try {
@@ -64,8 +69,6 @@ function Documentation() {
       setLoading(false);
     }
   }
-
-  const [selectedDocument, setSelectedDocument] = useState<string>('');
 
   const handleSelectDocument = (documentPath: string) => {
     setSelectedDocument(documentPath);
@@ -102,41 +105,39 @@ function Documentation() {
                 </TreeView>
               </div>
               {/** AI prompt */}
-              {selectedDocument && (
-                <div className="mt-10 flex flex-col justify-center items-center w-full h-full">
-                  <input
-                    className="mt-3 rounded border w-[400px] text-black px-2 py-1"
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Enter query here..."
-                  />
-                  <Button className="w-[400px] mt-3" onClick={sendQuery}>
-                    Ask AscendAI
-                  </Button>
-                  {loading && (
-                    <ChartPieIcon className="my-5 w-8 h-8 animate-spin" />
-                  )}
-                  {/* todo: for now, remove this button from the UI once the embeddings are created ... 
+              <div className="mt-10 flex flex-col justify-center items-center w-full h-full">
+                <input
+                  className="mt-3 rounded border w-[400px] text-black px-2 py-1"
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Enter query here..."
+                />
+                <Button className="w-[400px] mt-3" onClick={sendQuery}>
+                  Ask AscendAI
+                </Button>
+                {loading && (
+                  <ChartPieIcon className="my-5 w-8 h-8 animate-spin" />
+                )}
+                {/* todo: for now, remove this button from the UI once the embeddings are created ... 
                 ... will add a button to upload a pdf and create the embeddings from that
                 */}
-                  {/* <Button
+                {/* <Button
                       className="w-[400px] mt-2"
                       variant="outline"
                       onClick={createIndexAndEmbeddings}
                     >
                     Create index and embeddings
                     </Button> */}
-                  {result && (
-                    <p className="my-8 border p-8 rounded">
-                      <AnimatedText
-                        text={result}
-                        show={true}
-                        animated={true}
-                        animationDelay={500}
-                      />
-                    </p>
-                  )}
-                </div>
-              )}
+                {result && (
+                  <p className="my-8 border p-8 rounded">
+                    <AnimatedText
+                      text={result}
+                      show={true}
+                      animated={true}
+                      animationDelay={500}
+                    />
+                  </p>
+                )}
+              </div>
             </div>
           </div>
           <div className="lg:col-span-2 border rounded">
