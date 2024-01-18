@@ -1,7 +1,7 @@
 'use client';
 
 import { Disclosure } from '@headlessui/react';
-import DropdownButton from './DropdownButton';
+import DropdownButton from '@/components/DropdownButton';
 import { MailIcon } from 'lucide-react';
 import {
   BellAlertIcon,
@@ -23,6 +23,7 @@ export default function OrgNavBar() {
                     'Ace Manufacturing, Hamilton',
                     'Ace Manufacturing, Regina',
                   ]}
+                  color="ghost"
                 />
               </div>
             </div>
