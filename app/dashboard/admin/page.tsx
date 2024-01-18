@@ -135,7 +135,7 @@ export default function Dashboard() {
           </Dialog>
         </Transition.Root>
 
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <main className="mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-1 pt-24">
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">

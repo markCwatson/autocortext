@@ -1,6 +1,13 @@
 'use client';
 
-import { MinusSquareIcon, PlusSquareIcon } from 'lucide-react';
+import {
+  FileIcon,
+  FolderClosed,
+  FolderIcon,
+  FolderOpen,
+  MinusSquareIcon,
+  PlusSquareIcon,
+} from 'lucide-react';
 import React, { useState } from 'react';
 import { useSpring, animated } from 'react-spring';
 
@@ -10,6 +17,7 @@ interface TreeItemProps {
   onSelect?: () => void;
   showIcons?: boolean;
   isOpen?: boolean;
+  isFolder?: boolean;
 }
 
 const TreeItem = ({
@@ -18,6 +26,7 @@ const TreeItem = ({
   onSelect,
   showIcons,
   isOpen,
+  isFolder,
 }: TreeItemProps) => {
   const [open, setOpen] = useState(isOpen);
   const expand = useSpring({ height: open ? 'auto' : 0 });
@@ -34,16 +43,17 @@ const TreeItem = ({
           setOpen(!open);
         }}
       >
-        {showIcons ? (
-          open || isOpen ? (
-            <MinusSquareIcon />
-          ) : (
-            <PlusSquareIcon />
-          )
+        {showIcons ? open ? <FolderOpen /> : <FolderClosed /> : null}
+        {!isFolder ? (
+          <FileIcon
+            style={{
+              padding: '3px',
+            }}
+          />
         ) : null}
         <span className="ml-2">{label}</span>
       </div>
-      <animated.div style={expand} className="ml-6 overflow-hidden">
+      <animated.div style={expand} className="ml-8 mt-2 overflow-hidden">
         {children}
       </animated.div>
     </div>
@@ -55,7 +65,7 @@ interface TreeViewProps {
 }
 
 const TreeView = ({ children }: TreeViewProps) => {
-  return <div className="p-4">{children}</div>;
+  return <div className="px-8 py-1">{children}</div>;
 };
 
 export { TreeView, TreeItem };

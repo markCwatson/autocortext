@@ -48,7 +48,7 @@ export default function DropdownButton({
         <Menu.Button className={dropdownButtonVariants({ size, color })}>
           {title}
           <ChevronDownIcon
-            className="-mr-1 h-5 w-5 text-gray-600"
+            className="-mr-1 h-5 w-5 text-my-color1"
             aria-hidden="true"
           />
         </Menu.Button>

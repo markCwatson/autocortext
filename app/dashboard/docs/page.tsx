@@ -1,11 +1,14 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { TreeItem, TreeView } from '@/components/Tree';
 import { Button } from '@/components/Button';
 import { ChartPieIcon } from '@heroicons/react/24/outline';
 import AnimatedText from '@/components/AnimatedText';
 import { useSession } from 'next-auth/react';
+import Search from '@/components/Search';
+import FileUpload from '@/components/FileUpload';
+import Folders from './Folders';
+import AiHeader from '@/components/AiHeader';
 
 const iFrameHeight = '75vh';
 const iFrameWidth = '100%';
@@ -21,7 +24,7 @@ const placeholderStyle = {
   fontSize: '1rem',
 };
 
-function Documentation() {
+export default function Documentation() {
   const [query, setQuery] = useState('');
   const [result, setResult] = useState('');
   const [loading, setLoading] = useState(false);
@@ -76,35 +79,29 @@ function Documentation() {
 
   return (
     <div className="bg-my-color8">
-      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <main className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid pt-2 grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10">
           <div className="lg:col-span-2 bg-my-color7 border rounded">
-            <div className="flex flex-col px-4 py-2">
-              <div className="sticky top-0 pt-10 ">
-                <TreeView>
-                  <TreeItem label="/" showIcons={true} isOpen={true}>
-                    <TreeItem label="/usr" showIcons={true}>
-                      <TreeItem label="/bin" showIcons={true} />
-                      <TreeItem label="/lib" showIcons={true} />
-                      <TreeItem label="/local" showIcons={true} />
-                      <TreeItem label="/share" showIcons={true} />
-                    </TreeItem>
-                    <TreeItem label="/etc" showIcons={true} />
-                    <TreeItem label="/opt" showIcons={true} />
-                    <TreeItem label="/sbin" showIcons={true} />
-                    <TreeItem label="/var" showIcons={true} />
-                    <TreeItem label="/tmp" showIcons={true} />
-                    <TreeItem label="/documents" showIcons={true}>
-                      <TreeItem
-                        label="lathe.pdf"
-                        showIcons={false}
-                        onSelect={() => handleSelectDocument('/lathe.pdf')}
-                      />
-                    </TreeItem>
-                  </TreeItem>
-                </TreeView>
+            <div className="flex justify-between items-center px-4 py-2 border-b">
+              <FileUpload />
+              <Search />
+            </div>
+            <div className="flex flex-col">
+              <div
+                className="pt-4 border-b overflow-auto"
+                style={{ height: '30vh' }}
+              >
+                <Folders callback={handleSelectDocument} />
               </div>
               {/** AI prompt */}
+              <AiHeader
+                dropDownList={[
+                  'gpt-3.5-turbo-instruct',
+                  'gpt-3.5-turbo-1106',
+                  'gpt-4-1106-preview',
+                ]}
+                report={result}
+              />
               <div className="mt-10 flex flex-col justify-center items-center w-full h-full">
                 <input
                   className="mt-3 rounded border w-[400px] text-black px-2 py-1"
@@ -127,16 +124,19 @@ function Documentation() {
                     >
                     Create index and embeddings
                     </Button> */}
-                {result && (
-                  <p className="my-8 border p-8 rounded">
+                <p
+                  className="my-8 border p-8 rounded bg-my-color1 text-my-color9"
+                  style={{ width: '80%' }}
+                >
+                  {result && (
                     <AnimatedText
                       text={result}
                       show={true}
                       animated={true}
                       animationDelay={500}
                     />
-                  </p>
-                )}
+                  )}
+                </p>
               </div>
             </div>
           </div>
@@ -157,5 +157,3 @@ function Documentation() {
     </div>
   );
 }
-
-export default Documentation;
