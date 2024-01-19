@@ -29,8 +29,6 @@ class UsersRepository {
         message: error.message,
         explanation: null,
       });
-    } finally {
-      await Database.dropClient();
     }
   }
 
@@ -46,8 +44,6 @@ class UsersRepository {
         message: error.message,
         explanation: null,
       });
-    } finally {
-      await Database.dropClient();
     }
   }
 
@@ -65,8 +61,6 @@ class UsersRepository {
         message: error.message,
         explanation: null,
       });
-    } finally {
-      await Database.dropClient();
     }
   }
 
@@ -83,8 +77,6 @@ class UsersRepository {
         message: error.message,
         explanation: null,
       });
-    } finally {
-      await Database.dropClient();
     }
   }
 
@@ -101,8 +93,6 @@ class UsersRepository {
         message: error.message,
         explanation: null,
       });
-    } finally {
-      await Database.dropClient();
     }
   }
 

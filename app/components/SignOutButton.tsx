@@ -23,6 +23,10 @@ const SignOutButton: FC<SignOutButtonProps> = ({ onDone }) => {
       await signOut({ redirect: false });
       setIsLoading(false);
       onDone();
+      toast({
+        title: 'Success',
+        message: 'You will be redirected shortly.',
+      });
     } catch (error) {
       toast({
         title: 'Error signing out',

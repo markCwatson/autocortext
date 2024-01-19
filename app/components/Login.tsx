@@ -4,11 +4,9 @@ import { FormEventHandler, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { Logo } from '@/components/Logo';
 import { toast } from '@/components/Toast';
-import { useRouter } from 'next/navigation';
 
 export default function Login() {
-  const router = useRouter();
-  const [info, setInfo] = useState({ email: '', password: '' });
+  const [info, setInfo] = useState({ email: '', password: '', error: false });
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -24,6 +22,7 @@ export default function Login() {
         message: 'Please try again later.',
         type: 'error',
       });
+      setInfo({ ...info, error: true });
     }
   };
 
@@ -38,6 +37,11 @@ export default function Login() {
           <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
+                {info.error ? (
+                  <p className="text-red-500 text-sm my-4">
+                    Invalid credentials.
+                  </p>
+                ) : null}
                 <label
                   htmlFor="email"
                   className="block text-sm font-medium leading-6 text-gray-900"

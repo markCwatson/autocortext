@@ -102,6 +102,9 @@ const Dashboard = React.forwardRef<HTMLDivElement, DashboardProps>(
     const [imageSrc, setImageSrc] = useState<string>('');
 
     const getUserImage = async () => {
+      // todo: remove this and fetch real image
+      // removing to avoid errors about fetching image
+      return null;
       if (session.status === 'authenticated' || session.status === 'loading') {
         const res = await fetch(`/api/user`, {
           method: 'GET',

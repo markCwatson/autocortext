@@ -1,7 +1,6 @@
 'use client';
 
 import { FormEventHandler, useState } from 'react';
-import { signIn } from 'next-auth/react';
 import { Logo } from '@/components/Logo';
 import { toast } from '@/components/Toast';
 import { useRouter } from 'next/navigation';
@@ -23,12 +22,23 @@ export default function Register() {
       });
 
       if (response.ok) {
+        toast({
+          title: 'Success',
+          message: 'Account created! Please sign in.',
+        });
         router.push('/');
+      } else {
+        toast({
+          title: 'Error creating account',
+          message: 'Please try again later.',
+          type: 'error',
+        });
       }
     } catch (error) {
+      console.log('error on page:', error);
       toast({
         title: 'Error resigering',
-        message: 'Please try again later.',
+        message: `${error}`,
         type: 'error',
       });
     }

@@ -11,6 +11,9 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
   },
+  pages: {
+    signIn: '/',
+  },
   secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === 'development',
   providers: [
@@ -49,7 +52,6 @@ export const authOptions: NextAuthOptions = {
           };
         }
 
-        Database.dropClient();
         return ret;
       },
     }),

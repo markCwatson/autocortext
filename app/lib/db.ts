@@ -1,22 +1,19 @@
-import { MongoClient, ServerApiVersion, Db } from 'mongodb';
+import { MongoClient, ServerApiVersion } from 'mongodb';
 
-interface DatabaseConnection {
-  client: MongoClient;
-  db: Db;
-}
-
+let client: MongoClient;
 let isConnected = false;
 
-// Create a global instance of MongoClient
-const client = new MongoClient(process.env.DATABASE_URI!, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-});
+const connectToDatabase = async (): Promise<MongoClient> => {
+  if (!client) {
+    client = new MongoClient(process.env.DATABASE_URI!, {
+      serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+      },
+    });
+  }
 
-const connectToDatabase = async (): Promise<DatabaseConnection> => {
   if (!isConnected) {
     try {
       await client.connect();
@@ -25,33 +22,16 @@ const connectToDatabase = async (): Promise<DatabaseConnection> => {
     } catch (error) {
       console.error('Failed to connect to database:', error);
       isConnected = false;
+      throw error;
     }
   }
 
-  return { client, db: client.db('admin') };
+  return client;
 };
 
-const disconnectFromDatabase = async (): Promise<void> => {
-  if (isConnected) {
-    try {
-      await client.close();
-      isConnected = false;
-      console.log('Database disconnected');
-    } catch (error) {
-      console.error('Failed to disconnect from database:', error);
-    }
-  }
-};
-
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  connection: null as DatabaseConnection | null,
   async getClient(): Promise<MongoClient> {
-    if (!isConnected || !this.connection) {
-      this.connection = await connectToDatabase();
-    }
-    return this.connection.client;
-  },
-  async dropClient(): Promise<void> {
-    await disconnectFromDatabase();
+    return connectToDatabase();
   },
 };

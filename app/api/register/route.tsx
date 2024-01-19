@@ -4,24 +4,29 @@ import { NextResponse } from 'next/server';
 export async function POST(request: Request) {
   const { name, email, password } = await request.json();
   if (!name || !email || !password) {
-    return new NextResponse(
-      JSON.stringify({ message: 'Missing name, email, or password' }),
-      {
-        status: 400,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      },
-    );
+    throw new Error('Missing name, email, or password');
   }
 
   // create user
-  const createdUser = await UsersService.create({ name, email, password });
-  if (!createdUser) {
+  let createdUser = null;
+  try {
+    createdUser = await UsersService.create({ name, email, password });
+    if (!createdUser) {
+      return new NextResponse(
+        JSON.stringify({ message: 'Error creating user' }),
+        {
+          status: 409,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+    }
+  } catch (error) {
     return new NextResponse(
       JSON.stringify({ message: 'Error creating user' }),
       {
-        status: 400,
+        status: 500,
         headers: {
           'Content-Type': 'application/json',
         },

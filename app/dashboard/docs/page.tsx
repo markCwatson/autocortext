@@ -10,6 +10,7 @@ import AiHeader from '@/components/AiHeader';
 import AiPromptSimple from '@/components/AirPromptSimple';
 import { useQueryContext } from '@/components/AiQueryProvider';
 import { Button } from '@/components/Button';
+import { toast } from '@/components/Toast';
 
 const iFrameHeight = '100%';
 const iFrameWidth = '100%';
@@ -74,6 +75,11 @@ export default function Documentation() {
   async function sendQuery() {
     if (!interaction.question) return;
     setInteraction({ ...interaction, loading: true });
+    toast({
+      title: 'Success',
+      message: `Sending query: ${interaction.question}`,
+      duration: 2000,
+    });
     try {
       const result = await fetch('/api/read', {
         method: 'POST',
@@ -81,9 +87,21 @@ export default function Documentation() {
       });
       const json = await result.json();
       setInteraction({ ...interaction, answer: json.data, loading: false });
+      if (json.data) {
+        toast({
+          title: 'Success',
+          message: `Answer received!`,
+          duration: 3000,
+        });
+      }
     } catch (err) {
       console.log('err:', err);
       setInteraction({ ...interaction, loading: false });
+      toast({
+        title: 'Error',
+        message: 'Error sending query. Please try again later.',
+        type: 'error',
+      });
     }
   }
 

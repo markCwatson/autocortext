@@ -65,12 +65,12 @@ Toast.Description = function ToastDescription({
 interface ToastOpts {
   title?: string;
   message: string;
-  type?: 'success' | 'error' | 'default';
+  type?: 'success' | 'error';
   duration?: number;
 }
 
 export function toast(opts: ToastOpts) {
-  const { title, message, type = 'default', duration = 3000 } = opts;
+  const { title, message, type = 'success', duration = 4000 } = opts;
 
   return hotToast.custom(
     ({ visible }) => (
@@ -78,7 +78,7 @@ export function toast(opts: ToastOpts) {
         visible={visible}
         className={cn({
           'bg-red-600 text-white': type === 'error',
-          'bg-black text-white': type === 'success',
+          'bg-green-500 text-white': type === 'success',
         })}
       >
         <Toast.Title>{title}</Toast.Title>

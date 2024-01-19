@@ -32,6 +32,11 @@ export default function Reports() {
 
     try {
       setInteraction({ ...interaction, loading: true });
+      toast({
+        title: 'Success',
+        message: `Sending query: ${interaction.question}`,
+        duration: 2000,
+      });
 
       const response = await fetch('/api/openai', {
         method: 'POST',
@@ -43,7 +48,7 @@ export default function Reports() {
 
       if (!response?.ok) {
         return toast({
-          title: 'Error generating obituary',
+          title: 'Error',
           message: `Server status code: ${response.status}`,
           type: 'error',
         });
@@ -51,6 +56,12 @@ export default function Reports() {
 
       const data = await response.json();
       setInteraction({ ...interaction, answer: data.answer, loading: false });
+
+      toast({
+        title: 'Success',
+        message: `Answer received!`,
+        duration: 3000,
+      });
     } catch (err) {
       console.log('err:', err);
       setInteraction({ ...interaction, loading: false });

@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import Providers from '@/components/Providers';
 
 import { cn } from '@/lib/utils';
+import { Toaster } from '@/components/Toast';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
@@ -13,15 +14,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={cn(
-        'h-full bg-gray-50',
-        inter.className,
-      )}
-    >
+    <html lang="en" className={cn('h-full bg-gray-50', inter.className)}>
       <body className="min-h-screen h-full bg-my-color8 antialiased">
         <Providers>
+          <Toaster position="bottom-right" />
           <main>
             <section className="pt-0">{children}</section>
           </main>
