@@ -64,7 +64,7 @@ export default function Folders({ callback }: FoldersProps) {
             <TreeItem
               label="fervi_bench_lathe.pdf"
               showIcons={false}
-              onSelect={() => callback('/lathe.pdf')}
+              onSelect={() => callback('fervi_bench_lathe.pdf')}
             />
           </TreeItem>
         </TreeItem>

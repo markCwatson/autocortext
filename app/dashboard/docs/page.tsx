@@ -56,13 +56,13 @@ export default function Documentation() {
   const { interaction, setInteraction } = useQueryContext();
 
   useEffect(() => {
-    if (session.data?.user.name) {
-      if (selectedDocument) {
-        setInteraction({
-          ...interaction,
-          answer: 'Perfect. Ask me about the Fervi Bench Lathe.',
-        });
-      } else {
+    if (selectedDocument) {
+      setInteraction({
+        ...interaction,
+        answer: `Perfect. Ask me about the document: ${selectedDocument}`,
+      });
+    } else {
+      if (session.data?.user.name) {
         setInteraction({
           ...interaction,
           answer: `Hello ${session.data.user.name}. Select a document so we can get started.`,
@@ -134,14 +134,14 @@ export default function Documentation() {
                 {/* todo: for now, remove this button from the UI once the embeddings are created ... 
                 ... will add a button to upload a pdf and create the embeddings from that
                 */}
-                {/* <CreateEmbeddings */}
+                {/* <CreateEmbeddings /> */}
               </div>
             </div>
           </div>
           <div className="lg:col-span-2 border rounded">
             {selectedDocument ? (
               <iframe
-                src={selectedDocument}
+                src={`/${selectedDocument}`}
                 style={{ width: iFrameWidth, height: iFrameHeight }}
               />
             ) : (
