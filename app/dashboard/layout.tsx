@@ -7,6 +7,7 @@ import DashboardPage from '@/components/DashboardPage';
 import DialogModal from '@/components/DialogModal';
 import SignInButton from '@/components/SignInButton';
 import OrgNavBar from '@/components/OrgBar';
+import { AiQueryProvider } from '@/components/AiQueryProvider';
 
 export default async function DashboardLayout({
   children,
@@ -47,7 +48,7 @@ export default async function DashboardLayout({
           />
           <DashboardPage>
             <main className="flex w-full flex-1 flex-col overflow-hidden mt-10">
-              {children}
+              <AiQueryProvider>{children}</AiQueryProvider>
             </main>
           </DashboardPage>
         </div>

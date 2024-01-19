@@ -1,14 +1,15 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Button } from '@/components/Button';
-import { ChartPieIcon } from '@heroicons/react/24/outline';
 import AnimatedText from '@/components/AnimatedText';
 import { useSession } from 'next-auth/react';
 import Search from '@/components/Search';
 import FileUpload from '@/components/FileUpload';
 import Folders from './Folders';
 import AiHeader from '@/components/AiHeader';
+import AiPromptSimple from '@/components/AirPromptSimple';
+import { useQueryContext } from '@/components/AiQueryProvider';
+import { Button } from '@/components/Button';
 
 const iFrameHeight = '75vh';
 const iFrameWidth = '100%';
@@ -24,25 +25,7 @@ const placeholderStyle = {
   fontSize: '1rem',
 };
 
-export default function Documentation() {
-  const [query, setQuery] = useState('');
-  const [result, setResult] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [selectedDocument, setSelectedDocument] = useState<string>('');
-  const session = useSession();
-
-  useEffect(() => {
-    if (session.data?.user.name) {
-      if (selectedDocument) {
-        setResult(`Perfect. Ask me about the Fervi Bench Lathe.`);
-      } else {
-        setResult(
-          `Hello ${session.data.user.name}. Select a document so we can get started.`,
-        );
-      }
-    }
-  }, [session, selectedDocument]);
-
+function CreateEmbeddings() {
   async function createIndexAndEmbeddings() {
     try {
       const result = await fetch('/api/setup', {
@@ -55,21 +38,52 @@ export default function Documentation() {
     }
   }
 
+  return (
+    <Button
+      className="w-[400px] mt-2"
+      variant="outline"
+      onClick={createIndexAndEmbeddings}
+    >
+      Create index and embeddings
+    </Button>
+  );
+}
+
+export default function Documentation() {
+  const [selectedDocument, setSelectedDocument] = useState<string>('');
+  const session = useSession();
+
+  const { interaction, setInteraction } = useQueryContext();
+
+  useEffect(() => {
+    if (session.data?.user.name) {
+      if (selectedDocument) {
+        setInteraction({
+          ...interaction,
+          answer: 'Perfect. Ask me about the Fervi Bench Lathe.',
+        });
+      } else {
+        setInteraction({
+          ...interaction,
+          answer: `Hello ${session.data.user.name}. Select a document so we can get started.`,
+        });
+      }
+    }
+  }, [session, selectedDocument]);
+
   async function sendQuery() {
-    if (!query) return;
-    setResult('');
-    setLoading(true);
+    if (!interaction.question) return;
+    setInteraction({ ...interaction, loading: true });
     try {
       const result = await fetch('/api/read', {
         method: 'POST',
-        body: JSON.stringify(query),
+        body: JSON.stringify(interaction.question),
       });
       const json = await result.json();
-      setResult(json.data);
-      setLoading(false);
+      setInteraction({ ...interaction, answer: json.data, loading: false });
     } catch (err) {
       console.log('err:', err);
-      setLoading(false);
+      setInteraction({ ...interaction, loading: false });
     }
   }
 
@@ -100,43 +114,27 @@ export default function Documentation() {
                   'gpt-3.5-turbo-1106',
                   'gpt-4-1106-preview',
                 ]}
-                report={result}
+                report={interaction.answer}
               />
               <div className="mt-10 flex flex-col justify-center items-center w-full h-full">
-                <input
-                  className="mt-3 rounded border w-[400px] text-black px-2 py-1"
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Enter query here..."
-                />
-                <Button className="w-[400px] mt-3" onClick={sendQuery}>
-                  Ask AscendAI
-                </Button>
-                {loading && (
-                  <ChartPieIcon className="my-5 w-8 h-8 animate-spin" />
-                )}
-                {/* todo: for now, remove this button from the UI once the embeddings are created ... 
-                ... will add a button to upload a pdf and create the embeddings from that
-                */}
-                {/* <Button
-                      className="w-[400px] mt-2"
-                      variant="outline"
-                      onClick={createIndexAndEmbeddings}
-                    >
-                    Create index and embeddings
-                    </Button> */}
+                <AiPromptSimple callback={sendQuery} />
                 <p
                   className="my-8 border p-8 rounded bg-my-color1 text-my-color9"
                   style={{ width: '80%' }}
                 >
-                  {result && (
+                  {interaction.answer && (
                     <AnimatedText
-                      text={result}
+                      text={interaction.answer}
                       show={true}
                       animated={true}
                       animationDelay={500}
                     />
                   )}
                 </p>
+                {/* todo: for now, remove this button from the UI once the embeddings are created ... 
+                ... will add a button to upload a pdf and create the embeddings from that
+                */}
+                {/* <CreateEmbeddings */}
               </div>
             </div>
           </div>

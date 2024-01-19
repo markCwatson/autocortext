@@ -6,43 +6,22 @@ import {
   CodeBracketIcon,
   LinkIcon,
 } from '@heroicons/react/20/solid';
-import { FormEvent, useState } from 'react';
-import { toast } from '@/components/Toast';
+import { FormEventHandler, useState } from 'react';
+import { useQueryContext } from './AiQueryProvider';
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function AiPrompt() {
-  const [interaction, setInteraction] = useState({ question: '', answer: '' });
+interface Interaction {
+  callBack: FormEventHandler<HTMLFormElement>;
+}
 
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const response = await fetch('/api/openai', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ question: interaction.question }),
-    });
-
-    if (!response?.ok) {
-      return toast({
-        title: 'Error generating obituary',
-        message: `Server status code: ${response.status}`,
-        type: 'error',
-      });
-    }
-
-    const data = await response.json();
-    const answer = data.answer;
-    setInteraction({ ...interaction, answer });
-    sessionStorage.setItem('answer', answer);
-    window.dispatchEvent(new Event('storageUpdate'));
-  }
+export default function AiPrompt({ callBack }: Interaction) {
+  const { interaction, setInteraction } = useQueryContext();
 
   return (
-    <form onSubmit={onSubmit} className="w-full md:max-w-xl mx-auto">
+    <form onSubmit={callBack} className="w-full md:max-w-xl mx-auto">
       <Tab.Group>
         {({ selectedIndex }) => (
           <>

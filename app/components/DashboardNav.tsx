@@ -65,8 +65,8 @@ const navigation = [
     icon: DocumentDuplicateIcon,
   },
   {
-    name: 'AI',
-    href: '/dashboard/ai',
+    name: 'Reports',
+    href: '/dashboard/reports',
     icon: CubeTransparentIcon,
   },
   {
