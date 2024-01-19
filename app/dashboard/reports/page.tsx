@@ -21,7 +21,7 @@ export default function Reports() {
 
         I am ready to assist you in generating reports, troubleshooting equipment failures, planning maitenance work, and more.
 
-        Please ask me a question in the text box above.`,
+        Please ask me a question in the text box below.`,
       });
     }
   }, [session]);
@@ -67,11 +67,10 @@ export default function Reports() {
         ]}
         report={interaction.answer}
       />
-      <div className="mt-10 flex flex-col justify-center items-center w-full h-full">
-        <AiPromptSimple callback={onSubmit} />
+      <div className="flex flex-col justify-center items-center w-full h-full">
         <div className="flex flex-col justify-center items-center w-full h-full">
           <p
-            className="my-8 border p-8 rounded bg-my-color1 text-my-color9"
+            className="my-8 p-8 border rounded bg-my-color1 text-my-color9"
             style={{ width: '80%' }}
           >
             {interaction.answer && (
@@ -83,6 +82,7 @@ export default function Reports() {
               />
             )}
           </p>
+          <AiPromptSimple callback={onSubmit} />
         </div>
       </div>
     </>

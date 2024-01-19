@@ -11,7 +11,7 @@ import AiPromptSimple from '@/components/AirPromptSimple';
 import { useQueryContext } from '@/components/AiQueryProvider';
 import { Button } from '@/components/Button';
 
-const iFrameHeight = '75vh';
+const iFrameHeight = '100%';
 const iFrameWidth = '100%';
 
 const placeholderStyle = {
@@ -95,7 +95,7 @@ export default function Documentation() {
     <div className="bg-my-color8">
       <main className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid pt-2 grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10">
-          <div className="lg:col-span-2 bg-my-color7 border rounded">
+          <div className="pb-8 lg:col-span-2 bg-my-color7 border rounded">
             <div className="flex justify-between items-center px-4 py-2 border-b">
               <FileUpload />
               <Search />
@@ -116,10 +116,9 @@ export default function Documentation() {
                 ]}
                 report={interaction.answer}
               />
-              <div className="mt-10 flex flex-col justify-center items-center w-full h-full">
-                <AiPromptSimple callback={sendQuery} />
+              <div className="mt-2 flex flex-col justify-center items-center w-full h-full">
                 <p
-                  className="my-8 border p-8 rounded bg-my-color1 text-my-color9"
+                  className="my-8 p-8 border rounded bg-my-color1 text-my-color9"
                   style={{ width: '80%' }}
                 >
                   {interaction.answer && (
@@ -131,6 +130,7 @@ export default function Documentation() {
                     />
                   )}
                 </p>
+                <AiPromptSimple callback={sendQuery} />
                 {/* todo: for now, remove this button from the UI once the embeddings are created ... 
                 ... will add a button to upload a pdf and create the embeddings from that
                 */}

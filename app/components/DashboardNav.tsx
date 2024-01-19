@@ -17,7 +17,6 @@ import {
   NewspaperIcon,
   PresentationChartBarIcon,
   QuestionMarkCircleIcon,
-  ShoppingCartIcon,
   UserCircleIcon,
   UserGroupIcon,
   WrenchScrewdriverIcon,
@@ -68,11 +67,6 @@ const navigation = [
     name: 'Reports',
     href: '/dashboard/reports',
     icon: CubeTransparentIcon,
-  },
-  {
-    name: 'Shop',
-    href: '/dashboard/shop',
-    icon: ShoppingCartIcon,
   },
   {
     name: 'Help',

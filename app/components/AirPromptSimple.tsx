@@ -20,11 +20,12 @@ export default function AiPromptSimple({ callback }: AiPromptSimpleProps) {
         placeholder="Enter query here..."
       />
       <Button className="w-[400px] mt-3" onClick={callback}>
-        Ask AscendAI
+        {interaction.loading ? (
+          <ChartPieIcon className="w-6 h-6 animate-spin" />
+        ) : (
+          'Ask AscendAI'
+        )}
       </Button>
-      {interaction.loading && (
-        <ChartPieIcon className="my-5 w-8 h-8 animate-spin" />
-      )}
     </>
   );
 }
