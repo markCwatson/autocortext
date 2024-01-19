@@ -57,9 +57,20 @@ export default function Folders({ callback }: FoldersProps) {
           isOpen={true}
           isFolder={true}
         >
-          <TreeItem label="drill_presses" showIcons={true} isFolder={true} />
-          <TreeItem label="welders" showIcons={true} isFolder={true} />
-          <TreeItem label="cnc" showIcons={true} isFolder={true} />
+          <TreeItem label="cartoners" showIcons={true} isFolder={true}>
+            <TreeItem
+              label="HS5160-SFC-ENT-117&118.pdf"
+              showIcons={false}
+              onSelect={() => callback('HS5160-SFC-ENT-117&118.pdf')}
+            />
+          </TreeItem>
+          <TreeItem label="conveyers" showIcons={true} isFolder={true}>
+            <TreeItem
+              label="HS5160-SFC-WSIPTU-115&116.pdf"
+              showIcons={false}
+              onSelect={() => callback('HS5160-SFC-WSIPTU-115&116.pdf')}
+            />
+          </TreeItem>
           <TreeItem label="lathes" showIcons={true} isFolder={true}>
             <TreeItem
               label="fervi_bench_lathe.pdf"
@@ -67,6 +78,9 @@ export default function Folders({ callback }: FoldersProps) {
               onSelect={() => callback('fervi_bench_lathe.pdf')}
             />
           </TreeItem>
+          <TreeItem label="drill_presses" showIcons={true} isFolder={true} />
+          <TreeItem label="welders" showIcons={true} isFolder={true} />
+          <TreeItem label="cnc" showIcons={true} isFolder={true} />
         </TreeItem>
       </TreeView>
     </>

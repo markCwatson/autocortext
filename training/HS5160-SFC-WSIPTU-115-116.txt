@@ -1,0 +1,4900 @@
+REPL ACEMENT M ANU ALS
+CAN BE ORDERED
+AT A NOMINAL CHAR GE. PUR CHAES ORDER MUST INCL UDE
+MACHINE MODEL ________________ AND SERIAL NUMBER 
+_________________________________
+(AND M ANU AL NUMBER (S) IF A VAILABLE).
+You can get additional inf ormation b y contacting
+Kliklok-Woodman a t the addr ess belo w:
+ Klik lok-Woodman        
+ Decatur, Georgia 30035
+ E-M ail:ser vice@k liklok-woodman.c om
+ Telephone: 770/981-5200
+ Fax: 770/987-7160
+To Order Spar e Parts,
+Ask for the P arts Sales D epar tmen t. 
+If you w ant troubleshooting , main tenanc e, 
+or other advic e, ask f or the 
+Service Depar tmen t.
+Parts S ales 
+Monda y-Thursda y from
+7 AM un til 7 P M east ern time and
+Friday 7A M un til 5P M.SPARE P ARTS LIST
+CUST OM P ARTS LISTELEC TRIC AL DR AWINGS
+REPLA CEMENT P ARTS 
+SETUP SHEE TSSETUPOPER ATION / M AINTENANCEMANUAL PARTS SPARES CUSTOM ELECTRICAL
+®
+EXITSERVICE BULLETINSSERVICE
+BULLETINSSCHWANS - ATLANTA
+HS5160HOME
+SCHWANS - ATLANTA
+HS5160Kliklok
+2TECHNICAL SUPPORT
+Monday-Friday
+7:00am-5:00pm
+770-981-5200
+After Hours, W eekends and Holidays
+770-331-8386 or 770-356-1 128
+Email A nytim e
+techsupport@kliklokwoodman.comPARTS SUPPORT
+Monday-Friday
+7:00am-7:00pm
+770-981-5200
+After Hours, W eekends and Holidays
+770-331-8397
+Email A nytim e
+parts@kliklokwoodman.comAFTERMARKET SUPPORT TEAM®
+®3
+8 17 2016
+OPERATORS AND MAINTENANCE MANUAL 
+Thank you for your purchase of Kliklok-Woodman packaging machines. We hope this comprehensive Operators, Maintenance 
+and Parts manual will help you get the best possible performance and reliability from your packaging system. Kliklok-Woodman 
+stands behind every machine we make and we are ready to provide any additional assistance you may require. 
+The operator’s sections give step by step procedures on machine operations and set ups. The maintenance sections give brief 
+descriptions of each machine system along with a preventive maintenance schedule and troubleshooting guides. 
+Should service or assistance in troubleshooting and repair be required, please contact the Kliklok-Woodman Customer Service 
+Department with the following information: 
+1. Machine Serial Number 
+2. Software Version 
+Your machine may differ slightly from those illustrated in this manual due to engineering changes or the addition of optional 
+equipment. 
+MACHINE SERIAL NUMBERS                 SOFTWARE VERSIONS 
+Packaging Productivity. ..by Design 
+5224 SNAPFINGER WOODS DRIVE, DECATUR GA 30035
+USA TEL: 770/981-5200. FAX: 770/987-7160 
+email: publications@kliklokwoodman.com
+UK/EUROPEAN INQUIRIES 
+WESTERN DRIVE,  HENGROVE PARK ESTATE; BRISTOL BS14 OAY, ENGLAND
+TEL;44-1-275-836131     FAX; 44-1-275-891754
+®
+4
+5
+8 17 2016TABLE OF CONTENTS
+1.0 GENERAL INFORMATION  ....................................................... 11
+    1.2 STANDARD FEATURES  ...................................................... 12
+1.3 OPERATING REQUIREMENTS  .......................................... 12
+1.4 CONTACT INFORMATION  .................................................. 13
+1.5 MACHINE LAYOUT  .............................................................. 14
+2.0.1 SAFETY  ................................................................................. 15
+2.1 BASIC RULES OF SAFE MACHINE OPERATION  .............. 16
+ 2.1.1 SAFETY IN NORMAL MACHINE OPERATION  ...... 16
+ 2.1.2 SHUT DOWN AND RESTART  ................................. 17
+2.2  LOCK-OUT/TAG-OUT PROCEDURES  .............................. 17
+2.3  MACHINE GUARDS AND SAFETY INTERLOCKS  ............ 18
+2.4   Safety Symbols  ................................................................. 18
+2.5 Machine Safety Labels  ......................................................... 19
+2.6 INSTALLATION SAFETY  .................................................... 20
+ 2.6.1 GENERAL INSTALLATION INFORMATION  ........... 20
+ 2.6.2 PERSONNEL REQUIREMENTS  ............................ 20
+2.7 INSTALLATION  ................................................................... 20
+ 2.7.1 RECEIVING & UNPACKING THE MACHINE  ......... 20
+ 2.7.2 MOVING THE MACHINE  ....................................... 21
+ 2.7.3 LEVELING THE MACHINE  .................................... 21
+ 2.7.4 MAIN ELECTRICAL & AIR CONNECTIONS  ........... 226
+8 17 2016
+TABLE OF CONTENTS
+7
+8 17 2016TABLE OF CONTENTS
+8
+8 17 20169
+8 17 2016DEFINITIONS
+TERMS AND ABBREVIATIONS
+ AS Compressed air supply
+Check/Adjust Check.  Adjust as necessary 
+Check/Change Check.  Change if necessary
+Conveyor Belt Belt, slatband, tabletop chain or similar 
+flat carrier used on a conveyor.
+Conveyor Lug A conveyor flight of sheet metal, often 
+fastened to the side of a carrier chain or 
+to the edge of a conveyor belt.
+CPM, cpm Cartons per minute
+CT  Chain Tensioner
+Flight A surface projection or other attachment 
+on a conveyor that limits the movement 
+of items placed on a conveyor
+GS Glue system
+HS Heat seal (system).
+IPTU Intelligent Product Transfer Unit
+LH Left Hand
+LH machine Machine with the inserter on the left 
+hand side
+LH side Left hand side of the machine, looking 
+down stream.
+Load side The side of the machine on which 
+the inserter is located.(LH side on LH 
+machine and vice versa)
+MMI Man/Machine Interface  (Operator Touch 
+Screen)
+OG Overhead guides
+OL Oil lubrication (system)Non-load Side The side opposite to the load side, i.e. 
+the side of the 
+ machine without the inserter.  (RH side 
+on a LH machine, and vice versa)
+PI Piston inserter
+PIC Product infeed conveyor
+PLC Programmable logic controller (used to 
+control product and cartonning opera -
+tions)
+Pocket The space, on a conveyor, between 
+a pusher flight/lug and the preceding 
+retarder flight/lug
+Pusher Lug A following flight which forces items to 
+travel with the conveyor belt.
+Retarder Lug A flight preceding and forming a pocket 
+in front of a pusher flight
+RH Right hand side of machine, looking 
+downstream
+RH Machine Machine with the inserter on the RH side
+RH Side Right hand side of machine
+Rotary Feeder Carton feeder
+RPL Replacement parts list
+RTS Rotary Transfer System
+SBI Smart Belt Infeed
+UHMWP  Ultra High Molecular Weight Polyeth -
+ylene10
+8 17 2016
+11
+1.0 SAFETY INSTRUCTIONS
+1.1 GENERAL
+BEFORE OPERATING THE MACHINE,  THIS SEC -
+TION ON SAFETY MUST BE READ AND UNDER -
+STOOD.
+ALL SAFETY WARNINGS and SAFETY INSTRUC -
+TIONS MUST BE STRICTLY FOLLOWED.
+1.1.2 Safety Notes and Instructions.
+SAFETY WARNINGS AND SAFETY INSTRUCTIONS 
+IN THIS MANUAL ARE PRECEDED by the following 
+symbol
+This symbol indicates a potentially hazardous situation 
+that might result in serious injury, death, or machine 
+damage, when you misuse the machine without follow -
+ing the instructions under this symbol.
+This symbol indicates a potentially hazardous situation 
+that might result in minor injury or machine damage. It 
+also indicates strict attention must be given to the in -
+structions following this symbol
+This symbol indicates important precautions for oper -
+ation, or actions to be carried out prior to operation or 
+adjustment of machinery
+This symbol indicates other instructions that 
+should be read in conjunction with the rele -
+vant section, i.e. the instructions following this 
+symbol might tell the user to read a different section of 
+the manual before proceeding.
+This symbol indicates NOT  to proceed until the following 
+instructions are adhered to, or a potentially hazardous 
+situation might occur if the instructions following this 
+symbol are not carried out.
+12
+8 17 2016This symbol indicates that when all the instructions have been 
+carried out, it is safe to proceed, or the operation is complete.
+This symbol indicates an example of an operation or procedure 
+that could result in the machine not operating correctly.
+1.1.3 Equipment Supplied by Others
+Where associated equipment is supplied or fitted by oth -
+ers, the seller and purchaser of the equipment are re -
+sponsible for ensuring that:
+1. The equipment complies with all Safety Requirements,
+2. The associated equipment does not adversely affect 
+the operation or safety of equipment or guarding sup -
+plied by Kliklok International Limited.
+1.2. INSTALLATION
+Before starting the installation, read this Manual.
+During installation, follow the recommended procedures 
+in SECTION 4, and obey the safety instructions.
+Installation may require the temporary  removal of guards 
+and / or  the temporary removal of electrical interlocks.  
+(See Personnel and Electrical Supply, below.)
+1.2.1 Personnel
+Installers should use only approved, trained, competent 
+personnel.
+All other persons should be prohibited from entering the 
+installation area.1.2.2 Electrical Supply
+Only properly qualified persons may:
+a) Connect the electrical supply to the machine. The 
+cable carrying the electrical supply to the ma -
+chine must be correctly rated for the supply volt -
+age and current specified. An upstream fuse or 
+circuit breaker should be fitted to limit the fault 
+current.
+b) Remove/disconnect and connect / reconnect 
+electrical interlocks.
+ 
+1.2.3  Guards
+After installation, before starting the machine:
+1) Refit the guards. 
+2) Re-commission the interlocks. 
+3) Check that, where associated equipment is sup -
+plied by others, any interface guards are electrical -
+ly interlocked with the KL supplied machinery.
+4) Check that guards comply with the current require -
+ments of the relevant Health and Safety Authority.
+Never operate the machine unless all guards are in 
+place.
+1.2.4 Commissioning
+Commissioning runs should be conducted by an approved 
+person who has been instructed in the operation of the 
+machinery.13
+8 17 20161.3 Personnel Training
+After the machine has completed satisfactory trials, the 
+installer should train one or more authorised persons, 
+nominated by the employer to be responsible for operat -
+ing the machinery.
+All persons operating or tending the machinery should 
+be trained by a qualified trainer.
+Training should include instruction on Safe Practices 
+and known hazards.
+Operators and attendants should be directed NOT  to operate 
+the machinery unless all guards are in place.
+Although guards, devices and warning signals have been 
+provided for known hazards, the user is responsible for 
+ensuring that personnel know and follow the correct Operating 
+Procedures and Safe Practices.
+Operators should not wear loose filling clothing, neckties or 
+gloves, except where sanitary requirements for handling the 
+products specify that gloves are to be worn.
+1.4 Operating Safety
+1.4.1  General
+Before starting up the machine, inspect it for damaged or 
+missing parts.
+Before clearing a jam or making an adjustment, turn off the 
+machine by pressing one of the “ EMERGENCY STOP ” button.Unless the proposed procedure requires an electrical pow -
+er supply to the machine, before undertaking any repair, 
+size change or maintenance, switch OFF the main electri -
+cal isolator.
+Wait until the machine has completely stopped.
+Ensure that tools and other foreign objects are removed 
+before start up.
+Before start up, replace all guards (including changed or 
+extra guards after a size change).
+Before starting, restarting, or applying electrical power or 
+compressed air to the machine:
+1. Make a visual observation that all personnel are 
+clear of moving components.
+2. Make an audible warning to all personnel in the vi -
+cinity of the machine before pressing the START 
+button.
+1.5 Electrical System
+MOBILE TELEPHONES MUST NOT BE USED NEAR AN 
+electrical control panel or electrical control centre when 
+the panel/centre is powered and the panel/centre door is 
+open. High frequency equipment and/or arc welding equip -
+ment must not be used in the vicinity of the machine when 
+it is powered.14
+8 17 2016Failure to observe these instructions, and others written 
+in this manual could result in severe damage to the ma -
+chinery and injury to personnel.
+1.6 Maintenance Safety Guidelines
+1. Follow all safety guidelines, when applicable, from 
+the Operator & Attendant Safety Guidelines.
+2. Replace any broken or defective safety devices. 
+Machine warranties will be void and injuries and/or 
+damage to equipment becomes the responsibility 
+of the user.
+NEVER REMOVE OR BYPASS ANY SAFETY SWITCH 
+OR DEVICES USED FOR SAFETY!  SERIOUS INJURY 
+AND/OR DAMAGE TO THE MACHINE WILL RESULT.
+3. Use only approved Kliklok replacement parts when 
+replacing damaged or worn components.  Failure to 
+do so voids all warranties expressed and will cause 
+damage to the machine and/or injuries to personnel 
+caused either directly or indirectly from using non-ap -
+proved components The use of non-approved com -
+ponents or parts becomes the responsibility of the 
+user or individual who authorized the equipment. Do 
+not use unauthorized parts or components.
+4. When replacing fuses, circuit breakers, overloads, 
+or any other circuit protection components, replace 
+only with components of the same rating.
+5. Never modify barrier guarding without the approval of 
+Kliklok engineering department.1.7 Machine Guards
+The operators and attendants are protected from contact 
+with the moving parts of the machine by barrier guard -
+ing.  This machine is equipped with lower stainless steel 
+guards and hinged ploycarbonate or mesh guards cover -
+ing the conveyor belts. All doors are interlocked with the 
+machine control for safety.  If any door is opened during 
+production, the machine will sto.
+Never reach around or crawl  under  safety doors or  
+guards.  Disregarding the safety aspects of machine 
+guards may result in serious personal injuries.
+Safety Interlock switches are not to be tampered with or 
+bypassed.  
+The correct operation of these switches is required at all 
+times to provide the proper guarding.  An interlock switch 
+that is not functioning properly should be reported to a 
+supervisor immediately and the machine should be shut 
+down until the switch is repaired or replaced.
+1.8 Main Disconnect Switch
+The electrical cabinet of the machine is equipped with a 
+Main Disconnect switch. This switch is linked to the main 
+circuit breaker inside the cabinet which connects or dis -
+connects the factory supplied power to the machine.
+During maintenance, service, or repair operations, always 
+use the appropriate lockout, tag-out procedure accepted 
+in your plant 15
+8 17 2016Always turn off the machine power OFF before servicing.
+It is critical not to touch high voltage components in the 
+Electrical Cabinet,  This could result is serious injuries.
+The incoming Power Cables are still live when the Discon -
+nect is turned off.
+1.9 SAFETY COMPONENTS LOCATION 
+DIAGRAM  
+EMERGENCY STOP
+PUSH BUTTO NMachine Co ntrols
+STARTSTOPRESETMAIN ELECTRICAL
+DISCONNECTHazardous
+voltage.
+Follow lockout
+procedure befor e
+servicing.16
+8 17 2016
+EMERGENCY STOP
+PUSH BUTTO NMachine Co ntrols
+STARTSTOPRESET
+2. EMERGENCY STOP BUTTON.
+This red illuminated button at the base of the HMI, stops 
+the machine instantaneously when depressed.
+It is only to be used in the event of an emergency.
+Products will require removing from the machine be -
+fore it is restarted. The opening of any of the machine 
+doors, or guards, while the machine is running will also 
+actuate an Emergency Stop.
+To start the machine after an emergency stop or fault 
+has occurred, clear all faults, reset the emergency stop 
+button by PULLING OUT THE BUTTON,  then press the  
+RESET BUTTON. THEN THE START BUTTON.THE EMERGENCY STOP BUTTONS SHOULD ONLY 
+BE DEPRESSED WHEN EITHER THE MACHINE IS IN 
+DANGER OF BEING DAMAGED, OR INJURY TO PER -
+SONNEL MAY OCCUR.
+Note!
+The Siptu must be interlocked with the parent machine so 
+that if the Siptu is stopped the parent machine stops as 
+well. If this is not performed, the Siptu will fault out as it is 
+being told to stop but the encoder is still running (on the 
+parent machine).
+NORMAL STOP
+ 
+(Non-illuminated RED  push-button). This button is pressed 
+when initiating a normal stop on the machine. 
+This will stop the Metering Conveyor, but the phasing con -
+veyors will continue to run until all products currently load -
+ed are discharged. 
+RESET
+     
+When an Emergency Stop button has been depressed, or 
+a guard switch operated or a machine fault has occurred, 
+the display screen shows the related fault message indi -
+cating that the RESET button needs to be pressed to re -
+set the safety circuit, and clear all faults.
+REMOVE ALL REMAINING PRODUCTS FROM THE  
+CONVEYORS BEFORE RESTARTING THE MACHINE.The machine will not operate until all faults have been 
+cleared and the RESET button pressed.17
+8 17 20161.10 Safety Symbols 
+Listed below are the safety symbols that are used 
+throughout this manual. 
+NOTE!! Important Information To Be Aware Of!!
+CAUTION!! ! Describes a process that could damage 
+the machine.
+WARNING!!! Risk of Injury or Death!!!
+Indicates an imminent hazardous situation which, if not 
+avoided, will result in death or serious injury.
+LOCKOUT SYMBOL-  When this is at the 
+begining or next to a procedure, implement 
+lock-out/tag-out procedures before continuing 
+the procedure.
+1.10.1 Machine Safety Labels
+Reorder No.H6043-BFCHPJ ã1999 Hazard Communication Systems, Inc.        800-748-0241Hot surface .
+Do not touch.
+To avoid possible skin burns,
+disconnect and lockout powe r
+and allow surface to cool 
+before servicing.
+Reorder No. H6060-H5WHPJ ã1999 Hazard Communication Systems, Inc.        800-748-0241Avoid injury .
+Do NOT operate wit h
+guard removed.
+Replace guard before
+operating machine.Reorder No. H6010-KEDVPJ ã1999 HCS, Inc.  800-748-0241Severe Shock 
+Hazard.
+Only authorized 
+personnel may service 
+this equipment .
+Turn power OFF 
+before entry .
+Reorder No. H6011-19WHP J ã2000 Hazard Communication Systems, Inc.        800-748-0241Hazardous
+voltage.
+Follow lockout
+procedure before
+servicing.Reorder No. H1102-T4WHPJ ã2000 Hazard Communication Systems, Inc.        800-748-0241Entanglement hazard.
+Do not operate with
+guard removed. 
+Lockout /tagout 
+before servicing.
+Moving parts can
+crush and cut.
+Keep hands clear
+while operating
+machine.
+Reorder No. H1057-FTWHPJ ã2000 Hazard Communication Systems, Inc.        800-748-0241
+Reorder No. H6013-T8DHPJ ã2000 Hazard Communication Systems, Inc.        800-748-0241Hydraulic, pneumatic 
+and electric power 
+sources present.
+Lockout ALL energy 
+sources before
+servicing.
+Reorder No. H1017-40WVPJ ã2000 HCS, Inc.  800-748-0241CRUSH HAZARD.
+Moving parts can
+crush and cut.
+Do NOT operate with 
+guard removed.
+Lockout power before
+servicing machine .18
+8 17 201619
+Sectio n2Standard Machine Specification 
+2.1 STANDARD MACHINE SPECIFICATION
+The Smooth IPTU is designed to receive products ar -
+riving randomly at high speed, and load them onto a 
+secondary process line, providing a smooth transition 
+between product flow  & variable infeed and outfeed 
+speeds.
+2.1.1 Machine Speed
+Variable : up to 250 products per minute.
+2.1.2 Product
+A wide range of food products (see customer specific 
+specifications).
+2.1.3 Controls
+An operator control panel and machine running controls 
+are located on top of the electrical control cabinet.A touch sensitive operator control screen provides prod -
+uct infeed timing and positional setup functions via a 
+user friendly screen menu system.
+Other controls include:
+	 Machine Start Button
+	 Emergency Stop Button
+	 Normal Stop 
+	 Reset Button
+Machine Start & Running Speed are controlled from the 
+parent machine during normal operation.
+2.1.4 Size changing
+Multiple product programmes can be entered into the 
+screen menu system, to quickly change infeed timing 
+settings during a size change.
+Adjustable product guides are fitted.
+The Position of the product sensors must not be adjusted.20
+8 17 20162.1.5 Product Pitch
+305mm (12”) Phasing Conveyors.
+Or 229mm (9”) Phasing conveyor
+2.1.6 Product Specification :
+A wide range of frozen, or non-frozen ready meals within 
+C-PET type trays.
+The standard size range is shown, but some combina -
+tions outside this band, (but within the current frame 
+size), can be accommodated.2.1.7 Machine guards
+The machine is guarded as standard to comply in our 
+opinion with the full US packaging machinery standards. 
+The machine is safe for use providing it is operated in ac -
+cordance with the instructions given during training and in 
+this Operating Manual.
+2.1.8 Lubrication
+Manual lubrication points are fitted as standard on all 
+bearings and running chains. Centralised manual or soft -
+ware controlled automatic lubrication systems, (controlled 
+via the parent machine), can be fitted as an option.
+HMI CONTROL S
+2.1.9  EQUIPMENT LAYOUT DIAGRAMSectio n2Standard Machine Specification 21
+8 17 2016Sectio n2Standard Machine Specification 
+2.1.10 MACHINE DIMENSIONS
+FLOWPHASING SENSORS
+FLOW
+3’-11”3’-8 ” -.0
++2”5’-3 ”
+AIR SUPP LY1’-1 ”2’-1 ”8’-7 ”
+5’-7 ” 1’-0 ”
+3’-4BELT4
+”BELT3
+BELT
+2
+BELT1
+22
+8 17 2016Sectio n2Standard Machine Specification 
+2.2 Electrical Installation
+2.2.1 Services Required
+Electricity: 480 VAC, 3 Phase, 60Hz, Live, and Protec -
+tive Earth conductors.
+Consumption: 8.5Kw maximum.
+a)  The electric’s as regard to Safety and Code of Com -
+pliance follow the latest. b) The electrical control 
+panel is constructed in stainless steel
+c) Isolator protects the main electrical control panel.
+d) The operators controls are situated on top the main 
+electrical enclosure.
+2.2.2 Electrical Component Specification
+Circuit Breakers                 Allen Bradley 
+Contactors                         Allen Bradley 
+Inverter Drive                     Allen Bradley 
+Main Enclosure               Stainless Steel 
+Terminals                           Allen Bradley 
+Main Disconnect           Allen Bradley 
+PLC / Servo Controller       Allen Bradley 
+Servo Drive/Motors            Allen Bradley 
+Relay                                  Allen Bradley 
+Push Button                       Allen Bradley 
+Display                               Allen Bradley 
+Lamps                                Allen Bradley 
+Power Supply  Allen Bradley Air Solenoids   S M C 
+Safety Relay   Allen Bradley 
+Guard Switch                    Allen Bradley 
+Photo Eye   Baumer 
+Encoders   Allen Bradley
+2.3 Mechanical Specification
+2.3.1 Finish
+The construction is basically of stainless steel. All com -
+ponents that contact the product are stainless steel, 
+UHMWP or a food quality conveyor belt.
+2.3.2 Drive Medium
+All transmission drives are via Gates polychain timing 
+belt 8mm pitch. 8m GT series.
+2.3.3 Guards
+The machine is guarded as standard to comply in our 
+opinion with the full UK Health & Safety at Work Act and 
+the current EC Directives relative to packaging machin -
+ery. It is safe for use provided it is operated in accor -
+dance with the instructions given during training and in 
+the Operating Manual.
+2.3.4 Lubrication
+All flange bearings are equipped with grease nipples for 
+lubrication by hand. Instructions are in the manual.23
+8 17 2016Sectio n2Standard Machine Specification 
+2.3.5 Conveying
+The conveying means are Polyurethane flat belts run -
+ning on stainless steel rollers.
+2.3.6 Shafts
+All shafts are manufactured in stainless steel.
+2.3.7 Guides
+All guide rails are manufactured in stainless steel.
+2.3.8 Bearings
+Drive shafts are supported in self-aligning electro less 
+nickel-plated flanged bearings.
+2.3.9 Infeed and Outfeed Height
+890 mm ± 25mm to base of carton.
+(35” ± 1”)
+2.3.10 Noise Levels
+83 dBA max (12” machine at 250c.p.m)
+2.3.11 Conditions
+Machine running at 250ppm with product being fed. 
+Noise level measured one meter from the machine, on 
+each side.24
+8 17 2016Sectio n2Standard Machine Specification 25
+Sectio n3Standard Machine Descriptio n
+3.1 INTRODUCTION
+The Kliklok Smooth IPTU is designed to receive products 
+arriving randomly at high speed, and load them equally 
+spaced into the flights of a secondary process line, pro -
+viding a smooth transition between variable infeed and 
+outfeed speeds. 
+The gentle transfer operations provide effective product 
+handling ensuring that even the most delicate products 
+can be processed at high speeds.
+An operator control panel and touch sensitive screen 
+menu system provide the means for simple operation & 
+adjusting the product infeed timing operations.
+HMI CONTROL S
+26
+8 17 2016Sectio n3Standard Machine Descriptio n
+3.1.9 EQUIPMENT LAYOUT DIAGRAM
+FLOW
+PRODUCT METERING
+CONVEYORPRODUCT ACCELERATIONCONVEYORCONVEYOR SERVO DRIVEMOTORS BEHIND PANEL
+PHASING CONVEYOR
+MACHINE SAFETY GUARDSREMOVED FOR CLARITY
+OPERATOR PANEL
+27
+8 17 2016Sectio n3Standard Machine Descriptio n
+3.2 Sequence of Operation
+Products are timed, & correctly spaced before place -
+ment onto the downstream Product Infeed Conveyor by 
+means of a Smooth  IPTU.
+The Smooth  IPTU  consists of six separate conveyors, 
+1-metering, 1-acceleration and 4-phasing.
+From the  low back line pressure conveyor (recommend -
+ed) the product passes onto the Metering conveyor.
+This conveyor regulates (Meters) the flow products into 
+the SIPTU and is running at a speed dependent on par -
+ent machine speed and product length, and is calculated 
+as follows:-
+(Machine speed PPM x Product Length mm) ÷ 1000 = 
+M/Min.
+(Machine speed PPM x Product Length (in inches) ÷ 12 
+=(feet). per minute.
+From the Metering conveyor the product passes onto the 
+Acceleration conveyor. This conveyor accelerates the 
+products up to parent machine speed and pitches the 
+product at the parent machine pitch length.
+The speed is dependent on parent machine speed and 
+pitch length, and is calculated as follows: -
+(Machine speed PPM x Machine Pitch Length mm) ÷ 
+1000 = M/Min.(Machine speed PPM x Product Length (in inches) ÷ 12 
+=(feet) per minute.
+From the Acceleration Conveyor the product is trans -
+ferred onto first phasing conveyor, the leading edge is 
+detected by a pair of product sensors.
+A signal is sent to the PLC that product is detected, and 
+the machine encoder position is then integrated. The tim -
+ing Encoder is generally located on the outfeed end of 
+the parent machine, but the Encoder MUST be mounted 
+on a one to one shaft
+The p osition of the flights on the Product Infeed Convey -
+or, relative to the position of the product is then calculat -
+ed. This is known as the CORRECTION FACTOR.
+The Correction Factor is the distance a product has to 
+be moved, in order to be finally placed in the correct po -
+sition within the flights of the Product Infeed Conveyor. 
+Each Phasing Conveyor’s correction factor is adjustable 
+via the operator screen menu system.
+The product has now passed over the first phasing con -
+veyor and positioned to a percentage of the total correc -
+tion factor.
+As the product travels downstream over the phasing con -
+veyors, each pair of sensors will signal the PLC to estab -
+lish where the PRODUCT position is, relative to the po -
+sition of the downstream conveyor flights. The remaining 
+positional error of the product is established.28
+8 17 2016Sectio n3Standard Machine Descriptio n
+In order to place the product in the correct position, each 
+conveyor has to move, (or phase) a certain distance. As 
+the product passes along the phasing conveyors, each 
+conveyor will apply an adjustment, (Correction Factor), 
+as a percentage of the remaining positional error. 
+Example Only:
+Phasing Belt 1 = 0.40 (40%)
+Phasing Belt 2 = 0.50 (50%)
+Phasing Belt 3 = 0.90 (90%)
+Phasing Belt 4 = 1.00 (100%)
+If the positional error is 100mm:-
+Phasing Belt 1 will apply a adjustment of 40% of 100mm = 
+40mm, (60mm positional error remaining).
+Phasing Belt 2 will apply a adjustment of 50% of 60mm = 
+30mm, (30mm positional error remaining).
+Phasing Belt 3 will apply a adjustment of 90% of 30 = 27mm, 
+(3mm positional error remaining).
+Phasing Belt 4 will remove the remaining product positional 
+error if necessary.
+The above example shows that phasing belt 1 is applying 
+the most adjustment, and phasing belt 4 is applying the least 
+adjustment.
+On the final phasing conveyor the product is transferred 
+into the flights of the downstream conveyor.3.2.1  INFORMATION
+ Mode of Operation :
+The metering belt meters the product into the SIPTU at the 
+rate set by the product length in the machine setup screen 
+1 and the speed of the closing machine as the SIPTU fol -
+lows the closing machine. The product then transfers on
+to the accelerating belts which pulls a gap between the 
+products. The product gap is preset in the program and 
+cannot be changed and the product then transfers onto 
+phasing belt 1.
+As the product triggers phasing belt 1 sensor, the prod -
+uct speeds up over the correction distance set in machine 
+setup and screen 1. This distance is the same for all the 
+phasing belts. The speed is automatic and variable as the 
+program deter mines how much the belt can speed up, by 
+using the correction factor in the machine setup 2 screen. 
+The product then transfers onto phasing belt 2 and the 
+process starts all over again.     
+Under normal operating conditions a queue is not expect -
+ed to be present on the low back line pressure convey -
+or.  The parent machine and the SIPTU normally run frac -
+tionally faster than the upstream equipment is feeding the 
+product, normally the Siptu and closing machine run 10% 
+faster then production.
+The Metering conveyor can accommodate a queue of 
+product on the low back line pressure conveyor, should 
+the feed rate momentarily exceed the speed of the parent 
+machine and the SIPTU. The length of the queue will be 29
+8 17 2016Sectio n3Standard Machine Descriptio n
+dependent on the type of low back line pressure convey -
+or.  Too long a queue will cause product to be forced into 
+the SIPTU at a rate greater than can be accommodated 
+causing positional errors.  
+Servo Motors:
+	 Metering conveyor section driven by servomotor M1.
+	 Acceleration conveyor section driven by servomotor 
+M2.
+	 First phasing conveyor section driven by servomotor 
+M3.
+	 Second phasing conveyor section driven by 
+servomotor M4.
+	 Third phasing conveyor section driven by servomotor 
+M5.
+	 The Fourth phasing conveyor section driven by 
+servomotor M6.30
+8 17 2016Sectio n3Standard Machine Descriptio n31
+Sectio n4Installatio n
+4.1 INSTALLATION
+Before starting the installation, read this Manual.
+During installation, follow the following recommended 
+procedures in this manual and obey the safety instruc -
+tions detailed in Section 1.
+Installation may require the temporary  removal of 
+guards and / or  the temporary removal of electrical 
+interlocks.  (See Personnel and Electrical Supply, be -
+low.)
+4.1.1 Personnel
+Installers should use only approved, trained, compe -
+tent personnel.
+All other persons should be prohibited from entering 
+the installation area.4.1.2 Electrical Supply
+Only properly qualified persons may:
+a) Connect the electrical supply to the machine. The 
+cable carrying the electrical supply to the ma -
+chine must be correctly rated for the supply volt -
+age and current specified. An upstream fuse or 
+circuit breaker should be fitted to limit the fault 
+current.
+b) Remove/disconnect and connect / reconnect 
+electrical interlocks. 
+4.1.3 Guards
+After installation, before starting the machine:
+1) Refit the guards. 
+2) Re-commission the interlocks. 
+3) Check that, where associated equipment is sup -
+plied by others, any interface guards are electri -
+cally interlocked with the KW supplied machinery.
+4) Check that guards comply with the current re -
+quirements of the relevant Health and Safety.
+32
+8 17 2016Sectio n4Installatio n
+Never operate the machine unless all guards are in place.
+4.1.4  Commissioning
+Commissioning runs should be conducted by an ap -
+proved person who has been instructed in the operation 
+of the machinery.
+4.2 Personnel Training
+After the machine has completed satisfactory trials, the 
+installer should train one or more authorised persons, 
+nominated by the employer to be responsible for operat -
+ing the machinery.
+All persons operating or tending the machinery should 
+be trained by a qualified trainer.
+Training should include instruction on Safe Practices and 
+known hazads.
+Operators and attendants should be directed NOT  to op -
+erate the machinery unless all guards are in place.
+Although guards, devices and warning signals have been 
+provided for known hazards, the user is responsible for 
+ensuring that personnel know and follow the correct Op -
+erating Procedures and Safe Practices.Operators should not wear loose filling clothing, neckties 
+or gloves, except where sanitary requirements for han -
+dling the products specify that gloves are to be worn
+4.3 SAFETY COMPONENTS
+4.3.1 Emergency Stop Buttons & Guards
+The Emergency Stop system is designed to prevent 
+people from being injured while working on or around 
+the machine. It is also automatically actuated when a 
+jam occurs during operation, or if the guard doors are 
+opened.
+Fig 4.3.1.1 shows the l Emergency Stop Button. In the 
+case of an emergency, press  the emergency stop but -
+ton or open the guard. The machine will come to an im -
+mediate stop and the control screen will display that an 
+emergency stop has been actuated.
+If the  electrical connections to the parent machine  have 
+been made as specified, then any Emergency Stop on 
+the parent machine will also stop the SIPTU, and the 
+other way around as well.
+Testing of this circuit is included with the commissioning. 33
+8 17 2016Sectio n4Installatio n
+Fig 4.3.1.1 Typical Emergency 
+Stop Button.
+Accelerating 
+BeltsE-ST OP
+Main Air InPrograming Port34
+8 17 2016Sectio n4Installatio n
+4.4 Installing the Smooth iptu
+BEFORE INSTALLING THE MACHINE, SECTION 
+ONE, SAFETY AND SECTION FIVE OPERATION, 
+MUST BE READ AND UNDERSTOOD.
+POST INSTALLATION CHECKS ARE TO BE CARRIED 
+OUT BY QUALIFIED, SKILLED PERSONNEL.
+IF IT IS NECESSARY TO REMOVE ANY FIXED 
+GUARDS IN ORDER TO OBSERVE PARTS OF THE 
+MACHINERY, EXTREME CARE MUST BE EXER -
+CISED TO PREVENT INJURY.
+4.4.1 General
+Take care not to damage the machine during unpack -
+ing.  While unpacking and installing the machine, check 
+for damaged or missing parts.  Record and report any 
+dents, scratches or other damage, and check for broken 
+or loose electrical connections.  Accurately mark (on the 
+floor) the position of the machine.
+EXERCISE EXTREME CARE WHEN MOVING HEAVY 
+MACHINERY.
+Never lift the SIPTU with the Electrical Control Panel. 
+Unhooked from the machine.4.4.2 Moving the Machine
+1. While installing the machine, check for damaged or 
+missing parts. 
+2. When moving the SIPTU, use a suitably rated trol -
+ley lift or fork lift truck and take care to use the 
+correct lifting points. The SIPTU may be lifted by 
+carefully placing the fork lift truck forks beneath the 
+main frame of the SIPTU on the long dimension 
+only. The forks must be positioned centrally and 
+the load distributed evenly.
+Fig 4.4.2-1 Lifting the SIPTU 
+3. Position the SIPTU at the upstream end of the par -
+ent machine product infeed conveyor. 
+4. Check that the SIPTU is level.
+35
+8 17 2016Sectio n4Installatio n
+5. Attach the SIPTU to the parent machine product 
+infeed conveyor using the two hexagon-headed 
+screws and brackets which are located one to ei -
+ther side of the loader outfeed.
+6. Move the low backline pressure infeed conveyor to 
+the SIPTU infeed conveyor. Position the low back -
+line pressure conveyor as close to the SIPTU in -
+feed conveyor as possible.
+ 
+4.5  Connection of Services
+4.5.1 Mains Electrical Supply
+IF IN DOUBT CON -
+SULT A QUALI -
+FIED ELECTRICAL 
+ENGINEER. WIR -
+ING IS TO BE CAR -
+RIED OUT ONLY BY 
+The incoming pow -
+er cables are still live 
+when the disconnect 
+is turned off. a) Take care to use the correct size of cable, with fuses 
+or circuit breakers of the correct type and rating.
+b) Duct the main electrical supply or otherwise protect 
+it from accidental damage.  The entry for the mains 
+supply cable is in the  main control centre.   
+c) Feed the mains electrical supply cable (three phase, 
+neutral and EARTH, or three phase and EARTH, as 
+required) through the cable entry and make off the 
+ends.
+d) Connect the three phase conductors to the isolator 
+input terminals, the neutral to the neutral bus bar con -
+nection and the EARTH to the main EARTH terminal.
+AB AB AB AB AB AB AB ABDC POWER
+SUPPL Y
+ 1 AMP
+FU106SERVO LIN E
+FILTER
+25AMP
+FU118DOOR LOC K
+1AMP
+FU133
+AB ABTRANSFORME R
+3AMP
+FU201
+FU20 8
+FU208A
+FU21 6
+FU21 7
+GND14 15
+14 15OPTIONA L
+480VAC POWE R
+DISTRIBUTION
+PDB105
+41 42L3L2L1 ++--POWER SUPPLY
+INPUT: 480 VAC 3PH
+OUTPUT: 24 VDC 10AM P
+LINELOADPOWE R
+RUNI /O
+RS23 2
+OK
+RUN REMP ROGBAT
+LINK NET OK
+SERVO FILTER
+FLT118PLC POWER SUPPLY
+PLC552CPU
+PLC55 4ETHERNET
+PLC 56 2INPUTS
+PLC60 0
+62
+5658 59 61 6163OUTPUTS
+PLC70 0
+64 60 60
++24VDC24V
+COM+24VDC
+AFTER ESTO PMCR
+SR350
+CR70 0
+CR70 2
+CR70 3
+CR70 5
+71 71 71 71 7475 75
+72
+7372
+7372
+7372
+737724
+24
+24
+24
+24
+24
+24C
+24C
+24C
+24C
+24C
+24C
+24C
+24C
+24C
+24C
+24S1
+24S1
+24S1
+24S2
+24S2
+24S224
+24
+24
+24
+FU364
+17
+12
+FU365
+17
+1275
+50FU452
+FU522
+17
+8317
+83
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OOI:02/00
+I:02/01
+I:02/02
+I:02/03
+I:02/04
+I:02/05
+I:02/06
+I:02/07
+302
++-OO
++-OO
++-OO
++-OO
++-OO
++-OOI:02/08
+I:02/09
+I:02/10
+I:02/11
+I:02/12
+I:02/13
+I:02/14
+I:02/15
+O:03/00
+O:03/01
+O:03/02
+O:03/03
+O:03/04
+O:03/05
+O:03/06
+O:03/07
+O:03/08
+O:03/09
+O:03/10
+O:03/11
+O:03/12
+O:03/13
+O:03/14
+O:03/15
+302A
+302B
+302C
+302D
+302E
+315
+305
+305A
+305B
+305C
+305D
+305E
+318
+456
+456A
+459
+459A
+462
+462A
+465
+465A
+74
+SPAR E
+SPAR E
+SPAR E
+SPAR E
+SPAR E
+SPAR E
+SPAR E
+SPAR E
+SPAR E
+GND
+GND
+GND
+GNDINFEED CONVEYOR VFD
+VFD15 285THERMOSTAT
+TAS452LINK NET OKOPTIONAL
+ETHERNET
+PLC 56 8
+PWS106
+AB AB ABVFD152
+3 AM P
+FU152
+FU10 7
+ETHERNET SWITCH
+ES50 443
+4 310
+1010
+1017
+METERING BEL T
+DRV807ACCEL BEL T PHASING BELT 1
+2198-H015-ERS 2198-H015-ERS 2198-H015-ER S 2198-H015-ERSPHASING BELT 2
+26 28
+93DRV857
+26 29
+93DRV907
+26 29
+93DRV95 7
+26 28
+93PHASING BELT 3
+2198-H015-ER S 2198-H015-ERSPHASING BELT 4
+DRV1007
+26 29
+93DRV105 7
+26 29
+93 30 32SERVO POWER
+DISTRIBUTIO N
+PDB118
+41 42
+120 VAC SUPPLY
+TRANSFORME R
+XF205MAIN POWER
+DISCONNEC T
+DS10 1
++-OO
++-OO
++-OO
++-OO
++-OOSPAR E
+SPAR E
+SPAR E
+SPAR E
+SPAR E
+96 97 98 75 VFD FILTER
+FLT15 2
+120
+03111 1211 128 74
+83
+93
+61195 40
+61
+70
+7574
+7774
+77
+FU813
+FU963
+17
+8317
+8336
+8 17 2016Sectio n4Installatio n
+4.5.2 Lubrication 
+Connect the piping for the automatic lubrication (where 
+fitted) of theSIPTU. The SIPTU piping is normally an ex -
+tension of the lubrication system.
+4.5.3 Interconnections with parent machine
+There are electrical connections with the parent machine
+• Emergency stop circuit
+• Running signal
+• Encoder  connections
+• PLC connections
+Refer to the circuit diagrams in Section 8
+There are two   types of encoder system.
+If the parent machine is of the multiple servo-motor driv -
+en type it will only be necessary to connect the signal 
+wires as shown on the circuit drawing.
+If the parent machine is of conventional  style and driven 
+by one central motor, it will be necessary to fit the optical 
+encoder supplied with  the SIPTU.
+Proceed as follows :
+1. At the parent machine, fit the IPTU-i timing encod -
+er which must mounted on a 1:1 shaft. Refer to the 
+parent machine Operating and Maintenance Man -
+ual for further information.
+2. Tighten the encoder collar retaining screws. 
+3. Make the encoder electrical connections. Refer to 
+the SIPTU electrical circuit diagrams.4 Follow the instructions given in Section 7 of this 
+manual for setting up the timing of the encoder 
+with reference to the SIPTU .
+4.6 Pre-Production Operations and Checks
+Check that the Emergency Stop button operates correct -
+ly and stops both the IPTU and the main machine when 
+operated.
+At the appropriate time, ensure that the IPTU-i responds 
+to the controls at the parent machine control panel in ad -
+dition to the testing of the IPTU-i controls. When inching 
+the parent machine, check for correct product deposition 
+into the product infeed conveyor.37
+5.1 OPERATOR CONTROLS
+5.1.1 Machine Running Controls
+Located on the top of the Electrical Control Operator Station 
+are the machine running controls:
+	 START BUTTON
+	 CYCLE STOP BUTTON
+		 RESET BUTTON
+	 EMERGENCY STOP BUTTON
+1. GREEN START BUTTON.
+(Push Button - illuminated). This button is illuminated 
+when the machine is ready to run (flashing) , or when 
+running (solid).
+When the machine has been setup ready for operation 
+and all machine faults cleared, press  the reset button 
+then the start button to operate the Smooth IPTU in con -
+junction with the parent machine.If a fault has occurred, or the Emergency Stop button has 
+been pressed, clear all faults and reset the Emergency 
+Stop Button, then press the RESET BUTTON. The ma -
+chine can now be started.
+Press the START BUTTON.  
+(If the SIPTU is interconnected with the downstream ma -
+chine, press the Start Button on the parent machine. The 
+SIPTU will operate).Fig 5.1.1-1 Operator Controls
+Sectio n5Operator Contro ls38
+8 17 2016Sectio n5Operator Contro ls
+2. CYCLE STOP
+(Non-illuminated push-button). This button is pressed 
+when initiating a normal stop.
+This will stop the upstream Conveyors, but the SIPTU will 
+continue to run until all products currently loaded are dis -
+charged from the machine.
+The SIPTU will then stop.
+When an Emergency Stop button has been depressed, 
+or a guard switch operated or a machine fault has oc -
+curred, the screen will display the fault message as a 
+banner which is be shown at the bottom of the screen. 
+Once the condition has been cleared from the machine, 
+the reset button must be touched so that the safety circuit 
+can reset and clear all faults.
+2A. RESET BUTTON
+Press this button to 
+reset any faults on 
+the SIPTU as long 
+as those faults are 
+cleared.
+The machine will not 
+operate until all faults 
+have been cleared 
+and the RESET but -
+ton pressed.
+REMOVE ALL PRODUCT FROM 
+THE Smooth IPTU.3. EMERGENCY STOP BUTTON.
+This red, mushroom shaped button stops the machine instan -
+taneously when depressed. It is only to be used in the event 
+of an emergency.
+It has a lock-down mechanism, which is released when rotat -
+ed.
+Remove all products from the ma -
+chine before restarting. The open -
+ing of any of the machine doors, 
+or guards, while the machine is 
+running will also actuate an Emer -
+gency Stop.
+To start the machine after an emer -
+gency stop or fault has occurred, 
+clear all faults, reset the emer -
+gency stop button by ROTATING 
+CLOCKWISE , then press the RE-
+SET BUTTON.
+Pressing the Emergency Stop Button on the downstream par -
+ent machine will also stop the Smooth IPTU.
+THE EMERGENCY STOP BUTTONS SHOULD ONLY BE 
+DEPRESSED WHEN EITHER THE MACHINE IS IN DAN -
+GER OF BEING DAMAGED, OR INJURY TO PERSONNEL 
+MAY OCCUR.
+REMOVE ALL REMAINING PRODUCTS FROM WITHIN 
+THE Smooth IPTU, AND ON THE INFEED PHASING CON -
+VEYORS.
+39
+8 17 2016Sectio n5Operator Contro ls
+4. ELECTRICAL MAIN DISCONNECT
+The Isolator Switch is mounted on the control centre 
+door.  Set the Switch to 0 (OFF) to disconnect the elec -
+trical supply.
+Set the Switch to 1 (ON) to connect the electrical supply.
+ELECTRICAL MAIN DISCON -
+NECT SWITCH IN POWER ON 
+POSITION. TURN THROUGH 
+90o TO SWITCH OFF.
+5.2 OPERATOR INTERFACE
+This section will identify the various operator controls you will 
+encounter while working with the SIPTU.
+This section should be read and understood by any per -
+sonnel who will operate, maintain, or service the equip -
+ment. 
+5.3 INTRODUCTION
+The SIPTU machine is mainly controlled by a software 
+program written into the PLC which interfaces with the 
+machine and its components. A comprehensive, pass -
+word protected screen menu system is provided on a 
+color, touch sensitive HMI (Human Machine Interface), 
+mounted on top of the electrical panel.
+Note! HMI passwords are not included in this manual.
+Common terms you will encounter in the following section 
+include:
+ICON –  Graphic symbol used to represent a command 
+or function.
+NAVIGATE –  Process of moving from one screen menu 
+to another by using the buttons on the screen.
+TAB – The icons located across the top and down the 
+right side of the HMI display give the user ac -
+cess to the various screens and pages con -
+tained within the HMI.40
+8 17 2016PAGE –  Pages are contained within various HMI 
+screens, these are accessed by selecting the 
+tabs running vertically along the right side of 
+any given screen. 
+HOME SCREEN – Name used for the screen menu 
+displayed during normal operation, also some -
+times referred to as the “Running Screen”
+5.4 HMI SCREENS, BUTTONS, AND FUNCTIONS
+Operator machine controls are mounted on the HMI 
+control panel, and consist of the following buttons. Sectio n5Operator Contro ls
+EMERGENCY STOP
+PUSH BUTTO NMachine Co ntrols
+STARTSTOPRESET5.4 HOME SCREEN 
+The Home Screen is the main screen displayed during 
+normal production. This screen has been developed to 
+give the operator pertinent production information at 
+a glance such as Machine State, Machine Operating 
+Speed, Loaded Recipe, and any Active Machine Faults. 
+From here the different levels of operator access can be 
+selected.
+MESSAGE BANNER : The message banner located 
+at the top of the screen displays the current recipe,and 
+machine state.
+HOME ICON:  Returns the user to the home screen. 
+Solid Blue - Glue F aulte dFlashing Green - Ready to Run
+Solid Gr een - RunningFlashing Y ellow - 
+Flashing Red - Faulte dHome Butto nMessage BannerCurrently loaded RecipeRecipe Settings Scr eensRecipe Select Scr eens
+Jog ScreenStatistics Screens
+Machine Stat eAcce ss Level 1
+Acce ss Level 2  
+Machine SpeedKW GRAPHIC:  Touching the KW 
+Graphic on the Home Screen will open 
+the Splash Screen. This screen gives 
+the user contact information for Klik -
+lok-Woodman as well as the installed 
+HMI and PLC versions.41
+8 17 2016Sectio n5Operator Contro ls
+Brings the user to the available recipe set -
+tings for the loaded recipe.
+Brings the user to the Recipe Menu to load 
+new recipe’s.
+Brings user to the Jog screen to jog whole 
+machine or specific sections of the machine.
+Brings the user to the Statistics screens, cur -
+rently unavailable and are blank.
+MACHINE SPEED:  The machines operating speed in 
+Cartons Per Minute (CPM).
+ACCESS LEVEL ICON: The screen menu structure has 
+been developed for three levels of access:
+• Operator Level-Only change machine speed al -
+though most buttons are visible they cannot be 
+changed.
+• Operator Level II-Can change certain buttons but 
+cannot save any values.
+• Maintenance Level-Can change, save & delete 
+values
+Touching the Maintenance Level “II” icon will bring up 
+an alphanumeric key pad prompting the user for a pass -
+word. Type the password and press enter for admittance 
+to this level. Passwords are not included in this manual, 
+contact Kliklok-Woodman Service for information.
+Touching the “I” icon will return the user to the Operator 
+Level of Access.
+These Icons are displayed on all pages and can be ac -
+cess at anytime.
+5.5   OPERATOR LEVEL “I” ACCESS
+At the OPERATOR LEVEL you have access to view, but 
+not change, five distinct screens in the HMI program. 
+Each screen is accessed from tabs located horizontally 
+along the top of the displayed home screen. The informa -
+tion contained within these pages will change with each 
+recipe loaded/selected. Below is a description of each of 
+these selectable screens and their pages.
+5.5.1 HOME SCREEN 
+Returns user to the HOME SCREEN 42
+8 17 20165.5.2 RECIPE SETTINGS SCREEN 
+The RECIPE SETTINGS SCREENS give the user the 
+ability to adjust the Phasing Correction Distance, In -
+sert the Product Length and determine the SIPTU 
+Offset Value.
+PAGE #1 –  Phasing Correction Distance, Product Length 
+and SIPTU Offset Value.Sectio n5Operator Contro ls
+5.5.4   RECIPE MENU SCREEN 
+This screen displays all available recipes. The recipe cur -
+rently loaded for production is revealed by an arrow  to 
+its left. 
+To do a size change load the new recipe and press Recipe 
+Check list, a prompt will come which is a check to see if a 
+size change is required. 
+Care must be taken when changing machine parameters. 
+Always ensure there is no interference between machine 
+components. We recommend jogging the machine, prior 
+to running, anytime changes have been made.
+43
+8 17 2016Sectio n5Operator Contro ls
+5.5.5 MODE SCREEN
+This screen gives the operator the ability to select be -
+tween AUTOMATIC and MANUAL/JOG running modes.
+NOTE:  That the machine must be reset with No Faults  
+to enter Manual Mode
+The JOG MODE allows the operator to slow machine 
+motion to ensure no interference between machine com -
+ponents. Utilizing the JOG PENDANT gives the opera -
+tor freedom to move around the machine while checking 
+said components.
+To Utilize the Jog function first select the axis to be 
+jogged, if multiple axis is desired select each necessary, 
+Then touch and hold the Jog button. The feature to Jog 
+continuously is available as well, allowing the machine to 
+run without requiring the holding of the jog button. 
+Note! It is recommended to select a slower speed prior 
+to jogging to ensure visual inspection and so in the event 
+that there is an issue the condition is at the slowest pos -
+sible form.
+5.6  OPERATOR LEVEL “II”
+Operator Level II allows access to all Level I screens and the 
+ability to change values. When logged into Operator Level 
+II, all recipe and machine parameters may be changed, 
+however they may not be saved.
+5.7  MAINTENANCE LEVEL “M”
+MAINTENANCE LEVEL ACCESS is password protect -
+ed. Selecting the “II” Maintenance Level button will dis -
+play an alphanumeric keypad. Entering the wrong pass -
+word will return the user to the “I” Operator Level.
+Once logged into Maintenance Level, the “II” icon will 
+change to a red highlighted “M”
+These Icons are displayed on all pages and can be access 
+at anytime.
+44
+8 17 2016Once logged into Maintenance Level, a timer located in 
+the upper left hand corner of the Home Screen will begin 
+to countdown. When this counter reaches “0” the system 
+will initiate an automatic log-off, reverting access to Level 
+I, Operator Access.
+Passwords are not included in this manual. Contact Klik -
+lok-Woodman Customer Service Department for more 
+information
+Maintenance Level Access has all of the functionality of 
+Operator Level access with the following features added:
+• Access to Diagnostics, and Maintenance Screens.
+• The ability to create, modify, and delete many of the 
+parameters relating to recipes, automated and manu -
+al machine settings, and component timing.
+It is required that this manual be read and fully under -
+stood prior to attempting any changes to the stored set -
+tings.
+Care must be taken when changing machine parame -
+ters. Always ensure there is no interference between ma -
+chine components. We recommend jogging the machine, 
+prior to running, anytime changes have been made.5.7.1   HOME SCREEN
+Returns user to the home screen (see 3.2)
+Sectio n5Operator Contro ls45
+8 17 2016
+5.7.2 RECIPE SETTINGS SCREEN
+Recipe Settings Screen 1 allows the operator to review 
+specific recipe settings based on the Conveyor setup 
+process. Operator level 1 can view this information, oper -
+ator level 2 can edit but not save and Maintenance Level 
+can edit and save their settings.
+These parameters are able to be edited when accessed 
+in the maintenance level. It is required that this manu -
+al be read and fully understood prior to attempting any 
+changes to the stored settings. 5.7.3   RECIPE MENU SCREEN 
+This screen displays all available recipes and empty rec -
+ipe locations. The recipe currently loaded for production 
+is revealed by an arrow  to its left. When accessed at 
+the maintenance level, recipes are able to be created, 
+edited, saved, and deleted.
+Sectio n5Operator Contro ls46
+8 17 20165.7.4   MODE SCREEN – MAINTENANCE LEVEL
+This screen gives the user the ability to select between 
+automatic and manual/jog running modes. In maintenance 
+level the user has the option to jog each axis independently 
+or as a whole machine. The Jog feature is especially helpful 
+when setting the machine up to run a new carton, as well as 
+for troubleshooting. Utilizing the jog pendant gives the user 
+freedom to move around the machine while checking said 
+components.
+Servo positions are displayed for the each of the belts
+. 
+NOTE:  That the machine must be reset with No Faults  to 
+enter Manual Mod e.
+When exiting the jog screen this feature is re-enabled.
+Note: To Jog the machine all guard doors must be closed 
+and the machine reset and in a ready state.
+To operate the machine in Manual Mode: 
+1. Navigate to the Jog Screen.
+2. Touch the Manual Mode Icon. 
+3. Touch the Jog Speed Icon and input the desired jog 
+speed into the pop-up keypad.
+4.  Select individual components to jog. 
+5. Touch the Jog Icon to place the machine into motion 
+or utilize the Jog Pendant. The machine will stop all 
+motion when the Jog Icon or Jog Pendant buttons are 
+released.
+6. The Jog Continuously Icon can be use to place 
+the machine into constant motion. Touching the Jog 
+Continuously Icon a second time will stop machine 
+motion.
+7. Exiting the Mode Screen will automatically place 
+the machine back into Auto Mode.Sectio n5Operator Contro ls47
+8 17 20165.7.5 DIAGNOSTICS SCREENS
+The following screens provide information pertinent to 
+troubleshooting machine faults. The pages accessed 
+Diagnostics Screen 1 allow the user to monitor sensor 
+input and output, set/view servo torque limits/statistics, 
+and view stored servo fault history. Each page is further 
+described below.
+DIAGNOSTICS PAGE #1 – I/O 
+Diagnostics Page 1 provides operational state of the 
+two (2)  Remote Input/Output Slots located within the 
+PLC.
+Red denotes an input/output that is HIGH (+24VDC).DIAGNOSTICS PAGE #2 – INPUTS
+Page 2 identifies each Input switch/sensor and its loca -
+tion within the PLC slots, and displays the operational 
+state of said components.
+Sectio n5Operator Contro ls48
+8 17 2016DIAGNOSTICS PAGE #4 – OUTPUTS
+Page 4 identifies each Local Output switch/sensor 
+within slot 3, and displays the operational state of said 
+components.
+Pages #3, 5 and 7 are intentionally left blank
+DIAGNOSTICS PAGE #7 – SERVO TORQUE
+Page 7 allows the user to set Over-Torque trip points 
+for each servo axis. This page also records the Max -
+imum Torque an axis has encountered as well as 
+Torque Averages.
+To enter a Trip Point value, touch the corresponding 
+icon and input the new value on the pop-up keypad 
+that displays.
+To clear the max recorded and average torque touch 
+the Reset Values icon.
+49
+8 17 20165.7.6 MAINTENANCE SCREEN
+This screen gives the user access to global set-up fea -
+tures, servo homing, sensor teach, and machine options. 
+There are three (3) pages located within the MAINTE -
+NANCE SCREEN each of which is described below.
+NEVER MAKE ANY CHANGES TO DATA CONTAINED 
+WITHIN THE FOLLOWING SCREENS UNLESS THIS 
+ENTIRE MANUAL HAS BEEN READ AND FULLY UN -
+DERSTOOD.
+MAINTENANCE PAGE #1 – GLOBAL SET-UP 
+Page 1 allows the user to set the Date, and Time.When changing the date/time, enter the desired values into 
+the popup keypad and HOLD the blue clock icon for 5 sec -
+onds to apply the change.
+MAINTENANCE PAGE #2 – MACHINE OPTIONS 
+Remote Recipe Select Enabled-  Is available to allow the 
+SIPTU machine and the parent machine to communicate the 
+desired recipe. Example: If the operator loads a new recipe 
+from the parent machine the SIPTU is notified and changes 
+to the same recipe without the operator being required to 
+load additionally on the SIPTU machine.
+50
+8 17 2016Sectio n5Operator Contro ls
+MAINTENANCE PAGE #3 –CORRECTIONS LOG
+Page 3 displays a detailed Log of each correction on 
+each phasing belt. 
+5.8 OPERATOR INSTRUCTIONS
+In this section, the Operator will learn how to load recipes, 
+start, stop, and setup the SIPTU for production and how 
+to jog the machine manually.  This section should be thor -
+oughly read and understood prior to attempting any of the 
+procedures outlined.
+Any personnel that will work with this machinery should 
+be familiar with the information provided in the previous 
+sections of this manual. These sections give essential 
+safety information and terminologies that will be utilized 
+to complete the actions detailed.
+5.8.1 TYPES OF STOPS
+ 
+5.8.1 TYPES OF STOPS
+There are two types of stops, Cycle Stops and Emergen -
+cy Stops. 
+• CYCLE STOP
+A CYCLE STOP is the standard means of stopping the 
+machine. Unless required for safety concerns (i.e. when 
+a guard door is opened, or the machine faults), all stops 
+are cycle stops.
+The Cycle Stop button is locate on the HMI panel. To ini -
+tiate the cycle stop procedure simply press this button. 
+Once the button is pressed. the parent machine will deter -
+mine the correct time to actually stop the machine. Give 
+the Line a few seconds to clear the product so that it can 
+stop in the correct location allowing for a jam free restart.51
+8 17 2016Sectio n5Operator Contro ls
+• EMERGENCY STOP
+The Emergency Stop button is located on the HMI pan -
+el next to the Start button, Reset Button and Cylce Stop 
+button. Be sure to know the location of this E-Stop But -
+ton.
+Note!  When connected to the parent machine and in -
+terfaced, all Cycle Stops and E-Stops on the parent ma -
+chine will conduct their stopping features for the SIPTU 
+machine as well.
+E-STOP
+Emergency Stop
+Cycle Sto pAn Emergency Stop (E Stop) situation exists when any 
+of the following occur.
+    
+1. An E-Stop push button is depressed.
+2. A guard door is opened (Parent Machine).
+3. A sensed jam.
+4. A servo fault.
+5. An improper reading of the photo-sensors.
+An Emergency Stop will immediately stop all machine 
+motion, dump pneumatic air, and the control screen will 
+display that an Emergency Stop has been actuated.
+5.8.2 OPERATIONAL STATE IDENTIFICATION
+The control system has four main operational states: 
+E-Stop, Homing, Ready, and Run. These are explained 
+in detail below.
+• E-STOP –  The machine is stopped, power is removed 
+from components.
+• HOMING –  The machine is moving each axis to its 
+home position.
+• READY – Power is on, the servos are in their home 
+position, and other systems are powered and ready to 
+run.
+• RUN – The system is running
+Each state is identified either by the color coded stack 
+light located on the left side of the HMI screen, and/or 
+on the message banner located at the top of the HMI 
+screen. 52
+8 17 2016Sectio n5Operator Contro ls
+5.8.3 MACHINE STATE CHANGES
+The system will enter an E-STOPPED STATE anytime 
+a guard door is opened (On the Parent Machine), an 
+E-Stop button is pressed, or a machine fault occurs. 
+This is also the initial state after a power-up. Change out 
+of this state requires that all guard doors to be closed, 
+all E-Stop buttons be reset, and all machine faults be 
+cleared.
+From E-Stop the system will change to a Resetting 
+State, whenever the Reset button on the Control Panel 
+is pressed. Once the safety circuit has been checked the 
+machine will enter the “Ready State”.
+In the READY STATE the system is primed to start pro -
+duction. To change from Ready to Run depress the Start 
+button. Once the Start Button is pressed, the servos will 
+move to the Start position for the selected recipe. Once 
+this move is complete, the machine will Start. To change 
+from Run to Ready press the cycle stop button.
+Note! Parent Machine must be in the Ready State for the 
+SIPTU machine to run and Vise Versa.
+Touching the red beacon will take the operator to the alarm 
+history page. 
+5.9 RUNNING THE MACHINE
+This section will outline the steps required for a production 
+run, how to restart the machine after a fault or jam, and 
+how to operate the machine in manual mode.
+The following procedure assumes that the machine has 
+been setup, and ready for production.
+5.9.1 STARTING PROCEDURES
+1. Close all machine guards. 
+2. Load products onto the Infeed conveyors upstream of 
+the SIPTU. 
+3. Select the RECIPE from the SCREEN MENU SYSTEM. 
+4. Clear all machine faults and perform all instructions that 
+are indicated on the Smooth IPTU control panel screen. 
+5. Press the RESET BUTTON. 
+6. Press the START button on the Smooth IPTU. The 
+screen will display SIPTU running with master. If the SIP -
+TU is interconnected with the downstream parent ma -
+chine, it will not move until the START button on the par -
+ent machine is pressed. 
+7. Perform the start procedure on the parent machine. 
+On the parent machine operator control screen, the mes -
+sage READY TO RUN should be displayed. 53
+8 17 2016Sectio n5Operator Contro ls
+WARN ALL NEARBY PERSONNEL THAT THE MA -
+CHINES ARE TO BE STARTED. 
+8. Press the START button on the parent machine. The 
+Smooth IPTU will start with the parent machine.
+5.9.2 RUNNING THE MACHINE IN MANUAL MODE 
+(ENTERPRISE AND INTERCEPTOR TRANSFER 
+UNIT) 
+1. Close all guard doors, clear all alarms, and reset the 
+machine.
+2. From the HOME SCREEN touch the MODE TAB.
+3. Touch the MANUAL ICON to open the JOG SCREEN.
+4. Touch the JOG SPEED ICON and enter the desired 
+jog speed in the pop up keypad.
+5. Select the desired Axis(s) to Jog.
+6. Use the buttons on the Jog Pendant to put the ma -
+chine into motion.
+5.9.3 RUNNING THE MACHINE IN AUTO MODE 
+(ENTERPRISE AND INTERCEPTOR TRANSFER 
+UNIT)
+1.  Clear all machine faults.
+2.  Load product onto the upstream Conveyor.
+3. Press the reset button to home the servos. 
+4. Press the start button to begin production.
+ 
+5.9.4 STOPPING THE MACHINE – CYCLE STOP
+1. Press the Cycle Stop button on the HMI, or any cycle 
+stop button on the parent machine if equipped. 
+2. If the machine is to be stopped for more than an hour, 
+disable the power via the main electrical disconnect.
+5.9.5 STOPPING THE MACHINE – EMERGENCY 
+STOP
+The Emergency Stop system is designed to prevent peo -
+ple from being injured while working on or around the 
+machine. It is also automatically actuated when a jam 
+occurs during operation, or if the guard doors are opened 
+on the parent machine.54
+8 17 2016Sectio n5Operator Contro ls
+1. In the case of an emergency, press any of the Emer -
+gency Stop buttons positioned around the machine. 
+The  machine will come to an immediate stop, the 
+pneumatic system will be disabled, and the control 
+screen will display that an Emergency Stop has been 
+actuated.
+2. Remove any Remove any products from the meter -
+ing / phasing conveyors.
+*use caution when working around hot components*
+3. Check the area of the machine where the jam oc -
+curred for damage.
+ 
+4. Clear all machine faults that are indicated on the dis -
+played alarm screen.
+5. Close all guard doors.
+6. Press the reset button to re-home the servos.
+7. Reload or ensure that product is prepared on the up -
+stream conveyors.
+8. Press the START button.5.9.6 RESTARTING THE MACHINE AFTER A FAULT
+  
+Alarms are categorized into two types: Warnings and 
+Faults
+All warnings are self clearing and generally will not stop 
+the machine. Warnings are displayed in the upper banner 
+on the home screen.
+In the event of a fault, the machine will stop, the pneumat -
+ic system will be disabled, and a red warning banner will 
+be displayed on the HMI screen detailing the cause of the 
+fault.
+Clearing a fault message and resetting the machine:
+55
+8 17 2016Sectio n5Operator Contro ls
+1. Inspect the area where the fault has occurred and re -
+move the cause of the fault.
+2. Remove any product from the phasing conveyors.
+ *use caution when working around hot components*
+3. Inspect the surrounding area where the fault occurred 
+for damage.
+4. Close all guard doors.
+5. Touch the displayed alarm banner to return to the home 
+screen.
+6. Press the reset button to clear the fault message.
+7. Press the start button to resume production.
+5.10 Screen Menu System
+The correct positioning and timing of the products as they 
+are transfer along the phasing conveyors and into the flight 
+pockets of the downstream Infeed Conveyor, is controlled 
+by a comprehensive screen menu system, programmed 
+into the Operator Control Panel. Access to the various sub-
+menu is achieved by simply pressing the required menu box 
+on the screen. Adjustment to the settings is best acheived 
+with the machine running at slow speed, with product.Before the machine can be adjusted the Sensors must 
+be set to the correct positions. As shown in the diagram, 
+X displays the product length once it is fully on the begin -
+ning portion of the conveyor. Each Photo Sensor must be 
+positioned so that it is in line with the leading edge of the 
+product. Once the Sensor is positioned  (Each Phasing 
+Belt Sensor must be positioned to the same dimension) 
+the values can be then be adjusted. Review the following 
+for a detailed description of each setting.
+SIPTU OFFSET VALUE-  This is the required offset to 
+achieve the proper timing of the product from the SIPTU 
+onto the Parent machines Infeed Conveyor. 
+PRODUCT LENGTH-  This is the length of the product, 
+enter the length dimension here.
+PHASING CORRECTION DISTANCE -  This value is 
+based on the remaining distance once the product is on 
+each phasing conveyor. As shown in the diagram A,B,C, 
+and D is the determined Phasing Correction Distance. 
+Once the Photo Sensor has been set measure the re -
+maining distance and record that dimension here. This 
+allows the SIPTU system to determine the maximum dis -
+tance it has to correct the spacing for each product.56
+8 17 2016X A B C DFLOW FLOW
+METERING CONVEYORACCELERATION
+ CONVEYORPHASING
+ CONVEYOR 1PHASING
+ CONVEYOR 2PHASING
+ CONVEYOR 3PHASING
+ CONVEYOR 4PHASING CONVEYOR No.1
+CORRECTION DISTANCE.
+PHASING CONVEYOR No.2
+CORRECTION DISTANCE.
+PHASING CONVEYOR No.3
+CORRECTION DISTANCE.
+PHASING CONVEYOR No.4
+CORRECTION DISTANCE.
+PRODUCT SENSOR POSITION
+= PRODUCT LENGTH
+MEASURED DOWNSTREAM
+FROM END OF CONVEYOR. Sectio n5Operator Contro ls
+Note!  It is important that all 4 of the phasing sensors 
+are set in the same position on all 4 phasing belts. The 
+reason is the same phasing distance is used on all 4 
+belts.A
+B
+C
+D
+X57
+8 17 2016Sectio n5Operator Contro ls
+5.11 SELECTING, EDITING, CREATING,    
+ AND PRODUCT SETUP AND COMPONENT   
+ ADJUSTMENT
+This section will detail the steps taken to CREATE and 
+MODIFY RECIPE PARAMETERS, RESET DATUM TIM -
+ING POSITIONS, AND TEACH COMPONENT  S E N -
+SOR OPERATIONAL LIMITS.
+Improperly adjusting these settings can have adverse re -
+sults, resulting in poor machine performance and/or ma -
+chine damage. DO NOT attempt making these adjust -
+ments unless you have thoroughly read this entire manu -
+al and completely understand the information contained 
+herein. 
+ 
+The procedures outlined in the following sections are 
+performed while logged into the system with Mainte -
+nance Level II Access. 5.11.1 SELECTING A RECIPE
+1. From the HOME SCREEN  touch the RECIPE MENU 
+TAB.
+2. To select a recipe, touch the BLUE RECIPE BAR  con-
+taining the recipe name you wish to choose. This will 
+move the selection arrow ► to that recipe. You may also 
+scroll the arrow ► up/down through the Recipe Bar by 
+utilizing the scroll icons.
+3. Touch the LOAD ICON.
+ 
+4. A pop-up box will display asking you to confirm your 
+selection. 
+5. Touch the green check √ to confirm the change, Touch 
+the red X to cancel the change.
+58
+8 17 20165.11.2 EDITING A RECIPE 
+1.  Select the recipe to edit.
+2. Touch the RECIPE SETTINGS TAB
+3. Input the new Product dimensions, with the pop-up 
+keypad, by touching the gray boxes containing the ex -
+isting dimensions.
+4. Touch the RECIPE MENU TAB.
+5. Touch the SAVE ICON.
+6. CONFIRM your selection.
+5.11.3 CREATING A RECIPE
+1. From the HOME SCREEN touch the RECIPE MENU 
+TAB.
+2. To select a recipe location, touch any empty, Blue 
+Recipe Bar.  This will move the selection arrow ► to 
+that recipe location. You may also scroll the arrow ► 
+up/down through the Recipe Bar by utilizing the scroll 
+icons.
+3. Touch the LOAD ICON.
+4. Touch the green check √ to confirm the change, Touch 
+the red X  to cancel the change.
+  
+5. Touch the RECIPE SETTINGS TAB.
+6. Consecutively input the new CARTON DIMENSIONS, 
+MACHINE SETTINGS , and CHANGE PART Infor-
+mation on each of the attached ten (10) pages. (see 
+7.1.2)
+ 
+7. Touch the RECIPE MENU TAB.
+8. Touch the SAVE ICON.
+9. CONFIRM  your selection.Sectio n5Operator Contro ls
+NOTE: Editing a Recipe can only be done in Operator 
+II Level or above.
+Editing, saving or Deleting a recipe can only be done 
+in Main Mode.
+59
+8 17 2016Sectio n5Operator Contro ls
+5.11.4 DELETING A RECIPE
+1. Touch the RECIPE MENU TAB .
+2. Touch the BLUE RECIPE BAR  containing the recipe 
+name you wish  to delete. This will move the selec -
+tion arrow ► to that recipe. You may also scroll the 
+arrow ► up/down through the Recipe Bar by utilizing 
+the scroll icons.
+3. Touch the DELETE ICON.
+4.  CONFIRM  your selection.
+60
+8 17 2016Sectio n5Operator Contro ls61
+6.1 DAILY MAINTENANCE SCHEDULE
+BEFORE CARRYING OUT ANY MAINTENANCE, 
+PUSH  IN ONE OF THE EMERGENCY STOP BUT -
+TONS AND OPEN A GUARD TO PREVENT THE MA -
+CHINE FROM BEING STARTED
+IF New PARTS ARE FITTED, particularly conveyor or 
+drive chains and belts, THE machine timing OPERA -
+TIONS MAY BE EFFECTED.
+A preventative maintenance schedule should be em -
+ployed every 8 hours. The following checks should be car -
+ried out daily before production running commences.
+(a) Check for damaged or missing parts.
+(b) Check all moving parts for signs of wear or insecure 
+fixing.
+(c) Inspect the condition of all belts. Clean if required, 
+with warm water and a damp cloth. Replace a belt 
+if it is damaged or broken.
+(d) Report noisy operation of the motors to mainte -
+nance personnel. (e) Check that the interlock switches on the guards are 
+working. Replace if damaged.
+(f) Check that the EMERGENCY STOP push buttons 
+are working. Replace if damaged.
+(g) Gently clean all sensors. Take care not to disturb the 
+position of any sensor.
+6.2 Maintenance Schedule
+6.2.1 General
+(a) Every 25 hours, check the tension in new chains 
+& belts. These stretch quickly during the first 200 
+hours of operation.
+(b) Within four weeks of initial installation, check all 
+nuts, bolts and other fasteners for security. Tight -
+en any that have worked loose.
+(c) Within two weeks of fitting new parts, check that 
+the parts are securely fastened. Tighten any loose 
+fasteners.
+(d) For proprietary items, see the manufacturer’s 
+data in Section 10 and the bulletins which were 
+despatched with the machine.Sectio n6Maintenance62
+8 17 20166.2.2 Every 8 Hours
+Refer to the Daily Maintenance Schedule in 6.1.
+6.2.3 Every 50 Hours
+(a) Check the operation of the Electrical Main Dis -
+connect. Repair the Isolator or fit a new one as 
+required.
+(b) Check the operation of the Emergency Stop But -
+ton. Fit a new one if faulty.
+(c) Inspect the Product Metering / Phasing Con-
+veyors. If contaminated, clean with warm water 
+and detergent using a soft cotton cloth. Remove 
+all traces of food and dirt as this may effect the 
+phasing operations. Fit new belts if damaged.
+(d) Check/adjust the tension of all conveyor chains 
+and drive belts.
+(e) Check that all sensors and associated circuits 
+operate correctly. Correct any faults.
+6.2.4 Every 250 Hours
+(a) Inspect the operation of all sensors. Clean them 
+or fit new ones as needed.
+(b) Check the operation of all safety guard door in -
+terlock switches. Open each guard door in turn 
+during operation. The safety circuit should pre -
+form an emergency stop.
+(c) Inspect all drive motors and belts or chains for 
+damage & wear
+(d) Inspect all conveyor belts for cleanliness
+(e) Inspect all chain drive sprockets & bearings for 
+wear and damage.6.2.5 Every 500 Hours
+(a) Inspect all chains. If the chain stretch exceeds 2%, 
+fit new chains.
+6.2.6 Every 750 hours
+(a) Inspect the gearboxes & servo motors. Check for 
+noisy running and backlash in the drive mecha -
+nism.
+6.2.7 Every 3,000 Hours
+Where chains are  lubricated from a centralised system:
+(a) Remove the all drive chains, for cleaning and lubri -
+cation. Fit new chains if required.
+(b) Inspect all  bearings. Check for bearing wear and 
+damage to the bearings and housings.
+6.3 Lubrication
+6.3.1 General
+Some bearings (silver in colour) are fitted with grease nip -
+ples. These allow the bearings to be greased after harsh 
+washing procedures. Sufficient grease should be pumped 
+into each bearing to displace any fluid that has been 
+forced into the bearing. Routine greasing is not needed.
+The Lubrication Schedule Table gives details of both auto -
+matic and manual lubrication requirements.
+The Main Drive Servo Motor is “lubricated for life” and 
+sealed. This gearbox needs no lubrication. Sectio n6Maintenance63
+8 17 20166.3.2 Lubrication Tables
+LUBRICATIO
+N CODENOITACIFICEPS NOITACILPPA
+AO IL CAN (GENERAL USE) SHELL TONNA TX2200
+AC ENTRAL LUBRICA TION SYS TEMS HELL TONNA  TX2200
+COMPRESSED AIR LUBRICATORSREFER TO MANUFACTURERS
+ BULL ETINS IN SEC TION 10 OF
+ MANUAL
+LUBRICATIO
+N CODENOITACIFICEPS NOITACILPPA
+2LR
+ ADIBA
+ MUIHTIL
+ LLEHS NUGESAERG B
+C SPLINES AND SCREW  JACKSHEAVY SILICONE ANTI-SEIZ E GREASE
+ (COPPER MOLYBDENUM )
+ESAERG DIULF LOGASSO SGNIRAEB D
+DC ENTRAL LUBRICA TION SYST EM OSSAGOL FLUID GREASE
+BG EAR BOXES  WHERE  SPECIFIED SHELL LITHIUM ABIDA RL2STANDARD LUBRICANTS - Non Food Grade
+OIL
+GREASE
+NOTE: Some suppl iers of oil and grease produ cts may specify suitable alternatives. Refer to Section 
+10 of this manual for Manufacturers Bulletins & Instructions.lLUBRICATION 
+CODESNOITCURTSNI METI YCNEUQERF
+AE very 24 HoursCentral Lubr ication Oil 
+SystemOperate the hand  pump once only, or if automatic 
+lubrication system fitted - manually select screen menu 
+on parent machine to apply oil.
+Every Week Compressed Air SystemSee Manufacturers Instructions supplied in Section 10 
+of this manual.
+A"Central Lubr ication Oil 
+SystemOperate the hand pump  once only o r manually set 
+screen m enu on par ent machine to apply oil. Check oil 
+level in reservoir and refill if required
+D"Central Lubr ication Grease  
+SystemOperate the hand pump  once only o r manually set 
+screen m enu on par ent machine to apply grease. 
+Check grease  level in reservoir and refill if requir ed
+A" Drive MotorsSee Manufacturers Instructions supplied in Section 10 
+of this manual.
+A" Gear BoxesSee Manufacturers Instructions supplied in Section 10 
+of this manual.
+AE very 6 MonthsC hainsRemove c hains  and clean in Hydraulic oil. Lubricate and 
+refit. Adjust tension.
+B" Overload ClutchesGrease  during re-assembly after the maintenanc e 
+inspection
+"G ear Bo xesSee Manufacturers Instructions supplied in Section 10 
+of this manual.LUBRICATION MAINTENANCE SCHEDULESectio n6Maintenance64
+8 17 20166.4 DRIVE BELTS TROUBLE SHOOTING 
+TABLE
+The most common causes of premature failure of drive 
+belts are shown below. There are other less apparent 
+causes of drive belt failure: excessive reverse bend, 
+sub-minimum diameter idler pulley, variable centre (as 
+caused by rubber mounted motors and mountings, etc. 
+Periodic inspection of all drive belts should determine if 
+wear is apparent, and if replacement is required.Sectio n6Maintenance
+Misalignment or non-rigid 
+centers. Check align ment and / or 
+reinforce mounting. Exces sive edge wear 
+Bent flange Straighten flange 
+Jack et wear on pressu re-face 
+side of belt tooth Exces sive overload and / or 
+exce ssive belt tightness Reduce installation tension and / 
+or increase drive load-carry ing 
+capacit y. 
+Exces sive jacke t wear between 
+belt teeth (exposed tension 
+members) Exces sive installation tension Reduce installation tension 
+Cracks  in neoprene  back ing Exposure to exces sive low 
+temperature (below –35oC) and 
+/or excess ive high temperature 
+(over 100oC).Elimi nate high/low temp erature 
+condition or consult factory for 
+proper belt construction. 
+Softening of neoprene backing. Exposure to oil Elimin ate oil condition or consult 
+Kliklok for proper belt 
+specification. 
+Sma ll or sub-minimum diameter 
+pulley Increase  pulley diamete r or 
+recalculate drive 
+Exces sive overload Increase  belt width Tensile failure  
+Foreign material Use drive cover 
+Exces sive overload and / or 
+exce ssive belt tightness Reduce installation tension and / 
+or increase drive load-carry ing 
+capacit y. Exces sive pulley tooth wear (on 
+pressure face and / or outer 
+diameter. 
+Insufficient hardness of pulley 
+material Surface- harden pulley or use 
+harder material 
+Incorrect  flange installation Reinstall flange correctly Unmounting of flange 
+Misa lignment Correct  align ment 
+Misalignment Correct alignm ent 
+Excessive installation  belt tension  Reduce  belt tension 
+ .yticapac gniyrrac daol evird esaercnI  daol evissecxEExcessive drive noise 
+Sub-minimum pulle y diameter Increase pulle y diameters 
+Too few teeth in pulley  or sprocket Fit pulley or sprocket with correct 
+numbe r of teeth. Tooth shear 
+Excessive load Increase drive load carrying capacity 
+Belt stretch Reduction of center distance or belt 
+tension  pulley loose . Re-te nsion  drive pulleys. 65
+8 17 2016
+Sectio n6Maintenance
+6.5 Machine Cleaning PROCEDURE
+STOP THE MACHINE AND SET THE ELECTRICAL 
+ISOLATORS TO THE OFF POSITION BEFORE CLEAN -
+ING.
+Do not clean any ELECTRICAL drive motor directly 
+WITH A  high pressure hose. Enclose all electrical drive 
+motors within a waterproof cover before proceeding, or 
+damage to the  electrical circuits may occur.
+6.5.1 Safety Precautions
+1) For individual components safety features, con -
+sult the manufacturers’ bulletins, and those which 
+were supplied separately with the machine.
+2) Use hot water with care.  Overheating can dam -
+age components.
+3) Germicidal solutions may, in time, degrade some 
+materials.
+4) If a water or steam hose is used for cleaning, DO 
+NOT direct the jet at electrical boxes and motors.
+5) Although the machine is sealed to resist pene -
+tration of the washing solution into working parts, 
+electrical cabinets, etc., hose jets could penetrate 
+the seals.
+6) Take care when cleaning items which could be 
+damaged by washing down. For example:
+Hot Components:
+Allow  to cool before cleaningChains:
+Lubricate after cleaning, if required
+Belts:
+Rinse off washing solutions with clean water and air dry. Use 
+warm air if required
+Grease Nipples / Sensors / Bearing Seals:
+Reapply grease / oil after cleaning as specified in the lu -
+brication table.
+7) Wash down the machine to production require -
+ments.
+8) After washing with chemical solutions, rinse with 
+clean water.
+Do not rinse surfaces which are required to be sanitised 
+and the sanitising of which would be destroyed by clear 
+water.
+6.5.2 Machine Cleaning Procedure
+Observe basic precautions before washing.
+These apply to both models
+ENSURE T HAT THE ELECTRICAL 
+ISOLAT ION SWITCH IS OFF , 
+AND ELECTRICAL CABINET 
+DOORS ARE CLOSED BEFORE 
+COMMENCING W ASH DOWN 
+POCEDURES.66
+8 17 2016
+2
+16.5.2.1 Cleaning (Closed ) Flat-belt model
+1. Wash all Conveyor belts with warm water and 
+detergent using a cotton cloth, or soft bristle 
+hand brush. Do not use excessive amounts of 
+water. Remove all food debris and dirt.
+ Dry conveyor belts with clean cotton cloth.
+2. Gently wipe clean all product sensors using a 
+clean dry cotton cloth. DO NOT MOVE SEN -
+SOR POSITIONS.
+3. Clean the inside and outside of the safety guard 
+using a non abrasive damp cotton cloth.
+4. Wash all stainless steel guards with warm water 
+and detergent using a cotton cloth or soft hand 
+brush.
+5. Remove debris from under machine.1
+2Sectio n6Maintenance
+6.6 Belt Replacement  Tension  AND 
+Tracking  Procedures
+SIPTU BELT MAINTENANCE PROCEDURES
+The SIPTU machine was designed to receive products ar -
+riving at high speed and load them equally spaced into 
+the flights of a secondary process line. This provides a 
+smooth transition between variable infeed and outfeed 
+speed. Here we will discuss the proper procedures in Belt 
+Replacement, Belt Tension and Belt Tracking. Prior to any 
+work being performed on the machine, review your manu -
+al for all safety requirements and procedures.
+If a belt becomes torn or damaged it may be necessary to 
+replace the belt, in this case certain steps are required to 
+properly remove and install the new belt. Review the fol -
+lowing:67
+8 17 2016Sectio n6Maintenance
+6.6.1 BELT REPLACEMENT
+First remove the main outside guard that covers the 6 
+drive assemblies for the belts.
+1. Loosen the motor mounting plate- (6) (Shown on Fig -
+ure1.0)
+2. Loosen and remove TL Bushing (17) which holds the 
+pulley. (Figure 1.0)
+3. Remove pulley (16) and belt (20) (Figure 1.0)
+4. De-tension the belt via Jacking screws (42) and (43), 
+on both sides of the belt. (Figure 3.0)5. Remove Motor side bearing (4) (Figure 1.0)
+6. Remove Drive Pulley (5). (Figure 1.0)
+ 
+7. Loosen Idler Retainers/ Tensioners (10) or (12) on both 
+sides of the conveyor assembly. (Figure 1.0 and 2.0)
+8. With the Idler Retainers, loosen, (on both sides of the 
+conveyor) the Slider Bed (30)(31)or(32), retainers and lift 
+the Slider bed Slightly.
+9. Lift Idlers (3) and slide the old belt out. (Figure 1.0 and 
+2.0) 
+10. Insert New Belt over Idlers (3), re-install Slider Bed 
+and tighten Retainer/ Tensioner (10) or (12) (Figure 1.0 
+and 2.0) Also See Belt Path Diagram Figure 5.0 at the end 
+of this section.
+   
+11. Feed Drive Pulley back onto machine, inserting 
+through inside of belt.
+68
+8 17 2016Sectio n6Maintenance
+FIGURE 29” SIPTU CONVEYOR BELT
+INSTALLATION 
+PROCEDURES
+(STANDARD HAND 
+SHOWN)
+3 10
+GUARD ASSEMBLIES
+(NOT  SHOWN)FIGURE 1.0
+ACCEL BELT
+PHASINGBELTMETERING BELT11 31 30 22 79 32
+42
+43441223
+172016105643
+TENSIONING
+MARKS69
+8 17 2016Sectio n6Maintenance
+TENSIONING BOLTLOCKING NUT
+2212. Replace Bearing (4)
+13. Re-Seat Idlers (3) and tighten Retainer/ Tensioner 
+(10) or (12) on Both sides of the conveyor. 
+14. See Tensioning Procedure for proper tension of the 
+belt. 
+15. Replace Timing Belt / Pulley / TL Bushing (20) (16) 
+(17) 
+16. Tension Timing Belt via motor mount (6) and snug (+)
+(+)
+Note: If Belt is to be temporarily de-tensioned but re-u -
+sed, Make 8.000” marks per Tensioning procedure 
+BEFORE De-tensioning the Belt. After Maintenance 
+is complete, used belt should be re-tensioned back to 
+the 8.000”. Over Tension can cause damage to the Belt 
+and/or create tracking issues.FIGURE 3
+FIGURE 4
+BELT PATH
+For Belt Replacement  
+FIGURE 5.070
+8 17 2016
+6.7 BELT TENSIONING
+1. Tension belt evenly on both sides of the con -
+veyor by hand, to remove slack. Keep belt cen -
+tered across the width of the conveyor. (Figure 
+6.0)
+2. Make (2) marks on top (flat) portion of the belt, 
+EXACTLY 8.000” apart, at centerline and both 
+edges of the Belt.
+3. Gradually and Evenly Tension both sides (42)
+(43) until distance between all (3) sets of marks 
+are between 8.024” and 8.040”. 
+4. Should Slippage ever occur, tensioned spac -
+ing may be increased to 8.080” MAX. 
+5 Verify Tracking per Tracking procedures 3.0.TOP VIEW @ PHASING BELT        
+TENSIONING MARKS
+8.024”
+(AT FULL  TENSION)8.024”
+(AT FULL  TENSION)
+FIGURE 6.0Sectio n6Maintenance71
+8 17 2016Sectio n6Maintenance
+6.8  BELT TRACKING 
+1. Monitor belt path while the conveyor is running.
+ 
+2. Shown  to the Right: (Figure 7.0)
+If the belt runs towards the left on Downstream Idler, ini -
+tially reduce tension on the right side slightly. 
+Additional Tracking can be made by increasing Tension 
+on the same side as the direction of track ( Left for Left, 
+Right for Right ) 
+3 Always verify proper tensioning during and following 
+tracking process. If over tension occurs during tracking, 
+it is best practice to review Tension on both sides and 
+set to 8.024” – 8.040” and start tracking procedure over. 
+FIGURE 7.072
+8 17 20166.6.2 Transmitted Beam Sensors
+Installation and Setup Procedures 
+ 
+Here we will discuss the proper procedures in  
+installing and setting up the Photo Sensors for the 
+SIPTU Machine. 
+Default Settings:
+The factory default settings are configured so that 
+no teaching is required in most conditions. 
+Output Mode:  
+Dark Operate (Output ON when the light between the 
+emitter and  the receiver is blocked)
+Output Type: Auto PNP/NPN or IO-Link.  
+In Auto PNP/NPN mode, the sensor continuously 
+monitors the load connection and automatically 
+configures the output to PNP or NPN.
+Receiver User Interface   LED Status
+The table below provides LED status on the receiver  
+in the RUN mode i.e, during operation. The sensor is 
+always in RUN mode, except when being taugh t.Auto PNP/NPN Operation
+OFF                        Po wer is OFF
+ON                         Po wer is ON
+Flashing       (6 H z) Unstable light level (0.5 < margin < 2)
+YellowFlashing       (1.5 H z) Output shor t circuit protec tion ac tiveGreen
+OFF                 Output d e-energized
+ON                      Output energized
+IO-Link Ope ration
+Green
+YellowOFF                    Po wer is OFF
+Flashing          (1 H z) Po wer is ON
+OFF            Output d e-energized
+ON                 Output energized73
+8 17 2016Setting up the Photo Sensors
+Each Sensor must be set and positioned in the same 
+location. Starting from the outfeed end follow the direc -
+tions shown.
+Measuring from the upstream idler centerline as shown 
+determine the product length and measure downstream 
+that distance. This will be the location to set the Photo -
+Sensor centerline. Shown as „X“ on the diagram is that 
+dimension.
+Phasing Belt #4
+“X”74
+8 17 2016Sectio n6Maintenance
+Align the Photo Sensors so that they are directly across 
+from one another. The Center of the beam should be di -
+rectly over the determined dimension of product length, 
+inches position established earlier. Ensure that both 
+Emitter and reciever are “seeing” one another.
+Next you must train the eye without any product or de -
+bris obstructing the view of the eye. 
+Press and hold the button on top of the sensor for three 
+(3) seconds until the Yellow LED light Starts Flashing. 
+Release the button. The Sensor Has now been taught.
+All remaining belts are to be guaged off of 
+this first phasing belt. 
+For each additional belt measure 10 inches 
+from the previous 5.5 inch location. 
+Posistion reletive to each belt should be the 
+same 5.5 inches from downstream.
+For further infomation, please contact Klik -
+lok Woodman Service Department at:75
+Sectio n7Setting-Up and Timi ng
+7.2 TIMING SENSOR SETUP
+7.2.1 Phasing Conveyors Timing Sensors
+Note: The following section  is a general guide to posi -
+tioning the product sensors. This will vary depending on 
+product type and the belt design. 
+1. Measure the overall product length.
+2. For closed flat belt conveyors, position the product 
+over the first phasing belt so that the trailing edge is 
+aligned with the end of the upstream conveyor.
+3. With the product correctly positioned, move the tim -
+ing sensors along the rails until they are just detect -
+ing the front leading edge of the product - fix in posi -
+tion.
+4. Repeat the above procedure for the remaining 3 
+phasing conveyors. Each sensor must be positioned 
+in exactly the same position on each conveyor, and 
+at equal pitch, (machine pitch = 9”, 12” or 15”).
+Note!
+The Sensor position must be set using the smallest prod -
+uct.
+PRODUCT
+LENGTHPRODUCT TIMING SENSOR
+POSITION (TYPICAL)FLOWPHASING CONVEYORS
+Note: 
+Higher Value  =  Retards Position.
+Lower Value  =  Advances Posi -
+tion.76
+8 17 20167.3 PRODUCT PHASING SETUP
+NOTE:
+The position of sensors on the machine 
+may differ from the illustration shown as 
+their position is product specific.
+PHASING CORRECTION DISTANCEX A B C DFLOW FLOW
+METERING CONVEYORACCELERATION
+ CONVEYORPHASING
+ CONVEYOR 1PHASING
+ CONVEYOR 2PHASING
+ CONVEYOR 3PHASING
+ CONVEYOR 4
+PHASING CONVEYOR No.1
+CORRECTION DISTANCE.
+PHASING CONVEYOR No.2
+CORRECTION DISTANCE.
+PHASING CONVEYOR No.3
+CORRECTION DISTANCE.
+PHASING CONVEYOR No.4
+CORRECTION DISTANCE.
+PRODUCT SENSOR POSITION
+= PRODUCT LENGTH
+MEASURED DOWNSTREAM
+FROM END OF CONVEYOR. A
+B
+C
+D
+XThe Correction Distance on each phasing conveyor is 
+measured from the product sensor to the end of the 
+associated conveyor belt.
+It is over this distance that the positional adjustment to 
+the product is made on each conveyor.Sectio n7Setting-Up and Timi ng77
+8 17 20167.3.1 Recipe Settings Screen 1
+SIPTU Offset Value – is the position of the product as 
+it transfers onto the Infeed Conveyor of the parent ma -
+chine. Note that the smaller the number the more ad -
+vanced the product and the larger the number the more 
+retarded the product relative to the PIC (product infeed 
+conveyor).
+Phasing Correction distance –  is the distance the servo 
+belts move to change the product position. Normally the larg -
+er the product the smaller the correction distance and the 
+smaller the product the larger the correction distance.
+Product Length (inches) –  is the measured length of the 
+product  as the product approaches the SIPTU, simply mea -
+sure the product length. 
+   Sectio n7Setting-Up and Timi ng78
+8 17 20167.3.2 Machine Options Page 3
+This screen sets the percentage of correction for each 
+servo belt so that any one belt is not trying to do all the 
+correction but is shared between all four servo belts.
+Normal setup is 
+Belt 1 (upstream belt) is the 1st of 4 belts so belt 1 does 
+25% (0.25) of the remaining correction.
+Belt 2 is the 2nd of 3 remaining belts so belt 2 does 33% 
+(3rd) (0.33) of the remaining correction.Belt 3 is the 3rd of 2 remaining belts so belt 3 does 50% 
+(1/2) (0.50) of the remaining correction. 
+Belt 4 is the 4th of 1 remaining belts so belt 4 does 100% 
+(all) (1.0) of the remaining correction.     
+If the product positional error is 100mm (4”) relative to the 
+PIC pocket 
+Phasing belt 1 will apply 25% of 100mm (4”) = 25mm (1”) 
+of product movement which will leave 75mm (3”) position -
+al error remaining.
+Phasing belt 2 will apply 33% of 75mm (3”) = 25mm (1”) 
+of product movement which will leave 50mm (2”) position -
+al error remaining.
+Phasing belt 3 will apply 50% of 50mm (2”) = 25mm (1”) 
+of product movement which will leave 25mm (1”) position -
+al error remaining.
+Phasing belt 4 will apply 100% of 25mm (1”) = 25mm (1”) 
+of product movement which will leave 0mm (0”) positional 
+error remaining.
+NOTE!!!! Any phasing belt correction factors chang -
+es will only be registered in the CPU when the machine 
+is stopped. To alter the factors first stop the SIPTU by 
+pressing the normal stop button, access the machine set -
+up screen 2 and adjust accordingly then press the start 
+button.  
+Sectio n7Setting-Up and Timi ng79
+8 17 2016Sectio n7Setting-Up and Timi ng
+7.3.2 Diagnostics Screen 7- Servo Torque Page.
+This screen shows the maximum recorded and set 
+points of each of the 6 servo motors
+Metering Belt is the 1st belt as the product enters the 
+SIPTU.
+Accel Belt is the 2nd belt as the product enters the SIP -
+TU.
+Phasing Belt1 is the 3rd belt as the product enters the 
+SIPTU but the 1st belt that changes speed and the po -
+sition of the product
+Phasing Belt2 is the 4th belt as the product enters the 
+SIPTU but the 2nd belt that changes speed and the po -
+sition of the product.Phasing Belt3 is the 5th belt as the product enters the SIP -
+TU but the 3rd belt that changes speed and the position of 
+the product.
+Phasing Belt4 is the 6th belt as the product enters the SIP -
+TU but the 4th belt that changes speed and the position of 
+the product
+Reset Torque Values – this button when touched resets 
+ALL torque values to zero.
+To set the torque values correctly touch the reset torque 
+values to set all torque values to zero. Run the machine 
+with product for 10 minutes and look at the maximum re -
+corded values, now set each torque for each motor 10 to 
+15% higher than the maximum recorded value for that mo -
+tor.
+80
+8 17 2016Sectio n7Setting-Up and Timi ng81
+8 17 2016Sectio n7Setting-Up and Timi ng82
+8 17 2016ELECTRICA L SCHEMA TICS
+HOME
+SCHWANS - ATLANTA
+HS5160Find NumPart NumberItem Description QtyRev
+A
+1 169001 ELECTRICAL WIRING SCHEMATICS, 
+SIPTU, AB CONTROLS, 480VAC, K55001 D
+2 169002 MAIN ELECTRICAL PANEL, SIPTU, 
+AB CONTROLS, 480VAC, K55001 E
+3 169003 FRAME ELECTRICALS,SIPTU, 
+AB CONTROLS, 480VAC, K55001 C
+4 169004 OPERATOR INTERFACE, SIPTU, 
+AB CONTROLS, 480VAC, K55001 A
+5 169005 CONTROL PANEL AUXILLARY EQUIPMENT,
+SIPTU, AB CONTROLS, 480VAC, K55001 BTOP ELEC, SIPTU, AB CONTROLS
+480VAC, MOTORS, K5500
+169000
+TOP ELEC, SIPTU, AB CONTROLS
+480VAC, MOTORS, K5500
+169000DRAWING NUMBEROF
+SHEET NO REVISION169001TITLE SHEET
+SIPTU 480 VAC D 0 10Wire Colors:
+480VAC: BLACK
+120VAC
+LINE(120L):BLACK
+NEUTRAL (120N): WHITE
+GROUND (GND): GREEN W/ YELLOW STRIPE
+24VDC
+POSITIVE (24P, 24AE): BLUE
+COMMON (24C): WHITE W/ BLUE STRIPE
+PANEL INTERCONNECTIONS: YELLOWKLIKLOK WOODMAN
+5224 SNAPFINGER WOODS DR.
+DECATUR, GA 30035 USA
+TEL: 770-981-5200
+FAX: 770-987-7160
+DRAWING LIST:
+PAGE 0: DOCUMENTATION COVER SHEET
+PAGE 1: MAIN POWER DISTRIBUTION
+PAGE 2: 120VAC POWER DISTRIBUTION
+PAGE 3: SAFETY CIRCUIT LOOPS
+PAGE 4: SAFETY RELAY/ 24VDC POWER DISTRIBUTION
+PAGE 5: ETHERNET/PLC CONNECTIONS
+PAGE 6 REMOTE DIGITAL INPUT CONNECTIONS
+PAGE 7: REMOTE DIGITAL OUTPUTS CONNECTIONS
+PAGE 8: SERVO DRIVES-METERING BELT, ACCEL BELT
+PAGE 9: SERVO DRIVES-PHASING BELT 1, PHASING BELT 2
+PAGE 10: SERVO DRIVES-PHASING BELT 3, PHASING BELT 4NAME PLATE DATE:
+VOLTS: 480 AMPS: 40 
+HERTZ: 60
+PHASE: 3 DISCONNECT
+RATING: 40A
+SHORT CIRCUIT CURRENT RATING:
+100KA
+LARGEST CIRCUIT AMPS: 251. ALL UNGROUNDED 480VAC and 240 VAC WIRING TO BE 12 AWG BLACK UNLESS
+OTHERWISE SPECIFIED.
+2. ALL DC VOLTAGE WIRING TO BE 18 AWG BLUE UNLESS OTHERWISE SPECIFIED.
+3. ALL UNGROUNDED 120VAC CONTROL WIRING TO BE 18 AWG RED UNLESS OTHERWISE
+SPECIFIED.
+4. ALL UNGROUNDED 24VDC "+" WIRING TO BE 18 AWG BLUE UNLESS OTHERWISE
+SPECIFIED.
+5. ALL GROUNDED 24VDC "COM" WIRING TO BE 16 AWG WHITE/BLU UNLESS OTHERWISE
+SPECIFIED.
+6. ALL UNGROUNDED WIRING TO REMOTE INLINE I/O MODULES TO BE 18 AWG BLUE
+(24VDC"+") AND GROUNDED WIRING BLU\WHITE (24VDC "COM")
+7. ALL GROUND(PE) WIRING TO BE 14 AWG GREEN\YELLOW UNLESS OTHERWISE
+SPECIFIED AND OR MARKED AS GROUND. GROUND TERMINALS ARE MARKED "GND".
+8. NO MORE THAN 2 CONDUCTORS ON ANY ONE TERMINAL.
+9. POWER CABLING AND CONTROL WIRING TO BE KEPT SEPERATE WHERE EVER
+POSSIBLE AND RUN AT 90 ANGLE WHERE IT IS NOT POSSIBLE.
+10. BOTTOM AND OR RIGHT SIDE OF TERMINAL BLOCKS ARE RESERVED FOR FIELD
+TERMINATIONS. FIELD TERMINATIONS ARE DESIGNATED BY DASHED LINES.
+11. POWER WIRING TO TERMINATE TO DEVICES USING THE FOLLOWING RULES. TOP TO
+BOTTOM, LEFT TO RIGHT, FRONT TO BACK DEPENDING ON THE DEVICE ORIENTATION AS
+MOUNTED IN THE ENCLOSURE.
+12. ALL COMPONENTS ARE TO BE LABELED FROM THE SCHEMATIC TAG NUMBER AND
+LOCATED DIRECTLY ABOVE OR BELOW THE COMPONENT ON THE SUBPANEL AND OR
+REAR OF DOOR AS APPLICABLE.  THE SELF ADHESIVE LABEL WILL BE WHITE 0.5 INCH
+HIGH WITH 0.25 INCH HIGH BLACK LETTERS. CROY TAPE OR EQUAL. NO LABELS ARE TO
+BE APPLIED TO THE WIRE DUCT COVERS.
+13. DO NOT USE SELF TAPPING SCREWS FOR MOUNTING - ONLY MACHINE SCREWS -
+DRILL AND TAP AS REQUIRED.MFG\WIRING NOTES
+Page Number
+Line Number521DRAWING NUMBEROF
+SHEET NO REVISION169001480 VAC DISTRIBUTION PAGE
+SIPTU 480 VAC D 1 10100
+101
+102
+103
+104
+105106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117118
+119
+120121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136DS101MAIN PANEL
+40AL1L2L3CUSTOMER SUPPLIED
+480 VAC
+60 HZ
+3 PH
+GNDMAIN PANELGND
+24VDC
+SUPPLYPOWERPWS106MAIN PANEL
+136004L1
+L2
+L3
+GND24+
+24-24MAIN PANEL
+24CMAIN PANEL10AFU107
+P008542021AMAIN PANEL
+FU106
+090318
+1A
+1A24A 24
+24C126T1
+126T2
+126T3
+L1AL2AL3AGNDMAIN PANEL
+GND
+FLT118SERVO LINE FILTER
+MAIN PANEL
+L1
+L2
+L3
+GNDT1
+T2
+T3
+GND086816
+25AMAIN PANEL
+FU118
+090318
+25A
+25A
+GNDMAIN PANEL
+GND150
+151
+152
+153
+154
+155
+156157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+T1A1501L1A
+1361
+L1A
+??1501L2A
+1361
+L2A
+T3A1501L3A
+1361
+L1A
+L2A
+L3A
+L1A
+L2A
+L3ASERVO POWER119T1
+9079
+119T2
+9079
+119T3
+9089118T1
+118T2
+118T3119T1
+119T2
+119T3L2A
+DOOR LOCK
+480VACDL133ENCLOSURE DOOR
+L1
+L21AMAIN PANEL
+FU133
+090319133T1
+1A133T2
+L1A2002
+L2A2002L3A
+24S1
+MAIN PANEL
+24S2MAIN PANEL24S1
+24S224S1MAIN PANEL
+24S1
+24CMAIN PANEL
+24C192.168.1.42INFEED MOTOR
+460 VAC 3 PHFRAME
+MOT152153T1
+153T2
+153T33AMAIN PANEL
+FU152
+090318152T1
+3A
+3A152T2
+152T3L1A
+L2A
+L3A
+GND
+MAIN PANELGND
+1081VFD SETTINGS FOR VFD152
+PARAMETER    SETTING
+P31 460
+P32 60
+P33 2.6
+P34 2.6
+P41 1
+P42 1
+P43 0
+P44 90
+P46 5
+P47 15
+T76 2DS111FRAMECIP NETWORK1081
+108110POWERFLEX 525
+VFD
+DRIVE
+COM
+4-20mA0-10V10VVFD152MAIN PANEL
+L1
+L2
+L3
+GND
+S1
+S2
+S+
+13
+14
+15
+16
+R2
+R5ETHERNET 104/COM0201/ENABLEGNDT3T2T1
+12
+R1 BR+
+BR-03
+R6ETHERNET 2OPTIONAL HIGH VOLTAGE DISCONNECTMAIN PANEL
+PDB105L3 L1L2
+091745
+MAIN PANEL
+DISTRIBUTIONSERVO POWERPDB118
+L3L1
+L2FLT152VFD LINE FILTER
+MAIN PANEL
+L1
+L2
+L3
+GNDT1T2
+T3
+GND086816
+155154153152DRAWING NUMBEROF
+SHEET NO REVISION169001120 VAC DISTRIBUTION
+SIPTU 480 VAC D 2 10LNGREPT215ENCLOSURE DOOR200
+201
+202
+203
+204
+205
+206
+207208
+209
+210
+211
+212
+213
+214
+215
+216217
+218219
+220
+221
+222
+223
+224
+225
+226
+227228229
+230231232
+233
+234
+235
+236GNDMAIN PANEL
+GNDETHERNET213
+5045 213
+3AMAIN PANEL
+FU216
+P00854202215L
+3AMAIN PANEL
+FU217
+P00854202H3H1 H4
+X1X21KVAXF205480VAC
+120 VACMAIN PANELH2L1AL1A
+1861L2A
+1861
+L2A
+204N 204LFU2013A
+T1G
+3A
+T2G
+FU20810A FU208A10A208N
+208L206
+215N300
+301302
+303
+304305
+306
+307
+308
+309
+310311
+312
+313314
+315
+316317
+318
+319320
+321
+322323
+324
+325326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362363
+364365
+366
+367
+368369
+370371372
+373374
+375
+376
+377378
+379
+380
+381
+382
+383384
+385386387
+388302
+MAIN PANEL302A
+MAIN PANEL302B
+MAIN PANEL302C
+MAIN PANEL302D
+MAIN PANEL302E
+MAIN PANEL302A
+315
+318
+MAIN PANELOPERATOR STATION
+ESTOP BUTTONOPERATORS STATION
+PB302
+302BSPARE
+(JUMP OUT)SPARE
+(JUMP OUT)SPARE
+(JUMP OUT)SPARE
+(JUMP OUT)
+MAIN PANEL
+14 11PLC SAFETY INTERLOCK
+CR700
+24 21318302D 302C 302E
+315
+3543
+318
+350,3563,3305
+MAIN PANEL305A
+MAIN PANEL305B
+MAIN PANEL305C
+MAIN PANEL305D
+MAIN PANEL305E
+MAIN PANELSPARE
+(JUMP OUT)SPARE
+(JUMP OUT)SPARE
+(JUMP OUT)SPARE
+(JUMP OUT)
+305A 305B 305C 305D 305E
+3AFU364 24S1MAIN PANEL
+24S1
+3AFU36524S2 24S2MAIN PANEL24MAIN PANEL MAIN PANEL
+315
+MAIN PANEL318315
+MAIN PANEL
+14 11
+705SAFETY RESET
+CR70524CAUX PANEL
+24C403
+409 409A
+IMMED OUT NO
+IMMED OUT NO
+TD OUT NO
+TD OUT NO
+TD OUT NOSAFETY RELAYMAIN
+SR350
+A1
+S52
+S12
+S33
+S34
+13
+23
+37
+47
+57A2
+Y39
+Y40
+S21
+S22
+Y1
+Y2
+14
+24
+38
+48
+5824AUX PANEL
+24AUX PANEL315
+3163
+318
+3183
+DRAWING NUMBEROF
+SHEET NO REVISION169001SAFETY CIRCUIT  PAGE
+SIPTU 480 VAC D 3 10400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416417
+418
+419420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434435
+436
+437
+43824MAIN PANEL
+24C24CMAIN PANEL
+2424CMAIN PANEL
+24MAIN PANELMAIN PANEL
+24CMAIN PANEL
+ENCLOSURE COOLINGTHERMOSTAT FOR
+TAS452 SOL452
+SOLENOIDVORTEC COOLER
+456MAIN PANEL
+456AMAIN PANEL
+459MAIN PANEL
+459AMAIN PANEL
+462MAIN PANEL
+462AMAIN PANEL
+465MAIN PANEL
+465AMAIN PANEL450
+451
+452453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+48724452
+456 456A
+459 459A
+462 462A
+465 465AMAIN PANEL
+24 21
+703
+MACHINE FAULTEDCR703MAIN PANEL
+14 11
+703
+MACHINE FAULTEDCR703MAIN PANEL
+24 21
+702
+MACHINE RUNNINGCR702MAIN PANEL
+14 11
+702
+MACHINE RUNNINGCR7021AMAIN PANEL
+FU452
+086326452A
+DRAWING NUMBEROF
+SHEET NO REVISION169001SAFETY RELAY AND 24VDC DISTRIBUTION
+SIPTU 480 VAC D 4 10DRAWING NUMBEROF
+SHEET NO REVISION169001ETHERNET CONNECTIONS
+SIPTU 480 VAC D 5 10ES504
++24V
+OV
+PE500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+53924MAIN PANEL24CMAIN PANEL
+GNDMAIN PANEL
+GNDRECEPTICAL ETHERNET204
+2052550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+58824MAIN PANEL24CMAIN PANELRS232PLC554
+1756-L71MAIN PANEL
+1
+2
+3
+4
+5
+6
+7
+8
+9
+ETHERNET562
+5105PLC ETHERNET562
+5625
+2424C204
+562
+2424C562
+HMI24+
+24-ETHERNETHMI522192.168.1.41512
+2AFU522
+086326CIP NETWORK566
+8298566PLC562
+1756-EN2TR192.168.1.40MAIN PANELPORT 1 PORT 2
+PLC568
+1756-ENBT
+OPTIONALMAIN PANELIN / OUTPLC552MAIN PANEL+24VDC COM E24MAIN PANEL
+24CMAIN PANEL
+GNDMAIN PANEL24
+24CGNDDRAWING NUMBEROF
+SHEET NO REVISION169001PLC INPUTS PAGE
+SIPTU 480 VAC D 6 1060024CMAIN PANEL24MAIN PANEL
+65024CMAIN PANEL24MAIN PANEL
+651
+652
+653
+654
+655
+656
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618LT302
+R
+I:12/07MAIN PANEL
+24I:12/07OPERATOR STATION302ESTOP BUTTONOPERATORS STATION
+PB302
+I:12/06OPERATOR STATIONSTART BUTTON
+PB600
+099963
+OPERATOR STATIONRESET BUTTON
+PB602
+124210
+CUSTOMER SIGNAL
+DOWNSTREAM INTERLOCKCROPERATOR STATIONSTOP BUTTON
+PB601
+114591I:12/00MAIN PANEL
+I:12/01MAIN PANEL
+I:12/02MAIN PANEL
+I:12/03MAIN PANEL
+I:12/06MAIN PANEL
+I:12/07MAIN PANELI:12/04MAIN PANEL
+I:12/08MAIN PANEL
+I:12/09MAIN PANEL
+I:12/10MAIN PANEL
+I:12/11MAIN PANEL
+I:12/12MAIN PANEL
+I:12/13MAIN PANEL
+I:12/14MAIN PANEL
+I:12/15MAIN PANELI:12/05
+I:12/08
+I:12/09
+I:12/10
+I:12/11
+I:12/12
+I:12/13
+I:12/14
+I:12/1524S1MAIN PANEL
+I:02/05 24S1I:12/00
+I:12/01
+I:12/02
+I:12/03
+I:12/041
+I:12/00START PB1756-IB16AB
+SLOT 2
+PLC60024VDC 16-PT DIGITAL INPUTSRACK 1
+IN-0
+2
+I:12/01STOP PB
+IN-1
+3
+I:12/02RESET PB
+IN-2
+4
+I:12/03DOWNSTREAM INTERLOCK
+IN-3
+5
+I:12/04IN-4
+6
+I:12/05MCR
+IN-5
+7
+I:12/06ESTOP
+OPERATORS PANELIN-6
+8
+I:12/07IN-7
+9
+GND-0
+10
+GND-0
+11
+I:12/08IN-8
+12
+I:12/09IN-9
+13
+I:12/10IN-10
+14
+I:12/11IN-11
+15
+I:12/12IN-12
+16
+I:12/13IN-13
+17
+I:12/14IN-14
+18
+I:12/15IN-15
+19
+GND-1
+20
+GND-1700
+701
+702
+703704705
+706
+707
+708
+709710
+711
+712
+713
+714
+715
+716717
+71824MAIN PANEL
+24CMAIN PANEL
+24O:13/00
+O:13/02
+FRAME
+START BUTTON LIGHTLT706
+GO:13/06A2 A1
+MAIN PANEL
+NCNO462,465MACHINE FAULTEDCR703A2 A1
+MAIN PANEL
+NCNO456,459MACHINE RUNNINGCR702A2 A1
+MAIN PANEL
+NCNO313,364PLC SAFETY INTERLOCKCR700
+O:15/03
+A2 A1
+MAIN PANEL
+NCNO407SAFETY RESETCR7051
+O:13/00AB
+SLOT 3
+5VDC 16-PT DIGITAL OUTPUTSRACK 1
+PLC7001756-OB16
+OUT-0
+2
+O:13/01OUT-1
+3
+O:13/02OUT-2
+4
+O:13/03OUT-3
+5
+O:13/04OUT-4
+6
+O:13/05OUT-5
+7
+O:13/06OUT-6
+8
+O:13/07OUT-7
+9
+DC COM-0
+10
+DC-0(+)
+11
+O:13/08OUT-8
+12
+O:13/09OUT-9
+13
+O:13/10OUT-10
+14
+O:13/11OUT-11
+15
+O:13/12OUT-12
+16
+O:13/13OUT-13
+17
+O:13/14OUT-14
+18
+O:13/15OUT-15
+19
+DC COM-1
+20
+DC-1(+)O:13/00MAIN PANEL
+O:13/02MAIN PANEL
+O:13/03MAIN PANEL
+O:13/05MAIN PANEL
+O:13/06MAIN PANELO:13/01MAIN PANEL
+O:13/04MAIN PANEL
+O:13/07MAIN PANEL
+O:13/08MAIN PANEL
+O:13/09MAIN PANEL
+O:13/10MAIN PANEL
+O:13/11MAIN PANEL
+O:13/12MAIN PANEL
+O:13/13MAIN PANEL
+O:13/14MAIN PANEL
+O:13/15MAIN PANELO:13/08
+O:13/09
+O:13/10
+O:13/11
+O:13/12
+O:13/13
+O:13/14
+O:13/15O:13/03
+O:13/05O:13/01
+O:13/04
+O:13/07
+DRAWING NUMBEROF
+SHEET NO REVISION169001PLC OUTPUTS PAGE
+SIPTU 480 VAC D 7 10DRAWING NUMBEROF
+SHEET NO REVISION169001SERVO DRIVES: METERING BELT, ACCEL BELT
+SIPTU 480 VAC D 8 10800 850
+851
+852
+853
+854
+855
+856
+857
+858
+859
+860
+861
+862
+863
+864
+865
+866
+867
+868
+869
+870
+871
+872
+873
+874
+875
+876
+877
+878
+879
+880
+881
+882
+883
+884
+885
+886
+887
+888
+889801
+802
+803
+804
+805
+806
+807
+808
+809
+810
+811
+812
+813
+814
+815
+816
+817
+818
+819
+820
+821
+822
+823
+824
+825
+826
+827
+828
+829
+830
+831832
+833
+834
+835
+836
+837
+83844321SAFE OFF
+STO21MOTOR FEEDBACK
+MF
+21MOTOR BRAKE
+MPGREEN
+BLUEBLACKBROWN
+SHUNT
+RESISTOR
+RC
+214321DIGITAL INPUTS
+IOD4321INPUT POWER
+IPDMOTOR POWER
+MP
+2124VDC INPUT
+CPKENETIX 5500DRV807METERING BELT DRIVE
+2198-H015-ERSMAIN PANEL
+150283
+GND
+L1
+L2
+L3
+24V+
+24V-
+IN1
+COM
+IN2
+SHLD
+SB+
+SB-
+S1
+SC
+S2
+ETHERNET 1
+ETHERNET 2U
+V
+WGND
+MBRK+
+MBRK-D+
+D-
+SHIELD
+DC+
+SHCBL807
+VPL SERVO MOTORMOTOR
+POWERMTR807METERING BELT MOTOR
+156065FRAME VPL-B1003F-PJ12ASU
+V
+WGND
+1
+2
+24S1MAIN PANEL
+24CMAIN PANEL
+24S2MAIN PANEL24S1
+24S2
+CIP NETWORK566
+5665 566
+831SERVO POWER119T1
+1181119T1
+119T2
+1191 119T2
+119T3
+1201119T3MAIN PANEL
+GNDNOTE: USE
+DC BUS,
+AC POWER, AND
+CONTROL POWER
+JUMPERS TO
+DISTRIBUTE
+POWER TO OTHER
+DRIVES.
+192.168.1.50
+CIP NETWORK831
+879824MAIN PANEL
+24CMAIN PANEL24
+24C2AMAIN PANEL
+FU813
+24C
+44321SAFE OFF
+STO21MOTOR FEEDBACK
+MF
+21MOTOR BRAKE
+MPGREEN
+BLUEBLACKBROWN
+SHUNT
+RESISTOR
+RC
+214321DIGITAL INPUTS
+IOD4321INPUT POWER
+IPDMOTOR POWER
+MP
+2124VDC INPUT
+CPKENETIX 5500DRV857ACCEL BELT DRIVE
+2198-H015-ERSMAIN PANEL
+150283
+GND
+L1
+L2
+L3
+24V+
+24V-
+IN1
+COM
+IN2
+SHLD
+SB+
+SB-
+S1
+SC
+S2
+ETHERNET 1
+ETHERNET 2U
+VWGND
+MBRK+
+MBRK-D+
+D-
+SHIELD
+DC+
+SHCBL857
+VPL SERVO MOTORMOTOR
+POWERMTR857ACCEL BELT MOTOR
+156065FRAME VPL-B1003F-PJ12ASU
+V
+WGND
+1
+2
+24S1MAIN PANEL
+24CMAIN PANEL
+24S2MAIN PANEL24S1
+24S2
+CIP NETWORK831
+8318 831
+881NOTE: USE
+DC BUS,AC POWER, AND
+CONTROL POWER
+JUMPERS TO
+DISTRIBUTE
+POWER TO OTHERDRIVES.
+192.168.1.5124C
+CIP NETWORK881
+9299DRAWING NUMBEROF
+SHEET NO REVISION169001SERVO DRIVES- PHASING BELT 1, PHASING BELT 2
+SIPTU 480 VAC D 9 10900 950
+PE967PHASING BELT 2
+REGISTRATION SENSOR RECEIVER
+FRAMEBLACKPE917PHASING BELT 1
+REGISTRATION SENSOR RECIEVER
+FRAME BLUEBLACK
+PE921PHASING BELT 1
+REGISTRATION SENSOR TRANSMITTER
+FRAMEBLUE
+BLACK24MAIN PANEL
+24CMAIN PANEL
+2424C24MAIN PANEL
+950MAIN PANEL
+2424C
+PE971PHASING BELT 2
+REGISTRATION SENSOR TRANSMITTER
+FRAMEBLUE
+BLACK951
+952
+953
+954
+955
+956
+957
+958
+959
+960
+961
+962
+963
+964
+965
+966
+967
+968
+969
+970
+971
+972
+973
+974
+975
+976
+977
+978
+979
+980
+981
+982
+983
+984
+985986
+987
+988901
+902
+903
+904
+905
+906
+907
+908
+909
+910
+911
+912
+913
+914
+915
+916
+917
+918
+919
+920
+921
+922
+923
+924
+925
+926
+927928
+929
+930
+931
+932
+933
+934
+935
+936
+937
+938917
+950
+44321SAFE OFF
+STO21MOTOR FEEDBACK
+MF
+21MOTOR BRAKE
+MPGREEN
+BLUEBLACKBROWN
+SHUNT
+RESISTOR
+RC
+214321DIGITAL INPUTS
+IOD4321INPUT POWER
+IPDMOTOR POWER
+MP
+2124VDC INPUT
+CPKENETIX 5500DRV907PHASING BELT 1 DRIVE
+2198-H015-ERSMAIN PANEL
+150283
+GND
+L1
+L2
+L3
+24V+
+24V-
+IN1
+COM
+IN2
+SHLD
+SB+
+SB-
+S1
+SC
+S2
+ETHERNET 1
+ETHERNET 2U
+V
+WGND
+MBRK+
+MBRK-D+
+D-
+SHIELD
+DC+
+SHCBL907
+VPL SERVO MOTORMOTOR
+POWERMTR907PHASING BELT 1 MOTOR
+156065FRAME VPL-B1003F-PJ12ASU
+V
+WGND
+1
+2
+24S1MAIN PANEL
+24CMAIN PANEL
+24S2MAIN PANEL24S1
+24S2
+CIP NETWORK881
+8818881
+931NOTE: USE
+DC BUS,
+AC POWER, AND
+CONTROL POWER
+JUMPERS TO
+DISTRIBUTE
+POWER TO OTHER
+DRIVES.
+192.168.1.52
+CIP NETWORK931
+979924C
+44321SAFE OFF
+STO21MOTOR FEEDBACK
+MF
+21MOTOR BRAKE
+MPGREEN
+BLUEBLACKBROWN
+SHUNT
+RESISTOR
+RC
+214321DIGITAL INPUTS
+IOD4321INPUT POWER
+IPDMOTOR POWER
+MP
+2124VDC INPUT
+CPKENETIX 5500DRV957PHASING BELT 2 DRIVE
+2198-H015-ERSMAIN PANEL
+150283
+GND
+L1
+L2
+L3
+24V+
+24V-
+IN1
+COM
+IN2
+SHLD
+SB+
+SB-
+S1
+SC
+S2
+ETHERNET 1
+ETHERNET 2U
+V
+WGND
+MBRK+
+MBRK-D+
+D-
+SHIELD
+DC+
+SHCBL957
+VPL SERVO MOTORMOTOR
+POWERMTR957PHASING BELT 2 MOTOR
+156065FRAME VPL-B1003F-PJ12ASU
+V
+WGND
+1
+2
+24S1MAIN PANEL
+24CMAIN PANEL
+24S2MAIN PANEL24S1
+24S2
+CIP NETWORK931
+9319931
+981SERVO POWER119T1
+1181 119T1
+119T2
+1191119T2
+119T3
+1201 119T3MAIN PANEL
+GNDNOTE: USE
+DC BUS,
+AC POWER, AND
+CONTROL POWER
+JUMPERS TO
+DISTRIBUTE
+POWER TO OTHER
+DRIVES.
+192.168.1.5324MAIN PANEL
+24CMAIN PANEL24
+24C2AFU963
+24C
+CIP NETWORK981
+102910967DRAWING NUMBEROF
+SHEET NO REVISION169001SERVO DRIVES - PHASING BELT 3, PHASING BELT 4
+SIPTU 480 VAC D 10 101000 105024MAIN PANEL
+24CMAIN PANEL
+2424C24MAIN PANEL
+1050MAIN PANEL
+2424C
+1051
+1052
+1053
+1054
+1055
+1056
+10571058
+1059
+1060
+1061
+1062
+1063
+1064
+1065
+1066
+1067
+1068
+1069
+1070
+1071
+1072
+1073
+1074
+1075
+1076
+1077
+1078
+1079
+1080
+1081
+1082
+1083
+1084
+1085
+1086
+1087
+1088
+10891001
+1002
+1003
+1004
+1005
+1006
+10071008
+1009
+1010
+1011
+1012
+1013
+1014
+1015
+1016
+1017
+1018
+1019
+1020
+1021
+1022
+1023
+1024
+1025
+1026
+1027
+1028
+1029
+1030
+1031
+1032
+10331034
+1035
+1036
+1037
+1038
+1039PE1067PHASING BELT 4
+REGISTRATION SENSOR RECEIVER
+FRAMEBLACKPE1017PHASING BELT 3
+REGISTRATION SENSOR RECIEVER
+FRAME
+BLUEBLACK
+PE1021PHASING BELT 3
+REGISTRATION SENSOR TRANSMITTER
+FRAMEBLUE
+BLACK
+44321SAFE OFF
+STO21MOTOR FEEDBACK
+MF
+21MOTOR BRAKE
+MPGREEN
+BLUEBLACKBROWN
+SHUNT
+RESISTOR
+RC
+214321DIGITAL INPUTS
+IOD4321INPUT POWER
+IPDMOTOR POWER
+MP
+2124VDC INPUT
+CPKENETIX 5500DRV1007PHASING BELT 1 DRIVE
+2198-H015-ERSMAIN PANEL
+150283
+GND
+L1
+L2
+L3
+24V+
+24V-
+IN1
+COM
+IN2
+SHLD
+SB+
+SB-
+S1
+SC
+S2
+ETHERNET 1
+ETHERNET 2U
+V
+WGND
+MBRK+
+MBRK-D+
+D-
+SHIELD
+DC+
+SHCBL1007
+VPL SERVO MOTORMOTOR
+POWERMTR1007PHASING BELT 1 MOTOR
+156065FRAME VPL-B1003F-PJ12ASU
+V
+WGND
+1
+2
+24S1MAIN PANEL
+24CMAIN PANEL
+24S2MAIN PANEL24S1
+24S2
+CIP NETWORK981
+9819981
+1031NOTE: USE
+DC BUS,
+AC POWER, AND
+CONTROL POWER
+JUMPERS TO
+DISTRIBUTE
+POWER TO OTHER
+DRIVES.
+192.168.1.54
+CIP NETWORK1031
+10791024C
+44321SAFE OFF
+STO21MOTOR FEEDBACK
+MF
+21MOTOR BRAKE
+MPGREEN
+BLUEBLACKBROWN
+SHUNT
+RESISTOR
+RC
+214321DIGITAL INPUTS
+IOD4321INPUT POWER
+IPDMOTOR POWER
+MP
+2124VDC INPUT
+CPKENETIX 5500DRV1057PHASING BELT 2 DRIVE
+2198-H015-ERSMAIN PANEL
+150283
+GND
+L1
+L2
+L3
+24V+
+24V-
+IN1
+COM
+IN2
+SHLD
+SB+
+SB-
+S1
+SC
+S2
+ETHERNET 1
+ETHERNET 2U
+V
+WGND
+MBRK+
+MBRK-D+
+D-
+SHIELD
+DC+
+SHCBL1057
+VPL SERVO MOTORMOTOR
+POWERMTR1057PHASING BELT 2 MOTOR
+156065FRAME VPL-B1003F-PJ12ASU
+V
+WGND
+1
+2
+24S1MAIN PANEL
+24CMAIN PANEL
+24S2MAIN PANEL24S1
+24S2
+CIP NETWORK1031
+1031101031
+1081NOTE: USE
+DC BUS,
+AC POWER, AND
+CONTROL POWER
+JUMPERS TO
+DISTRIBUTE
+POWER TO OTHER
+DRIVES.
+192.168.1.5524C
+CIP NETWORK1081
+1611BROWN
+BLUE
+BLUE
+BLACKBROWN
+PE1071PHASING BELT 4
+REGISTRATION SENSOR TRANSMITTER
+FRAMESHEET 1 OF 3
+MAIN ELECTRICAL PANEL
+SIPTU, AB CONTROLS, 480VAC, K5500
+169002SHEET 2 OF 3
+MAIN ELECTRICAL PANEL
+SIPTU, AB CONTROLS, 480VAC, K5500
+169002Find NumPart NumberItem Description QtyRev
+E
+0 168676 CONTROL PANEL BACK PLATE, SIPTU, AB CONTROLS, 480VAC, K5500 1 A
+1 099226 TRF-Transformer 1 A
+3 090318 FSH-Fuse Holder 3 D
+4 090319 FSH-Fuse Holder 2 D
+6 165521 FUS-Fuse 3 A
+7 096685 FUS-Fuse 5 A
+8 125063 FUS-Fuse 5 A
+10 147260 FSH-Fuse Holder 4 A
+11 114543 FUS-Fuse 3 A
+12 044232P FUS-Fuse 4 A
+14 037732P TER-Terminal 2 B
+15 037735P TER-Terminal 2 B
+16 147258 TER-Terminal 4 A
+17 147259 FSH-Fuse Holder 7 A
+20 086816 FLT-Filter 1 B
+26 150283 DRV-Drive 6 B
+28 150284 CON-Connector 2 A
+29 150285 CON-Connector 4 A
+30 165524 VFD-Variable Frequency Drive 1 A
+31 150282 FLT-Filter 1 A
+32 159041 VFD-Variable Frequency Drive 1 A
+35 147339 TER-Terminal 3 A
+36 147338 TER-Terminal 1 A
+37 150125 TER-Terminal 2 A
+40 145859 SWT-Switch 1 A
+41 058847 PWB-Power Block 1 C
+42 098232 CVP-Cover Plate 1 A
+43 136004 PWS-Power Supply 1 A
+44 145349 HAN-Handle 1 A
+45 146987 CBL-Cable 1 A
+50 136005 HUB-Hub 1 A
+56 144807 PLC-Programmable Logic Controller 1 A
+58 159043 PLC-Programmable Logic Controller 1 A
+59 069838 PLC-Programmable Logic Controller 1 D
+60 069842 PLC-Programmable Logic Controller 2 A
+61 069835 PLC-Programmable Logic Controller 3 A
+62 069833 PWS-Power Supply 1 D
+63 069832 PLC-Programmable Logic Controller 1 A
+64 069839 PLC-Programmable Logic Controller 1 A
+70 133497 REL-Relay 1 B
+71 111509 REL-Relay 4 B
+72 111510 MOD-Module 4 B
+73 111507 REL-Relay 4 A
+74 147254 TER-Terminal 47A
+75 147261 TER-Terminal 8 A
+76 095671 TER-Terminal 8 A
+77 134229 JMP-Jumper 6 A
+82 P0072510 FUS-Fuse 1 A
+83 P0072515 FUS-Fuse 3 C
+85 012853P THS-Thermostats 1 B
+86 086829 PAN-Panel 25B
+87 P00856112MNR-Mounting Rail 25 -
+88 125025 MNR-Mounting Rail 3 A
+89 096518 TER-Terminal 1 A
+90 033324P TER-Terminal 2 -
+91 134234 TER-Terminal 2 B
+92 091502 CBL-Cable 2 B
+93 136162 CBL-Cable 6 A
+94 114719 CBL-Cable 1 A
+95 117610 FUS-Fuse 3 A
+96 147257 TER-Terminal 51A
+97 147256 TER-Terminal 51A
+98 147255 TER-Terminal 51ASHEET 3 OF 3
+MAIN ELECTRICAL PANEL
+SIPTU, AB CONTROLS, 480VAC, K5500
+169002DRAWING NUMBEROF
+SHEET NO REVISION169002MAIN PANEL LAYOUT
+SIPTU 480 VAC E 1 1AB AB AB AB AB AB AB ABDC POWER
+SUPPLY
+ 1 AMP
+FU106SERVO LINE
+FILTER
+25AMP
+FU118DOOR LOCK
+1AMP
+FU133
+AB ABTRANSFORMER
+3AMP
+FU201
+FU208
+FU208A
+FU216
+FU217
+GND14 15
+14 15OPTIONAL
+480VAC POWER
+DISTRIBUTION
+PDB105
+41 42L3L2L1 ++--POWER SUPPLY
+INPUT: 480 VAC 3PH
+OUTPUT: 24 VDC 10AMP
+LINELOADPOWER
+RUN I/O
+RS232
+OK
+RUN REM PROGBAT
+LINK NET OK
+SERVO FILTER
+FLT118PLC POWER SUPPLY
+PLC552CPU
+PLC554ETHERNET
+PLC 562INPUTS
+PLC600
+62
+5658 59 61 6163OUTPUTS
+PLC700
+64 60 60
++24VDC24V
+COM+24VDC
+AFTER ESTOPMCR
+SR350
+CR700
+CR702
+CR703
+CR705
+71 71 71 71 7475 75
+72
+7372
+7372
+7372
+737724
+24
+24
+24
+24
+24
+24C
+24C
+24C
+24C
+24C
+24C
+24C
+24C
+24C
+24C
+24S1
+24S1
+24S1
+24S2
+24S2
+24S224
+24
+24
+24
+FU364
+17
+12
+FU365
+17
+1275
+50FU452
+FU522
+17
+8317
+83
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OO
++-OOI:02/00
+I:02/01
+I:02/02
+I:02/03
+I:02/04
+I:02/05
+I:02/06
+I:02/07
+302
++-OO
++-OO
++-OO
++-OO
++-OO
++-OOI:02/08
+I:02/09
+I:02/10
+I:02/11
+I:02/12
+I:02/13
+I:02/14
+I:02/15
+O:03/00
+O:03/01
+O:03/02
+O:03/03
+O:03/04
+O:03/05
+O:03/06
+O:03/07
+O:03/08
+O:03/09
+O:03/10
+O:03/11
+O:03/12
+O:03/13
+O:03/14
+O:03/15
+302A
+302B
+302C
+302D
+302E
+315
+305
+305A
+305B
+305C
+305D
+305E
+318
+456
+456A
+459
+459A
+462
+462A
+465
+465A
+74
+SPARE
+SPARE
+SPARE
+SPARE
+SPARE
+SPARE
+SPARE
+SPARE
+SPARE
+GND
+GND
+GND
+GNDINFEED CONVEYOR VFD
+VFD15285THERMOSTAT
+TAS452LINK NET OKOPTIONAL
+ETHERNET
+PLC 568
+PWS106
+AB AB ABVFD152
+3 AMP
+FU152
+FU107
+ETHERNET SWITCH
+ES50443
+4 310
+1010
+1017
+METERING BELT
+DRV807ACCEL BELT PHASING BELT 1
+2198-H015-ERS 2198-H015-ERS 2198-H015-ERS 2198-H015-ERSPHASING BELT 2
+26 28
+93DRV857
+26 29
+93DRV907
+26 29
+93DRV957
+26 28
+93PHASING BELT 3
+2198-H015-ERS 2198-H015-ERSPHASING BELT 4
+DRV1007
+26 29
+93DRV1057
+26 29
+93 30 32SERVO POWER
+DISTRIBUTION
+PDB118
+41 42
+120 VAC SUPPLY
+TRANSFORMER
+XF205MAIN POWER
+DISCONNECT
+DS101
++-OO
++-OO
++-OO
++-OO
++-OOSPARE
+SPARE
+SPARE
+SPARE
+SPARE
+96 97 98 75 VFD FILTER
+FLT152
+120
+03111 1211 128 74
+83
+93
+61195 40
+61
+70
+7574
+7774
+77
+FU813
+FU963
+17
+8317
+83Find NumPart NumberItem Description QtyNotes Rev
+C
+1 156065 SRV-Servo Motor 6 A
+2 150751 CBL-Cable 6 A
+4 144665-1 SNR-Sensor 4 A
+5 144665-2 SNR-Sensor 4 A
+10 011101P CBL-Cable 8 C
+30 149828 GRO-Grommet 12if cord in place, split one wall to fit A
+31 004158P CBL-Cable 25 -
+32 099328 CBL-Cable 1 B
+34 140975 SWT-Switch REFOptional High voltage disconnect. A169003FRAME ELECTRICALS, SIPTU
+AB CONTROLS, 480VAC, K5500
+169003FRAME ELECTRICALS, SIPTU
+AB CONTROLS, 480VAC, K5500Find NumPart NumberItem Description QtyRev
+A
+1 159516 DISPLAY, PANELVIEW PLUS 6 EXTENDED 
+FEATURES10" WITH 2GB SD CARD.1 A
+4 114940 SWT-Switch 1 A
+5 114951 SWT-Switch 1 A
+6 099963 SWT-Switch 1 C
+8 124210 SWT-Switch 1 A
+9 103534 LBL-Label 1 A
+10 103535 LBL-Label 1 A
+11 103537 LBL-Label 1 A
+12 114487 NMP-Nameplate 1 AOPERATOR INTERFACE, SIPTU
+AB CONTROLS, 480VAC, K5500
+169004
+OPERATOR INTERFACE, SIPTU
+AB CONTROLS, 480VAC, K5500
+169004Find NumPart NumberItem Description QtyNotes Rev
+SR4W Former B
+0 070020 CON-Connector 1 A
+0 121220 PLL-Pilot Light 1 C
+0 151288 SWT-Switch 1 A
+0 154023 LGH-Light 4 A
+3 110901 ADP-Adapter 1 B
+9 100872 LCK- 1 B
+10 016866P ENC-Enclosure 1 -
+12 N8800508 CDF-Conduit Fitting 25 A
+14 091501 CBL-Cable 2RECPTB
+21 170574 CON-Connector 6 A169005CONTROL PANEL AUXILLARY EQUIPMENT
+SIPTU, AB CONTROLS, 480VAC, K5500
+169005CONTROL PANEL AUXILLARY EQUIPMENT
+SIPTU, AB CONTROLS, 480VAC, K5500Replac emen t Parts
+1. When or dering r eplac emen t par ts, the f ollowing inf ormation must be
+furnished:
+ Machine M odel
+ Serial Number
+ Part Number and D escr iption
+2. Or ders should be plac ed dir ectly with the P arts Sales D epar tmen t.
+ Kliklok-Woodman
+ Decatur, Georgia 30035
+ E-M ail:ser vice@ k liklok-woodman.c om
+ Telephone: 770/981-5200 • F ax: 770/987-7160
+3. The last numer ical g rouping in a c ertain •B• standar d par t number
+spac ers, shaf ts, key s, belts , rails and dr ive chains tha t have •B• numbers .
+4. M otor: To reorder, please g ive the f ollowing inf ormation fr om the mot or
+namepla te: M ake, Model Number , H.P . Rating , RPM, Voltage , Brake or
+Non-Br ake, Part Number , etc.
+5. Spr ockets: To replac e, give Part Number , pitch, number of t eeth and bor e
+size.
+REPLACEMENT PARTS
+HOMESCHWANS - ATLANTA
+HS5160Find NumPart NumberItem Description QtyRev
+J
+1 HS5160-1 SCHWANS ENTERPRISE CARTONER, 12", PIC INFEED, STD HAND 1 I
+2 HS5160-2 SCHWANS WSIPTU, IN-LINE STYLE PRODUCT INFEED  UNIT 1 E
+10 LINE LAYOUT, ENTERPRISE WITH WSIPTU INFEED, 
+HS5160 PORTABILITY KIT, ELEVATED KIT16-4485 REFCSCHWANS - ATLANTA
+KLIKLOK 'SIPTU'
+HS5160
+SCHWANS - ATLANTA
+KLIKLOK 'SIPTU'
+HS5160SCHWANS W/SIPTU, IN-LINE STYLE
+PRODUCT INFEED  UNIT
+HS5160-2
+SCHWANS W/SIPTU, IN-LINE STYLE
+PRODUCT INFEED  UNIT
+HS5160-2Find NumPart NumberItem Description QtyRev
+E
+0 SP01153 RECOMMENDED MECHANICAL SPARES; 12" WSIPTU,  PN9+ REFC
+0 SP01535 ELECTRICAL SPARES LIST, SIPTU, AB CONTROLS, 480VAC, K5500REFA
+1 147354 12" WSIPTU ASSY 2 G
+1 169585 CNV-Conveyor 1 B
+1 169586 CNV-Conveyor 1 B
+2 169000 TOP ELEC, SIPTU, AB CONTROLS, 480VAC, MOTORS, K5500 2 A
+3 149237 KIT, WSIPTU VORTEX COOLING ASSY 2 B
+4 169294 OUTFEED TRANSFER KIT, WSIPTU TO 
+ENTERPRISE, CASTELLATED ROLLERS, V22 B
+5 160315 CATCH PAN, WSIPTU, 12" FOR 2.5" LUG 2 A
+6 160327-001INFEED ROLLER KIT, WSIPTU  FOR 5 IN DIA SPROCKET, OPP 2 A
+7 149208 CASTER KIT, WSIPTU, 40" ELEVATION 1 C
+8 169296 RISER KIT, WSIPTU, 37" (MIN) - 42" (MAX) ELEVATION 1 A
+9 170143 OUTFEED GUARD KIT, SS MESH SIPTU TO ENTERPRISE 2 E
+10 107172 GASKET - SERVO CABLE COVER 2 B
+11 170575 SERVO CABLE BULKHEAD 2 A
+14 DELETIONSDELETION LIST REF-SHEET 1 OF 3
+12" WSIPTU ASSEMBLY
+147354SHEET 2 OF 3
+12" WSIPTU ASSEMBLY
+147354Find NumPart NumberItem Description QtyRev
+G
+1 147355 CONVEYOR ASSY, 12" WSIPTU 1 F
+2 147168 FRAME WELDMENT, WSIPTU 1 E
+3 080705 FOT-Foot 4 B
+4 149383 ENCLOSURE ASSY, WSIPTU 1 E
+5 147425 HMI & MTG ASSEMBLY WSIPTU 1 B
+7 P0044875 BSH-Bushing 2 -
+8 106057 BLOCK, TOP PIVOT 1 A
+9 149897 BLOCK, TOP LOCK 1 A
+10 149894 BMP-Bumper 2 A
+11 106076 CTR-Caster 1 A
+12 107980 BRACKET WMT, CASTER MOUNTING 1 A
+13 146281 SIPTU CABLE SHROUD 1 C
+14 149906 CLP-Clamp 1 A
+15 146411 DCL-Decal 2 B
+16 102608 DCL-Decal 2 C
+17 039428C DCL-Decal 1 -
+18 000150931000SAFETY SIGN-ENGLISH;NX9210PURCHASE EXCESS 1 -
+19 000150932000SAFETY SIGN-SPANISH;NX9210PUR     EXCESS 1 -
+20 072358 DCL-Decal 1 B
+21. 072359 DCL-Decal 1 B
+22 135036 DCL-Decal 1 C
+23 152587 DCL-Decal 2 A
+24 153601 DCL-Decal 1 A
+25 P00776140 DCL-Decal 1 B
+26 054851P FTG-Fitting 24 -
+27 P0043015 CON-Connector 12 -
+28 P0043019 FTG-Fitting 12 -
+29 083013 FTG-Fitting 12A
+30 P00430006 TUB-Tube 60 -SHEET 3 OF 3
+12" WSIPTU ASSEMBLY
+147354SHEET 1 OF 4
+CONVEYOR ASSEMBLY, 12" WSIPTU
+147355Find NumPart Number Item Description QtyRev
+F
+1 147366 SIDE MTG PLATE,  LH 1 D
+2 147384 SIDE MTG PLATE, RH 1 C
+3 147208 IDLER ROLLER ASSEMBLY 12C
+4 147333 BFL-Bearing, Flange 12A
+5 147216 DRIVE SHAFT ASSEMBLY 6 B
+6 105814 MOTOR MOUNTING PLATE 6 B
+7 147234 TENSIONER ROLLER ASSEMBLY 6 A
+8 105816 BLOCK, TAKE-UP 12B
+9 147412 BRKT,  LH TAKE-UP WMT 4 C
+10 147412-001 BRKT,  RH TAKE-UP WMT 4 C
+11 149751 BRKT,  LH TAKE-UP WMT, FLANGELESS 1 A
+12 147413 BRKT,  LH TAKE-UP WMT, ACCEL 1 D
+13 147413-001 BRKT,  RH TAKE-UP WMT, ACCEL 1 C
+14 149765 KEEPER, END SHAFT HOLD-DOWN 4 A
+15 105839 CROSS MEMBER 3 A
+16 B72E147247PPLY GTS 8MX-67S-12 6 A
+17 B72E070028 PLATED BSH MRT 2012-30MM 6 -
+18 B72E147249PBSH DGE 1008-16MM 6 A
+19 B72E147248PPLY GTS 8MX-22S-12 6 A
+20 147250 BLT-Belt 6 A
+21 B400561201094SPACER .56 X .12 X 1.094 SS; 24 -
+22 147636 BLT-Belt 4 B
+23 147635 BLT-Belt 1 B
+24 147634 BLT-Belt 1 B
+25 B78080481322HEX SPACER; M10 THREAD X 4.813 LG. 8 A
+26 105891 CATCH PAN, WSIPTU, 12" 1 C
+27 105895 COVER RH, DOWNSTREAM 1 G
+28 010583P HAN-Handle 8 -
+29 105916 COVER RH, UPSTREAM 1 F
+30 105931 BTR-Belt Track 4 D
+31 105932 BTR-Belt Track 1 D
+32 149776 BTR-Belt Track 1 B
+33 147350 END CAP 1 A
+34 147350-001 END CAP, OPP 1 A
+35 144665 TRANSMITTED LASER BEAM SENSOR ASSY REFA
+36 168994 BRACKET, ANGLE, 12" WSIPTU 8 A
+37 106146 NUT PLATE 8 A
+38 144800 SENSOR BRACKET, FOR 144665 (-1 OR -2) 8 E
+39 B780803125223/4" HEX SPACER 3.125 LG, M10 THREAD 8 A
+40 147362 COVER LH, DOWNSTREAM 1 B
+41 147365 COVER LH, UPSTREAM 1 B
+42 147420 FST-Fastener 12A
+43 FS M8X1.25 HEX NUT 12 -
+44 149751-001 BRKT,  RH TAKE-UP WMT, FLANGELESS 1 A
+45 132651 SUPPORT, SMALL CABLE W/ ATTACHING PLATE 4 BSHEET 2 OF 4
+CONVEYOR ASSEMBLY, 12" WSIPTU
+147355 SHEET 3 OF 4
+CONVEYOR ASSEMBLY, 12" WSIPTU
+147355 SHEET 4 OF 4
+CONVEYOR ASSEMBLY, 12" WSIPTU
+147355Find NumPart NumberItem Description QtyRev
+A
+1 147212 SHAFT, IDL ER RO LLER 1 B
+2 147209 IDLER RO LLER 1 A
+3 089570 BRD-Bearing, Radial 2 A
+4 147210 SEL-Seal 2 A
+5 089596 RNG -Ring 2 B
+ IDLER ROLLER ASSEMBLY
+147208 TENSIONER ROLLER ASSEMBLY Find NumPart NumberItem Description QtyRev
+A
+1 147235 ROLLER, TENSIONER 1 A
+2 147243 SHAFT, TENSIONER 1 A
+3 093912 BRG-Bearing 2 B
+4 147239 SEL-Seal 2 A
+5 128922 RNG -Ring 2 A
+147234SHEET 1 OF 3
+ENCLOSURE ASSEMBLY, WSIPTU
+149383Find NumPart NumberItem Description QtyRev
+E
+1 147135 MAIN CONTROL BOX WMT, WSIPTU 1 H
+2 105905 DOOR, ELECTRICAL BOX DOWN STREAM  1 C
+3 105905-001DOOR, ELECTRICAL BOX UP STREAM  1 C
+4 P0021554 GSK-Gasket 22 -
+5 153729 HINGE, STAINLESS, BLOCK 6 A
+6 159665 GASKET- HINGE 6 A
+7 120468 LTH-Latch 8 A
+8 120469 ENCLOSURE LATCH CAM 7 D
+9 149323 REMOVABLE CENTER SUPPORT; ELECTRICAL ENCLOSURE 1 A
+10 030502A GASKET, REMOVABLE C'SUPPORT 2 B
+13 149243 VORTEX GASKET 1 A
+14 149242 COVER PLATE, NO VORTEX 1 A
+15 149957 ENCLOSURE LATCH CAM, SHALLOW 1 A
+SHEET 2 OF 3
+ENCLOSURE ASSEMBLY, WSIPTU
+149383SHEET 3 OF 3
+ENCLOSURE ASSEMBLY, WSIPTU
+149383Find NumPart NumberItem Description QtyRev
+B
+1 169319 HMI ENCLOSURE, PV+ 1000, SIPTU 1 A
+2 147424 HMI SUPPORT 1 B
+3 169329 HMI WASHER, SIPTU 1 A
+4 085592 WSH-Washer 1 A
+5 085593 NUT-Nut 1 A
+6 091577 THRUST BEARING, CONTROL BOX 2 A
+HMI & MTG ASSEMBLY
+WSIPTU
+147425149237KIT, W/SIPTU VORTEX
+COOLING ASSEMBLYSHEET 1 OF 3Find NumPart NumberItem Description QtyNotes Rev
+B
+1 105136 VTC-Vortex Cooler 1 A
+2 149220 MTG BLOCK, VORTEX 1 C
+3 P0042126 FTG-Fitting 2 -
+4 P0042117 FTG-Fitting 2 -
+5 P0042374 FTG-Fitting 1 -
+6 149271 VALVE ASSY, WSIPTU VORTEX 1 B
+7 147380 DOOR, ELECTRICA L BOX, RH 1REPLACES 105905 B
+8 147381 DOOR, ELECTRICA L BOX, LH 1REPLACES 105905-001 B
+9 035212P CON-Connector 1 A
+10 P0042660 CON-Connector 1 -
+149237KIT, W/SIPTU VORTEX
+COOLING ASSEMBLYSHEET 2 OF 3149237KIT, W/SIPTU VORTEX
+COOLING ASSEMBLYSHEET 3 OF 3Find NumPart NumberItem Description QtyRev
+B
+1 161181 END CAP, WSIPTU FOR ENTERPRISE, WITH ROLLER TRANSFER MTG 1 A
+2 161181-001END CAP, WSIPTU FOR ENTERPRISE, WITH ROLLER TRANSFER MTG, OPP 1 A
+3 168532 TRANSFER PLATE, CASTELLATED, FOR ROLLERS 1 A
+4 161191-1 TRANSFER ROLLER PIN, 25 LG 12A
+5 161191-2 TRANSFER ROLLER PIN, 282 LG 1 A
+6 161192 ROL-Roller 21B
+OUTFEED TRANSFER KIT
+WSIPTU TO ENTERPRISE
+CASTELLATED ROLLERS, V2
+169294Find NumPart Number QtyRev
+AItem Description
+1 160328-001 1 A END CAP, WSIPTU FOR 5 IN SPROCKET, OPP
+2 149854 1 A ROLLER ASSY, WSIPTU OUTFEED
+3 150204 2 A SPACER, OUTFEED ROLLER
+4 FS 2 - M6 LOCK WSHR, SS
+5 149862 2 A PIVOT BOLT
+INFEED ROLLER KIT, WSIPTU
+FOR 5 IN DIA SPROCKET, OPP
+160327-001Find NumPart NumberItem Description QtyRev
+C
+1 148886 LEVELING PAD EXTENSION, 24MM X 150 LG, SS 4 C
+2 113555 MOUNTING PAD, CASTER MTG 6 B
+3 148878 BRACKET WMT, CASTER MOUNTING 1 A
+4 148834 BRACKET, CASTER MTG, SHORT 3 A
+5 106076 CTR-Caster 3 A
+6 169221 FOT-Foot 4 A
+7 169222 LEVELER STUD, M24 X 200 4 A
+8 066021 FST-Fastener 4 -CASTER KIT, WSIPTU
+40" ELEVATION
+149208Find NumPart NumberItem Description QtyRev
+A
+1 148886 LEVELING PAD EXTENSION, 24MM X 150 LG, SS 4 C
+2 148878 BRACKET WMT, CASTER MOUNTING 1 A
+3 169221 FOT-Foot 4 A
+4 169222 LEVELER STUD, M24 X 200 4 A
+5 066021 FST-Fastener 4 -
+ RISER KIT, WSIPTU, 37" (MIN)
+42" (MAX) ELEVATION
+169296Find NumPart Number Item Description QtyRev
+D
+1 170929 TUNNEL GUARD, PIC INFEED SS MESH 1 B
+2 170933 TUNNEL GUARD, SIPTU OUTFEED SS MESH 1 A
+3 170933-001 TUNNEL GUARD, SIPTU OUTFEED SS MESH, OPP HAND 1 A
+4 B400501200725SPACER: .725 LG; 4 A
+5 B780501800181/2" HEX SPCR X 1.80" LG, M6 THREAD 2 A
+6 B780501235181/2" HEX SPCR X 1.235" LG, M6 THREAD 2 A
+7 B400501200250SPACER; 12 -
+8 B780503025181/2" HEX SPACER 3.025" LG, M6 THREAD 5 A
+9 B780504775181/2" HEX SPACER 4.775" LG, M6 THREAD 5 A
+10 170188 GUSSET, SIPTU OUTFEED GUARD 2 A
+11 161679 CLP-Clamp 2 A
+12 170945 GUARDING LATCH B 2 A
+13 170943 GUARDING LATCH A 2 AOUTFEED GUARD KIT, SS
+MESH SIPTU TO ENTERPRISE
+170143 85.9 
+50.4 CARTON BLANK
+LOAD HEIGHT
+ 29.4 40.8  PRODUCT 
+INFEED CONVEYOR HEIGHT 159.9 
+40.0CARTON
+DISCHARGE HEIGHTCARTON BASE
+"Z" DATUMEND OF CARTON 
+BASE RAILS
+ABORT 
+CONVEYOR
+DISCHARGEGUARDS FULLY MESHED 490.9 
+ 29.7 
+ 102.4  60.3 
+ 53.1 
+ 53.1  33.0  163.8 
+ 51.6  122.5 
+ R32.3  R43.3 
+ 61.3 
+ 45.3  134.8 
+ 1.7 
+ 39.5 
+WSIPTU INFEED CONVEYORWSIPTU PRODUCT TRANSFER UNIT
+ENTERPRISE PRODUCT
+ INFEED CONVEYORENTERPRISE CARTON BLANK HOPPERELECT ENCLOSURE
+DOOR SWINGS
+HMI, SWIVELS TO BOTH SIDEBARREL CAM INSERTERGULLWING DOOR SWINGS
+GULLWING DOOR SWINGS MAIN AIR CONNECTION (ENTERPRISE)NORDSON GLUE TANKOUTFEED
+TUNNEL
+CONSTANT SCORE LINE
+"Y" DATUMCENTERLINE UPSTREAM HOOP
+"X" DATUM
+ELECTRICAL
+ENCLOSURE
+MAIN ELECTRICAL CONNECTION (ENTERPRISE) 
+ABORT CONVEYOR
+SAFETY TUNNEL OFFINK JET CONTROL CABINET
+ELECTRICAL CONNECTION  (SIPTU)
+AIR CONNECTION (SIPTU)
+LINE LAYOUT, ENTERPRISE WITH WSIPTU INFEED
+HS5160, PORTABILITY KIT, ELEVATED KIT
+16-4485RECOMMENDED S PARES
+HOME
+SCHWANS - ATLANTA
+HS5160Find NumPart NumberItem Description Qty  
+C
+1 147333 BFL-Bearing, Flange 2 A
+2 B72E147248PPLY GTS 8MX-22S-12 2 A
+3 B72E147247PPLY GTS 8MX-67S-12 2 A
+4 147250 BLT-Belt 4 A
+5 147636 BLT-Belt 4 B
+6 147635 BLT-Belt 1 B
+7 147634 BLT-Belt 1 B
+8 147234 TENSIONER RO LLER ASSEMBLY 2 A
+9 147216 DRIV E SHAFT ASSEMBLY 2 B
+10 147208       4 C
+     IDLER ROLLER ASSEMBLYRECOMMENDED MECHANICAL SPARES
+12” WSIPTU, PN109+
+SP01153
+RECOMMENDED MECHANICAL SPARES
+12” WSIPTU, PN109+
+SP01153Find NumPart NumberItem Description QtyRev
+A
+1 150283 DRV-Drive 1 A
+2 150284 CON-Connector 1 A
+3 150285 CON-Connector 1 A
+4 150751 CBL-Cable 1 A
+5 156065 SRV-Servo Motor 1 A
+6 144665-1 SNR-Sensor 1 A
+7 114951 SWT-Switch 1 A
+8 144665-2 SNR-Sensor 1 A
+9 095765 FUS-Fuse 3 A
+10 099963 SWT-Switch 1 C
+11 096685 FUS-Fuse 5 A
+12 124210 SWT-Switch 1 A
+13 125063 FUS-Fuse 5 A
+14 011101P CBL-Cable 1 C
+15 114543 FUS-Fuse 4 A
+16 044232P FUS-Fuse 3 A
+17 086703 FUS-Fuse 3 B
+20 086816 FLT-Filter 1 B
+32 099328 CBL-Cable 1 B
+34 140975 SWT-Switch 1 A
+40 145859 SWT-Switch 1 A
+43 136004 PWS-Power Supply 1 A
+44 145349 HAN-Handle 1 A
+45 146987 CBL-Cable 1 A
+50 136005 HUB-Hub 1 A
+56 144807 PLC-Programmable Logic Controller 1 A
+58 159043 PLC-Programmable Logic Controller 1 A
+59 069838 PLC-Programmable Logic Controller 1 D
+60 069842 PLC-Programmable Logic Controller 1 A
+61 069835 PLC-Programmable Logic Controller 1 A
+62 069833 PWS-Power Supply 1 D
+63 069832 PLC-Programmable Logic Controller 1 A
+64 069839 PLC-Programmable Logic Controller 1 A
+70 086670 REL-Relay 1 B
+71 111509 REL-Relay 1 B
+72 111510 MOD-Module 4 B
+73 111507 REL-Relay 4 A
+82 P0072510 FUS-Fuse 3 A
+83 P0072515 FUS-Fuse 1 C
+85 012853P THS-Thermostats 1 B
+92 091502 CBL-Cable 1 B
+93 136162 CBL-Cable 1 A
+95 117610 FUS-Fuse 3 A
+99 157603 CNT-Contactor 1 A
+100 094857 REL-Relay 1 BELECTRICAL SPARES LIST
+SIPTU, AB CONTROLS, 480VAC, K5500
+SP01535CUST OM P ARTS LIST
+HOME
+SCHWANS - ATLANTA
+HS5160SETUP  SHEETS
+HOME
+SCHWANS - ATLANTA
+HS5160SIPTU Setup Sheet
+®SIPTU  Setup Sheet
+Customer Name:
+Customer Location:Customer N ame:
+Customer L ocation:Factory #                                                                 FAT Date:
+5224 Snapfinger Woods Dr.
+Decatur, Georgia 30035Tel: 770 981 5200 • Fax 770 987 7160
+Email: sales@klikwood.com
+Western Drive, Hengrove Park Estate,
+Whitchurch, Bristol, BS14 OAY, England
+Tel: +44 1275 836131• Fax: +44 1275 891754
+Email: sales@kliklook-woodman-int.com
+SIPTU   Setup Sheet 2014Carton   Color Designation
+Carton Size:    Machine Speed            CPM
+Maximum Recorded        Fault Trip PointTorque Readings
+Metering Belt
+Accel BeltPhasing Belt 1Phasing Belt 2Phasing Belt 3Phasing Belt 4
+Has the Zero Position Been set?         Yes                 No
+Machine Setup 1
+SIPTU OffsetCorrection DistanceProduct Length (Inches)
+Machine Setup 2Phasing Belt 1 Correction FactorPhasing Belt 2 Correction FactorPhasing Belt 3 Correction FactorPhasing Belt 4 Correction FactorEngineering Data Screen
+VFD Speed RatioHS5160 10/27/2016
+SFCGSC-Atlanta
+One Lemon Lane NE
+Atlanta ,GA 30307-2899
+'A' RED
+9.625"x2.375"x9.625" 70/160
+29 100
+31 100
+31 100
+37 100
+36 100
+31 100
+✔
+7.4
+0.700
+8.5
+9.5
+0.250
+0.333
+0.500
+1.000SIPTU Setup Sheet
+®SIPTU  Setup Sheet
+Customer Name:
+Customer Location:Customer N ame:
+Customer L ocation:Factory #                                                                 FAT Date:
+5224 Snapfinger Woods Dr.
+Decatur, Georgia 30035Tel: 770 981 5200 • Fax 770 987 7160
+Email: sales@klikwood.com
+Western Drive, Hengrove Park Estate,
+Whitchurch, Bristol, BS14 OAY, England
+Tel: +44 1275 836131• Fax: +44 1275 891754
+Email: sales@kliklook-woodman-int.com
+SIPTU   Setup Sheet 2014Carton   Color Designation
+Carton Size:    Machine Speed            CPM
+Maximum Recorded        Fault Trip PointTorque Readings
+Metering Belt
+Accel BeltPhasing Belt 1Phasing Belt 2Phasing Belt 3Phasing Belt 4
+Has the Zero Position Been set?         Yes                 No
+Machine Setup 1
+SIPTU OffsetCorrection DistanceProduct Length (Inches)
+Machine Setup 2Phasing Belt 1 Correction FactorPhasing Belt 2 Correction FactorPhasing Belt 3 Correction FactorPhasing Belt 4 Correction FactorEngineering Data Screen
+VFD Speed RatioHS5160 10/27/2016
+SFCGSC-Atlanta
+One Lemon Lane NE
+Atlanta ,GA 30307-2899
+'A' RED
+9.625"x2.375"x9.625" 120/160
+28.3 100
+39.4 100
+42.4 100
+41.8 100
+38.9 100
+38.6 100
+✔
+7.4
+0.700
+8.5
+9.5
+0.250
+0.333
+0.500
+1.000HOME
+SERVICE BULLETINS
+SCHWANS - ATLANTA
+HS5160

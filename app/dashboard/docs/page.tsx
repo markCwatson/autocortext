@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { type PutBlobResult } from '@vercel/blob';
+import { upload } from '@vercel/blob/client';
 import AnimatedText from '@/components/AnimatedText';
 import { useSession } from 'next-auth/react';
 import Search from '@/components/Search';
@@ -50,6 +52,42 @@ function CreateEmbeddings() {
   );
 }
 
+function UploadPdf() {
+  const inputFileRef = useRef<HTMLInputElement>(null);
+  const [blob, setBlob] = useState<PutBlobResult | null>(null);
+  return (
+    <>
+      <form
+        className="mt-4"
+        onSubmit={async (event) => {
+          event.preventDefault();
+
+          if (!inputFileRef.current?.files) {
+            throw new Error('No file selected');
+          }
+
+          const file = inputFileRef.current.files[0];
+
+          const newBlob = await upload(file.name, file, {
+            access: 'public',
+            handleUploadUrl: '/api/upload',
+          });
+
+          setBlob(newBlob);
+        }}
+      >
+        <input name="file" ref={inputFileRef} type="file" required />
+        <button type="submit">Upload</button>
+      </form>
+      {blob && (
+        <div>
+          Blob url: <a href={blob.url}>{blob.url}</a>
+        </div>
+      )}
+    </>
+  );
+}
+
 export default function Documentation() {
   const [selectedDocument, setSelectedDocument] = useState<string>('');
   const session = useSession();
@@ -57,20 +95,13 @@ export default function Documentation() {
   const { interaction, setInteraction } = useQueryContext();
 
   useEffect(() => {
-    if (selectedDocument) {
+    if (session.data?.user.name) {
       setInteraction({
         ...interaction,
-        answer: `Perfect. Ask me about the document: ${selectedDocument}`,
+        answer: `Hello ${session.data.user.name}. Select a document so we can get started.`,
       });
-    } else {
-      if (session.data?.user.name) {
-        setInteraction({
-          ...interaction,
-          answer: `Hello ${session.data.user.name}. Select a document so we can get started.`,
-        });
-      }
     }
-  }, [session, selectedDocument]);
+  }, [session]);
 
   async function sendQuery() {
     if (!interaction.question) return;
@@ -105,8 +136,30 @@ export default function Documentation() {
     }
   }
 
-  const handleSelectDocument = (documentPath: string) => {
-    setSelectedDocument(documentPath);
+  // todo: link urls to accounts and remove this
+  useEffect(() => {
+    console.log('selectedDocument: ', selectedDocument);
+  }, [selectedDocument]);
+
+  interface DocMap {
+    [key: string]: string;
+  }
+
+  const docMap: DocMap = {
+    'HS5160-SFC-ENT-117&118.pdf':
+      'https://t3xziqgvuko9aizs.public.blob.vercel-storage.com/HS5160-SFC-ENT-117&118-GkTYoB4zg1F4kOcXAo5aiXNivX1F0T.pdf',
+    'HS5160-SFC-WSIPTU-115&116.pdf':
+      'https://t3xziqgvuko9aizs.public.blob.vercel-storage.com/HS5160-SFC-WSIPTU-115&116-jKpTudlZJFbkNvgVrp1p0mhpt9b5o4.pdf',
+    'fervi_bench_lathe.pdf':
+      'https://t3xziqgvuko9aizs.public.blob.vercel-storage.com/fervi_bench_lathe-8VpQpc7JyZ0g9yapQE8Zc8jI4jEnV7.pdf',
+  };
+
+  const handleSelectDocument = (file: string) => {
+    setSelectedDocument(docMap[file]);
+    setInteraction({
+      ...interaction,
+      answer: `Perfect. Ask me about the file ${file}`,
+    });
   };
 
   return (
@@ -153,13 +206,14 @@ export default function Documentation() {
                 ... will add a button to upload a pdf and create the embeddings from that
                 */}
                 {/* <CreateEmbeddings /> */}
+                {/* <UploadPdf /> */}
               </div>
             </div>
           </div>
           <div className="lg:col-span-2 border rounded">
             {selectedDocument ? (
               <iframe
-                src={`/${selectedDocument}`}
+                src={selectedDocument}
                 style={{ width: iFrameWidth, height: iFrameHeight }}
               />
             ) : (

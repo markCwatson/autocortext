@@ -1,0 +1,1818 @@
+OPERATION AND
+MAINTENANCE MANUAL
+Bench Lathe
+Art. T999/230V –T999/230V3A
+Art. T999/400V -T999/400V3A
+TRANSLATION OF THE ORIGINAL INSTRUCTIONS
+fervi.comMACHINES AND
+ACCESSORIES
+Page 2of84PREFACE
+Please ensure you have read this manual before operation
+TRANSLATION OF THE ORIGINAL INSTR UCTIONS
+It is compulsory to read this instruction manual before starting operation. The guarantee of
+smooth operation and full performance of the machine is highly dependent on the application
+of all the instructions contained in this manual.
+Operato r qualifications
+The workers responsible for the use of this machine must have all the necessary
+information and instruction and should be given adequate training in relation to safety
+regarding:
+a) Conditions of use for the equipment;
+b) Foreseeable abnormal s ituations, pursuant to Article 73 of Legislative Decree
+81/08.
+We guarantee the Machine complies with the specifications and technical instructions
+described in the Manual on the date of issuance and listed herein; On the other hand,
+the machine may als o be subject to important technical changes in the future, without
+the manual being updated.
+Therefore, contact FERVI for information about modifications that may have been
+implemented.
+REV. 1 May 2013
+fervi.comMACHINES AND
+ACCESSORIES
+Page 3of84INDEX
+1GENERAL INFORMATION ................................ ................................ ........... 5
+2GENERAL SAFETY WARNI NGS................................ ................................ ...7
+2.1 General safety rules for machin e equipment ................................ ................................ .7
+2.2 Safety rules for electrical machine equipment ................................ .............................. 9
+2.3 Technical Assistance ................................ ................................ ................................ .....9
+2.4 Other provisions ................................ ................................ ................................ ........... 9
+3TECHNICAL SPECIFICAT IONS ................................ ................................ .10
+4DESCRIPTION OF THE M ACHINE ................................ ............................. 11
+4.1 Intended use and field of application ................................ ................................ .......... 11
+4.2 Description of the main parts ................................ ................................ ...................... 13
+4.2.1 Supporting table ................................ ................................ ................................ ......14
+4.2.2 Head and spindle ................................ ................................ ................................ .....14
+4.2.3 Spindle speed adjustment levers ................................ ................................ ................ 14
+4.2.4 Feed speed adjustment panel ................................ ................................ .................... 15
+4.2.5 Tool holder carriage ................................ ................................ ................................ .15
+4.2.6 Tailstock ................................ ................................ ................................ ................. 15
+4.2.7 Steady rest ................................ ................................ ................................ ............. 16
+4.2.8 Electric control panel ................................ ................................ ................................ 16
+4.2.9 Pedal brake ................................ ................................ ................................ ............. 16
+4.2.10 Rotation reverse lever ................................ ................................ .............................. 17
+4.3 Identification plate ................................ ................................ ................................ .....17
+4.4Pictograms and plates ................................ ................................ ................................ .18
+5MACHINE SAFETY DEVIC ES................................ ................................ .....19
+5.1 Electrical safety devices ................................ ................................ .............................. 19
+5.2 Mechanical Safety Devices ................................ ................................ .......................... 20
+5.3 Personal Protective Equipment (PPE) ................................ ................................ ......... 21
+6FORBIDDEN USES AND H AZARDS ................................ ........................... 22
+7LIFTING, TRANSPORTAT ION AND STORAGE IN W AREHOUSE ................. 24
+7.1 Lifting ................................ ................................ ................................ ......................... 24
+7.2 Transportation ................................ ................................ ................................ ............ 24
+7.3 Warehouse storage ................................ ................................ ................................ .....24
+8ASSEMBLY AND COMMISS IONING ................................ .......................... 25
+8.1 Identification of the installation site ................................ ................................ ........... 25
+8.2 Support base ................................ ................................ ................................ ............... 25
+8.3 Levelling the machine ................................ ................................ ................................ .26
+8.3.1 Preliminary phase ................................ ................................ ................................ ....26
+8.3.2 Transverse levelling of the table ................................ ................................ ................ 26
+fervi.comMACHINES AND
+ACCESSORIES
+Page 4of848.3.3 Levelling the lathe rails ................................ ................................ ............................. 26
+8.4 Operations before starting the machine. ................................ ................................ .....26
+8.4.1 Lubrication and greasing ................................ ................................ ........................... 26
+8.4.2 Connection to the power supply network ................................ ................................ .....26
+8.4.3 Open circuit test ................................ ................................ ................................ ......27
+9DESCRIPTION OF CONTRO LS................................ ................................ ..28
+9.1 Control buttons ................................ ................................ ................................ ........... 28
+9.1.1 Main switch ................................ ................................ ................................ ............. 28
+9.1.2 Electric and control panel buttons and lights ................................ ................................ 28
+9.1.3 Emergency button ................................ ................................ ................................ ....29
+9.2 Levers and control wheels ................................ ................................ .......................... 29
+9.2.1 Spindle speed adjustment knobs ................................ ................................ ................ 29
+9.2.2 Automatic feed speed adjustment knobs ................................ ................................ .....30
+9.2.3 Adjustment knob / lever of the split casing ................................ ................................ ..31
+9.2.4 Levers and handwheels of the carriage and tool holder slides ................................ ........ 32
+9.2.5 Lever and handwheel of the tailstock ................................ ................................ .......... 33
+9.3 Mechanical brake pedal of the spindle ................................ ................................ ........ 34
+9.4 Digital display ................................ ................................ ................................ ............. 34
+9.4.1 Using the display ................................ ................................ ................................ .....35
+10 OPERATION ................................ ................................ .......................... 46
+10.1 Automatic Feed Tool Carriage ................................ ................................ .................. 49
+11 MAINTENANCE ................................ ................................ ..................... 51
+11.1 Lubrication ................................ ................................ ................................ ............... 52
+11.2 Periodic checks ................................ ................................ ................................ ........ 54
+11.3 Adjusting the Machine ................................ ................................ ............................. 54
+11.3.1 Adjusting the tension of the motor belts ................................ ................................ .....54
+11.3.2 Tailstock alignment ................................ ................................ ................................ ..55
+11.3.3 Spindle alignment ................................ ................................ ................................ ....55
+11.3.4 Adjusting the slack of the gears ................................ ................................ ................. 56
+12 REPLACEMENT PARTS ................................ ................................ ........... 57
+12.1 ACCESSORIES SUPPLIED ................................ ................................ .......................... 80
+13 DISPOSAL OF PARTS AND MATERIA LS................................ ................. 81
+14 TROUBLESHOOTING ................................ ................................ ............. 82
+15 ELECTRIC CIRCUIT ................................ ................................ ............... 83
+15.1 Art. T999/400V ................................ ................................ ................................ ........ 83
+15.2 Art. T999/230V ................................ ................................ ................................ ........ 84
+fervi.comMACHINES AND
+ACCESSORIES
+Page 5of841GENERAL INFORMATION
+This manual is considered an integral part of the machine it was attached to at the time of
+purchase.
+The manufacturer holds all ownership to material and intellectual property of this manual;
+any disclosure or copying, even partial, of this publication without prior written consent is
+forbidden.
+This manual is designed to provide the k nowledge required for the use and maintenance of
+theGear head lathe (Art. T999/230V –T999/230V3A –T999/400V T999/400V3A)
+and to provide the operator assigned to the device with a sense of responsibility and
+knowledge of its possibilities and limitations .
+Operators must be properly trained and prepared, so make sure that this manual is read and
+consulted by the staff responsible for commissioning, operation and maintenance of the
+machine. This is to make all operations as safe and effective as possible f or those who carry
+out these tasks. Therefore, it is imperative to strictly comply with the requirements in this
+manual, a necessary condition for safe and satisfactory operation of the Lathe.
+Before starting operation, installation and use of the machine , authorized staff must
+therefore:
+read this technical document carefully;
+know which protections and safety devices are available on the Lathe, their location and
+how they work.
+The buyer is responsible for ensuring that users are properly trained, that they are aware of
+all the information and instructions in this document and that they are aware of the potential
+risks of operating the Lathe.
+The manufacturer will not be held responsible for any damage to people and/or
+property caused by non -compliance with any instructions in this manual.
+Operators will be held fully responsible for any changes they have made to the
+machine; the manufacturer will not be held responsible for any damage to persons
+and/or property resulting from maintenance performed by u nqualified personnel
+and in a manner that differs from the operating procedures shown below.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 6of84TheGear head lathe has been designed and built with mechanical guards and safety devices
+designed to protect the operator/user from possible injury.
+It is stri ctly forbidden to modify or remove guards, safety devices and caution labels. If you
+do so temporarily (for example, for the purposes of cleaning or repair), make sure that no
+one can use the machine.
+Graphic representation of safety, operational and risk warnings
+The following boxes are designed to attract the attention of the reader / user for the proper
+andsafe use of the machine:
+Pay Attention
+This highlights behavioural rules to prevent damage to the machine and/or the occurrence of
+dangerous si tuations.
+Residual Risks
+This highlights the presence of dangers that cause residual risks to which the operator must
+pay attention in order to avoid injury or damage to property.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 7of842GENERAL SAFETY WARNI NGS
+2.1General safety rules for machine equipment
+Follow the instructions contained herein, in addition to the general precautions to be observed
+while working. Even if the operator is already familiar with the use of manually operated lathes, it
+is necessary to: In particular:
+Acquire full knowledge of t he machine.
+For safe operation, this manual must be read carefully in order to acquire the necessary
+knowledge of the machine and to understand: operation, safety devices and all
+necessary precautions.
+Wear appropriate clothing for the job.
+The operator mu st wear appropriate clothing to prevent accidents.
+Maintain the machine with care.
+Risks associated with using the machine
+The machine must only be used by personnel who have been specially trained by authorized
+personnel.
+Risks associated with usi ng the Machine
+DO NOT underestimate the risks associated with using the machine and concentrate on the
+work in progress.
+Risks associated with using the Machine
+Despite the implementation of all the safety devices for safe use of the machine, it is
+necessary to take note of all the requirements for the prevention of accidents detailed in the
+various sections of this manual.
+Protective equipment for the operator
+Before starting any type of work, the operator must wear the appropriate personal prot ective
+equipment (PPE) such as goggles, gloves etc. (see section 5.3 of this manual).
+1.Always check the efficiency and integrity of the machine.
+2.Before connecting the machine to the mains, make sure that the rotating parts are not
+damaged or badly worn. M ake sure that the switch is in the neutral position.
+3.Do not start the machine in an enclosed or poorly ventilated area, or in the presence of
+a flammable and/or explosive atmosphere. Do not use the machine in damp and/or wet
+locations, or those exposed to rain.
+4.Avoid starting accidentally.
+5.Before starting the machine, get used to ensuring that no remaining maintenance and
+service keys are inserted.
+6.Keep the workplace tidy and free from obstruction; disorder causes accidents.
+7.Make sure that your work environ ment is forbidden to children, strangers and animals.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 8of848.Do not perform tasks on the machine other than those for which it was designed. Only
+use the machine in the manner in which it was intended, as described in this
+instruction manual.
+9.Work without disturb ances.
+10.Work areas must be well lit.
+11.Always wear eye protection and protective gloves while working. If dust is produced,
+use the appropriate masks.
+12.Wear appropriate clothing. Loose clothing, dangling jewellery, long hair, etc.., can get
+caught in the movin g parts, causing irreparable injury.
+13.Firmly secure the workpiece before starting the lathe, using the jaws installed on the
+spindle.
+14.Always use the tool in an appropriate manner. Perform only the work for which the tool
+is made. Do not use the tool for ina dequate work.
+15.Only use suitable resistance tools in relation to the work that is to be done. This is to
+avoid risky and unnecessary overloading for the operator, which may be harmful for
+the life of the tools themselves.
+16.Do not pick up moving tools or othe r moving parts. To stop the moving parts on the
+machine, always only use the stop command device.
+17.Before performing any measurement of the workpiece mounted on the spindle, turn the
+motor off, unplug it and wait for the spindle to stop.
+18.Do not remove the shavings with your hands, even at a standstill. To do this, use tongs
+or a palette knife.
+19.When the work tools need to be replaced or the speed needs to be changed, stop the
+motor and wait for the spindle to stop.
+20.Do not move away from the machine until th e tools and other moving parts, have
+completely stopped.
+21.After the work is completed, clean the tool and check its efficiency.
+22.Replace worn and/or damaged parts, check that the repairs and protections work
+properly before operating. Eventually, if necessar y, have it checked by Service staff.
+Use only original spare parts.
+23.Unplug the power cord of the machine from the power outlet when:
+the machine is not being operated;
+it is left unattended;
+performing maintenance or registration, because the machine does not work properly;
+the power cable is damaged;
+the tool is replaced;
+it is being moved or transported;
+during cleaning operations.
+24.It is recommended that users of this publication, for maintenance and repair, have a
+basic knowledge of the mechanical princi ples and procedures inherent in repair
+technique.
+25.The company safety officer is required to make sure that machine operators
+have read and understood this manual in its entirety.
+26.Management is responsible for safety and verification of the company's risk
+status according to Legislative Decree 81/08.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 9of842.2Safety rules for electrical machine equipment
+Changes in the Electrical System
+1.Do not modify the machine's electrical system in any way. Any attempt to do so may
+impair the operation of the electrical devi ces causing a malfunction or accident.
+2.Work on the electrical system of the machine must therefore be carried out only by
+qualified and authorised personnel.
+3.If you hear unusual noises, or notice anything unusual, stop the machine immediately.
+Then, carry out an inspection and, if necessary, perform any repairs as required.
+1.The supply voltage must correspond to that stated on the identification plate and in the
+technical specifications (400 V / 50 Hz or 230 V 50 Hz). Never use any other type of
+power supp ly.
+2.The use of a lifesaving device on the power supply line is recommended. For more
+detailed information, contact a trusted electrician.
+3.The power plug must be a grounded tripolar type plug for T999/400V and a grounded
+bipolar plug for T999/230V. Any exte nsion cords must be of equal or greater length
+than the power cord on the machine.
+4.Make sure that the power cord does not come into contact with hot objects, wet or oiled
+surfaces, and/or sharp edges.
+5.The power cord should be checked regularly and before e ach use to check for signs of
+damage or wear. If these are not in good condition, do not use the machine and replace
+the cable.
+6.Do not use the power cord to remove the plug from the socket or move the machine.
+2.3Technical Assistance
+For any problems or conce rns, please do not hesitate to contact the dealer who sold the item.
+2.4Other provisions
+TAMPERING WITH SAFETY DEVICES IS FORBIDDEN
+Check the presence and integrity of protective devices and the proper functioning of safety
+devices before starting operation.
+If any defect is detected, do not use the Gear head lathe!
+It is strictly forbidden to modify or remove guards, safety devices, labels and information
+plates on the machine.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 10of843TECHNICAL SPECIFICAT IONS
+Description (unit of measurement) T999/230V T999/400V
+Centres distance (mm) 1000
+Spindle hole diameter (mm) 38
+Maximum swing over the bed (mm) 320
+Maximum swing over the cross slide (mm) 198
+Turning diameter over cavity (mm) 470
+Spindle diameter (3 + 3 self centring) (mm) 160
+Spindle connector Camlock D1 -4
+No. of spindle speeds 8
+Spindle speed (r/min) 70-2000 RPM
+No. of metric threads 32
+Range of metric threads (mm) 0.44-10
+No. of inch threads 20
+Range of inch threads (mm) 2 ¼ -40
+Range of longitudinal feeds (mm) 00.78 -1.044
+Range of transverse feeds (mm) 0.022 -0.298
+Outer diameter of the feed screw (mm) 22
+Guide length (mm) 1390
+Cross carriage travel (mm) 200
+Tailstock sleeve diameter (mm) 32
+Maximum travel of the tailstock sleeve (mm) 80
+Inner taper CM 5
+Tailsto ck base length (mm) 165
+Tailstock base width (mm) 125
+Steady rest diameter (mm) 120
+Dimensions (W x D x H) (mm) 1820 x 530 x 1350
+Package dimensions (W x D x H) (mm) 1920 x 840 x 1560
+Weight of machine (kg) 520
+Voltage / power supply frequency (V / H z) 230/50. 400 / 50
+Motor power (W) 1500/1800
+Acoustic pressure level at operator's workstation
+(dB(A))84
+fervi.comMACHINES AND
+ACCESSORIES
+Page 11of844DESCRIPTION OF THE M ACHINE
+TheGear head lathe (Art. T999/230V e T999/400V) is a machine tool, with a horizontal
+axis, for the machining of meta llic materials by means of cold chip removal.
+The cutting motion is given by the motion of the workpiece, rotating on its own axis, and the
+feed motion of the tool.
+The machine is completely manually operated , as it can only execute movements under the
+direct control of the operator.
+4.1Intended use and field of application
+The machine is designed and built to perform the following operations on all types of ferrous
+metals:
+Cylindrical turning;
+Taper turning;
+Facing;
+Profiling
+Drilling;
+Boring;
+Threading;
+Cutting / Breaking (from bar).
+Intended use and materials
+The machine has been designed and manufactured for the use specified. Operating the
+machine other than as intended and non -observance of the technical parameters laid down
+by the Manufacturer may be dangerous for operators; therefore the former cannot accept any
+responsibility for resulting damage.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 12of84The lathe is equipped with a support base and must be installed and used on flat surfaces,
+with ergonomic features and adequate resistance.
+The Lathe can operate in closed work environments (production halls, warehouses, etc.), i.e.
+protected from the weather and where there is no danger of fire or explosion.
+The operating temperature range is -20 to +50°C.
+The environment must also be sufficiently i lluminated so as to ensure operation in maximum
+safety (at least 200 lux is recommended).
+There are two main groups within the Lathe (see figure 1):
+The spindle shaft unit;
+The sliding tool holder unit.
+The first is constituted by the spindle, which is m adeintegral with the workpiece, and by the
+components that transmit motion from the motor to the spindle.
+The second is constituted by the components that transmit motion to the slide, which guides
+the tool in the feeding motion and movement of the wor kpiece.
+Figure 1–Typical main groups of the bench lathe.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 13of844.2Description of the main parts
+Figure 2–Main parts of the gear head lathe (Art. T999/230V and T999/400V).
+1Brake 9Protective device 17Tailstock handwheel
+2Carriage handwheel 10Halogen lamp 18Support bars
+3Workbench 11Turret 19Lead screw
+4Speed switches 12Coolant tube 20Turning bar
+5Side cover 13Longitudinal turret travel
+(mm)21Bar for lathe activation
+6Control panel 14Micrometer 22Tray
+7Electrical controls 15Tailstock block 23Transmission activation lever;
+83-jaw lathe spindle 16Guides 24Digital display4
+1 256
+378 910
+11 1213
+14 15
+1617
+18
+19
+20
+21
+222324
+fervi.comMACHINES AND
+ACCESSORIES
+Page 14of844.2.1 Supporting table
+The supporting table (ref. 2 in figure 2 ) is made of cast iron; the casting has been stabilized
+to avoid twisting and/or deformation due to the internal stresses in the material. In the upper
+part there are prismatic guides that ensure the movement and alignment of the drive head
+with t he carriage and the moving head (tailstock). The guides are hardened and ground.
+Reinforcements ribs have been incorporated that increase rigidity.
+4.2.2 Head and spindle
+The head is made of high strength cast iron, in addition two internal protrusions which h ave
+been introduced that increase rigidity, reducing vibration during high speed machining.
+The different spindle speeds are obtained by means of a gear speed change (see also section
+4.2.3 of this manual).
+The head is made of high strength cast iron, in a ddition two internal protrusions which have
+been introduced that increase rigidity, reducing vibration during high speed machining.
+The different spindle speeds are obtained by means of a gear speed change (see also section
+4.2.3 of this manual).
+The spin dle (see figure 3) is installed on the head shaft, and is
+supported by two precision bearings. It is self-centring , with
+three terminals (jaws) which permit the clamping of the workpiece
+in a safe and stable way. For the opening / closing of the jaws it is
+necessary to insert a special key in the housing (square cross -
+section), on the outer contour of the spindle. For a more detailed
+explanation on this subject, see section 10 of this manual.
+The danger zone, in the vicinity of the spindle, is protected by a
+moveable interlocking guard (see figure 3), which consists of a tin
+screen plate with micro -safety switch.
+Figure 3–Spindle
+4.2.3 Spindle speed adjustment levers
+The panel for the adjustment of the spindle rotation speed (see
+figure 4), is positioned at the left part of the machine, between the
+spindle and the feeding speed change gearbox. It is equipped with
+two levers for selection of the desired rotation speed, depending on
+the type of processing and the material.
+Figure 4–Speed
+adjustment lever.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 15of844.2.4 Feed speed adjustment panel
+The panel for the adjustment of the spindle rotation speed (see
+figure 5), is positioned at the left part of the machine, under the
+spindle speed adjustment panel. The lathe is provided with gears
+that can guarantee the considerable availability of feeds and
+threads (metric and inch). The selection of the steps is made using
+4 rotary knob switches which control the gear speed change. There
+is also a fifth knob for selecting th e feed direction of the carriage.
+Figure 5–Speed
+adjustment.
+4.2.5 Tool holder carriage
+The carriage sliding along the rails of the bed is used to hold,
+position and feed the tool. The various parts (see figure 6), are
+made of cast iron, with hardened and ground guides for greater
+stability. The carriage is equipped with an independent system that
+ensures the lubrication of the moving parts.
+The handwheels to move the carriage and the levers are easy to
+reach and easy to use.
+Figure6–Tool holder
+carriage.
+4.2.6 Tailstock
+The tailstock (see figure 7) is constituted by a cast iron body that
+ensures rigidity and stability in any conditions of use. The tailstock
+body is equipped with a locking system on the lathe guides, with a
+lever. An adjustment screw, allows axial alignment of the tailstock
+to be achieved. Inside a steel sleeve has been fitted. Movement is
+applied via a handle equipped with a micrometer.
+Figure 7–Tailstock.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 16of844.2.7 Stead y rest
+In the operations of drilling, boring and facing, the tailstock can not
+be used to secure the work piece.
+On the other hand, if the pieces are long and heavy, it is not
+enough to use only a self -centring spindle, but you must attach one
+end of the work piece using a tool called a steady rest (see figure
+8)
+They are supplied with two rests: steady rest and follow rest
+Figure 8–Rests.
+4.2.8 Electric control panel
+Figure A Figure B
+Figure A
+WHITE WARNING LIGHT : Indicat es the presence of voltage
+BLACK SELECTOR : Coolant pump selector
+GREEN BUTTON : Gears application button
+RED MUSHROOM : EMERGENCY STOP
+Figure B
+Main switch with safety key
+4.2.9 Pedal brake
+The machine is equipped with a mechanical brake pedal that slows o r stops the rotation of
+the spindle as required. Releasing the foot stops the braking action.
+Figure 9–Emergency stop.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 17of844.2.10 Rotation reverse lever
+Lever for reversing the rotation direction of the electric motor. The lever is locat ed to the
+right of the tool holder carriage.
+Figure 10–Reverse lever.
+4.3Identification plate
+On the machine, and in particular on the feed speed change gearbox, there is the following
+identification plate (see Figure 11):
+Figure 11–Identification plate.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 18of844.4Pictograms and plates
+CAUTION AND WARNING P ICTOGRAMS .
+The following pictogram has been applied to the side of the electrical panel:
+Hazard / warning plate.
+Prohibitive warning for carrying out work on live equipment.
+Hazard plate.
+The removal of safety guards is forbidden.
+Electrical hazard symbol
+PLATE IN ITALIAN PLATE IN ENGLISH
+ATTENZIONE
+È VIETATO ESEGUIRE LAVORI SU
+APPARECCHIATURE ELETTRIC HE SOTTO
+TENSIONE
+EVENTUALI DEROGHE DEVONO ESSERE
+AUTORIZZATE DAL CAPO RESPONSABILE
+IN CONDIZIONI DI PARTICOLARE PERICOLO DEVE
+ESSERE PRESENTE UN’ALTRA PERSONA OLTRE A CHI
+ESEGUE IL LAVORO
+INIZIARE I LAVORI SOLO AD AVVENUTA
+ATTAZIONE DELLE MISURE DI SICUR EZZA
+In ottemperanza al Dgs.81/08 relativo alla prevenzioni
+infortuni
+ATTENTION
+IT IS PROHIBITED TO WORK ON LIVE ELECTRICAL
+EQUIPMENT
+ANY EXCEPTIONS MUST BE APPROVED BY THE HEAD
+MANAGER
+UNDER PARTICULARLY DANGEROUS CO NDITIONS,
+ANOTHER PERSON MUST BE PRESENT WHO IS NOT
+PERFORMING THE WORK
+ONLY BEGIN WORKING WHEN SAFETY MEASURES
+HAVE BEEN IMPLEMENTED
+In accordance with Legislative Decree 81/08 on accident
+prevention
+NON
+RIMUOVERE
+I DISPOSITIVI DI
+SICUREZZA
+DO NOT
+REMOVE
+THE SAFETY DEVICES
+Figure 12-Pictograms
+fervi.comMACHINES AND
+ACCESSORIES
+Page 19of845MACHINE SAFETY DEVIC ES
+5.1Electrical safety devices
+The electrical circuit of the lathe is equipped with a rotary main switch with a safety key
+(see chapter 9.1 of this manual). This prevents the danger of unwanted and/or accidental
+starts of the machine, since the switch can o nly be activated through a voluntary action
+suitable for the given purpose and if a suitable key is available.
+The machine is also equipped with an emergency stop button (mushroom type). In an
+emergency, if pressure is applied to the mushroom button, the dangerous functions stop.
+The electric control panel is powered by 24V DC voltage; the presence of a transformer
+minimises the the danger of electrocution.
+The Lathe's power supply connection must be equipped with a grounding conductor
+according to regulat ions.
+Electric Shock
+Improper connection of the Lathe and/or the grounding conductor can result in the risk of
+electric shock.
+The use of a lifesaving device on the power supply line is recommended. For more detailed
+information, contact a trusted ele ctrician.
+Check with a qualified electrician if you don't understand the grounding instructions
+or if you have any doubts about grounding the machine.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 20of845.2Mechanical Safety Devices
+Protective screens
+The screens and guards have the role of protecting the oper ator by preventing coolant, chips,
+splinters, tool fragments or even the workpiece, which may detach, from being projected
+towards the face or torso. The screens are fixed or mobile (see Figure 13).
+Figure 13–Position of the protective screens.
+LEGEND:
+1:Gearbox guard (fixed);
+2:Protective screen for the spindle (movable interlocked);
+The interlocking movable guards, are equipped with suitable safety switches, connected to
+the machine' s control system (electric circuit), so that the opening of the movable screen
+causes the motion of the spindle and the dangerous moving parts to stop.
+Checking the Safety devices
+Each time the Lathe is used, check that the safety devices function and are positioned
+properly.
+In case of damage and/or breakage, do not use the machine.
+Pedal brake
+The machine is equipped with a mechanical brake pedal that slows or stops the rotation of
+the spindle as required (ref. 1 in Figure 2).
+fervi.comMACHINES AND
+ACCESSORIES
+Page 21of845.3Personal Protective Equipment (PPE)
+Use of PPE
+ALWAYS use appropriate personal protective equipment (PPE) such as (see Figure 14):
+Gloves;
+Goggles or face shields;
+Overalls or aprons;
+Safety shoes.
+PROTECTIVE
+GLOVESPROTECT YOUR
+EYESPROTECTIVE
+SCREENPROTECTIVE
+CLOTHINGPROTECTIVE
+SHOES
+Figure 14–Personal Protective Equipment.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 22of846FORBIDDEN USES AND H AZARDS
+The modes of use specified in this manual as incorrect, should never be permitted , under
+any circumstances.
+Using the machine for turning non -ferrous materials, for unauthorised manoeuvres, its
+misuse and lack of maintenance can result in serious danger to the safety of the staff,
+especially the operator, as well as affecting the functionality and the intrinsic safety of the
+machine itself.
+The following actions described, which obviously can not cover the entire range of potential
+possibilities of "misuse" of the machine, are those which are "reasonably" more pr edictable
+and should be considered strictly prohibited.
+THE FOLLOWING IS STRICTLY PROHIBITED!
+Supplying the machine with voltage from the mains that is different from that shown on
+the identification plate (230V, 50 Hz).
+Using the machine for services other than those for which it is intended;
+Using the machine without having read the operating i nstructions and without due care.
+Using the machine, and in particular carrying out manual loading without the use of
+appropriate personal protective equipment (PPE) according to the instructions given in
+this manual.
+Using the machine and, particularly, t he tool improperly.
+Picking up moving tools or other moving parts.
+Taking measurements of the workpiece mounted on the spindle, without turning the
+motor off, unplugging it and waiting for the spindle to stop.
+Removing chips with your hands.
+Replacing the work tools or carrying out the speed change, without stopping the motor,
+disconnecting the plug and waiting for the machine to stop.
+Modifying and/or tampering with the safety devices of the lathe.
+Using the machine as a support and/or work surface.
+Climb ing on the machine.
+Touching the machine with wet and/or damp hands.
+Using the machine when barefoot.
+Exposing the machine to the elements (sun, rain, hail, etc..).
+Using jets of water
+Using the machine without fastening it securely.
+Cleaning and/or maint aining the machine without fastening it securely.
+Installing and using the machine on surfaces that are not sufficiently flat and smooth.
+Installing and using the machine on surfaces that are not hard and strong enough to
+support its weight.
+Installing and using the machine outdoors.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 23of84Using the machine in a dark place.
+Allowing untrained personnel to use the machine.
+Operating this machine without being psychophysically fit;
+Allowing untrained and unqualified personnel to carry out maintenance, and without
+complying with the procedures specified in this manual.
+Performing maintenance operations in insufficient conditions of lighting and/or visibility.
+Performing cleaning and/or maintenance without disconnecting the power plug.
+Changing the machine's electrica l system.
+Moving the machine without using suitable lifting equipment.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 24of847LIFTING, TRANSPORTAT ION AND STORAGE IN
+WAREHOUSE
+7.1Lifting
+To lift the Lathe, proceed as follows:
+1.To achieve perfect balance, move the tailstock all the way to the end on the right side of
+the table and securely fix it with the locking lever;
+2.At the same time, slide the tool holder carriage until the perfect machine balance is obtained.
+Breaking of the guide rails
+Make sure that the harnessing accessories are not touching the guide ra ils and the lead screw,
+which could be damaged beyond repair.
+1.Attach the hook of the lifting equipment (cranes, hoists, etc..) in the centre of harness
+accessories (between the two side ends) and lift slowly and smoothly.
+The manufacturer declines all re sponsibility for any damage to people and/or
+objects caused by the improper lifting of the machine performed by unsuitable
+personnel, with inappropriate lifting means and without following the instructions
+in this manual.
+7.2Transportation
+The transport of t he machine can be carried out through the aid of vehicles and/or industrial
+transportation vehicles, such as trucks, with containers of sufficient size to hold the machine
+itself. The machine must be suitably anchored to the means of transport (for example ,
+through the aid of ropes).
+During transport, the machine must be protected from rain, snow, hail, wind, and any other
+adverse weather conditions. In this regard, it is advisable to use means of transport with
+closed compartments (vans, trucks etc.) or po ssibly covered with tarpaulin.
+7.3Warehouse storage
+In the event that the machine is to be stored and unused for some time before being put into
+service again, proceed as follows:
+1.Disconnect the power supply cable;
+2.Protect the machined parts (such as the gui des, the carriage and the tool holder slides,
+spindle, the tailstock quill etc..) with protective liquid and/or grease;
+3.Store in a dry place, free from dust and contaminating agents. Climatic conditions
+recommended for storage:
+Temperature: -15° / + 55° C ;
+Humidity: 95% (non -condensing).
+Shock Protection
+Make sure the Lathe is protected from knocks and vibrations.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 25of848ASSEMBLY AND COMMISS IONING
+8.1Identification of the installation site
+To install the machine, identify an area that is well lit, away from w et areas and has no
+sources of vibration nearby.
+The lathe must be located so that adequate space is available for the operator, so you can
+use it to its full potential, and safely adjust, maintain and clean the machine. In this regard,
+an area of at least two square metres in front of the machine must be kept free.
+Installing the Machine
+Do not install the Machine outdoors to avoid deformation, loss of function and damage to the
+electrical control circuit.
+8.2Support base
+It is essential that the machine is positioned on a uniform, flat supporting surface that has
+sufficient strength to support it in any condition which may occur during normal use.
+Loss of Stability
+Install the Lathe on a solid and strong support surface to avoid it falling over and v ibrations;
+To ensure stability, excellent results and minimize vibrations, we recommend affixing the
+machine using the metal feet with threaded stems and rubber base. For the dimensions and
+the positions of the points of support, where the feet are put, seeFigure 15.
+Figure 15–Dimensions and fastening points.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 26of848.3Levelling the machine
+For this operation, it is recommended to use a precision spirit level (0.001 mm).
+8.3.1 Preliminary phase
+The preliminary ph ase serves to eliminate the presence of torsions in the lathe table. Proceed
+to reset the head by adjusting the relative screws and then locking the tailstock with the
+relative adjustment screws moving the reference mark to zero.
+8.3.2 Transverse levelling of th e table
+Position the spirit level in a transverse direction on the lathe guides under the spindle and
+check the bubble.
+Position the spirit level in a transverse direction on the table guides under the tailstock and
+check the bubble.
+Repeat these operatio ns frequently and, if necessary, make small corrections by screwing
+and/or unscrewing the adjustable feet below the pallet.
+8.3.3 Levelling the lathe rails
+Place the level on the sides of the carriage and move it slowly along its entire length while
+checking tha t the bubble does not change.
+If the bubble moves, adjust the adjustable feet until it reaches a uniform level throughout the
+entire course of the carriage .
+Periodically check these measurements (at least every six months).
+Levelling the machine perfectl y is one of the first and most essential steps to carry
+out before using the machine.
+8.4Operations before starting the machine.
+8.4.1 Lubrication and greasing
+Before you start the machine, it should be lubricated and greased as described in section
+11.1, on "Lubri cation".
+8.4.2 Connection to the power supply network
+Connect the power supply cable to the terminal inside the electrical cabinet. Connect the
+three phases to the connectors on the body of the terminal and the grounding conductor to
+the connector on the left si de of the terminal itself.
+Connection
+Ensure the perfect connection of the power cord.
+The plant to which the machine is connected must have a suitable system for the automatic
+disconnection of electric power, for protection against indirect contacts.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 27of848.4.3 Open circuit test
+Manually rotate the hand wheels on the carriage 's tool carrier slides and tailstock quills to
+verify that these move freely and without friction.
+Start the machine by turning the main switch to the position I and the activation lever to
+reverse the rotation of the spindle (see Figure 16) and make sure that the electric motor and
+spindle are working properly.
+Test the operation of the lever for reversing the rotation of the electric motor.
+Test the brake pedal, the spindle should slow down and eventually stop.
+Test the emergency stop button, the whole machine should stop.
+Operate the machine for a few minutes, checking the entire series of spindle speed change
+gears, starting with low speeds.
+Ejection of obje cts
+During the test run, no operator and no other person should be within range of the machine.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 28of849DESCRIPTION OF CONTR OLS
+9.1Control buttons
+9.1.1 Main switch
+The main switch with safety key is located on the left side of the electric panel, and it is
+useful to prevent unauthorised use of the machine.
+To power the machine (see Figure 16), in fact, it is necessary to:
+insert the safety key into the lock to the left of the switch (marked R.L.);
+turn the key clockwise and simultaneously tu rn the main switch to "I", by turning it
+clockwise.
+Figure 16-Main switch.
+Confirm the white power light has turned on, found on the electrical panel (marked POWER).
+9.1.2 Electric and control panel buttons and lights
+Figure 17–Electrical and control panel.
+The electrical panel has the following controls:
+RED MUSHROOM : Emergency button (red mushroom).
+WHITE WARNING LIGHT : Indicates the presence of voltage
+BLACK SELECTOR : Coolant pump selector
+GREEN BUTTON : Gears application button
+fervi.comMACHINES AND
+ACCESSORIES
+Page 29of849.1.3 Emergency button
+Additionally on the electric panel there is a emergency stop switch:
+To stop the machine, in cases of emergency, press the red mushroom shaped button. When it
+is pushed, the motion of the electric moto r and other rotating parts is interrupted.
+Before you begin work, always make sure that the mushroom button is raised. To restore
+power to the machine again after an emergency stop, turn the mushroom clockwise and lift
+it.
+Checking the Emergency Button
+Before starting any work on the machine, ensure that the emergency stop button functions.
+In case of emergency
+In an emergency, press the red emergency button to stop the machine.
+Risk of abrasion and/or cutting
+After pressing the stop or emerge ncy switch, the spindle will continue to rotate by inertia.
+Do not hold body parts near the moving spindle!
+9.2Levers and control wheels
+9.2.1 Spindle speed adjustment knobs
+The panel for the adjustment of the spindle rotation speed (see Figure 16), is positioned at
+the left part of the machine, between the spindle and the gearbox. It is equipped with two
+levers, marked with colours, letters and numbers, for selection of the desired rotation speed,
+depending on the type of processing and the material to be process ed.
+Figure 18–Speed adjustment knobs.
+To select the desired rotation speed, turn the knobs to the corresponding positions, according
+to the instructions given in this manual or on the rotation speed plate attached directly to the
+machine (see Figure 16).
+Spindle speed adjustment
+Before changing the spindle speed, always stop the electric motor of the machine.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 30of849.2.2 Automatic feed speed adjustment knobs
+Figure 19-Feed adjustment knobs.
+The panel for automatic feed speed adjustment (see Figure 19), is
+positioned at the left part of the machine, under the spindle rotation
+speed adjustment panel.
+The different speeds are selected via 4 knob swit ches which control the
+gear speed change (ref. F,G,H,IinFigure 19). There is also a fifth
+knob for selecting the feed direction of the carriage (ref. EinFigure
+19).
+Threading
+To make a thread:
+Operate the knob (I), insert the bar for threading in 4 positions ( see
+Figure 20);
+Position the two knobs ( F) (G) and ( H) according to the
+instructions given in this manual or on the rating plate for the
+feed speed installed directly on the machine
+N.B.: When carrying other machining position the selector I in
+position 0 (see Figure 20)
+Figure 20–Close -
+up of knob
+E
+F
+HI
+G
+fervi.comMACHINES AND
+ACCESSORIES
+Page 31of849.2.3 Adjustment knob / lev er of the split casing
+The casing adjustment knob and lever for the transfer of motion from the lead screw to the
+tool holder carriage (see Figure 21), are located at the sides of the tool holder carriage itself.
+Figure 21–Close -up of knob and lever.
+By turning the knob or lever 90°, the split casing "closes" on the lead screw, creating a rigid
+coupling between the two, and allowing the transfer of motion from the lead screw to the tool
+holder carriage (and to the tool) for the automatic feed for threading operations.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 32of849.2.4 Levers and handwheels of the carriage and tool holder slides
+On the tool holder carriage there are five manual controls (levers and handwheels) for
+carrying ou t fine adjustments and feeding (see Figure 22).
+Figure 22–Lever and handwheel of the carriage.
+(I) Split casing lever : See section 9.2.3.
+(J) Lever for selection of transverse or longitudinal feeds: The lever selects the type
+of automatic feed desired. To operate the transverse feed, forward and backward, move the
+lever to the right (toward the tailstock), to operate the longitudinal feed, left and right, move
+the lever to the l eft (toward the spindle).
+(K) Handwheel for longitudinal displacement of the tool holder slide: The handwheel
+allows the quick longitudinal displacement, to the right and left, of the tool holder slide. To
+move the slide to the left (towards the spindle), turn the handwheel clockwise and vice versa
+to move the slide to the right (towards the tailstock), rotate the handwheel anticlockwise.
+(L) Handwheel for longitudinal movement of the carriage: The handwheel allows the
+quick longitudinal displacement, to th e right and left, of the tool holder carriage. To move the
+carriage to the right (towards the tailstock), turn the handwheel clockwise and vice versa to
+move the carriage to the left (towards the spindle), rotate the handwheel anticlockwise.
+(M) Handwheel for transversal displacement of the tool holder slide: The handwheel
+allows the transversal displacement, forward and backward, of the tool holder slide. To move
+the slide forward (towards the workpiece), turn the handwheel clockwise and vice versa to
+move the slide backward (towards the operator), rotate the handwheel anticlockwise.
+(N) Handwheel for longitudinal displacement of the tool holder slide: The handwheel
+allows the quick longitudinal displacement, to the right and left, of the tool holder slide. To
+move the slide to the left (towards the spindle), turn the handwheel clockwise and vice versa
+to move the slide to the right (towards the tailstock), rotate the handwheel anticlockwise.
+(P) Tool locking lever: The lever allows locking of the cutting to ol, to the tool holder base
+(turret).P
+N
+LM
+KJ
+I
+fervi.comMACHINES AND
+ACCESSORIES
+Page 33of84(Q) Lever for activating and selecting the direction
+of rotation of the electric motor: The lever selects
+activation and the direction of rotation of the electric motor
+and the other rotating parts (spindle). Move the lever down
+to rotate the spindle clockwise, move the lever up to turn
+the spindle anti -clockwise. The central location "0", puts the
+spindle in neutral.
+Figure 23-Close -up of the
+lever.
+9.2.5 Lever and handwheel of the tailstock
+Onthe tailstock there are manual controls (levers, handwheels and screws) which allow fine
+adjustments and feed adjustments (see Figure 24).
+Figure 24–Lever and handwheel of the tailstock.
+(R) Quill locking lever: The lever allows the tailstock quill to be locked (located on the
+side not visible in Figure 24)
+(S) Handwheel for longitudinal movement of the quill: The handwheel allows the
+quick longitudinal displacement, to the right and left, of the tailstock quill. To move the quill
+to the left (towards the spindle), turn the handwheel clockwise and vice versa to move the
+quill to the right, rotate the handwheel anticlockwise.
+(T) Tailstock transverse adjusting screw: The s crew allows for adjustments to the
+transverse centring of the tailstock. To move the tailstock forward (away from the operator),
+turn the screw clockwise and vice versa to move the tailstock backward (towards the
+operator), rotate the screw anticlockwise.TR
+S
+fervi.comMACHINES AND
+ACCESSORIES
+Page 34of849.3Mechanical brake pedal of the spindle
+The machine is equipped with a mechanical brake pedal that slows or stops the rotation of
+the spindle as required (see Figure 25).
+Pressing the pedal with your foot, the spin dle is immediately braked, while releasing the
+pedal stops the braking action.
+Figure 25–Pedal Details.
+9.4Digital display
+The Gear head lathe 400V3A -T070 is equipped with a digital display that can monitor the
+dimensions X, Y and Z with a precision of 0.001.
+Furthermore it is possible to store different machining depths depending on the X coordinate
+in which the tool is located.
+Figure 26-Close -up of the digital display.
+At the front there are all the programming keys of the panel, while at the rear there are
+1) on / off switch (I/0);
+2) the three data cables, in order from top to bottom X Axis -Y Axis -Z Axis, from the
+sensors placed on the tool holder carri age;
+3) the power supply cable.
+At the time of purchase, the display must be installed on the left side of the lathe, using the
+bracket supplied.
+The power cord must be connected to a 230V / 50 Hz plug equipped with a grounding
+conductor.
+2
+13
+fervi.comMACHINES AND
+ACCESSORIES
+Page 35of84
+Data cable co nnections
+Pay attention to the correct connection of the data cables.
+If reversed they can cause erroneous readings by the digital display.
+The display can be rotated and tilted to allow the data to be viewed at any time.
+Rotation is achieved by simply moving it with one hand, and to adjust the angle, loosen the
+bolt located just below the power cord, tilt the panel and then retighten the bolt.
+Figure 27–Panel adjustment
+9.4.1 Using the display
+When acti vating the panel, the management system performs a self -diagnostic routine.
+Figure 28–Close -up of the display
+fervi.comMACHINES AND
+ACCESSORIES
+Page 36of841-Self-test
+The display shows the following messages:
+Model Use with lathe*
+SDS25XLATHE
+35Y
+35Z
+Axis number Resolution
+* "Lathe" is specified because the panel can be programmed for other tool machines.
+At the end of the self -diagnostic the display shows the following messages:
+It could be “I NC” “ALE”
+“ZER”
+0.000XALE
+0.000Y
+0.000Z
+2–Setting the system
+Pressing the button during the self -diagnostic process, starts the setting mode, which
+begins as soon as the firs t phase has finished.
+-Setting the X -axis resolution:
+current resolution
+5XXreslN
+In this way, the desired resolution is set for the X axis, using the numbers on the panel
+according to the following scheme:
+Button0 1 2 5 7 8 9
+Resolution (µm)10 1 2 5 0.1 0.2 0.5
+-After choosing the resolution press the button then to move to the next step.
+-To set the resolution of the Y axes and (Z if used), proceed as described above
+forthe X axisENT.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 37of84-After each setting, press the button and to move to the next step.
+-Setting the axis linear encoder measuring direction.
+1XXdir
+-Press the button of the axis which you wish to set (X, Y, Z)
+-Press the button for a positive count in the direction of movement from the
+outside towards the rotation axis.
+-Press the button for a negative count in the direction of mov ement from the
+outside towards the rotation axis.
+-Press the buttons and to move to the next step.
+-Perform the above steps to set the measuring direction of the linear encoder
+of the Y axes (Z if us ed)
+-After each setting, press the button and to move to the next step.
+-Setting the list of tools.
+0Xtool
+-Select the desired machine by pressing the corresponding button.
+Button Machine
+0 Multifunction milling machine
+1 Universal milling machine
+2 Process unloader
+3 Lathe
+-Press the buttons and to move to the next step.
+-As you are using the lathe, select number 3 , then the instrument will display
+only the X and Y dimensions necessary for turning operationsENT
+ENTENT10ENT
+fervi.comMACHINES AND
+ACCESSORIES
+Page 38of84-Integration of the Y -axis with the Z axis
+-Press the button or the button to change the setting
+YNONE
+YINGREAT
+-After the selection press the and buttons to move to the next step.
+By integrating the Y and Z dimensions (movements on the same axis) only one
+dimen sion (Y -axis) will be displayed, which will vary depending on whether you are
+operating the handwheel for longitudinal movement of the carriage, or the
+handwheel for longitudinal movement of the turret.
+-Press the button twice t o activate the auto -diagnostic function. Press to finish
+the setting process.
+A)
+Xtestoff
+3–RESETTING THE DISPLAY
+-You can reset the display of the X, Y and Z axes at any time by pressing the
+button, or and then the button.
+321.456X
+
+0.000XCLSENT1 0
+CLSX
+fervi.comMACHINES AND
+ACCESSORIES
+Page 39of844-DEFAULT DATA
+The default data allows continuous monitoring of the machining in
+operation.
+If, for exam ple, it has a piece as shown in Figure 29/a) and you
+want to get the piece in Figure 29/b) you can set all the heights in
+order to precisely control the actual machining.
+To set the data, proceed as follows:
+Figure 29–Example of
+machining.
+-Move the tool to the height A in the Z direction (longitudinal).
+-Press the button
+ to set height 5.
+. Y
+
+-5.000Y
+-Press the button then the button to choose the negative direction of the
+machining (towards the spindle ).
+If an incorrect value is entered, press
+ again to enter the correct va lue.
+-Start machining until the display shows -13.
+-13.000Y± 5
+fervi.comMACHINES AND
+ACCESSORIES
+Page 40of845–Displaying the absolute / relative coordinates
+Press the buttons to move from the relative coordinates "INC" to the absol ute
+coordinates "ALE" and vice versa, on the display of the Y coordinate. Set the D plane as the
+reference plane, in this way in "ALE" mode (absolute coordinates) on the Y axis 0 will be
+displayed.
+0. Y
+Figure 30–Viewing absolute / relative.
+With reference to Figure 30, proceed as follows, to switch from absolute coordinates to
+relative coordinates.
+-Bring the cutting tool to the D plane.
+0.000XALE
+0.000Y
+-Move the cutting tool to the C plane.
+0.000XALE
+-100.000Y
+-Move the cutting tool to the B plane.
+0.000XALE
+-150.000Y
+fervi.comMACHINES AND
+ACCESSORIES
+Page 41of84-Press the button (to switch to the relative coordinates) then reset the display of Y,
+by pressing the
+ and buttons.
+0.000XINC
+0.000Y
+-Move the cutting tool to the A plane.
+0.000XINC
+-10.000Y
+-Move the cutting tool to the E plane.
+0.000XINC
+-30.000Y
+-Reset the Y display by pressing the
+ and buttons.
+0.000XINC
+0.000Y
+-Move the cutting tool to the A plane.
+0.000XINC
+20.000Y
+-Press the button (to switch to the absolute coordinates)CLSCLS
+fervi.comMACHINES AND
+ACCESSORIES
+Page 42of840.000XALE
+-130.000Y
+-Move the cut ting tool to the D plane.
+0.000XALE
+0.000Y
+6–Viewing stored coordinates
+Press the buttons, as well as switching between the absolute and relative
+coordinate s, it is also p ossible to view 200 previously stored coordinate values .
+ale inc zer1
+ 
+zer200 •••• zer2
+With the button it is possible to directly enter the display menu of the 200 coordinates.
+press the buttons from 1 to 9 twice (e.g. 5 and 0)
+alezernozer50
+In this way the relative coordinate number 50 is displayed.       
+ENTZERO
+fervi.comMACHINES AND
+ACCESSORIES
+Page 43of847–Radius / Diameter display
+Figure 31–Radius / Diameter display
+The reference for axis X is the axis of spindle rotation (dashed line in Figure 31).
+-Move the cutting tool to point A.
+5.000X
+-Press the and
+ buttons to switch from viewing the radius to the diameter.
+10.000X
+-Move the cutting tool to point B.
+20.000X
+-Press the and
+ buttons to switch from viewing the diameter to the radius.
+10.000X
+If the word "DIR" appears this means that on the X -axis the diameter of the workpiece is
+being displayed. The Y -axes only have one display mode.XX
+fervi.comMACHINES AND
+ACCESSORIES
+Page 44of848–Displaying Metric / Imperial coordinates
+The digital panel can also s how the coordinates of the X axis in Imperial units (inches), this
+display is not available for the Y axis
+With reference to Figure 32, proceed as follows, to switch from Metric coordinates to Imperial
+coordinates.
+Figure 32–Displaying Metric / Imperial coordinates.
+-Move the tool to point A, the coordinates in Metric units are 25.4 mm.
+25.400X
+-Pressing the button, switches the display to Imperial units 1”.
+1.00000X
+-Move the tool to point B, the coordinates in Imperial units are 2”.
+2.00000X
+-Pressing the button, switches the display to Metric units 50.8 mm.
+50.800XM/M/
+fervi.comMACHINES AND
+ACCESSORIES
+Page 45of849–Linear error compensation
+The linear error compensation function is used for the correction of errors in the transmission
+system of the lead screw.
+The correction factor is expressed as:
+where
+Lis the useful length of th e Z axis in mm;
+L’is the value displayed on the panel in mm;
+Sis the correction factor in mm/m.
+The correction factor can be positive if the displayed value is less than the actual length,
+negative if the value displayed is higher.
+The compensation r ange is ± 1.500 mm/m.
+Ex. If the useful length of the Y axes is 1000 mm and the panel at the end of travel of the
+carriage, reads 999.98 mm then S=(1000 -999.98)/(1000/1000)=0.02 mm/m.
+So to enter the compensation value it is necessary to:
+-Select the Y ax is by pressing the button
+ , pressing the button displays the
+correction factor S previously set.
+s0.050Y
+-Enter the calculated value 0.02 by pressing in sequence the keys 0 . 0 2
+s0.020Y
+-Press the button to confirm the data.
+The linear error compensation can be performed by either displaying the absolute
+coordinates, or displaying the relative coordinates.
+10–Disconnection of the power supply
+If the power supply is discon nected or it is necessary to turn off the machine during
+machining, the panel is able to automatically store the coordinates where the tool is located,
+the compensation factor currently set and the display mode.
+When the machine is turned on again, the dis play will show the exact data before the
+interruption, immediately after the initial self -diagnosis phase. If the tool and/or workpiece
+have not been moved, it is possible to resume machining without problems.ENTM/
+m mmLLLS /1000/'
+fervi.comMACHINES AND
+ACCESSORIES
+Page 46of8410OPERATION
+Intended use and materials
+The Ge ar head lathe (Art. T999/230V and T999/400V) has been designed and constructed for
+the machining of metallic materials by means of cold chip removal. Any use and lack of
+respect for the technical parameters established by the manufacturer may be dangerous to
+operators; therefore, the manufacturer cannot assume any liability for resulting damages.
+Risk of Abrasion and Accident
+Before using the machine, make sure that it is correctly attached to prevent unwanted
+movement or loss of stability.
+Wear appro priate personal protective equipment (PPE) such as gloves, goggles, overalls or
+aprons and safety shoes.
+Environment of Use
+The lathe can operate in enclosed working environments (production departments,
+warehouses, etc.), such as those that are prote cted from the weather and where there is
+no danger of fire or explosion.
+The operating temperature is within the range of -10 / +50°C.
+The working environment must be sufficiently well lit to ensure maximum operational
+safety (at least 200 lux).
+Worki ng close to the spindle
+Before starting work in the vicinity of the spindle, ALWAYS check that the machine is stopped.
+It is recommended to not extend the continued use of the machine for more than 10 minutes
+to avoid overheating the machine (which coul d damage the motor) and the equipment.
+1.Lift the movable protective screen of the spindle.
+2.Place the workpiece on the spindle and secure it by tightening the jaws, with the
+appropriate key.
+Insert the key into one of the holes with a square cross -section o n the spindle, and to close
+the jaws, turn it clockwise (see Figure 33).
+Figure 33–Spindle key.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 47of84
+Locking the piece
+Lock the workpiece onto the self -centring spindle in a stable and secure manner, by tightening
+the jaws with the necessary force.
+3.If necessary, secure the opposite end of the workpiece using the tailstock. To do this,
+adjust the position of the tailstock and quill, using the appropriate fastening lever and
+hand wheel (see Figure 24).
+4.If necessary, check the eccentricity of the workpiece, using a comparator and by rotating
+the piece slowly (by hand) after it is fixed between the tips (see Figure34).
+Figure34–Checking the eccentricity of the workpiece.
+5.Insert the tool on the turret of the tool holder carriage, and secure it with the relative
+locking lever (ref. l in Figure 22).
+6.Adjust t he position of the carriage and tool holder slide, using the relative levers and
+handwheels (see Figure 22).
+7.Lower the movable protective screen of the spindle.
+Machine operation
+Before starting the machine, ALW AYS close the movable protective screen of the spindle. This
+is to provide adequate protection for the operator, in relation to mechanical hazards in the
+"danger zone" of the spindle.
+8.Set the correct spindle rotation speed, using the knobs on the control panel of the
+machine (see Figure 18).
+9.Turn the main switch to position "I" (see Figure 16) verifying that the voltage warning
+light has turned on (white, see ref. c in Figure 17).
+10.Move the start lever of the electric motor to start the rotation of the spindle, at the same
+time choosing the direction of rotation.
+11.Perform the machining of the workpiece, by moving the tool towards the workpiece, in
+rotation, using the handwheels that regulate the fine movement of the tool holder slides
+(ref. m / n in Figure 22). If necessary, move the nozzle of the cooling liquid closer to the
+area affected by t he machining and operate the pump.
+12.When finished, move the tool away from the work piece, then stop the rotation of the
+spindle with the start lever.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 48of84
+Risk of abrasion and/or cutting
+After putting the start lever into the neutral position or pressing the emergency stop
+switches, the spindle will continue to rotate by inertia. For an immediate stop, you must
+push the brake pedal beneath the bed of the machine.
+Do not allow body parts near the spindle while in motion!
+13.After stopping the rotation of the sp indle, lift the mobile protective screen and remove the
+work piece from the spindle by releasing the jaws with the appropriate key. To do this,
+insert the key into one of the hollow, square sections on the spindle and turn it
+anticlockwise.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 49of8410.1Automatic F eed Tool Carriage
+Longitudinal feed
+The automatic longitudinal feed of the carriage is derived from spindle, which transmits its
+motion to the grooved bar (see Figure 35).
+The longitudinal feed is due to the lowe r slide that drags the carriage in the direction of the
+axis of the Lathe. A worm screw B, connected to the grooved bar A, runs along the latter
+together with the carriage. The worm screw sets in rotation a gear wheel D and the other
+gears present, includi ng the pinion M which meshes with the rack N, which is moved by
+dragging the carriage during the rotation of the pinion.
+Figure 35–Longitudinal feed.
+Transverse feed
+The transverse feed is due to the transverse slide which dra gs the upper slide and the tool in
+the perpendicular direction to the axis of the Lathe (see Figure 36). And by moving the lever
+E to position 3, the idler wheel O meshes with the pinion G integral with the screw H. The
+screw is c oupled to the casing I integral with the transverse slide. The rotation of the screw
+therefore moves the transverse slide.
+Figure 36–Transverse feed.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 50of84Longitudinal feed for threading:
+The automatic longitudinal feed originates in the spindle, which transmits motion to the lead
+screw connected to the spindle itself by means of gears that allow for the variation in the
+rotational speed (see Figure 37).
+The lead screw, with its rotation motion, exerts a thrust on the fixed casing of the carriage,
+determining the automatic feed, in a longitudinal direction.
+Figure 37–Longitudinal feed with the lead screw.
+The change of feed speed of the Gear head lathe (Art. LC340/1000) is mixe d: mechanical
+with knobs for speed selection (see section 9.2.2) and with replaceable gears.
+To carry out the replacement of the gears, proceed as described below:
+Risk of Crushing
+Before replacing the gears, turn off the machine, put the main switch i n the "0" position .
+1.Open the guard for the feed speed change gearbox, placed on
+the left part of the machine;
+2.Unscrew the fastening nuts and disassemble the gears (see
+Figure 38);
+3.Position the relative gears for the feed desire d, check they fit
+perfectly and tighten the fastening nuts;
+4.Close the guard of the gearbox.
+Figure 38–Gears.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 51of8411MAINTENANCE
+Electric shock
+Before maintenance or checks, turn off the machine and ALWAYS unplug the power cord. This
+is so that there is no risk of electric shock.
+Regularly clean and take care of the machine to guarantee proper efficiency and a long
+working life.
+Use a compressor to blow off shavings, chips, filings and dust that has accumulated on the
+floor of the machine and on the workbench at the end of each machining operation.
+Working with compressed air
+ALWAYS wear the protective goggles when using compressed air.
+Check the status of the Lathe and the EC and warning plate; if these are no longer leg ible
+request replacements.
+Do not use the lathe if there are any defects!!
+Daily checks
+1Check that all moving parts are well lubricated .
+2 Clean the surface of the spindle, the turret and the body of the machine.
+3Check that there are no objects / tools near the moving parts.
+4Check the operation of the manually operated handwheels .
+5Check the wear of the guide rails.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 52of8411.1Lubrication
+It is good practice to clean the machine, especially the guides, removing all chips produced
+by the work.
+Apply, w ith a rag or a brush, a thin layer of oil on the guides and on the spindle to prevent
+corrosion.
+The next day, remember to remove the oil before starting the machine.
+The perfect efficiency of the lathe is guaranteed over time with the perfect lubrication of its
+moving parts.
+Lubrication
+Do not use the machine if oil leaks are detected or if the levels are not perfect.
+Lubrication
+Only use the lubricants listed in the table below.
+DO NOT use any types other than those indicated, DO NOT use too muc h and DO NOT fall
+below the level indicated by the indicators.
+The main gears of the lathe are splash lubricated, the lubricating oil level is signalled by the
+window (See figure 32).
+The other parts that are to be manually lubricated are specified in th e following table,
+together with the type of lubricant and frequency. The lead screw should be lubricated with
+lithium grease via the grease nipple.
+The lubricating oil should be completely replaced after the first week of using the new lathe.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 53of84For proper lubrication of the Lathe, proceed as follows (see Figure 39):
+Figure 39–Lubrication points on the machine.
+Ref
+.Parts of the machineLubricatio
+n pointType of
+lubricantFrequencyReplacemen
+t frequency
+1Feed shaft
+and lead screw bearings:2 Oil Daily /
+2Transverse feed casing 1 Oil Daily /
+3Tailstock sleeve and
+hand wheel2 Oil Daily /
+4Transverse slide 2 Oil Daily /
+5Longitudinal slide 3 Oil Daily /
+6Longitudinal feed
+handwheel1 Oil Daily /
+7Transverse feed
+handwheel1 Oil Daily /
+8Toolcarriage 1 Oil 20Level
+indicator6 months
+9Spindle gears 1 Oil 20Level
+indicator6 months
+Oil level windowsTop up the level
+OONNCCEEAADDAAYY
+fervi.comMACHINES AND
+ACCESSORIES
+Page 54of84Ref
+.Parts of the machineLubricatio
+n pointType of
+lubricantFrequencyReplacemen
+t frequency
+10Carriage rails 4 Oil 20 Daily /
+11Gears for threading 1 Oil 20Level
+indicator6 months
+Types of oil recommended
+Mobil Vectra No. 2
+Shell –Tonna –T68/TX68
+Chevron –Vistac –68X
+Esso–Febis –K68
+Lubrication
+DO NOT disperse used oil into the environment. Notify one of the authorized consortiums for
+collection and removal of used oil.
+11.2Periodic checks
+Every 6 months of the machine’s life, perform a thorough inspection of operation and wear
+and precisely level the table.
+The gear unit requires no maintenance other than oil changes.
+11.3Adjusting the Mach ine
+11.3.1 Adjusting the tension of the motor belts
+Make sure the motor belt tension is at an appropriate level. In this regard, make a simple
+check by pressing down firmly on the individual belts (approximately in the middle), which
+should move by a maximum of 5 mm.
+If the belts are loose or too tight, loosen the belt adjustment system bolts until the correct
+tension is achieved.
+Figure 40–Drive belts.
+Proper belt tension reduces wear and increases the production of the machine.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 55of8411.3.2 Tailstock alignment
+When the tailstock is off -axis, it is necessary to correct its position by turning the adjustment
+screw until aligned with the reference marks on the side plate.
+Figure 41–Adjustment screw.
+11.3.3 Spindle alignment
+When the spindle rotates off -axis or if particularly heavy machining operations must be
+carried out, make an adjustment to the bearings.
+The bearing that supports the spindle is tapered, to carry out the adjustment, proceed as
+follows (see Figure42):
+1.Loosen the bearing lock nut;
+2.Tighten the bearing adjustment nut;
+3.Test the spindle by rotating it, and —by means of a comparator (See Point 4 of Chapter
+10)—make sure it rotates perfectly.
+4.Re-tighten the bearing locking nut.
+Figure42–Spindle alignment.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 56of8411.3.4 Adjusting the slack of the gears
+It is very important that there is no abnormal slack between
+the gears, to avoid breakage or rapid wear of the teeth of the
+gears themselves.
+To reduce and / or adjust the slack , move the gear II and
+firmly tighten nuts III and IV (see Figure 43)
+Figure 43–Gear slackII
+IV
+III
+fervi.comMACHINES AND
+ACCESSORIES
+Page 57of8412REPLACEMENT PARTS
+TABLE A
+fervi.comMACHINES AND
+ACCESSORIES
+Page 58of84
+fervi.comMACHINES AND
+ACCESSORIES
+Page 59of84
+Part No. description Part No. description
+T999/A001 Fusion T999/A053 Plastic terminal
+T999/A002 Hand wheel T999/A054 Cap
+T999/A003 Box T999/A055 Cap
+T999/A004 Cover T999/A056 Handle
+T999/A005 Comparator body T999/A057 Spring
+T999/A006 Washer T999/A058 Spring
+T999/A007 Gib T999/A059 Key
+T999/A008 Selector body T999/A060 Screw
+T999/A009 Selection lever T999/A062 Screw
+T999/A010 Micrometer T999/A063 Screw
+T999/A011 Cover T999/A064 Screw
+fervi.comMACHINES AND
+ACCESSORIES
+Page 60of84Part No. description Part No. description
+T999/A012 Shaft T999/A065 Screw
+T999/A013 Gear 60 Teeth T999/A066 Screw
+T999/A014 Shaft 18 Teeth T999/A067 Screw
+T999/A015 Gear T999/A068 Screw
+T999/A016 Shaft T999/A069 Screw
+T999/A017 Ring T999/A070 Screw
+T999/A018 Gear with 30 Teeth T999/A071 Screw
+T999/A019 Gear with 46 Teeth T999/A072 Screw
+T999/A022 Gear with 63 Teeth T999/A073 Screw
+T999/A02 3Ring T999/A074 Screw
+T999/A024 Selector T999/A075 Screw
+T999/A025 Lever T999/A076 Screw
+T999/A026 Gear with 40 Teeth T999/A077 Screw
+T999/A028 Support T999/A078 Plug
+T999/A029 Half nut T999/A079 Plug
+T999/A030 Worm T999/A060 Plug
+T999/A031 Gear wi th 22 Teeth T999/A081 Plug
+T999/A032 Shaft T999/A082 Plug
+T999/A033 Gear 16 Teeth T999/A083 Plug
+T999/A034 Shaft T999/A084 Oiler
+T999/A035 Comparator shaft T999/A085 Washer
+T999/A038 Gear T999/A086 Locking ring
+T999/A039 Ring T999/A087 Nut
+T999/A040 Bar T999/A088 Nut
+T999/A041 Screw T999/A089 Nut
+T999/A041 Washer T999/A090 Rivet
+T999/A042 Washer T999/A091 Rivet
+T999/A043 Washer T999/A092 O-ring
+T999/A044 Washer T999/A095 Key
+T999/A050 Cap T999/A096 Steel ball
+T999/A051 Cap T999/A097 Washer
+T999/A052 Cap T999/A098 Screw
+fervi.comMACHINES AND
+ACCESSORIES
+Page 61of84TABLE B
+fervi.comMACHINES AND
+ACCESSORIES
+Page 62of84
+fervi.comMACHINES AND
+ACCESSORIES
+Page 63of84
+Part No. Description Part No. Description
+T999/B001 Fusion T999/B049 Bearing
+T999/B002 Cover T999/B050 Brass bushing
+T999/B003 Cover T999/B051 Stop
+T999/B004 Oil cap T999/B052 Gear
+T999/B00 5 O-ring T999/B053 Washer
+T999/B006 Sliding block T999/B054 Bearing
+T999/B007 Bolt T999/B055 Washer
+T999/B008 Conical plug T999/B056 Stop
+T999/B009 Bolt T999/B057 Stop
+T999/B010 Selector T999/B058 Gear
+T999/B011 Pin T999/B059 Gear
+T999/ B012 Support T999/B060 Key
+T999/B013 Selector T999/B061 Gear
+T999/B014 Pin T999/B062 Bearing
+T999/B015 Support T999/B063 Gasket
+T999/B016 Shaft T999/B064 Bearing cover
+fervi.comMACHINES AND
+ACCESSORIES
+Page 64of84Part No. Description Part No. Description
+T999/B017 Key T999/B065 Shaft
+T999/B018 O-ring T999/B066 Pin
+T999/B0 19 Locking screw T999/B067 Bearing cover
+T999/B020 Selector T999/B068 Gasket
+T999/B021 Support T999/B069 Gear
+T999/B022 Selector T999/B070 Gear
+T999/B023 Support T999/B071 Brass bushing
+T999/B024 Support T999/B072 Gear
+T999/B025 Allen key T999/B073 Brass bushing
+T999/B026 Gear T999/B074 Shaft
+T999/B027 O-ring T999/B075 Key
+T999/B028 Gasket T999/B076 Brass bushing
+T999/B029 Cover T999/B077 Gear
+T999/B030 Allen key T999/B078 Brass bushing
+T999/B031 Conical plug T999/B079 Gear
+T999/B032 Plug T999/B060 Gear
+T999/B033 Support T999/B081 Gear
+T999/B034 Small sphere T999/B082 Brass bushing
+T999/B035 Spring T999/B083 Gear
+T999/B036 Locking screw T999/B084 Key
+T999/B037 Label T999/B085 Shaft
+T999/B038 Phillips head s crew T999/B086 Key
+T999/B039 Locking screw T999/B087 Bearing cover
+T999/B040 Oil level T999/B088 Gasket
+T999/B041 Label T999/B089 Gear
+T999/B042 Lock T999/B090 Shaft
+T999/B043 Bearing protection T999/B091 Brass bushing
+T999/B044 Gasket T999/B092 Gear
+T999/B045 Washer T999/B093 Gasket
+T999/B046 Key T999/B094 Bearing cover
+T999/B047 Shaft 7 T999/B095 Ring
+T999/B048 Key T999/B096 Shaft
+T999/B097 Pin T999/B105 Bolt
+T999/B098 Screw T999/B106 Washer
+T999/B099 Washer T999/B107 Screw
+T999/B100 Bearing T999/B108 Bolt
+T999/B101 Stop T999/B109 Washer
+T999/B102 Gear T999/B110 Gear
+T999/B103 Bearing T999/B111 Washer
+T999/B104 Gear cover T999/B112 Allen key
+fervi.comMACHINES AND
+ACCESSORIES
+Page 65of84TABLE C
+fervi.comMACHINES AND
+ACCESSORIES
+Page 66of84
+fervi.comMACHINES AND
+ACCESSORIES
+Page 67of84
+fervi.comMACHINES AND
+ACCESSORIES
+Page 68of84Part No. Description Part No. Descr iption
+T999/C001 Collar T999/C046 Small pin
+T999/C002 Collar T999/C047 Cam
+T999/C003 Back cover T999/C048 Shaft
+T999/C004 Back cover T999/C050 Gear 51z
+T999/C005 Pulley T999/C051 Spacer
+T999/C006 Pin T999/C052 Shaft
+T999/C007 Head T999/C053 Gear 30 z
+T999/C008 Front cover T999/C054 Shaft
+T999/C009 Lever T999/C055 Shaft
+T999/C010 Shaft support T999/C056 Washer
+T999/C011 Cover T999/C057 Toothed shaft 17z
+T999/C012 Body T999/C059 Screw
+T999/C013 Shaft T999/C064 Switch
+T999/C014 Body T999/C065 Switch
+T999/C015 Pad T999/C066 Switch
+T999/C016 Hub T999/C067 Spacer
+T999/C017 Gear 37z T999/C068 Fork
+T999/C018 Washer T999/C069 Fork
+T999/C019 Washer T999/C073 Gasket
+T999/C020 Washer T999/C074 Gasket
+T999/C021 Gear 40z T999/C075 Gasket
+T999/C022 Washer T999/C076 Gasket
+T999/C023 Gear 37z T999/C077 Gasket
+T999/C024 Locking nut T999/C078 Gasket
+T999/C025 Gear 43z T999/C079 Gasket
+T999/C026 Gear 51z T999/C080 Gasket
+T999/C028 Shaft 16z T999/C081 Oil level window
+T999/C029 Washer T999/C084 Allen k ey M4 x 12
+T999/C030 Washer T999/C085 Allen key M4 x 12
+T999/C031 Shaft T999/C086 Allen key M4 x 12
+T999/C032 Washer T999/C087 Allen key M4 x 12
+T999/C033 Gear 21z T999/C088 Allen key M4 x 12
+T999/C034 Gear 29z T999/C089 Allen key M4 x 12
+T999/C035 Gear 46z T999/C093 Screw M6 x 12
+T999/C036 Gear 38z T999/C095 Screw M8 x 8
+T999/C037 Spacer T999/C096 Screw M8 x 10
+T999/C038 Gear 26z T999/C097 Screw M8 x 12
+T999/C039 Gear 34z T999/C098 Screw M8 x 16
+T999/C040 Gear 53z T999/C099 Screw M8 x 40
+T999/C 041 Lid T999/C100 Screw M4 x 8
+fervi.comMACHINES AND
+ACCESSORIES
+Page 69of84Part No. Description Part No. Descr iption
+T999/C042 Gear 74z T999/C102 Nut M12
+T999/C043 Gear 37z T999/C103 Key 5 x 15
+T999/C044 Shaft T999/C104 Key 5 x 18
+T999/C045 Spring T999/C105 Key5 x 50
+T999/C106 Key 6 x 40 T999/C131 O_Ring
+T999/C107 Key 6 x 55 T999/C13 2 O_Ring
+T999/C108 Key 6 x 120 T999/C133 O_Ring
+T999/C109 Key 6 x 120 T999/C134 O_Ring
+T999/C110 Key 6 x 18 T999/C135 O_Ring
+T999/C111 Key 5 x 20 T999/C136 O_Ring
+T999/C113 Plug 3 x 10 T999/C137 O_Ring
+T999/C114 Plug 4 x 18 T999/C138 O_Ring
+T999/C11 6Plug 5 x 32 T999/C139 Spring
+T999/C117 Locking ring 35 T999/C140 Spring
+T999/C119 Locking ring 20 T999/C141 Spring
+T999/C120 Locking ring 50 T999/C142 Hub
+T999/C121 Locking ring 72 T999/C143 Brass tube
+T999/C122 Locking ring 42 T999/C144 Knob
+T999/ C123 Bearing T999/C145 Belt
+T999/C124 Bearing T999/C148 Lid
+T999/C125 Bearing T999/C149 Plug
+T999/C126 Bearing T999/C150 Screw M6 x 50
+T999/C127 Bearing T999/C151 Allen key
+T999/C128 Bearing T999/C152 Handle plate
+T999/C129 Sphere T999/C153 Plug
+T999/C130 Sphere T999/C154 Shaft
+fervi.comMACHINES AND
+ACCESSORIES
+Page 70of84TABLE D
+fervi.comMACHINES AND
+ACCESSORIES
+Page 71of84
+fervi.comMACHINES AND
+ACCESSORIES
+Page 72of84Part No. Description Part No. Description
+T999/D001 Motor support T999/D069 Plug
+T999/D002 Pulley T999/D070 Bolt
+T999/D003 Table T999/D071 Bolt
+T999/D004 Cavity T999/D072 Bolt
+T999/D005 Protect ive device T999/D073 Lid
+T999/D006 Support T999/D074 Electrical controls box
+T999/D007 Support T999/D075 Splashguard
+T999/D008 Spacer T999/D076 Bolt
+T999/A009 Collar T999/D077 Bolt
+T999/D010 Rack T999/D078 Nut
+T999/D011 Rack T999/D079 Bath
+T999/D013 Rack T999/D060 Screw
+T999/D016 Main screw T999/D081 Lid
+T999/D019 Feed rod T999/D082 Left table support
+T999/D022 Shaft T999/D083 Right table support
+T999/D023 Spacer T999/D084 Lid
+T999/D024 Shaft T999/D085 Screw
+T999/D025 Rod T999/D086 Screw
+T999/D026 Ring T999/D087 Lid
+T999/D027 Spacer T999/D088 Screw
+T999/D028 Key T999/D089 Support
+T999/D029 Oil cup T999/D090 Screw
+T999/D039 Knob T999/D091 Tin plate
+T999/D040 Plug T999/D092 Support
+T999/D041 Plug T999/D093 Shaft
+T999/D041 Plug T999/D094 Elastic pin
+T999/D042 Screw T999/D095 Rod
+T999/D043 Protective device T999/D096 Lid
+T999/D044 Locking nut T999/D097 Nut
+T999/D045 Screw T999/D098 Elastic pin
+T999/D046 Screw T999/D099 Pedal arm
+T999/D047 Screw T999/D100 Connection
+T999/D049 Allen key T999/D101 Spring
+T999/D051 Allen key T999/D102 Lock
+T999/D052 Allen key T999/D103 Screw
+T999/D053 Nut T999/D104 Plug
+T999/D054 Grub screw T999/D105 Tube
+T999/D054A Bolt T999/D106 Elastic pin
+T999/D058 Plug T999/D107 Tube
+T999/D059 Plug T999/D108 Pedal
+fervi.comMACHINES AND
+ACCESSORIES
+Page 73of84Part No. Description Part No. Description
+T999/D061 Plug T999/D109 Screw
+T999/D061A Plug T999/D110 Nut
+T999/D067 Spring T999/D111 Rod support
+T999/D068 Sphere
+fervi.comMACHINES AND
+ACCESSORIES
+Page 74of84TABLE E
+fervi.comMACHINES AND
+ACCESSORIES
+Page 75of84
+fervi.comMACHINES AND
+ACCESSORIES
+Page 76of84Part No. Description Part No. Description
+T999/E001 Saddle T999/E042 Bearing
+T999/E002 Slide T999/E043 Bearing
+T999/E003 Rotating slide T999/E044 Screw
+T999/E004 Upper slide T999/E045 Screw
+T999/E005 Collar T999/E046 Screw
+T999/E006 Gib T999/E047 Screw
+T999/E007 Hub T999/E048 Allen key
+T999/E008 Strip T999/E049 Allen key
+T999/E009 Gib T999/E050 Allen key
+T999/E010 Stop T999/E052 Allen key
+T999/E011 Stop T999/E053 Adjustment grub screw
+T999/E012 Hammer screw T999/E054 Adjustment grub screw
+T999/E013 Lever base T999/E055 Adjustment grub screw
+T999/E014 Lever T999/E056 Adjustment grub screw
+T999/E015 Stop T999/E057 Adjustment grub screw
+T999/E016 Screw T999/E058 Adjustment grub screw
+T999/E017 Micrometer T999/E059 Nut
+T999/E018 Switch T999/E060 Nut
+T999/E019 Switch T999/E061 Washer
+T999/E020 Collar T999/E062 Screw
+T999/E022 Washer T999/E063 Spring
+T999/E023 Nut T999/E064 Oiler
+T999/E024 Micrometer T999/E066 Plug
+T999/E025 Plate T999/E067 Shaft gear
+T999/E026 Plate T999/E069 Bearing
+T999/E027 Plate T999/E070 Allen key
+T999/E028 Screw T999/E071 Lever
+T999/E029 Washer T999/E072 Handle
+T999/E030 Turret base T999/E073 Spacer
+T999/E031 Adjustment screw T999/E074 Key
+T999/E032 Adjustment screw T999/E075 Screw
+T999/E033 Switch T999/E076 Key
+T999/E034 Gib T999/E077 Thrusting beari ng
+T999/E035 T bolts T999/E078 Bearing housing
+T999/E036 Threaded lock T999/E079 Bearing dust cover
+T999/E037 Nut T999/E080 Washer
+T999/E038 Switch cover T999/E081 Washer
+T999/E039 Small brush T999/E082 Locking nut
+T999/E040 Small brush T999/E083 Allen key
+fervi.comMACHINES AND
+ACCESSORIES
+Page 77of84TABLE F
+fervi.comMACHINES AND
+ACCESSORIES
+Page 78of84
+Part No. Description Part No. Description
+T999/F001 Body T999/F022 Micrometer
+T999/F002 Flange T999/F023 Lock
+T999/F003 Hand wheel T999/F026 Switch
+T999/F004 Plate T999/F029 Knob
+T999/F005 Base T999/F030 Knob
+T999/F00 7 Sleeve T999/F031 Allen key
+T999/F008 Screw T999/F032 Allen key
+T999/F009 Washer T999/F033 Screw
+T999/F010 Screw T999/F034 Screw
+T999/F011 Screw T999/F035 Screw
+T999/F012 Screw T999/F036 Screw
+T999/F013 Pin T999/F037 Nut
+T999/F014 Screw T999/F038 Nut
+T999/F015 Sleeve coupling T999/F039 Key
+T999/F016 Tie rod T999/F040 Washer
+T999/F019 Pin T999/F041 Plug
+T999/F020 Lever T999/F041 Bearing
+T999/F021 Nut T999/F042 Oiler
+fervi.comMACHINES AND
+ACCESSORIES
+Page 79of84TABLE G TABLE H
+fervi.comMACHINES AND
+ACCESSORIES
+Page 80of84Part No. Descripti on Part No. Description
+T999/G001 Knob T999/H001 Knob
+T999/G002 Plug T999/H002 Plug
+T999/G003 Plain bearing T999/H003 Plain bearing
+T999/G004 Screw T999/H004 Screw
+T999/G005 Sleeve coupling T999/H005 Sleeve coupling
+T999/G006 Brass probe T999/H006 Probe
+T999/G007 Screw T999/H007 Knob
+T999/G008 Nut T999/H008 Nut
+T999/G009 Screw T999/H009 Screw
+T999/G010 Body T999/H010 Nut
+T999/G011 Allen key T999/H011 Bolt
+T999/H012 Bolt
+T999/H013 Lower body
+T999/H014 Nut
+T999/H 015 Washer
+T999/H016 Screw
+T999/H017 Plate
+T999/H018 Bolt
+T999/H019 Upper body
+12.1ACCESSORIES SUPPLIED
+1)Self-centring device 3+3 Ø 160 mm 2)Movable rest
+3)Independent jawed spindle 4+4 Ø 200 mm 4)Reduction bushing CM5
+5)Fixed rest 6)Flange Ø 250 mm
+7)Adjustable brake 8)Rotating tailstock CM 3
+9)Spindle protector 10) Threading comparator
+11) Quick change turret 12) Rear splashguard
+13) Pedal brake 14) Lead screw guard
+fervi.comMACHINES AND
+ACCESSORIES
+Page 81of8413DISPOSAL OF PARTS AN D MATERIALS
+If the ma chine is to be scrapped, its parts must be disposed of differently.
+The Lathe is composed of the following materials:
+the head, the table, the tailstock, the slides and the carriages are made of cast iron;
+the gears, shafts, bearings, slideways and spindle are made of steel.
+Respect the environment!
+Contact a specialist centre for the collection of metallic material s.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 82of8414TROUBLESHOOTING
+PROBLEM PROBABLE CAUSE SOLUTION
+Noisy operationA)Damaged bearings.
+B)Bearings not lubricated.
+C)Blunt tool.
+D) Loose tool.B)Contact Customer Service.
+C)Lubricate
+D)Remove/sharpen the tool.
+E)Tighten the fastening lever.
+The motor will no t
+start.A)Electrical power supply.
+B)Wiring connections
+C)Burnt motor windings.
+D)Blown fuses.
+E)Broken switch.A)Check the mains power
+supply.
+B)Check the wiring
+connections.
+C)Contact Technical Support.
+D)Replace the fuses.
+E)Contact technical support.
+The tool "s oftens"
+or overheats too
+much.A)Excessive pressure on the
+workpiece.
+B)Shavings will not discharge.
+C)Tool is worn or does not cut
+the material well.
+D)Needs lubrication.A)Apply less pressure.
+B)Clean the machine.
+C)Check the tool sharpness and
+wear.
+D)Lubricate as you work.
+The panel does
+not display
+correctlyA)Data cables not connected
+properly.
+B)Compensation factor is
+incorrect.
+F)
+C)Setting unit is not correct.A)Check the correct connection
+of data cables X, Y, Z at the
+rear of the panel.
+B)Proceed with the dec iding the
+compensation factor and
+setting of the panel.
+C)Check to see if the display
+unit is Metric or Imperial.
+fervi.comMACHINES AND
+ACCESSORIES
+Page 83of8415ELECTRIC CIRCUIT
+15.1Art. T999/400V
+fervi.comMACHINES AND
+ACCESSORIES
+Page 84of8415.2Art. T999/230V
+fervi.com

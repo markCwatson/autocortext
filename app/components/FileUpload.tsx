@@ -8,6 +8,7 @@ export default function FileUpload() {
     const file = event.target.files[0];
     if (file) {
       // todo: upload file to server
+      // see UploadPdf in doc page
     }
   };
 
