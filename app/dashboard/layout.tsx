@@ -8,6 +8,7 @@ import DialogModal from '@/components/DialogModal';
 import SignInButton from '@/components/SignInButton';
 import OrgNavBar from '@/components/OrgBar';
 import { AiQueryProvider } from '@/components/AiQueryProvider';
+import { ArrowPathIcon } from '@heroicons/react/20/solid';
 
 export default async function DashboardLayout({
   children,
@@ -19,10 +20,16 @@ export default async function DashboardLayout({
   if (!user) {
     return (
       <DialogModal
+        icon={
+          <ArrowPathIcon
+            className="h-6 w-6 text-green-600 animate-spin"
+            aria-hidden="true"
+          />
+        }
         title={'You are not signed in.'}
         body={'You cannot access this page.'}
         show={true}
-        goToButton={<SignInButton text="Sign in" />}
+        goToButtons={[<SignInButton text="Sign in" />]}
       />
     );
   }

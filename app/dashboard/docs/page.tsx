@@ -173,7 +173,7 @@ export default function Documentation() {
             </div>
             <div className="flex flex-col">
               <div
-                className="pt-4 border-b overflow-auto"
+                className="pt-4 border-b overflow-scroll"
                 style={{ height: '30vh' }}
               >
                 <Folders callback={handleSelectDocument} />

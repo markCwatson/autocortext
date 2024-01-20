@@ -3,15 +3,15 @@
 import { useState, Fragment } from 'react';
 import { useRouter } from 'next/navigation';
 import { Dialog, Transition } from '@headlessui/react';
-import { ArrowPathIcon } from '@heroicons/react/20/solid';
 
 type Props = {
+  icon: JSX.Element;
   title: String;
   body: String;
   show: boolean;
   goTo?: string;
   goToText?: string;
-  goToButton?: JSX.Element;
+  goToButtons?: JSX.Element[];
 };
 
 export default function DialogModal(props: Props) {
@@ -62,11 +62,8 @@ export default function DialogModal(props: Props) {
                 >
                   <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
                     <div>
-                      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                        <ArrowPathIcon
-                          className="h-6 w-6 text-green-600 animate-spin"
-                          aria-hidden="true"
-                        />
+                      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-ful">
+                        {props.icon}
                       </div>
                       <div className="mt-3 text-center sm:mt-5">
                         <Dialog.Title
@@ -80,11 +77,11 @@ export default function DialogModal(props: Props) {
                         </div>
                       </div>
                     </div>
-                    <div className="mt-5 sm:mt-6">
-                      {props.goToButton ? (
-                        <div className="inline-flex w-full justify-center ">
-                          {props.goToButton}
-                        </div>
+                    <div className="flex mt-5 sm:mt-6 justify-evenly">
+                      {props.goToButtons ? (
+                        props.goToButtons.map((button) => (
+                          <div className="mx-6">{button}</div>
+                        ))
                       ) : (
                         <button
                           type="button"

@@ -8,7 +8,7 @@ function classNames(...classes: any[]) {
 }
 
 const dropdownButtonVariants = cva(
-  'inline-flex w-full justify-center gap-x-1.5 px-2 py-1 text-sm font-semibold shadow-sm',
+  'inline-flex w-full justify-center gap-x-1.5 px-2 text-sm font-semibold shadow-sm',
   {
     variants: {
       size: {
@@ -22,6 +22,10 @@ const dropdownButtonVariants = cva(
         ghost: 'bg-transparent text-my-color1',
         outline: 'bg-transparent text-gray-900 border border-gray-300',
       },
+      chevron: {
+        default: 'visible',
+        hidden: 'invisible',
+      },
     },
     defaultVariants: {
       size: 'md',
@@ -32,7 +36,7 @@ const dropdownButtonVariants = cva(
 
 interface DropdownButtonProps
   extends VariantProps<typeof dropdownButtonVariants> {
-  title: string;
+  title: any;
   listItems: string[];
 }
 
@@ -41,16 +45,19 @@ export default function DropdownButton({
   listItems,
   size,
   color,
+  chevron,
 }: DropdownButtonProps) {
   return (
     <Menu as="div" className={'relative inline-block text-left'}>
       <div>
         <Menu.Button className={dropdownButtonVariants({ size, color })}>
           {title}
-          <ChevronDownIcon
-            className="-mr-1 h-5 w-5 text-my-color1"
-            aria-hidden="true"
-          />
+          {chevron === 'hidden' ? null : (
+            <ChevronDownIcon
+              className="-mr-1 h-5 w-5 text-my-color1"
+              aria-hidden="true"
+            />
+          )}
         </Menu.Button>
       </div>
 
