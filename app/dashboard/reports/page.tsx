@@ -76,7 +76,7 @@ export default function Reports() {
           'gpt-3.5-turbo-1106',
           'gpt-4-1106-preview',
         ]}
-        report={interaction.answer}
+        interaction={interaction}
       />
       <div className="flex flex-col justify-center items-center w-full h-full">
         <div className="flex flex-col justify-center items-center w-full h-full">

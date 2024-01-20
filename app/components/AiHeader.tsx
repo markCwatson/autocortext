@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import {
   ArrowDownOnSquareIcon,
@@ -8,18 +8,21 @@ import {
 } from '@heroicons/react/20/solid';
 import DropdownButton from '@/components/DropdownButton';
 import MyDocument from '@/components/MyDocument';
-import { Button, buttonVariants } from '@/components/Button';
+import { Button } from '@/components/Button';
 import { toast } from '@/components/Toast';
 
 interface AiHeaderProps {
   dropDownList: string[];
-  report: string;
+  interaction: { question: string; answer: string };
 }
 
-export default function AiHeader({ dropDownList, report }: AiHeaderProps) {
+export default function AiHeader({ dropDownList, interaction }: AiHeaderProps) {
   const [isCopied, setIsCopied] = useState<boolean>(false);
+  const [report, setReport] = useState('');
 
   const copyToClipboard = () => {
+    const report = `Question: ${interaction.question}\nAnswer: ${interaction.answer}`;
+    setReport(report);
     navigator.clipboard.writeText(report).then(
       () => {
         // Trigger the animation by resetting isCopied
