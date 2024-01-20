@@ -8,7 +8,7 @@ export default function Preview({}: Props) {
       <p className="text-sm leading-6 text-white">
         <a href="#">
           <strong className="font-semibold">
-            This is a preview version of AscendAI
+            This is a preview version of CORETEXT
           </strong>
         </a>
       </p>

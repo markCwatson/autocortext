@@ -23,7 +23,7 @@ export default function AiPromptSimple({ callback }: AiPromptSimpleProps) {
         {interaction.loading ? (
           <Loader2 className="h-6 w-6 animate-spin text-green-600" />
         ) : (
-          'Ask AscendAI'
+          'Ask CORETEXT'
         )}
       </Button>
     </>

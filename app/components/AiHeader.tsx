@@ -76,7 +76,7 @@ export default function AiHeader({ dropDownList, report }: AiHeaderProps) {
           <div>
             <PDFDownloadLink
               document={<MyDocument report={report} />}
-              fileName="ascendai-report.pdf"
+              fileName="coretext-report.pdf"
             >
               <Button className={buttonVariants({ variant: 'outline' })}>
                 <ArrowDownOnSquareIcon

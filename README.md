@@ -1,4 +1,4 @@
-# Ascend AI
+# CORETEXT
 
 ## Getting Started
 
