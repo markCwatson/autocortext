@@ -7,6 +7,7 @@ import { PlusIcon, TrashIcon } from '@heroicons/react/20/solid';
 import DialogModal from '@/components/DialogModal';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import { toast } from '@/components/Toast';
+import FileUpload from '@/components/FileUpload';
 
 interface TreeItemProps {
   label: string;
@@ -108,9 +109,17 @@ const TreeItem = ({
           {label}
         </span>
         <div className="flex ml-auto invisible group-hover:visible">
-          {isFolder ? <PlusIcon className="w-5 h-5" /> : null}
+          {isFolder ? (
+            <FileUpload
+              buttonType="ghost"
+              buttonSize="nill"
+              id="file-upload-2"
+              text=""
+              icon={<PlusIcon className="w-5 h-5" />}
+            />
+          ) : null}
           <TrashIcon
-            className="ml-1 w-5 h-5"
+            className="ml-2 w-5 h-5"
             onClick={() =>
               setDeleteSomething({ file: !!!isFolder, folder: !!isFolder })
             }

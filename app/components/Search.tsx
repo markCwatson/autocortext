@@ -1,4 +1,4 @@
-import { BarsArrowUpIcon } from '@heroicons/react/20/solid';
+import { SearchCheckIcon } from 'lucide-react';
 
 export default function Search() {
   return (
@@ -16,11 +16,11 @@ export default function Search() {
         type="button"
         className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-my-color1 ring-1 ring-inset ring-gray-300 bg-my-color9 hover:bg-my-color5"
       >
-        <BarsArrowUpIcon
+        <SearchCheckIcon
           className="-ml-0.5 h-5 w-5 text-my-color1"
           aria-hidden="true"
         />
-        Sort
+        Search
       </button>
     </div>
   );

@@ -16,14 +16,14 @@ const buttonVariants = cva(
           'underline-offset-4 underline text-my-color10 dark:text-my-color1 dark:hover:bg-my-color8 dark:text-my-color1',
         subtle:
           'bg-my-color9 text-my-color1 hover:bg-my-color3 dark:bg-my-color1 dark:text-my-color10',
-        ghost:
-          'bg-transparent hover:bg-my-color1 dark:hover:bg-my-color8 text-my-color10 dark:text-my-color1 data-[state=open]:bg-transparent dark:data-[state=open]:bg-transparent',
+        ghost: 'bg-transparent',
         link: 'bg-transparent dark:bg-transparent underline-offset-4 hover:underline text-my-color10 dark:text-my-color1 hover:bg-transparent dark:hover:bg-transparent',
       },
       size: {
         default: 'h-10 py-2 px-4',
         sm: 'h-9 px-2 rounded-md',
-        lg: 'h-11 px-8 rounded-md',
+        lg: 'h-1 px-8 rounded-md',
+        nill: '',
       },
     },
     defaultVariants: {

@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import { Pinecone } from '@pinecone-database/pinecone';
 import { DirectoryLoader } from 'langchain/document_loaders/fs/directory';
 import { TextLoader } from 'langchain/document_loaders/fs/text';
-import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 import { createPineconeIndex, updatePinecone } from '@/lib/pinecone';
+// import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 
 export async function POST() {
   // todo: change to upload from client

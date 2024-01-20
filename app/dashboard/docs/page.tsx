@@ -13,6 +13,7 @@ import AiPromptSimple from '@/components/AirPromptSimple';
 import { useQueryContext } from '@/components/AiQueryProvider';
 import { Button } from '@/components/Button';
 import { toast } from '@/components/Toast';
+import { ArrowUpIcon } from '@heroicons/react/20/solid';
 
 const iFrameHeight = '100%';
 const iFrameWidth = '100%';
@@ -168,7 +169,17 @@ export default function Documentation() {
         <div className="grid pt-2 grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10">
           <div className="pb-8 lg:col-span-2 bg-my-color7 border rounded">
             <div className="flex justify-between items-center px-4 py-2 border-b">
-              <FileUpload />
+              <div className="hover:bg-my-color5 cursor-pointer">
+                <FileUpload
+                  buttonType="outline"
+                  buttonSize="default"
+                  id="file-upload-1"
+                  text="Upload File"
+                  icon={
+                    <ArrowUpIcon className="w-4 h-4 mx-auto text-my-color1 mr-2" />
+                  }
+                />
+              </div>
               <Search />
             </div>
             <div className="flex flex-col">

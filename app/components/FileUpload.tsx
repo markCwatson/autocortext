@@ -1,7 +1,20 @@
-import { ArrowUpIcon } from '@heroicons/react/20/solid';
 import { Button, buttonVariants } from '@/components/Button';
 
-export default function FileUpload() {
+interface FileUploadProps {
+  buttonType: 'outline' | 'ghost';
+  icon?: React.ReactNode;
+  text: string;
+  buttonSize: 'default' | 'sm' | 'lg' | 'nill';
+  id: string;
+}
+
+export default function FileUpload({
+  buttonType,
+  icon,
+  text,
+  buttonSize,
+  id,
+}: FileUploadProps) {
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return;
 
@@ -13,19 +26,22 @@ export default function FileUpload() {
   };
 
   return (
-    <div className="hover:bg-my-color5 cursor-pointer">
+    <>
       <input
+        id={id}
         type="file"
-        id="file-upload"
+        accept=".pdf"
         style={{ display: 'none' }}
         onChange={handleFileUpload}
       />
-      <Button className={buttonVariants({ variant: 'outline' })}>
-        <ArrowUpIcon className="w-6 h-6 mx-auto text-my-color1 mr-2" />
-        <label htmlFor="file-upload" className="cursor-pointer">
-          Upload File
+      <Button variant={buttonType} size={buttonSize}>
+        <label htmlFor={id}>
+          <div className="flex items-center text-center">
+            {icon}
+            {text}
+          </div>
         </label>
       </Button>
-    </div>
+    </>
   );
 }
