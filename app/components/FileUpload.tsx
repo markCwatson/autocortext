@@ -36,7 +36,7 @@ export default function FileUpload({
       />
       <Button variant={buttonType} size={buttonSize}>
         <label htmlFor={id}>
-          <div className="flex items-center text-center">
+          <div className="flex items-center text-center cursor-pointer">
             {icon}
             {text}
           </div>

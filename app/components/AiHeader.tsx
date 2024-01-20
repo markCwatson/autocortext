@@ -78,7 +78,7 @@ export default function AiHeader({ dropDownList, report }: AiHeaderProps) {
               document={<MyDocument report={report} />}
               fileName="coretext-report.pdf"
             >
-              <Button className={buttonVariants({ variant: 'outline' })}>
+              <Button variant="outline">
                 <ArrowDownOnSquareIcon
                   className="h-6 w-6 shrink-0"
                   aria-hidden="true"

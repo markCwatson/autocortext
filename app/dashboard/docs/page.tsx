@@ -169,15 +169,13 @@ export default function Documentation() {
         <div className="grid pt-2 grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10">
           <div className="pb-8 lg:col-span-2 bg-my-color7 border rounded">
             <div className="flex justify-between items-center px-4 py-2 border-b">
-              <div className="hover:bg-my-color5 cursor-pointer">
+              <div className="cursor-pointer text-my-color1 hover:bg-my-color5 hover:text-my-color9">
                 <FileUpload
                   buttonType="outline"
                   buttonSize="default"
                   id="file-upload-1"
                   text="Upload File"
-                  icon={
-                    <ArrowUpIcon className="w-4 h-4 mx-auto text-my-color1 mr-2" />
-                  }
+                  icon={<ArrowUpIcon className="w-4 h-4 mx-auto mr-2" />}
                 />
               </div>
               <Search />

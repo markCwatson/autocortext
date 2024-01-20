@@ -19,7 +19,8 @@ const dropdownButtonVariants = cva(
       color: {
         default:
           'bg-white rounded-md ring-1 ring-inset ring-gray-300 text-gray-900 hover:bg-gray-50',
-        ghost: 'bg-transparent text-my-color1',
+        ghost:
+          'p-1 bg-transparent text-my-color1 hover:border rounded hover:border-my-color1',
         outline: 'bg-transparent text-gray-900 border border-gray-300',
       },
       chevron: {

@@ -11,12 +11,12 @@ const buttonVariants = cva(
         default: 'text-my-color1 bg-indigo-600',
         destructive: 'text-my-color1 hover:bg-red-600 dark:hover:bg-red-600',
         outline:
-          'bg-transparent text-my-color10 dark:text-my-color1 border border-my-color10 dark:border-my-color1 hover:text-my-color7 hover:border-my-color7 hover:dark:text-my-color3 hover:dark:border-my-color3',
+          'bg-transparent text-my-color1 border border-my-color1 hover:text-my-color9 hover:bg-my-color5',
         underline:
           'underline-offset-4 underline text-my-color10 dark:text-my-color1 dark:hover:bg-my-color8 dark:text-my-color1',
         subtle:
           'bg-my-color9 text-my-color1 hover:bg-my-color3 dark:bg-my-color1 dark:text-my-color10',
-        ghost: 'bg-transparent',
+        ghost: 'bg-transparent hover:border hover:border-my-color1',
         link: 'bg-transparent dark:bg-transparent underline-offset-4 hover:underline text-my-color10 dark:text-my-color1 hover:bg-transparent dark:hover:bg-transparent',
       },
       size: {

@@ -89,23 +89,24 @@ const TreeItem = ({
 
   return (
     <div className="flex flex-col">
-      <div className="group flex p-1 items-center cursor-pointer hover:bg-my-color5 ">
+      <div className="group flex p-1 items-center hover:bg-my-color5 ">
         {showIcons ? (
           open ? (
-            <FolderOpen onClick={handleClick} />
+            <FolderOpen onClick={handleClick} className="cursor-pointer" />
           ) : (
-            <FolderClosed onClick={handleClick} />
+            <FolderClosed onClick={handleClick} className="cursor-pointer" />
           )
         ) : null}
         {!isFolder ? (
           <FileIcon
             style={{
               padding: '3px',
+              cursor: 'pointer',
             }}
             onClick={handleClick}
           />
         ) : null}
-        <span className="pl-2" onClick={handleClick}>
+        <span className="pl-2 cursor-pointer" onClick={handleClick}>
           {label}
         </span>
         <div className="flex ml-auto invisible group-hover:visible">
@@ -115,11 +116,11 @@ const TreeItem = ({
               buttonSize="nill"
               id="file-upload-2"
               text=""
-              icon={<PlusIcon className="w-5 h-5" />}
+              icon={<PlusIcon className="w-5 h-5 cursor-pointer" />}
             />
           ) : null}
           <TrashIcon
-            className="ml-2 w-5 h-5"
+            className="ml-2 w-5 h-5 cursor-pointer"
             onClick={() =>
               setDeleteSomething({ file: !!!isFolder, folder: !!isFolder })
             }
