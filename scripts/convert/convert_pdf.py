@@ -2,7 +2,7 @@ import os
 import PyPDF2
 
 # Directory containing the PDF files
-pdf_directory = './public/'
+pdf_directory = './scripts/convert/pdf'
 
 # Loop through each file in the directory
 for filename in os.listdir(pdf_directory):
@@ -16,7 +16,7 @@ for filename in os.listdir(pdf_directory):
             
             # Extract base name and create a corresponding text file name
             base_name = os.path.splitext(filename)[0]
-            text_file_name = f"./training/{base_name}.txt"
+            text_file_name = f"./scripts/convert/text/{base_name}.txt"
 
             # Prepare to write extracted text to the text file
             with open(text_file_name, 'w') as text_file:

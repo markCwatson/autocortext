@@ -7,7 +7,7 @@ import { createPineconeIndex, updatePinecone } from '@/lib/pinecone';
 
 export async function POST() {
   // todo: change to upload from client
-  const loader = new DirectoryLoader('./training', {
+  const loader = new DirectoryLoader('./scripts/convert/text', {
     '.txt': (path) => new TextLoader(path),
     // '.pdf': (path) => new PDFLoader(path),
   });
