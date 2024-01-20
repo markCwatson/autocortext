@@ -32,6 +32,7 @@
   }
   50% {
     transform: scale(1.25);
+    color: #48bb78;
   }
   100% {
     transform: scale(1);

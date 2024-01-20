@@ -23,7 +23,15 @@ export default function AiHeader({ dropDownList, report }: AiHeaderProps) {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(answer).then(
       () => {
-        setIsCopied(true);
+        // Trigger the animation by resetting isCopied
+        setIsCopied(false);
+        setTimeout(() => setIsCopied(true), 10);
+
+        return toast({
+          title: 'Copied text.',
+          message: 'You can now paste it.',
+          type: 'success',
+        });
       },
       (err) => {
         setIsCopied(false);
@@ -55,27 +63,17 @@ export default function AiHeader({ dropDownList, report }: AiHeaderProps) {
       />
       <div className="flex items-center">
         <div className="flex items-center gap-2 md:gap-4">
-          {isCopied ? (
-            <button
-              type="button"
-              className="p-3 animate-grow-shrink"
-              onClick={copyToClipboard}
-            >
-              <span className="sr-only">Copy to clipboard</span>
-              <ClipboardDocumentCheckIcon
-                className="h-6 w-6 text-green-500"
-                aria-hidden="true"
-              />
-            </button>
-          ) : (
-            <button type="button" className="p-3" onClick={copyToClipboard}>
-              <span className="sr-only">Copy to clipboard</span>
-              <ClipboardDocumentCheckIcon
-                className="h-6 w-6 text-my-color10 dark:text-my-color2"
-                aria-hidden="true"
-              />
-            </button>
-          )}
+          <button
+            type="button"
+            className={`p-3 ${isCopied ? 'animate-grow-shrink' : null}`}
+            onClick={copyToClipboard}
+          >
+            <span className="sr-only">Copy to clipboard</span>
+            <ClipboardDocumentCheckIcon
+              className="h-6 w-6"
+              aria-hidden="true"
+            />
+          </button>
           <div>
             <PDFDownloadLink
               document={<MyDocument report={report} />}

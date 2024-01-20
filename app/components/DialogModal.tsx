@@ -9,6 +9,7 @@ type Props = {
   title: String;
   body: String;
   show: boolean;
+  onClose?: string;
   goTo?: string;
   goToText?: string;
   goToButtons?: JSX.Element[];
@@ -33,7 +34,7 @@ export default function DialogModal(props: Props) {
             as="div"
             className="relative z-10"
             onClose={() => {
-              router.push('/');
+              router.push(props.onClose ? props.onClose : '/');
               setOpen(false);
             }}
           >

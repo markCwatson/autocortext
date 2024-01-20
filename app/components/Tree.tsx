@@ -57,6 +57,7 @@ const TreeItem = ({
         title={`Delete ${deleteSomething.folder ? 'folder' : 'file'}`}
         body={'Are you sure? This cannot be undone.'}
         show={true}
+        onClose={'/dashboard/docs'}
         goToButtons={[
           <button
             type="button"
