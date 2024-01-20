@@ -17,11 +17,10 @@ interface AiHeaderProps {
 }
 
 export default function AiHeader({ dropDownList, report }: AiHeaderProps) {
-  const [answer, setAnswer] = useState<string>('');
   const [isCopied, setIsCopied] = useState<boolean>(false);
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(answer).then(
+    navigator.clipboard.writeText(report).then(
       () => {
         // Trigger the animation by resetting isCopied
         setIsCopied(false);
