@@ -1,19 +1,19 @@
 'use client';
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, CSSProperties } from 'react';
 import { type PutBlobResult } from '@vercel/blob';
 import { upload } from '@vercel/blob/client';
-import AnimatedText from '@/components/AnimatedText';
 import { useSession } from 'next-auth/react';
 import Search from '@/components/Search';
 import FileUpload from '@/components/FileUpload';
 import Folders from './Folders';
 import AiHeader from '@/components/AiHeader';
-import AiPromptSimple from '@/components/AirPromptSimple';
-import { useQueryContext } from '@/components/AiQueryProvider';
+import { AiMessage, useQueryContext } from '@/components/AiMessagesProvider';
 import { Button } from '@/components/Button';
 import { toast } from '@/components/Toast';
-import { ArrowUpIcon } from '@heroicons/react/20/solid';
+import { ArrowUpTrayIcon } from '@heroicons/react/20/solid';
+import AiPromptChat from '@/components/AiPromptChat';
+import { AiMessageList } from '@/components/AiMessageList';
 
 const iFrameHeight = '100%';
 const iFrameWidth = '100%';
@@ -89,37 +89,80 @@ function UploadPdf() {
   );
 }
 
+const navBarHeight = '160px';
+
+const mainContainerStyle: CSSProperties = {
+  height: `calc(100vh - ${navBarHeight})`,
+  display: 'flex',
+  flexDirection: 'column',
+  overflow: 'auto',
+};
+
+const columnStyle: CSSProperties = {
+  height: '100%',
+};
+
 export default function Documentation() {
   const [selectedDocument, setSelectedDocument] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+
   const session = useSession();
 
-  const { interaction, setInteraction } = useQueryContext();
+  const { messages, setMessages } = useQueryContext();
 
   useEffect(() => {
-    if (session.data?.user.name) {
-      setInteraction({
-        ...interaction,
-        answer: `Hello ${session.data.user.name}. Select a document so we can get started.`,
-      });
+    if (session.data?.user.name && messages.length === 0) {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          id: `${prevMessages.length + 1}`,
+          content: `AI: Hi ${session.data.user.name}, how can I help you?`,
+          role: 'assistant',
+        },
+      ]);
     }
   }, [session]);
 
-  async function sendQuery() {
-    if (!interaction.question) return;
-    setInteraction({ ...interaction, loading: true });
+  async function sendQuery(e: any, newMessage: AiMessage) {
+    e.preventDefault();
+    if (!messages) return;
+    const context = [...messages, newMessage]
+      .map((message) => message.content)
+      .join('\n');
+
+    setLoading(true);
+
     toast({
       title: 'Success',
-      message: `Sending query: ${interaction.question}`,
+      message: `Sending query...`,
       duration: 2000,
     });
+
     try {
       const result = await fetch('/api/read', {
         method: 'POST',
-        body: JSON.stringify(interaction.question),
+        body: JSON.stringify(context),
       });
+
+      if (!result?.ok) {
+        return toast({
+          title: 'Error',
+          message: `Server status code: ${result.status}`,
+          type: 'error',
+        });
+      }
+
       const json = await result.json();
-      setInteraction({ ...interaction, answer: json.data, loading: false });
       if (json.data) {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            id: `${prevMessages.length + 1}`,
+            content: `AI: ${json.data}`,
+            role: 'assistant',
+          },
+        ]);
+
         toast({
           title: 'Success',
           message: `Answer received!`,
@@ -128,12 +171,13 @@ export default function Documentation() {
       }
     } catch (err) {
       console.log('err:', err);
-      setInteraction({ ...interaction, loading: false });
       toast({
         title: 'Error',
         message: 'Error sending query. Please try again later.',
         type: 'error',
       });
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -147,79 +191,56 @@ export default function Documentation() {
   }
 
   const docMap: DocMap = {
-    'HS5160-SFC-ENT-117&118.pdf': '/HS5160-SFC-ENT-117&118.pdf',
+    'endload_cartoner.pdf': '/HS5160-SFC-ENT-117&118.pdf',
     // 'https://t3xziqgvuko9aizs.public.blob.vercel-storage.com/HS5160-SFC-ENT-117&118-GkTYoB4zg1F4kOcXAo5aiXNivX1F0T.pdf',
-    'HS5160-SFC-WSIPTU-115&116.pdf': '/HS5160-SFC-WSIPTU-115&116.pdf',
+    'siptu.pdf': '/HS5160-SFC-WSIPTU-115&116.pdf',
     // 'https://t3xziqgvuko9aizs.public.blob.vercel-storage.com/HS5160-SFC-WSIPTU-115&116-jKpTudlZJFbkNvgVrp1p0mhpt9b5o4.pdf',
-    'fervi_bench_lathe.pdf': '/fervi_bench_lathe.pdf',
+    'bench_lathe.pdf': '/fervi_bench_lathe.pdf',
     // 'https://t3xziqgvuko9aizs.public.blob.vercel-storage.com/fervi_bench_lathe-8VpQpc7JyZ0g9yapQE8Zc8jI4jEnV7.pdf',
   };
 
   const handleSelectDocument = (file: string) => {
     setSelectedDocument(docMap[file]);
-    setInteraction({
-      ...interaction,
-      answer: `Perfect. Ask me about the file ${file}`,
-    });
+
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      {
+        id: `${prevMessages.length + 1}`,
+        content: `AI: Perfect. Ask me about the file ${file}`,
+        role: 'assistant',
+      },
+    ]);
   };
 
   return (
     <div className="bg-my-color8">
-      <main className="mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid pt-2 grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10">
-          <div className="pb-8 lg:col-span-2 bg-my-color7 border rounded">
-            <div className="flex justify-between items-center px-4 py-2 border-b">
-              <div className="cursor-pointer text-my-color1 hover:bg-my-color5 hover:text-my-color9">
+      <main className="mx-auto px-4 sm:px-6 lg:px-8" style={mainContainerStyle}>
+        <div
+          className="grid pt-2 grid-cols-1 lg:grid-cols-7 gap-x-4 gap-y-10"
+          style={columnStyle}
+        >
+          {/** Folders/files */}
+          <div className="pb-8 lg:col-span-2 bg-my-color7 border rounded overflow-scroll">
+            <div className="flex justify-between items-center py-1 border-b">
+              <div className="ml-2 cursor-pointer text-my-color1 hover:bg-my-color5 hover:text-my-color9">
                 <FileUpload
                   buttonType="outline"
                   buttonSize="default"
                   id="file-upload-1"
-                  text="Upload File"
-                  icon={<ArrowUpIcon className="w-4 h-4 mx-auto mr-2" />}
+                  text="Upload"
+                  icon={<ArrowUpTrayIcon className="w-4 h-4 mx-auto mr-2" />}
                 />
               </div>
               <Search />
             </div>
             <div className="flex flex-col">
-              <div
-                className="pt-4 border-b overflow-scroll"
-                style={{ height: '30vh' }}
-              >
+              <div className="pt-4 overflow-scroll">
                 <Folders callback={handleSelectDocument} />
-              </div>
-              {/** AI prompt */}
-              <AiHeader
-                dropDownList={[
-                  'gpt-3.5-turbo-instruct',
-                  'gpt-3.5-turbo-1106',
-                  'gpt-4-1106-preview',
-                ]}
-                interaction={interaction}
-              />
-              <div className="mt-2 flex flex-col justify-center items-center w-full h-full">
-                <p
-                  className="my-8 p-8 border rounded bg-my-color1 text-my-color9"
-                  style={{ width: '80%' }}
-                >
-                  {interaction.answer && (
-                    <AnimatedText
-                      text={interaction.answer}
-                      show={true}
-                      animated={true}
-                      animationDelay={500}
-                    />
-                  )}
-                </p>
-                <AiPromptSimple callback={sendQuery} />
-                {/* todo: for now, remove this button from the UI once the embeddings are created ... 
-                ... will add a button to upload a pdf and create the embeddings from that
-                */}
-                {/* <CreateEmbeddings /> */}
-                {/* <UploadPdf /> */}
               </div>
             </div>
           </div>
-          <div className="lg:col-span-2 border rounded">
+          {/** PDF */}
+          <div className="lg:col-span-3 border rounded">
             {selectedDocument ? (
               <iframe
                 src={selectedDocument}
@@ -230,6 +251,28 @@ export default function Documentation() {
                 Please select a document to view
               </div>
             )}
+          </div>
+          {/** AI prompt */}
+          <div className="pb-8 lg:col-span-2 bg-my-color7 border rounded max-h-screen overflow-scroll">
+            <AiHeader
+              dropDownList={[
+                'auto-cortext-rev-0.0.1', // 'gpt-3.5-turbo-instruct',
+                'auto-cortext-rev-0.1.2', // 'gpt-3.5-turbo-1106',
+                'auto-cortext-rev-1.0.0', // gpt-4-1106-preview',
+              ]}
+              messages={messages}
+            />
+            <div className="flex flex-col justify-center w-full h-full">
+              <AiMessageList messages={messages} />
+              <div className="w-full px-4">
+                <AiPromptChat callback={sendQuery} isLoading={loading} />
+              </div>
+              {/* todo: for now, remove this button from the UI once the embeddings are created ... 
+                ... will add a button to upload a pdf and create the embeddings from that
+                */}
+              {/* <CreateEmbeddings /> */}
+              {/* <UploadPdf /> */}
+            </div>
           </div>
         </div>
       </main>

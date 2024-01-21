@@ -7,7 +7,7 @@ import {
   LinkIcon,
 } from '@heroicons/react/20/solid';
 import { FormEventHandler, useState } from 'react';
-import { useQueryContext } from './AiQueryProvider';
+import { useQueryContext } from './AiMessagesProvider';
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ');

@@ -13,6 +13,7 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 import {
+  BugAntIcon,
   CubeTransparentIcon,
   NewspaperIcon,
   PresentationChartBarIcon,
@@ -59,7 +60,7 @@ const navigation = [
     icon: WrenchScrewdriverIcon,
   },
   {
-    name: 'Documentation',
+    name: 'Docs',
     href: '/dashboard/docs',
     icon: DocumentDuplicateIcon,
   },
@@ -67,6 +68,11 @@ const navigation = [
     name: 'Reports',
     href: '/dashboard/reports',
     icon: CubeTransparentIcon,
+  },
+  {
+    name: 'Troubleshoot',
+    href: '/dashboard/troubleshoot',
+    icon: BugAntIcon,
   },
   {
     name: 'Help',
@@ -129,10 +135,7 @@ const Dashboard = React.forwardRef<HTMLDivElement, DashboardProps>(
     useEffect(() => {
       (async () => {
         const resImage = await getUserImage();
-        setImageSrc(
-          resImage?.img ||
-            'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        );
+        setImageSrc(resImage?.img);
       })();
     }, []);
 
@@ -263,7 +266,7 @@ const Dashboard = React.forwardRef<HTMLDivElement, DashboardProps>(
             {/* Static sidebar for desktop */}
             <div className="hidden md:z-1 md:flex md:w-56 md:flex-col md:flex-grow">
               <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-my-color8 px-6">
-                <div className="flex mt-8">
+                <div className="flex mt-4">
                   <a
                     href="#"
                     className="flex items-center group -mx-2 space-y-1 gap-x-3 rounded-md p-2 text-sm leading-6 font-bold text-my-color10 dark:text-my-color2 hover:text-my-color1 hover:bg-my-color4 dark:hover:bg-my-color8"

@@ -2,7 +2,7 @@ import { SearchCheckIcon } from 'lucide-react';
 
 export default function Search() {
   return (
-    <div className="m-3 flex rounded-md shadow-sm">
+    <div className="m-2 flex rounded-md shadow-sm">
       <div className="relative flex flex-grow items-stretch focus-within:z-10">
         <input
           type="text"
@@ -20,7 +20,6 @@ export default function Search() {
           className="-ml-0.5 h-5 w-5 text-my-color1"
           aria-hidden="true"
         />
-        Search
       </button>
     </div>
   );

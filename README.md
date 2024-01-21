@@ -1,4 +1,4 @@
-# CORETEXT
+# Auto CortexT
 
 ## Getting Started
 

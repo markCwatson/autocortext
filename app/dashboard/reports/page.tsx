@@ -1,49 +1,73 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { CSSProperties, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import AnimatedText from '@/components/AnimatedText';
 import AiHeader from '@/components/AiHeader';
-import AiPromptSimple from '@/components/AirPromptSimple';
 import { toast } from '@/components/Toast';
-import { useQueryContext } from '@/components/AiQueryProvider';
+import { AiMessage, useQueryContext } from '@/components/AiMessagesProvider';
+import { AiMessageList } from '@/components/AiMessageList';
+import AiPromptChat from '@/components/AiPromptChat';
+
+// todo: a lot of duplicate code here with docs page. refactor into a component
+
+const navBarHeight = '160px';
+
+const mainContainerStyle: CSSProperties = {
+  height: `calc(100vh - ${navBarHeight})`,
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  overflow: 'auto',
+};
+
+const columnStyle: CSSProperties = {
+  height: '100%',
+};
 
 export default function Reports() {
   const session = useSession();
-
-  const { interaction, setInteraction } = useQueryContext();
+  const [isLoading, setIsLoading] = React.useState(false);
+  const { messages, setMessages } = useQueryContext();
 
   useEffect(() => {
-    if (session.data?.user.name) {
-      setInteraction({
-        ...interaction,
-        answer: `Hello ${session.data.user.name}.
+    if (session.data?.user.name && messages.length === 0) {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          id: `${prevMessages.length + 1}`,
+          content: `AI: Hello ${session.data.user.name}.
 
         I am ready to assist you in generating reports, troubleshooting equipment failures, planning maitenance work, and more.
 
         Please ask me a question in the text box below.`,
-      });
+          role: 'assistant',
+        },
+      ]);
     }
   }, [session]);
 
-  async function onSubmit(event: any) {
+  async function sendQuery(event: any, newMessage: AiMessage) {
     event.preventDefault();
-    if (!interaction.question) return;
+    if (!messages) return;
+    const context = [...messages, newMessage]
+      .map((message) => message.content)
+      .join('\n');
+
+    setIsLoading(true);
+
+    toast({
+      title: 'Success',
+      message: `Sending query...`,
+      duration: 2000,
+    });
 
     try {
-      setInteraction({ ...interaction, loading: true });
-      toast({
-        title: 'Success',
-        message: `Sending query: ${interaction.question}`,
-        duration: 2000,
-      });
-
       const response = await fetch('/api/openai', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ question: interaction.question }),
+        body: JSON.stringify(context),
       });
 
       if (!response?.ok) {
@@ -54,48 +78,63 @@ export default function Reports() {
         });
       }
 
-      const data = await response.json();
-      setInteraction({ ...interaction, answer: data.answer, loading: false });
+      const json = await response.json();
+      if (json.data) {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            id: `${prevMessages.length + 1}`,
+            content: `AI: ${json.data}`,
+            role: 'assistant',
+          },
+        ]);
 
-      toast({
-        title: 'Success',
-        message: `Answer received!`,
-        duration: 3000,
-      });
+        toast({
+          title: 'Success',
+          message: `Answer received!`,
+          duration: 3000,
+        });
+      }
     } catch (err) {
       console.log('err:', err);
-      setInteraction({ ...interaction, loading: false });
+      toast({
+        title: 'Error',
+        message: 'Error sending query. Please try again later.',
+        type: 'error',
+      });
+    } finally {
+      setIsLoading(false);
     }
   }
 
   return (
-    <>
-      <AiHeader
-        dropDownList={[
-          'gpt-3.5-turbo-instruct',
-          'gpt-3.5-turbo-1106',
-          'gpt-4-1106-preview',
-        ]}
-        interaction={interaction}
-      />
-      <div className="flex flex-col justify-center items-center w-full h-full">
-        <div className="flex flex-col justify-center items-center w-full h-full">
-          <p
-            className="my-8 p-8 border rounded bg-my-color1 text-my-color9"
-            style={{ width: '80%' }}
-          >
-            {interaction.answer && (
-              <AnimatedText
-                text={interaction.answer}
-                show={true}
-                animated={true}
-                animationDelay={500}
-              />
-            )}
-          </p>
-          <AiPromptSimple callback={onSubmit} />
+    <main className="mx-auto px-4 sm:px-6 lg:px-8" style={mainContainerStyle}>
+      <div
+        className="grid pt-2 grid-cols-1 lg:grid-cols-7 gap-x-4 gap-y-10"
+        style={columnStyle}
+      >
+        {/* Left empty div */}
+        <div className="bg-transparent lg:visible lg:col-span-2" />
+        {/* Chat Window */}
+        <div className="lg:col-span-3 pb-8 bg-my-color7 border rounded overflow-scroll">
+          <AiHeader
+            dropDownList={[
+              'auto-cortext-rev-0.0.1', // 'gpt-3.5-turbo-instruct',
+              'auto-cortext-rev-0.1.2', // 'gpt-3.5-turbo-1106',
+              'auto-cortext-rev-1.0.0', // gpt-4-1106-preview',
+            ]}
+            messages={messages}
+          />
+          <div className="flex flex-col justify-center w-full h-full">
+            <AiMessageList messages={messages} />
+            <div className="w-full px-4">
+              <AiPromptChat callback={sendQuery} isLoading={isLoading} />
+            </div>
+          </div>
         </div>
+        {/* Right empty div */}
+        <div className="bg-transparent hidden lg:visible lg:col-span-2" />
       </div>
-    </>
+    </main>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import {
   ArrowDownOnSquareIcon,
@@ -8,20 +8,20 @@ import {
 } from '@heroicons/react/20/solid';
 import DropdownButton from '@/components/DropdownButton';
 import MyDocument from '@/components/MyDocument';
-import { Button } from '@/components/Button';
 import { toast } from '@/components/Toast';
+import { AiMessage } from './AiMessagesProvider';
 
 interface AiHeaderProps {
   dropDownList: string[];
-  interaction: { question: string; answer: string };
+  messages: AiMessage[];
 }
 
-export default function AiHeader({ dropDownList, interaction }: AiHeaderProps) {
+export default function AiHeader({ dropDownList, messages }: AiHeaderProps) {
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [report, setReport] = useState('');
 
   const copyToClipboard = () => {
-    const report = `Question: ${interaction.question}\nAnswer: ${interaction.answer}`;
+    const report = messages.map((message) => message.content).join('\n');
     setReport(report);
     navigator.clipboard.writeText(report).then(
       () => {
@@ -53,13 +53,12 @@ export default function AiHeader({ dropDownList, interaction }: AiHeaderProps) {
         justifyContent: 'space-between',
         alignItems: 'center',
         textAlign: 'center',
-        paddingLeft: 24,
-        paddingRight: 24,
-        paddingTop: 8,
+        padding: 10,
+        borderBottom: '1px solid #e5e7eb',
       }}
     >
       <DropdownButton
-        title="gpt-3.5-turbo-instruct"
+        title={`${dropDownList[0]}`}
         listItems={dropDownList}
         color="ghost"
       />
@@ -67,7 +66,7 @@ export default function AiHeader({ dropDownList, interaction }: AiHeaderProps) {
         <div className="flex items-center gap-2 md:gap-4">
           <button
             type="button"
-            className={`p-3 ${isCopied ? 'animate-grow-shrink' : null}`}
+            className={`p-0 ${isCopied ? 'animate-grow-shrink' : null}`}
             onClick={copyToClipboard}
           >
             <span className="sr-only">Copy to clipboard</span>
@@ -79,15 +78,12 @@ export default function AiHeader({ dropDownList, interaction }: AiHeaderProps) {
           <div>
             <PDFDownloadLink
               document={<MyDocument report={report} />}
-              fileName="coretext-report.pdf"
+              fileName="auto-cortext-report.pdf"
             >
-              <Button variant="outline">
-                <ArrowDownOnSquareIcon
-                  className="h-6 w-6 shrink-0"
-                  aria-hidden="true"
-                />
-                <p className="pl-4">Download as PDF</p>
-              </Button>
+              <ArrowDownOnSquareIcon
+                className="h-6 w-6 shrink-0"
+                aria-hidden="true"
+              />
             </PDFDownloadLink>
           </div>
         </div>

@@ -24,8 +24,8 @@ export default function Folders({ callback }: FoldersProps) {
           isOpen={false}
           isFolder={true}
         >
-          <TreeItem label="io9001" showIcons={true} isFolder={true}>
-            <TreeItem label="ios9001_2020.pdf" showIcons={false} />
+          <TreeItem label="iso9001" showIcons={true} isFolder={true}>
+            <TreeItem label="iso9001_2020.pdf" showIcons={false} />
           </TreeItem>
         </TreeItem>
       </TreeView>
@@ -59,23 +59,23 @@ export default function Folders({ callback }: FoldersProps) {
         >
           <TreeItem label="cartoners" showIcons={true} isFolder={true}>
             <TreeItem
-              label="HS5160-SFC-ENT-117&118.pdf"
+              label="endload_cartoner.pdf"
               showIcons={false}
-              onSelect={() => callback('HS5160-SFC-ENT-117&118.pdf')}
+              onSelect={() => callback('endload_cartoner.pdf')}
             />
           </TreeItem>
           <TreeItem label="conveyers" showIcons={true} isFolder={true}>
             <TreeItem
-              label="HS5160-SFC-WSIPTU-115&116.pdf"
+              label="siptu.pdf"
               showIcons={false}
-              onSelect={() => callback('HS5160-SFC-WSIPTU-115&116.pdf')}
+              onSelect={() => callback('siptu.pdf')}
             />
           </TreeItem>
           <TreeItem label="lathes" showIcons={true} isFolder={true}>
             <TreeItem
-              label="fervi_bench_lathe.pdf"
+              label="bench_lathe.pdf"
               showIcons={false}
-              onSelect={() => callback('fervi_bench_lathe.pdf')}
+              onSelect={() => callback('bench_lathe.pdf')}
             />
           </TreeItem>
           <TreeItem label="drill_presses" showIcons={true} isFolder={true} />

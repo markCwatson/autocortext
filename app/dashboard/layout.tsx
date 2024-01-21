@@ -7,7 +7,7 @@ import DashboardPage from '@/components/DashboardPage';
 import DialogModal from '@/components/DialogModal';
 import SignInButton from '@/components/SignInButton';
 import OrgNavBar from '@/components/OrgBar';
-import { AiQueryProvider } from '@/components/AiQueryProvider';
+import { AiMessagesProvider } from '@/components/AiMessagesProvider';
 import { ArrowPathIcon } from '@heroicons/react/20/solid';
 
 export default async function DashboardLayout({
@@ -41,7 +41,7 @@ export default async function DashboardLayout({
       <OrgNavBar />
       <div className="mx-auto flex flex-col space-y-6">
         <div
-          className="p-0 grid gap-12 md:grid-cols-[200px_1fr] bg-my-color8"
+          className="p-0 grid gap-12 md:grid-cols-[105px_1fr] bg-my-color8"
           style={{
             maxWidth: '100%',
           }}
@@ -54,8 +54,8 @@ export default async function DashboardLayout({
             }}
           />
           <DashboardPage>
-            <main className="flex w-full flex-1 flex-col overflow-hidden mt-10">
-              <AiQueryProvider>{children}</AiQueryProvider>
+            <main className="flex w-full flex-1 flex-col overflow-hidden mt-4">
+              <AiMessagesProvider>{children}</AiMessagesProvider>
             </main>
           </DashboardPage>
         </div>

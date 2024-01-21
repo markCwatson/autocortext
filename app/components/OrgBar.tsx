@@ -14,7 +14,7 @@ export default function OrgNavBar() {
     <Disclosure as="nav" className="bg-my-color7 border-b border-gray-200">
       {({ open }) => (
         <div className="mx-auto max-w-8xl px-2 sm:px-10 lg:px-12">
-          <div className="flex h-14 justify-between">
+          <div className="flex h-10 justify-between">
             <div className="flex items-center">
               <div className="flex-shrink-0 md:flex md:items-center">
                 <DropdownButton
