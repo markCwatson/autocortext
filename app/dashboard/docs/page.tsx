@@ -253,7 +253,7 @@ export default function Documentation() {
             )}
           </div>
           {/** AI prompt */}
-          <div className="pb-8 lg:col-span-2 bg-my-color7 border rounded max-h-screen overflow-scroll">
+          <div className="pb-8 lg:col-span-2 bg-my-color7 border rounded overflow-scroll">
             <AiHeader
               dropDownList={[
                 'auto-cortext-rev-0.0.1', // 'gpt-3.5-turbo-instruct',
