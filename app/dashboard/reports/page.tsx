@@ -10,7 +10,7 @@ import AiPromptChat from '@/components/AiPromptChat';
 
 // todo: a lot of duplicate code here with docs page. refactor into a component
 
-const navBarHeight = '160px';
+const navBarHeight = '170px';
 
 const mainContainerStyle: CSSProperties = {
   height: `calc(100vh - ${navBarHeight})`,

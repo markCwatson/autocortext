@@ -30,7 +30,7 @@ const ClientNavbar: React.FC<ClientNavbarProps> = ({ session }) => {
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="flex h-16 justify-between">
+            <div className="flex h-16 my-1 justify-between">
               <div className="flex">
                 <div className="-ml-2 mr-2 flex items-center md:hidden">
                   {/* Mobile menu button */}
@@ -52,17 +52,7 @@ const ClientNavbar: React.FC<ClientNavbarProps> = ({ session }) => {
                 <div className="hidden md:ml-4 md:flex md:flex-shrink-0 md:items-center">
                   <div className="hidden md:flex gap-4">
                     {userSession ? (
-                      <>
-                        <div className="hidden md:flex md:items-center md:space-x-4">
-                          <Link
-                            href="/dashboard"
-                            className={buttonVariants({ variant: 'outline' })}
-                          >
-                            Dashboard
-                          </Link>
-                        </div>
-                        <SignOutButton onDone={handleSignOut} />
-                      </>
+                      <SignOutButton onDone={handleSignOut} />
                     ) : (
                       <SignInButton text="Sign In" />
                     )}
