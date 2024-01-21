@@ -9,8 +9,8 @@ import { buttonVariants } from '@/components/Button';
 import SignOutButton from '@/components/SignOutButton';
 import SignInButton from '@/components/SignInButton';
 import { useState } from 'react';
-import { Logo } from '@/components/Logo';
 import { useRouter } from 'next/navigation';
+import LogoSvg from '@/components//LogoSvg';
 
 interface ClientNavbarProps {
   session: Session | null;
@@ -45,7 +45,7 @@ const ClientNavbar: React.FC<ClientNavbarProps> = ({ session }) => {
                 </div>
                 {/** Logo */}
                 <div className="flex flex-shrink-0 items-center">
-                  <Logo />
+                  <LogoSvg />
                 </div>
               </div>
               <div className="flex items-center">
