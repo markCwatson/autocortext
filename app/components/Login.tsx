@@ -28,7 +28,7 @@ export default function Login() {
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center sm:px-6 lg:px-8">
-      <div className="m-20 text-center sm:mx-auto sm:w-full sm:max-w-md">
+      <div className="m-10 text-center sm:mx-auto sm:w-full sm:max-w-md">
         <LogoSvg />
       </div>
 

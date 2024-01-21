@@ -1,9 +1,9 @@
 'use client';
 
 import { FormEventHandler, useState } from 'react';
-import { Logo } from '@/components/Logo';
 import { toast } from '@/components/Toast';
 import { useRouter } from 'next/navigation';
+import LogoSvg from '@/components/LogoSvg';
 
 export default function Register() {
   const router = useRouter();
@@ -47,8 +47,8 @@ export default function Register() {
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <div className="text-center sm:mx-auto sm:w-full sm:max-w-md">
-          Register an account with <Logo />
+        <div className="m-10  text-center sm:mx-auto sm:w-full sm:max-w-md">
+          <LogoSvg />
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
