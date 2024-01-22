@@ -271,7 +271,7 @@ export default function Documentation() {
                 ... will add a button to upload a pdf and create the embeddings from that
                 */}
               {/* <CreateEmbeddings /> */}
-              <UploadPdf />
+              {/* <UploadPdf /> */}
             </div>
           </div>
         </div>
