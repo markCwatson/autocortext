@@ -77,7 +77,7 @@ export default function AiHeader({ dropDownList, messages }: AiHeaderProps) {
           </button>
           <div>
             <PDFDownloadLink
-              document={<MyDocument report={report} />}
+              document={<MyDocument messages={messages} />}
               fileName="auto-cortext-report.pdf"
             >
               <ArrowDownOnSquareIcon

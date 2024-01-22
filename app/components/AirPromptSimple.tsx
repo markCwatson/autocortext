@@ -34,7 +34,7 @@ export default function AiPromptSimple({
         {isLoading ? (
           <Loader2 className="h-6 w-6 animate-spin text-green-600" />
         ) : (
-          'Ask CortexT'
+          'Ask Cortext'
         )}
       </Button>
     </>
