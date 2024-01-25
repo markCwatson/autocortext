@@ -9,6 +9,7 @@ import SignInButton from '@/components/SignInButton';
 import OrgNavBar from '@/components/OrgBar';
 import { AiMessagesProvider } from '@/components/AiMessagesProvider';
 import { ArrowPathIcon } from '@heroicons/react/20/solid';
+import { ClientCtxProvider } from '@/components/ClientCtxProvider';
 
 export default async function DashboardLayout({
   children,
@@ -41,7 +42,7 @@ export default async function DashboardLayout({
       <OrgNavBar />
       <div className="mx-auto flex flex-col space-y-6">
         <div
-          className="p-0 grid gap-12 md:grid-cols-[105px_1fr] bg-my-color8"
+          className="p-0 grid gap-12 md:grid-cols-[115px_1fr] bg-my-color8"
           style={{
             maxWidth: '100%',
           }}
@@ -55,7 +56,9 @@ export default async function DashboardLayout({
           />
           <DashboardPage>
             <main className="flex w-full flex-1 flex-col overflow-hidden mt-4">
-              <AiMessagesProvider>{children}</AiMessagesProvider>
+              <AiMessagesProvider>
+                <ClientCtxProvider>{children}</ClientCtxProvider>
+              </AiMessagesProvider>
             </main>
           </DashboardPage>
         </div>

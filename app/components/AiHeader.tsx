@@ -10,6 +10,7 @@ import DropdownButton from '@/components/DropdownButton';
 import MyDocument from '@/components/MyDocument';
 import { toast } from '@/components/Toast';
 import { AiMessage } from './AiMessagesProvider';
+import { isClientCtx } from './ClientCtxProvider';
 
 interface AiHeaderProps {
   dropDownList: string[];
@@ -19,6 +20,8 @@ interface AiHeaderProps {
 export default function AiHeader({ dropDownList, messages }: AiHeaderProps) {
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [report, setReport] = useState('');
+
+  const isClient = isClientCtx();
 
   const copyToClipboard = () => {
     const report = messages.map((message) => message.content).join('\n');
@@ -76,15 +79,17 @@ export default function AiHeader({ dropDownList, messages }: AiHeaderProps) {
             />
           </button>
           <div>
-            <PDFDownloadLink
-              document={<MyDocument messages={messages} />}
-              fileName="auto-cortext-report.pdf"
-            >
-              <ArrowDownOnSquareIcon
-                className="h-6 w-6 shrink-0"
-                aria-hidden="true"
-              />
-            </PDFDownloadLink>
+            {isClient && (
+              <PDFDownloadLink
+                document={<MyDocument messages={messages} />}
+                fileName="auto-cortext-report.pdf"
+              >
+                <ArrowDownOnSquareIcon
+                  className="h-6 w-6 shrink-0"
+                  aria-hidden="true"
+                />
+              </PDFDownloadLink>
+            )}
           </div>
         </div>
       </div>

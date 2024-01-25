@@ -1,7 +1,10 @@
 import React from 'react';
+import KanbanBoard from '@/components/KanbanBoard';
 
-function Data() {
-  return <div className="text-center">This will be fro troubleshooting</div>;
+export default function TroubleShooting() {
+  return (
+    <>
+      <KanbanBoard />
+    </>
+  );
 }
-
-export default Data;

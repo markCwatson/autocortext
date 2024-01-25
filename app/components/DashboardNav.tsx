@@ -22,11 +22,10 @@ import {
   UserGroupIcon,
   WrenchScrewdriverIcon,
 } from '@heroicons/react/20/solid';
-import { buttonVariants } from './Button';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { toast } from './Toast';
 import { useSession } from 'next-auth/react';
+import LogoSvg from './LogoSvg';
 
 export const dashboardVariants = cva(
   'w-full text-stone-700 dark:text-stone-300',
@@ -198,14 +197,10 @@ const Dashboard = React.forwardRef<HTMLDivElement, DashboardProps>(
                         </button>
                       </div>
                     </Transition.Child>
-                    {/* Sidebar component, swap this element with another sidebar if you like */}
+                    {/* Mobile Sidebar component */}
                     <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-400 dark:bg-gray-900 px-6 pb-2 ring-1 ring-white/10">
-                      <div className="flex h-16 shrink-0 items-center">
-                        <img
-                          className="h-8 w-auto"
-                          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                          alt="Your Company"
-                        />
+                      <div className="flex h-16 p-4 shrink-0 items-center">
+                        <LogoSvg />
                       </div>
                       <nav className="flex flex-1 flex-col">
                         <ul
@@ -254,12 +249,6 @@ const Dashboard = React.forwardRef<HTMLDivElement, DashboardProps>(
               <span className="sr-only">Open sidebar</span>
               <Bars3Icon className="h-6 w-6" aria-hidden="true" />
             </button>
-            <Link
-              href="/dashboard"
-              className={buttonVariants({ variant: 'subtle' })}
-            >
-              Dashboard
-            </Link>
           </div>
 
           <div className="flex flex-row ">

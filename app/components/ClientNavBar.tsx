@@ -68,17 +68,7 @@ const ClientNavbar: React.FC<ClientNavbarProps> = ({ session }) => {
               <div className="flex justify-between">
                 <div className="flex space-x-4 items-center">
                   {userSession ? (
-                    <>
-                      <SignOutButton onDone={handleSignOut} />
-                      <div className="pl-1">
-                        <Link
-                          href="/dashboard"
-                          className={buttonVariants({ variant: 'outline' })}
-                        >
-                          Dashboard
-                        </Link>
-                      </div>
-                    </>
+                    <SignOutButton onDone={handleSignOut} />
                   ) : (
                     <SignInButton text="Sign In" />
                   )}
