@@ -17,8 +17,10 @@ interface ProvidersProps {
 /**
  *
  * @description See https://stackoverflow.com/questions/75692116/next-js-13-window-is-not-defined
- *              This was causing errors with using dom document (kanban) and PDFDownloadLink (ai header)
- *              because they were being rendered on the server side.
+ *              Was seeing errors with using dom document (kanban) and PDFDownloadLink (ai header)
+ *              because they were being rendered on the server side. This component will wrap
+ *              the entire app and only render the children if the app is being rendered on the
+ *              client side.
  */
 export const ClientCtxProvider = ({ children }: ProvidersProps) => {
   const [isClient, setIsClient] = useState(false);
