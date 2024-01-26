@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import {
   DndContext,
@@ -15,9 +15,10 @@ import {
 import { SortableContext, arrayMove } from '@dnd-kit/sortable';
 import { PlusIcon } from '@heroicons/react/20/solid';
 import { Column, Id, Job } from '@/types';
-import TaskCard from '@/components/TaskCard';
+import JobCard from '@/components/JobCard';
 import ColumnContainer from '@/components/ColumnContainer';
 import { isClientCtx } from '@/components/ClientCtxProvider';
+import CreateJob from '@/components/CreateJob';
 
 const defaultCols: Column[] = [
   {
@@ -34,11 +35,41 @@ const defaultCols: Column[] = [
   },
 ];
 
+const defaultJobs: Job[] = [
+  {
+    id: 1,
+    columnId: 'todo',
+    title: 'Reprogram PLC',
+    description: 'The PLC needs to be reprogrammed. Use the latest version.',
+  },
+  {
+    id: 2,
+    columnId: 'todo',
+    title: 'Fix the lathe',
+    description: 'The lathe is broken. It has a broken shaft.',
+  },
+  {
+    id: 3,
+    columnId: 'doing',
+    title: 'Tighten the belt on the conveyor',
+    description: 'The belt is loose. It should be tightened to avoid slipping.',
+  },
+  {
+    id: 4,
+    columnId: 'done',
+    title: 'Fix the milling machine',
+    description:
+      'The milling machine will not power on. I think the fuse is blown.',
+  },
+];
+
 export default function KanbanBoard() {
   const [columns, setColumns] = useState<Column[]>(defaultCols);
-  const [tasks, setTasks] = useState<Job[]>([]);
+  const [jobs, setJobs] = useState<Job[]>(defaultJobs);
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
-  const [activeTask, setActiveTask] = useState<Job | null>(null);
+  const [activeJob, setActiveJob] = useState<Job | null>(null);
+  const [isCreateJobOpen, setIsCreateJobOpen] = useState(false);
+
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
 
   const isClient = isClientCtx();
@@ -51,28 +82,29 @@ export default function KanbanBoard() {
     }),
   );
 
-  function createTask(columnId: Id) {
-    const newTask: Job = {
+  function createJob({ title = '', description = '' }) {
+    const newJob: Job = {
       id: generateId(),
-      columnId,
-      content: ``,
+      columnId: 'todo',
+      title,
+      description,
     };
 
-    setTasks([...tasks, newTask]);
+    setJobs([...jobs, newJob]);
   }
 
-  function deleteTask(id: Id) {
-    const newTasks = tasks.filter((job) => job.id !== id);
-    setTasks(newTasks);
+  function deleteJob(id: Id) {
+    const newJobs = jobs.filter((job) => job.id !== id);
+    setJobs(newJobs);
   }
 
-  function updateTask(id: Id, content: string) {
-    const newTasks = tasks.map((job) => {
+  function updateJob(id: Id, newJob: Job) {
+    const newJobs = jobs.map((job) => {
       if (job.id !== id) return job;
-      return { ...job, content };
+      return { ...job, ...newJob };
     });
 
-    setTasks(newTasks);
+    setJobs(newJobs);
   }
 
   function createNewColumn() {
@@ -88,8 +120,8 @@ export default function KanbanBoard() {
     const filteredColumns = columns.filter((col) => col.id !== id);
     setColumns(filteredColumns);
 
-    const newTasks = tasks.filter((t) => t.columnId !== id);
-    setTasks(newTasks);
+    const newJobs = jobs.filter((t) => t.columnId !== id);
+    setJobs(newJobs);
   }
 
   function updateColumn(id: Id, title: string) {
@@ -108,14 +140,14 @@ export default function KanbanBoard() {
     }
 
     if (event.active.data.current?.type === 'Job') {
-      setActiveTask(event.active.data.current.job);
+      setActiveJob(event.active.data.current.job);
       return;
     }
   }
 
   function onDragEnd(event: DragEndEvent) {
     setActiveColumn(null);
-    setActiveTask(null);
+    setActiveJob(null);
 
     const { active, over } = event;
     if (!over) return;
@@ -148,37 +180,37 @@ export default function KanbanBoard() {
 
     if (activeId === overId) return;
 
-    const isActiveATask = active.data.current?.type === 'Job';
-    const isOverATask = over.data.current?.type === 'Job';
+    const isActiveAJob = active.data.current?.type === 'Job';
+    const isOverAJob = over.data.current?.type === 'Job';
 
-    if (!isActiveATask) return;
+    if (!isActiveAJob) return;
 
     // Im dropping a Job over another Job
-    if (isActiveATask && isOverATask) {
-      setTasks((tasks) => {
-        const activeIndex = tasks.findIndex((t) => t.id === activeId);
-        const overIndex = tasks.findIndex((t) => t.id === overId);
+    if (isActiveAJob && isOverAJob) {
+      setJobs((jobs) => {
+        const activeIndex = jobs.findIndex((t) => t.id === activeId);
+        const overIndex = jobs.findIndex((t) => t.id === overId);
 
-        if (tasks[activeIndex].columnId != tasks[overIndex].columnId) {
+        if (jobs[activeIndex].columnId != jobs[overIndex].columnId) {
           // Fix introduced after video recording
-          tasks[activeIndex].columnId = tasks[overIndex].columnId;
-          return arrayMove(tasks, activeIndex, overIndex - 1);
+          jobs[activeIndex].columnId = jobs[overIndex].columnId;
+          return arrayMove(jobs, activeIndex, overIndex - 1);
         }
 
-        return arrayMove(tasks, activeIndex, overIndex);
+        return arrayMove(jobs, activeIndex, overIndex);
       });
     }
 
     const isOverAColumn = over.data.current?.type === 'Column';
 
     // Im dropping a Job over a column
-    if (isActiveATask && isOverAColumn) {
-      setTasks((tasks) => {
-        const activeIndex = tasks.findIndex((t) => t.id === activeId);
+    if (isActiveAJob && isOverAColumn) {
+      setJobs((jobs) => {
+        const activeIndex = jobs.findIndex((t) => t.id === activeId);
 
-        tasks[activeIndex].columnId = overId;
+        jobs[activeIndex].columnId = overId;
         console.log('DROPPING TASK OVER COLUMN', { activeIndex });
-        return arrayMove(tasks, activeIndex, activeIndex);
+        return arrayMove(jobs, activeIndex, activeIndex);
       });
     }
   }
@@ -194,7 +226,7 @@ export default function KanbanBoard() {
         <button
           className="flex gap-2 items-center border-my-color7 border-2 rounded-md p-4 hover:bg-my-color7 active:bg-black"
           onClick={() => {
-            createTask('todo');
+            setIsCreateJobOpen(true);
           }}
         >
           <PlusIcon className="h-6 w-6" />
@@ -226,9 +258,9 @@ export default function KanbanBoard() {
                     column={col}
                     deleteColumn={deleteColumn}
                     updateColumn={updateColumn}
-                    deleteTask={deleteTask}
-                    updateTask={updateTask}
-                    tasks={tasks.filter((job) => job.columnId === col.id)}
+                    deleteJob={deleteJob}
+                    updateJob={updateJob}
+                    jobs={jobs.filter((job) => job.columnId === col.id)}
                   />
                 ))}
               </SortableContext>
@@ -243,18 +275,18 @@ export default function KanbanBoard() {
                     column={activeColumn}
                     deleteColumn={deleteColumn}
                     updateColumn={updateColumn}
-                    deleteTask={deleteTask}
-                    updateTask={updateTask}
-                    tasks={tasks.filter(
+                    deleteJob={deleteJob}
+                    updateJob={updateJob}
+                    jobs={jobs.filter(
                       (job) => job.columnId === activeColumn.id,
                     )}
                   />
                 )}
-                {activeTask && (
-                  <TaskCard
-                    job={activeTask}
-                    deleteTask={deleteTask}
-                    updateTask={updateTask}
+                {activeJob && (
+                  <JobCard
+                    job={activeJob}
+                    deleteJob={deleteJob}
+                    updateJob={updateJob}
                   />
                 )}
               </DragOverlay>,
@@ -262,6 +294,13 @@ export default function KanbanBoard() {
             )}
         </DndContext>
       </div>
+      <CreateJob
+        isOpen={isCreateJobOpen}
+        setJobDetails={({ title, description }) => {
+          createJob({ title, description });
+        }}
+        setIsOpen={setIsCreateJobOpen}
+      />
     </>
   );
 }

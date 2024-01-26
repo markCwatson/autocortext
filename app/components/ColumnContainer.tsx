@@ -2,31 +2,31 @@ import { useMemo, useState } from 'react';
 import { SortableContext, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { TrashIcon } from '@heroicons/react/20/solid';
-import TaskCard from '@/components/TaskCard';
+import JobCard from '@/components/JobCard';
 import { Column, Id, Job } from '@/types';
 
 interface Props {
   column: Column;
   deleteColumn: (id: Id) => void;
   updateColumn: (id: Id, title: string) => void;
-  updateTask: (id: Id, content: string) => void;
-  deleteTask: (id: Id) => void;
-  tasks: Job[];
+  updateJob: (id: Id, newJob: Job) => void;
+  deleteJob: (id: Id) => void;
+  jobs: Job[];
 }
 
-function ColumnContainer({
+export default function ColumnContainer({
   column,
   deleteColumn,
   updateColumn,
-  tasks,
-  deleteTask,
-  updateTask,
+  jobs,
+  deleteJob,
+  updateJob,
 }: Props) {
   const [editMode, setEditMode] = useState(false);
 
-  const tasksIds = useMemo(() => {
-    return tasks.map((job) => job.id);
-  }, [tasks]);
+  const jobsIds = useMemo(() => {
+    return jobs.map((job) => job.id);
+  }, [jobs]);
 
   const {
     setNodeRef,
@@ -76,7 +76,7 @@ function ColumnContainer({
       >
         <div className="flex gap-2">
           <div className="flex justify-center items-center bg-my-color7 px-2 py-1 text-sm rounded-full">
-            {tasks.length}
+            {jobs.length}
           </div>
           {!editMode && column.title}
           {editMode && (
@@ -106,13 +106,13 @@ function ColumnContainer({
       </div>
       {/* Column job container */}
       <div className="flex flex-grow flex-col gap-4 p-2 overflow-x-hidden overflow-y-auto">
-        <SortableContext items={tasksIds}>
-          {tasks.map((job) => (
-            <TaskCard
+        <SortableContext items={jobsIds}>
+          {jobs.map((job) => (
+            <JobCard
               key={job.id}
               job={job}
-              deleteTask={deleteTask}
-              updateTask={updateTask}
+              deleteJob={deleteJob}
+              updateJob={updateJob}
             />
           ))}
         </SortableContext>
@@ -120,5 +120,3 @@ function ColumnContainer({
     </div>
   );
 }
-
-export default ColumnContainer;

@@ -8,5 +8,6 @@ export type Column = {
 export type Job = {
   id: Id;
   columnId: Id;
-  content: string;
+  title: string;
+  description: string;
 };
