@@ -2,7 +2,13 @@ import { useState } from 'react';
 import { Id, Job } from '@/types';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { TrashIcon } from '@heroicons/react/20/solid';
+import {
+  Bars2Icon,
+  ChevronDoubleUpIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  TrashIcon,
+} from '@heroicons/react/20/solid';
 
 interface Props {
   job: Job;
@@ -10,11 +16,19 @@ interface Props {
   updateJob: (id: Id, newJob: Job) => void;
 }
 
+const severityMap = {
+  Severe: <ChevronDoubleUpIcon className="h-5 w-5 text-red-600" />,
+  High: <ChevronUpIcon className="h-5 w-5 text-yellow-600" />,
+  Medium: <Bars2Icon className="h-5 w-5 text-blue-600" />,
+  Low: <ChevronDownIcon className="h-5 w-5 text-green-600" />,
+};
+
 export default function JobCard({ job, deleteJob, updateJob }: Props) {
   const [mouseIsOver, setMouseIsOver] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [editedTitle, setEditedTitle] = useState(job.title);
   const [editedDescription, setEditedDescription] = useState(job.description);
+  const [openAiAssistant, setOpenAiAssistant] = useState(false);
 
   const {
     setNodeRef,
@@ -51,15 +65,9 @@ export default function JobCard({ job, deleteJob, updateJob }: Props) {
     setEditMode(false);
   };
 
-  if (isDragging) {
-    return (
-      <div
-        ref={setNodeRef}
-        style={style}
-        className="opacity-30 bg-my-color1 p-2.5 h-[100px] min-h-[100px] items-center flex text-left rounded-xl border-2 border-rose-500  cursor-grab relative"
-      />
-    );
-  }
+  const draggingStyle = isDragging
+    ? { opacity: 0.3, border: '2px solid #rose-500' }
+    : {};
 
   if (editMode) {
     return (
@@ -68,16 +76,16 @@ export default function JobCard({ job, deleteJob, updateJob }: Props) {
         style={style}
         {...attributes}
         {...listeners}
-        className="bg-my-color7 p-2.5 h-[150px] min-h-[150px] items-center flex flex-col text-left rounded-xl hover:ring-2 hover:ring-inset hover:ring-my-color3 cursor-grab relative"
+        className="bg-my-color7 p-2.5 items-center flex flex-col text-left rounded-xl hover:ring-2 hover:ring-inset hover:ring-my-color3 cursor-grab relative"
       >
         <textarea
-          className="h-[90%] w-full resize-none border-none rounded bg-transparent text-white focus:outline-none"
+          className="w-full resize-none border-none rounded bg-transparent text-white focus:outline-none"
           value={editedTitle}
           onChange={(e) => setEditedTitle(e.target.value)}
           placeholder="Job title here"
         />
         <textarea
-          className="h-[90%] w-full resize-none border-none rounded bg-transparent text-white focus:outline-none"
+          className="w-full resize-none border-none rounded bg-transparent text-white focus:outline-none"
           value={editedDescription}
           onChange={(e) => setEditedDescription(e.target.value)}
           placeholder="Job description here"
@@ -95,11 +103,10 @@ export default function JobCard({ job, deleteJob, updateJob }: Props) {
   return (
     <div
       ref={setNodeRef}
-      style={style}
+      style={{ ...style, ...draggingStyle }}
       {...attributes}
       {...listeners}
-      onClick={toggleEditMode}
-      className="bg-my-color8 p-2.5 h-[100px] min-h-[100px] items-center flex text-left rounded-xl hover:ring-2 hover:ring-inset hover:ring-my-color5 cursor-grab relative job"
+      className="flex flex-col bg-my-color8 p-2.5 justify-center rounded-xl hover:ring-2 hover:ring-inset hover:ring-my-color5 cursor-grab relative job"
       onMouseEnter={() => {
         setMouseIsOver(true);
       }}
@@ -108,24 +115,42 @@ export default function JobCard({ job, deleteJob, updateJob }: Props) {
       }}
     >
       <div className="flex flex-col gap-2">
-        <p className="my-auto h-[90%] w-full overflow-y-auto overflow-x-hidden whitespace-pre-wrap">
-          {job.title}
-        </p>
-        <p className="my-auto h-[90%] w-full overflow-y-auto overflow-x-hidden whitespace-pre-wrap">
-          {job.description}
-        </p>
+        <div className="flex justify-between items-center">
+          <div className="flex justify-center items-center px-2 py-1 text-xs">
+            <p>{'Ref# '}</p>
+            <p className="pl-2">{job.id}</p>
+          </div>
+          <p className="">{severityMap[job.severity]}</p>
+        </div>
+        <div onClick={toggleEditMode}>
+          <div className="flex flex-col gap-2 border border-gray-400 p-2.5 items-center text-left rounded-xl hover:ring-2 hover:ring-inset hover:ring-my-color5 cursor-grab relative job">
+            <p className="my-auto w-full overflow-y-auto overflow-x-hidden whitespace-pre-wrap text-md">
+              {job.title}
+            </p>
+            <p className="my-auto w-full overflow-y-auto overflow-x-hidden whitespace-pre-wrap text-sm">
+              {job.description}
+            </p>
+          </div>
+        </div>
       </div>
-
-      {mouseIsOver && (
+      <div className="flex justify-between items-center pt-2.5 px-2.5">
+        <button
+          onClick={() => {
+            setOpenAiAssistant(true);
+          }}
+          className="stroke-white rounded opacity-60 hover:opacity-100 text-sm"
+        >
+          AI Assistant
+        </button>
         <button
           onClick={() => {
             deleteJob(job.id);
           }}
-          className="stroke-white absolute right-4 top-1/2 -translate-y-1/2 bg-my-color9 p-2 rounded opacity-60 hover:opacity-100"
+          className="stroke-white rounded opacity-60 hover:opacity-100"
         >
-          <TrashIcon className="h-6 w-6" />
+          <TrashIcon className="h-4 w-4" />
         </button>
-      )}
+      </div>
     </div>
   );
 }

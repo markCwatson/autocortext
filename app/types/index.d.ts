@@ -10,4 +10,5 @@ export type Job = {
   columnId: Id;
   title: string;
   description: string;
+  severity: 'Severe' | 'High' | 'Medium' | 'Low';
 };

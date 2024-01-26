@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import {
   DndContext,
@@ -37,29 +37,33 @@ const defaultCols: Column[] = [
 
 const defaultJobs: Job[] = [
   {
-    id: 1,
+    id: 1178,
     columnId: 'todo',
     title: 'Reprogram PLC',
     description: 'The PLC needs to be reprogrammed. Use the latest version.',
+    severity: 'Low',
   },
   {
-    id: 2,
+    id: 1232,
     columnId: 'todo',
-    title: 'Fix the lathe',
+    title: 'Fix lathe',
     description: 'The lathe is broken. It has a broken shaft.',
+    severity: 'High',
   },
   {
-    id: 3,
+    id: 3113,
     columnId: 'doing',
-    title: 'Tighten the belt on the conveyor',
+    title: 'Tighten belt on conveyor',
     description: 'The belt is loose. It should be tightened to avoid slipping.',
+    severity: 'Medium',
   },
   {
-    id: 4,
+    id: 8894,
     columnId: 'done',
-    title: 'Fix the milling machine',
+    title: 'Fix milling machine',
     description:
       'The milling machine will not power on. I think the fuse is blown.',
+    severity: 'Severe',
   },
 ];
 
@@ -82,12 +86,21 @@ export default function KanbanBoard() {
     }),
   );
 
-  function createJob({ title = '', description = '' }) {
+  function createJob({
+    title,
+    description,
+    severity,
+  }: {
+    title: string;
+    description: string;
+    severity: 'Severe' | 'High' | 'Medium' | 'Low';
+  }) {
     const newJob: Job = {
       id: generateId(),
       columnId: 'todo',
       title,
       description,
+      severity,
     };
 
     setJobs([...jobs, newJob]);
@@ -160,8 +173,6 @@ export default function KanbanBoard() {
     const isActiveAColumn = active.data.current?.type === 'Column';
     if (!isActiveAColumn) return;
 
-    console.log('DRAG END');
-
     setColumns((columns) => {
       const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
 
@@ -188,11 +199,10 @@ export default function KanbanBoard() {
     // Im dropping a Job over another Job
     if (isActiveAJob && isOverAJob) {
       setJobs((jobs) => {
-        const activeIndex = jobs.findIndex((t) => t.id === activeId);
-        const overIndex = jobs.findIndex((t) => t.id === overId);
+        const activeIndex = jobs.findIndex((job) => job.id === activeId);
+        const overIndex = jobs.findIndex((job) => job.id === overId);
 
         if (jobs[activeIndex].columnId != jobs[overIndex].columnId) {
-          // Fix introduced after video recording
           jobs[activeIndex].columnId = jobs[overIndex].columnId;
           return arrayMove(jobs, activeIndex, overIndex - 1);
         }
@@ -209,7 +219,6 @@ export default function KanbanBoard() {
         const activeIndex = jobs.findIndex((t) => t.id === activeId);
 
         jobs[activeIndex].columnId = overId;
-        console.log('DROPPING TASK OVER COLUMN', { activeIndex });
         return arrayMove(jobs, activeIndex, activeIndex);
       });
     }
@@ -296,8 +305,8 @@ export default function KanbanBoard() {
       </div>
       <CreateJob
         isOpen={isCreateJobOpen}
-        setJobDetails={({ title, description }) => {
-          createJob({ title, description });
+        setJobDetails={({ title, description, severity }) => {
+          createJob({ title, description, severity });
         }}
         setIsOpen={setIsCreateJobOpen}
       />

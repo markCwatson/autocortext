@@ -2,8 +2,11 @@
 
 import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { ChevronDoubleUpIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import {
+  Bars2Icon,
+  ChevronDownIcon,
+  ChevronUpIcon,
   LinkIcon,
   PlusIcon,
   QuestionMarkCircleIcon,
@@ -53,9 +56,11 @@ interface CreateJobProps {
   setJobDetails: ({
     title,
     description,
+    severity,
   }: {
     title: string;
     description: string;
+    severity: 'Severe' | 'High' | 'Medium' | 'Low';
   }) => void;
 }
 
@@ -66,11 +71,31 @@ export default function CreateJob({
 }: CreateJobProps) {
   const [jobTitle, setJobTitle] = useState('');
   const [jobDescription, setJobDescription] = useState('');
+  const [severity, setSeverity] = useState<
+    'Severe' | 'High' | 'Medium' | 'Low'
+  >('Medium');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setJobDetails({ title: jobTitle, description: jobDescription });
+    setJobDetails({ title: jobTitle, description: jobDescription, severity });
     setIsOpen(false);
+  };
+
+  const handleSeverityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    switch (event.target.value) {
+      case 'Severe':
+        setSeverity('Severe');
+        break;
+      case 'High':
+        setSeverity('High');
+        break;
+      case 'Medium':
+        setSeverity('Medium');
+        break;
+      case 'Low':
+        setSeverity('Low');
+        break;
+    }
   };
 
   return (
@@ -140,6 +165,7 @@ export default function CreateJob({
                                   id="project-name"
                                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                   value={jobTitle}
+                                  placeholder="Enter a job title"
                                   onChange={(e) => setJobTitle(e.target.value)}
                                 />
                               </div>
@@ -158,6 +184,7 @@ export default function CreateJob({
                                   rows={4}
                                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                   defaultValue={''}
+                                  placeholder="Give a brief description of the job."
                                   value={jobDescription}
                                   onChange={(e) =>
                                     setJobDescription(e.target.value)
@@ -202,61 +229,75 @@ export default function CreateJob({
                             </div>
                             <fieldset>
                               <legend className="text-sm font-medium leading-6 text-my-color1">
-                                Privacy
+                                Severity
                               </legend>
                               <div className="mt-2 space-y-4">
                                 <div className="relative flex items-start">
                                   <div className="absolute flex h-6 items-center">
                                     <input
-                                      id="privacy-public"
-                                      name="privacy"
-                                      aria-describedby="privacy-public-description"
+                                      id="severe"
+                                      name="severity"
                                       type="radio"
+                                      value="Severe"
                                       className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                      defaultChecked
+                                      checked={severity === 'Severe'}
+                                      onChange={handleSeverityChange}
                                     />
                                   </div>
-                                  <div className="pl-7 text-sm leading-6">
+                                  <div className="flex gap-2 pl-7 text-sm leading-6 items-center">
+                                    <ChevronDoubleUpIcon className="h-4 w-4" />
                                     <label
                                       htmlFor="privacy-public"
                                       className="font-medium text-my-color1"
                                     >
-                                      Public access
+                                      Severe
                                     </label>
-                                    <p
-                                      id="privacy-public-description"
-                                      className="text-my-color1"
+                                  </div>
+                                </div>
+                                <div className="relative flex items-start">
+                                  <div className="absolute flex h-6 items-center">
+                                    <input
+                                      id="high"
+                                      name="severity"
+                                      type="radio"
+                                      value="High"
+                                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                      checked={severity === 'High'}
+                                      onChange={handleSeverityChange}
+                                    />
+                                  </div>
+                                  <div className="flex gap-2 pl-7 text-sm leading-6 items-center">
+                                    <ChevronUpIcon className="h-4 w-4" />
+                                    <label
+                                      htmlFor="privacy-public"
+                                      className="font-medium text-my-color1"
                                     >
-                                      Everyone with the link will see this
-                                      project.
-                                    </p>
+                                      High
+                                    </label>
                                   </div>
                                 </div>
                                 <div>
                                   <div className="relative flex items-start">
                                     <div className="absolute flex h-6 items-center">
                                       <input
-                                        id="privacy-private-to-project"
-                                        name="privacy"
-                                        aria-describedby="privacy-private-to-project-description"
+                                        id="medium"
+                                        name="severity"
                                         type="radio"
+                                        value="Medium"
                                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                        checked={severity === 'Medium'}
+                                        onChange={handleSeverityChange}
+                                        defaultChecked
                                       />
                                     </div>
-                                    <div className="pl-7 text-sm leading-6">
+                                    <div className="flex gap-2 pl-7 text-sm leading-6 items-center">
+                                      <Bars2Icon className="h-4 w-4" />
                                       <label
                                         htmlFor="privacy-private-to-project"
                                         className="font-medium text-my-color1"
                                       >
-                                        Private to project members
+                                        Medium
                                       </label>
-                                      <p
-                                        id="privacy-private-to-project-description"
-                                        className="text-my-color1"
-                                      >
-                                        Only members of this project would be
-                                        able to access.
-                                      </p>
                                     </div>
                                   </div>
                                 </div>
@@ -264,27 +305,23 @@ export default function CreateJob({
                                   <div className="relative flex items-start">
                                     <div className="absolute flex h-6 items-center">
                                       <input
-                                        id="privacy-private"
-                                        name="privacy"
-                                        aria-describedby="privacy-private-to-project-description"
+                                        id="low"
+                                        name="severity"
                                         type="radio"
+                                        value="Low"
                                         className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                        checked={severity === 'Low'}
+                                        onChange={handleSeverityChange}
                                       />
                                     </div>
-                                    <div className="pl-7 text-sm leading-6">
+                                    <div className="flex gap-2 pl-7 text-sm leading-6 items-center">
+                                      <ChevronDownIcon className="h-4 w-4" />
                                       <label
                                         htmlFor="privacy-private"
                                         className="font-medium text-my-color1"
                                       >
-                                        Private to you
+                                        Low
                                       </label>
-                                      <p
-                                        id="privacy-private-description"
-                                        className="text-my-color1"
-                                      >
-                                        You are the only one able to access this
-                                        project.
-                                      </p>
                                     </div>
                                   </div>
                                 </div>
