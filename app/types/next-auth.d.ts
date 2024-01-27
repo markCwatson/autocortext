@@ -6,7 +6,7 @@ declare module 'next-auth/jwt' {
   interface JWT {
     id: string;
     role: string;
-    companyId: string;
+    companyId?: string;
   }
 }
 
@@ -16,7 +16,7 @@ declare module 'next-auth' {
     name: string;
     email: string;
     role: string;
-    companyId: string;
+    companyId?: string;
     image?: string;
   }
 

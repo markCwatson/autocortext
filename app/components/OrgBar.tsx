@@ -10,7 +10,7 @@ import {
 import { useEffect, useState } from 'react';
 
 interface OrgNavBarProps {
-  companyId: string;
+  companyId?: string;
 }
 
 export default function OrgNavBar({ companyId }: OrgNavBarProps) {
@@ -18,6 +18,11 @@ export default function OrgNavBar({ companyId }: OrgNavBarProps) {
 
   useEffect(() => {
     async function fetchCompany() {
+      if (!companyId) {
+        setCompanyName('No company found');
+        return;
+      }
+
       try {
         const response = await fetch(`/api/company?id=${companyId}`);
         if (!response.ok) {
