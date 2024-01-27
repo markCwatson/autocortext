@@ -36,6 +36,25 @@ export default async function DashboardLayout({
     );
   }
 
+  if (user.role !== 'AscendAdmin') {
+    return (
+      <DialogModal
+        icon={
+          <ArrowPathIcon
+            className="h-6 w-6 text-red-600 animate-spin"
+            aria-hidden="true"
+          />
+        }
+        title={'Unauthorized!'}
+        body={
+          'This app is only accessible to Ascend Engineering personnel and approved partners.'
+        }
+        show={true}
+        goToText="Return"
+      />
+    );
+  }
+
   return (
     <>
       <Preview />

@@ -49,6 +49,8 @@ export const authOptions: NextAuthOptions = {
             id: user._id!.toString(),
             name: user.name,
             email: user.email,
+            role: user.role,
+            image: undefined, // todo: store images
           };
         }
 
@@ -59,6 +61,20 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async redirect({ url, baseUrl }) {
       return Promise.resolve('/dashboard');
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        // Ensure the user's id androle are in the JWT
+        token.id = user.id;
+        token.role = user.role;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      // Add the id/role to the session's user object
+      session.user.id = token.id;
+      session.user.role = token.role;
+      return session;
     },
   },
 };

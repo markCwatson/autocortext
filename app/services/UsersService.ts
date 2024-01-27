@@ -24,6 +24,7 @@ class UsersService {
       name,
       email,
       password: hashedPassword,
+      role: 'user',
     });
   }
 

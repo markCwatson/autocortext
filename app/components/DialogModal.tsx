@@ -22,6 +22,8 @@ export default function DialogModal(props: Props) {
   function onClick() {
     if (props.goTo) {
       router.push(props.goTo);
+    } else {
+      router.push('/');
     }
     setOpen(false);
   }

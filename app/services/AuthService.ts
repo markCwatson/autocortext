@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-import UsersService, { User } from '../services/UsersService';
-import ApiError from '../errors/ApiError';
+import UsersService, { User } from '@/services/UsersService';
+import ApiError from '@/errors/ApiError';
 
 class AuthService {
   static async generateToken(
