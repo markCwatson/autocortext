@@ -9,6 +9,7 @@ import {
   ChevronUpIcon,
   TrashIcon,
 } from '@heroicons/react/20/solid';
+import JobModal from './JobModal';
 
 interface Props {
   job: Job;
@@ -71,31 +72,16 @@ export default function JobCard({ job, deleteJob, updateJob }: Props) {
 
   if (editMode) {
     return (
-      <div
-        ref={setNodeRef}
-        style={style}
-        {...attributes}
-        {...listeners}
-        className="bg-my-color7 p-2.5 items-center flex flex-col text-left rounded-xl hover:ring-2 hover:ring-inset hover:ring-my-color3 cursor-grab relative"
-      >
-        <textarea
-          className="w-full resize-none border-none rounded bg-transparent text-white focus:outline-none"
-          value={editedTitle}
-          onChange={(e) => setEditedTitle(e.target.value)}
-          placeholder="Job title here"
+      <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+        <JobModal
+          title={editedTitle}
+          setTitle={setEditedTitle}
+          description={editedDescription}
+          setDescription={setEditedDescription}
+          onSave={handleSave}
+          onClose={() => setEditMode(false)}
+          job={job}
         />
-        <textarea
-          className="w-full resize-none border-none rounded bg-transparent text-white focus:outline-none"
-          value={editedDescription}
-          onChange={(e) => setEditedDescription(e.target.value)}
-          placeholder="Job description here"
-        />
-        <button
-          onClick={handleSave}
-          className="mt-2 rounded bg-indigo-600 py-2 px-4 text-white"
-        >
-          Save
-        </button>
       </div>
     );
   }
