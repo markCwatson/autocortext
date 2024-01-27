@@ -10,6 +10,7 @@ export async function POST(request: Request) {
   // create user
   let createdUser = null;
   try {
+    // todo: associate user with a company
     createdUser = await UsersService.create({ name, email, password });
     if (!createdUser) {
       return new NextResponse(

@@ -6,7 +6,7 @@ interface CreateUserInput {
   password: string;
   email: string;
   name: string;
-  companyId: string;
+  companyId?: string;
 }
 
 export type User = UserModel;
@@ -25,7 +25,7 @@ class UsersService {
       email,
       password: hashedPassword,
       role: 'user',
-      companyId: new ObjectId(companyId),
+      companyId: companyId ? new ObjectId(companyId) : undefined,
     });
   }
 
