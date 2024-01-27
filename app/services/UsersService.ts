@@ -1,5 +1,4 @@
 import { ObjectId } from 'mongodb';
-
 import AuthService from '@/services/AuthService';
 import UsersRepository, { UserModel } from '@/repos/UsersRepository';
 
@@ -7,13 +6,14 @@ interface CreateUserInput {
   password: string;
   email: string;
   name: string;
+  companyId: string;
 }
 
 export type User = UserModel;
 
 class UsersService {
   static async create(body: CreateUserInput): Promise<any> {
-    const { password, email, name } = body;
+    const { password, email, name, companyId } = body;
     const user = await UsersRepository.selectByEmail(email);
     if (user) {
       return null;
@@ -25,6 +25,7 @@ class UsersService {
       email,
       password: hashedPassword,
       role: 'user',
+      companyId: new ObjectId(companyId),
     });
   }
 
@@ -34,6 +35,10 @@ class UsersService {
 
   static async getUserById(id: ObjectId): Promise<User | null> {
     return UsersRepository.selectById(id);
+  }
+
+  static async getUsersByCompanyId(companyId: string): Promise<User[] | null> {
+    return UsersRepository.selectByCompanyId(companyId);
   }
 
   static async delete(id: ObjectId): Promise<Boolean> {

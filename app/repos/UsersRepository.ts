@@ -8,6 +8,7 @@ export interface UserModel {
   email: string;
   password: string;
   role: string;
+  companyId: ObjectId;
 }
 
 class UsersRepository {
@@ -88,6 +89,25 @@ class UsersRepository {
         .db()
         .collection('users')
         .findOne({ _id: userId }) as Promise<UserModel>;
+    } catch (error: MongoServerError | any) {
+      throw new ApiError({
+        code: 500,
+        message: error.message,
+        explanation: null,
+      });
+    }
+  }
+
+  static async selectByCompanyId(
+    companyId: string,
+  ): Promise<UserModel[] | null> {
+    const client = await Database.getClient();
+    try {
+      return client
+        .db()
+        .collection('users')
+        .find({ companyId })
+        .toArray() as Promise<UserModel[]>;
     } catch (error: MongoServerError | any) {
       throw new ApiError({
         code: 500,

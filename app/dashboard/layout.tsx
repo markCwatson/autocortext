@@ -59,7 +59,7 @@ export default async function DashboardLayout({
     <>
       <Preview />
       <Navbar />
-      <OrgNavBar />
+      <OrgNavBar companyId={user.companyId} />
       <div className="mx-auto flex flex-col space-y-6">
         <div
           className="p-0 grid gap-12 md:grid-cols-[115px_1fr] bg-my-color8"
@@ -69,18 +69,16 @@ export default async function DashboardLayout({
         >
           <DashboardNav
             user={{
-              name: user?.name,
-              image: user?.image,
-              email: user?.email,
+              name: user.name,
+              image: user.image,
+              email: user.email,
             }}
           />
           <DashboardPage>
             <main className="flex w-full flex-1 flex-col overflow-hidden mt-4">
               <AiMessagesProvider>
                 <ClientCtxProvider>
-                  <UserProvider
-                    value={{ name: user?.name, image: user?.image }}
-                  >
+                  <UserProvider value={{ name: user.name, image: user.image }}>
                     {children}
                   </UserProvider>
                 </ClientCtxProvider>

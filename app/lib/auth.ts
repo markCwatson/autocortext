@@ -50,7 +50,8 @@ export const authOptions: NextAuthOptions = {
             name: user.name,
             email: user.email,
             role: user.role,
-            image: undefined, // todo: store images
+            companyId: user.companyId.toString(),
+            image: undefined, // todo: store images (add to UserModel too)
           };
         }
 
@@ -64,9 +65,10 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token, user }) {
       if (user) {
-        // Ensure the user's id androle are in the JWT
+        // Ensure the user's id and role are in the JWT
         token.id = user.id;
         token.role = user.role;
+        token.companyId = user.companyId;
       }
       return token;
     },
@@ -74,6 +76,7 @@ export const authOptions: NextAuthOptions = {
       // Add the id/role to the session's user object
       session.user.id = token.id;
       session.user.role = token.role;
+      session.user.companyId = token.companyId;
       return session;
     },
   },
