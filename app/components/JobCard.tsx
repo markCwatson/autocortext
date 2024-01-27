@@ -30,6 +30,7 @@ export default function JobCard({ job, deleteJob, updateJob }: Props) {
   const [editedTitle, setEditedTitle] = useState(job.title);
   const [editedDescription, setEditedDescription] = useState(job.description);
   const [openAiAssistant, setOpenAiAssistant] = useState(false);
+  const [editedActivities, setEditedActivities] = useState(job.activities);
 
   const {
     setNodeRef,
@@ -62,6 +63,15 @@ export default function JobCard({ job, deleteJob, updateJob }: Props) {
       ...job,
       title: editedTitle,
       description: editedDescription,
+      activities: editedActivities,
+    });
+    setEditMode(false);
+  };
+
+  const handleClose = () => {
+    updateJob(job.id, {
+      ...job,
+      activities: editedActivities,
     });
     setEditMode(false);
   };
@@ -73,13 +83,15 @@ export default function JobCard({ job, deleteJob, updateJob }: Props) {
   if (editMode) {
     return (
       <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+        {/** todo: handle when they do not click on modal */}
         <JobModal
           title={editedTitle}
           setTitle={setEditedTitle}
           description={editedDescription}
           setDescription={setEditedDescription}
+          setActivities={setEditedActivities}
           onSave={handleSave}
-          onClose={() => setEditMode(false)}
+          onClose={handleClose}
           job={job}
         />
       </div>

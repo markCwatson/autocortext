@@ -3,19 +3,22 @@
 import { useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import JobsActivity from './JobsActivity';
-import { Job } from '@/types';
+import { Activity, Job } from '@/types';
 import {
   Bars2Icon,
   ChevronDoubleUpIcon,
   ChevronDownIcon,
   ChevronUpIcon,
+  CubeTransparentIcon,
 } from '@heroicons/react/20/solid';
+import { toast } from '@/components/Toast';
 
 type Props = {
   title: string;
   description: string;
   setTitle: (title: string) => void;
   setDescription: (description: string) => void;
+  setActivities: (activities: Activity[]) => void;
   onSave: () => void;
   onClose: () => void;
   job: Job;
@@ -31,11 +34,87 @@ const severityMap = {
 
 export default function JobModal(props: Props) {
   const [open, setOpen] = useState(true);
+  const [activities, setActivities] = useState(props.job.activities);
 
   function handleSave() {
     setOpen(false);
     props.onSave();
     props.onClose();
+  }
+
+  async function sendQuery(
+    e: React.FormEvent<HTMLFormElement>,
+    acts: Activity[],
+  ) {
+    e.preventDefault();
+    if (!acts) return;
+
+    let context = `${props.job.title}\n${props.job.description}.\n`;
+    const actsCopy = [...acts];
+
+    context = context.concat(
+      actsCopy
+        .sort((a, b) => b.id - a.id)
+        .map((activity) => {
+          if (activity.type === 'commented') {
+            return `${activity.person.name}: ${activity.comment}`;
+          }
+        })
+        .join('\n'),
+    );
+
+    toast({
+      title: 'Success',
+      message: `Sending query...`,
+      duration: 2000,
+    });
+
+    try {
+      const result = await fetch('/api/read', {
+        method: 'POST',
+        body: JSON.stringify(context),
+      });
+      if (!result?.ok) {
+        return toast({
+          title: 'Error',
+          message: `Server status code: ${result.status}`,
+          type: 'error',
+        });
+      }
+      const json = await result.json();
+      if (json.data) {
+        const newActivity: Activity = {
+          id: 0,
+          type: 'commented',
+          comment: `${json.data}`,
+          person: {
+            name: 'AI',
+            img: <CubeTransparentIcon className="w-4 h-4 flex-shrink-0" />,
+          },
+          date: 'Now',
+          dateTime: `${Date.now()}`,
+        };
+
+        let newActivities: Activity[] = [];
+        acts.map((activity) => activity.id++);
+        newActivities = [newActivity, ...acts];
+        setActivities(newActivities);
+        props.setActivities(newActivities);
+
+        toast({
+          title: 'Success',
+          message: `Answer received!`,
+          duration: 3000,
+        });
+      }
+    } catch (err) {
+      console.log('err:', err);
+      toast({
+        title: 'Error',
+        message: 'Error sending query. Please try again later.',
+        type: 'error',
+      });
+    }
   }
 
   return (
@@ -132,7 +211,14 @@ export default function JobModal(props: Props) {
                       <div className="mb-4 border-b-2 rounded border-my-color3">
                         <Tabs />
                       </div>
-                      <JobsActivity />
+                      <JobsActivity
+                        activities={activities}
+                        handler={(event, acts) => {
+                          props.setActivities(acts);
+                          setActivities(acts);
+                          sendQuery(event, acts);
+                        }}
+                      />
                     </div>
                   </Dialog.Panel>
                 </Transition.Child>

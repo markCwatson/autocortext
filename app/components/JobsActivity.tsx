@@ -1,4 +1,6 @@
-import { Fragment, useState } from 'react';
+'use client';
+
+import { Fragment, useContext, useState } from 'react';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import {
   FaceFrownIcon,
@@ -7,53 +9,13 @@ import {
   HandThumbUpIcon,
   HeartIcon,
   PaperClipIcon,
+  UserCircleIcon,
   XMarkIcon,
 } from '@heroicons/react/20/solid';
 import { Listbox, Transition } from '@headlessui/react';
-
-const activity = [
-  {
-    id: 1,
-    type: 'created',
-    person: { name: 'Chelsea Hagon' },
-    date: '7d ago',
-    dateTime: '2023-01-23T10:32',
-  },
-  {
-    id: 2,
-    type: 'edited',
-    person: { name: 'Chelsea Hagon' },
-    date: '6d ago',
-    dateTime: '2023-01-23T11:03',
-  },
-  {
-    id: 4,
-    type: 'commented',
-    person: {
-      name: 'Chelsea Hagon',
-      imageUrl:
-        'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-    comment:
-      'Called Alex. He reassured me the job would be finished by the 25th.',
-    date: '3d ago',
-    dateTime: '2023-01-23T15:56',
-  },
-  {
-    id: 5,
-    type: 'viewed',
-    person: { name: 'Alex Curren' },
-    date: '2d ago',
-    dateTime: '2023-01-24T09:12',
-  },
-  {
-    id: 6,
-    type: 'finished',
-    person: { name: 'Alex Curren' },
-    date: '1d ago',
-    dateTime: '2023-01-24T09:20',
-  },
-];
+import { Activity } from '@/types';
+import { toast } from '@/components/Toast';
+import { useUserContext } from '@/components/UserProvider';
 
 const moods = [
   {
@@ -100,91 +62,77 @@ const moods = [
   },
 ];
 
+interface Props {
+  activities?: Activity[];
+  handler: (
+    e: React.FormEvent<HTMLFormElement>,
+    activities: Activity[],
+  ) => void;
+}
+
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function JobsActivity() {
+export default function JobsActivity({ activities, handler }: Props) {
+  const userValue = useUserContext();
+
   const [selected, setSelected] = useState(moods[5]);
+  const [comment, setComment] = useState('');
+
+  function onCommentSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const newActivity: Activity = {
+      id: 0,
+      type: 'commented',
+      person: {
+        name: userValue.user.name || 'You',
+        img: userValue.user.image || (
+          <UserCircleIcon className="w-6 h-6 flex-shrink-0" />
+        ),
+      },
+      comment,
+      date: 'Today at 5:59 PM',
+      dateTime: '2024-01-27T17:59:00',
+    };
+
+    let newActivities: Activity[] = [];
+    if (activities) {
+      activities.map((activity) => activity.id++);
+      newActivities = [newActivity, ...activities];
+    } else {
+      newActivities = [newActivity];
+    }
+
+    toast({
+      title: 'Success',
+      message: `Comment added`,
+      duration: 2000,
+    });
+
+    setComment('');
+    handler(e, newActivities);
+  }
 
   return (
     <>
-      <ul role="list" className="space-y-6">
-        {activity.map((activityItem, activityItemIdx) => (
-          <li key={activityItem.id} className="relative flex gap-x-4">
-            <div
-              className={classNames(
-                activityItemIdx === activity.length - 1 ? 'h-6' : '-bottom-6',
-                'absolute left-0 top-0 flex w-6 justify-center',
-              )}
-            >
-              <div className="w-px bg-gray-200" />
-            </div>
-            {activityItem.type === 'commented' ? (
-              <>
-                <img
-                  src={activityItem.person.imageUrl}
-                  alt=""
-                  className="relative mt-3 h-6 w-6 flex-none rounded-full bg-gray-50"
-                />
-                <div className="flex-auto rounded-md p-3 ring-1 ring-inset ring-my-color3">
-                  <div className="flex justify-between gap-x-4">
-                    <div className="py-0.5 text-xs leading-5 text-my-color10">
-                      <span className="font-medium text-gray-900">
-                        {activityItem.person.name}
-                      </span>{' '}
-                      commented
-                    </div>
-                    <time
-                      dateTime={activityItem.dateTime}
-                      className="flex-none py-0.5 text-xs leading-5 text-my-color10"
-                    >
-                      {activityItem.date}
-                    </time>
-                  </div>
-                  <p className="text-sm leading-6 text-my-color10">
-                    {activityItem.comment}
-                  </p>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="relative flex h-6 w-6 flex-none items-center justify-center bg-my-color1">
-                  {activityItem.type === 'finished' ? (
-                    <CheckCircleIcon
-                      className="h-6 w-6 text-indigo-600"
-                      aria-hidden="true"
-                    />
-                  ) : (
-                    <div className="h-1.5 w-1.5 rounded-full bg-my-color3 ring-1 ring-my-color10" />
-                  )}
-                </div>
-                <p className="flex-auto py-0.5 text-xs leading-5 text-my-color10">
-                  <span className="font-medium text-my-color10">
-                    {activityItem.person.name}
-                  </span>{' '}
-                  {activityItem.type} the job.
-                </p>
-                <time
-                  dateTime={activityItem.dateTime}
-                  className="flex-none py-0.5 text-xs leading-5 text-my-color10"
-                >
-                  {activityItem.date}
-                </time>
-              </>
-            )}
-          </li>
-        ))}
-      </ul>
-
       {/* New comment form */}
-      <div className="mt-6 flex gap-x-3">
-        <img
-          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-          alt=""
-          className="h-6 w-6 flex-none rounded-full bg-gray-50"
-        />
-        <form action="#" className="relative flex-auto">
+      <div className="my-6 flex gap-x-3">
+        {typeof userValue.user.image === 'string' ? (
+          <img
+            src={userValue.user.image}
+            alt=""
+            className="h-6 w-6 flex-none rounded-full bg-gray-50"
+          />
+        ) : (
+          <UserCircleIcon className="w-6 h-6 flex-shrink-0" />
+        )}
+        <form
+          action="#"
+          className="relative flex-auto"
+          onSubmit={(event) => onCommentSubmit(event)}
+        >
           <div className="overflow-hidden rounded-lg pb-12 shadow-sm ring-1 ring-inset ring-my-color10 focus-within:ring-2 focus-within:ring-indigo-600">
             <label htmlFor="comment" className="sr-only">
               Add your comment
@@ -195,7 +143,8 @@ export default function JobsActivity() {
               id="comment"
               className="block w-full resize-none border-0 bg-transparent py-1.5 text-my-color10 placeholder:text-my-color8 focus:ring-0 sm:text-sm sm:leading-6"
               placeholder="Add your comment..."
-              defaultValue={''}
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
             />
           </div>
 
@@ -304,6 +253,81 @@ export default function JobsActivity() {
           </div>
         </form>
       </div>
+
+      <ul role="list" className="space-y-6">
+        {activities &&
+          activities.map((activityItem, activityItemIdx) => (
+            <li key={activityItem.id} className="relative flex gap-x-4">
+              <div
+                className={classNames(
+                  activityItemIdx === activities.length - 1
+                    ? 'h-6'
+                    : '-bottom-6',
+                  'absolute left-0 top-0 flex w-6 justify-center',
+                )}
+              >
+                <div className="w-px bg-gray-200" />
+              </div>
+              {activityItem.type === 'commented' ? (
+                <>
+                  {typeof activityItem.person.img === 'string' ? (
+                    <img
+                      src={activityItem.person.img}
+                      alt=""
+                      className="relative mt-3 h-6 w-6 flex-none rounded-full bg-gray-50"
+                    />
+                  ) : (
+                    activityItem.person.img
+                  )}
+                  <div className="flex-auto rounded-md p-3 ring-1 ring-inset ring-my-color3">
+                    <div className="flex justify-between gap-x-4">
+                      <div className="py-0.5 text-xs leading-5 text-my-color10">
+                        <span className="font-medium text-gray-900">
+                          {activityItem.person.name}
+                        </span>{' '}
+                        commented
+                      </div>
+                      <time
+                        dateTime={activityItem.dateTime}
+                        className="flex-none py-0.5 text-xs leading-5 text-my-color10"
+                      >
+                        {activityItem.date}
+                      </time>
+                    </div>
+                    <p className="text-sm leading-6 text-my-color10">
+                      {activityItem.comment}
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="relative flex h-6 w-6 flex-none items-center justify-center bg-my-color1">
+                    {activityItem.type === 'finished' ? (
+                      <CheckCircleIcon
+                        className="h-6 w-6 text-green-600"
+                        aria-hidden="true"
+                      />
+                    ) : (
+                      <div className="h-1.5 w-1.5 rounded-full bg-my-color3 ring-1 ring-my-color10" />
+                    )}
+                  </div>
+                  <p className="flex-auto py-0.5 text-xs leading-5 text-my-color10">
+                    <span className="font-medium text-my-color10">
+                      {activityItem.person.name}
+                    </span>{' '}
+                    {activityItem.type} the job.
+                  </p>
+                  <time
+                    dateTime={activityItem.dateTime}
+                    className="flex-none py-0.5 text-xs leading-5 text-my-color10"
+                  >
+                    {activityItem.date}
+                  </time>
+                </>
+              )}
+            </li>
+          ))}
+      </ul>
     </>
   );
 }

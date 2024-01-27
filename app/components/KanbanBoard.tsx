@@ -39,9 +39,31 @@ const defaultJobs: Job[] = [
   {
     id: 1178,
     columnId: 'todo',
-    title: 'Reprogram PLC',
-    description: 'The PLC needs to be reprogrammed. Use the latest version.',
+    title: 'Reprogram conveyer computer',
+    description:
+      "The conveyer's computer needs to be reprogrammed. Use the latest version.",
     severity: 'Low',
+    activities: [
+      {
+        id: 0,
+        type: 'commented',
+        person: {
+          name: 'Chelsea Hagon',
+          img: 'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        },
+        comment:
+          'Does anyone know when this will be finished? I need it for a project I am working on.',
+        date: '3d ago',
+        dateTime: '2023-01-23T15:56',
+      },
+      {
+        id: 1,
+        type: 'created',
+        person: { name: 'Chelsea Hagon' },
+        date: '7d ago',
+        dateTime: '2023-01-23T10:32',
+      },
+    ],
   },
   {
     id: 1232,
@@ -49,6 +71,29 @@ const defaultJobs: Job[] = [
     title: 'Fix lathe',
     description: 'The lathe is broken. It has a broken shaft.',
     severity: 'High',
+    activities: [
+      {
+        id: 0,
+        type: 'viewed',
+        person: { name: 'Thomas Keizer' },
+        date: '7d ago',
+        dateTime: '2023-01-23T10:32',
+      },
+      {
+        id: 1,
+        type: 'viewed',
+        person: { name: 'Bill Knewls' },
+        date: '7d ago',
+        dateTime: '2023-01-23T10:32',
+      },
+      {
+        id: 3,
+        type: 'created',
+        person: { name: 'Matt Knox' },
+        date: '7d ago',
+        dateTime: '2023-01-23T10:32',
+      },
+    ],
   },
   {
     id: 3113,
@@ -56,14 +101,70 @@ const defaultJobs: Job[] = [
     title: 'Tighten belt on conveyor',
     description: 'The belt is loose. It should be tightened to avoid slipping.',
     severity: 'Medium',
+    activities: [
+      {
+        id: 0,
+        type: 'started',
+        person: { name: 'Chelsea Hagon' },
+        date: '1d ago',
+        dateTime: '2023-01-29T10:32',
+      },
+      {
+        id: 1,
+        type: 'created',
+        person: { name: 'Chelsea Hagon' },
+        date: '7d ago',
+        dateTime: '2023-01-23T10:32',
+      },
+    ],
   },
   {
     id: 8894,
     columnId: 'done',
-    title: 'Fix milling machine',
-    description:
-      'The milling machine will not power on. I think the fuse is blown.',
+    title: 'Replace cartoner fuse',
+    description: 'The cartoner will not power on. I think the fuse is blown.',
     severity: 'Severe',
+    activities: [
+      {
+        id: 0,
+        type: 'finished',
+        person: { name: 'Alex Curren' },
+        date: '1d ago',
+        dateTime: '2023-01-24T09:20',
+      },
+      {
+        id: 1,
+        type: 'viewed',
+        person: { name: 'Alex Curren' },
+        date: '2d ago',
+        dateTime: '2023-01-24T09:12',
+      },
+      {
+        id: 2,
+        type: 'commented',
+        person: {
+          name: 'Chelsea Hagon',
+          img: 'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        },
+        comment: 'Called Alex. He said the fuse is stuck.',
+        date: '3d ago',
+        dateTime: '2023-01-23T15:56',
+      },
+      {
+        id: 3,
+        type: 'edited',
+        person: { name: 'Chelsea Hagon' },
+        date: '6d ago',
+        dateTime: '2023-01-23T11:03',
+      },
+      {
+        id: 4,
+        type: 'created',
+        person: { name: 'Chelsea Hagon' },
+        date: '7d ago',
+        dateTime: '2023-01-23T10:32',
+      },
+    ],
   },
 ];
 
@@ -233,7 +334,7 @@ export default function KanbanBoard() {
     <>
       <div className="flex justify-evenly py-4">
         <button
-          className="flex gap-2 items-center border-my-color7 border-2 rounded-md p-4 hover:bg-my-color7 active:bg-black"
+          className="flex gap-2 items-center border-my-color7 border-2 rounded-md p-2 hover:bg-my-color7 active:bg-black"
           onClick={() => {
             setIsCreateJobOpen(true);
           }}
@@ -245,10 +346,10 @@ export default function KanbanBoard() {
           onClick={() => {
             createNewColumn();
           }}
-          className="flex gap-2 items-center border-my-color7 border-2 rounded-md p-4 hover:bg-my-color7 active:bg-black"
+          className="flex gap-2 items-center border-my-color7 border-2 rounded-md p-2 hover:bg-my-color7 active:bg-black"
         >
           <PlusIcon className="h-6 w-6" />
-          Add a Column
+          Add a column
         </button>
       </div>
       <div className="m-auto flex w-full items-center overflow-x-scroll overflow-y-hidden px-4">

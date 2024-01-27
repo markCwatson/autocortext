@@ -10,6 +10,7 @@ import OrgNavBar from '@/components/OrgBar';
 import { AiMessagesProvider } from '@/components/AiMessagesProvider';
 import { ArrowPathIcon } from '@heroicons/react/20/solid';
 import { ClientCtxProvider } from '@/components/ClientCtxProvider';
+import { UserProvider } from '@/components/UserProvider';
 
 export default async function DashboardLayout({
   children,
@@ -57,7 +58,13 @@ export default async function DashboardLayout({
           <DashboardPage>
             <main className="flex w-full flex-1 flex-col overflow-hidden mt-4">
               <AiMessagesProvider>
-                <ClientCtxProvider>{children}</ClientCtxProvider>
+                <ClientCtxProvider>
+                  <UserProvider
+                    value={{ name: user?.name, image: user?.image }}
+                  >
+                    {children}
+                  </UserProvider>
+                </ClientCtxProvider>
               </AiMessagesProvider>
             </main>
           </DashboardPage>
