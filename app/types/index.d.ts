@@ -21,14 +21,16 @@ export type Activity = {
     | 'finished'
     | 'deleted'
     | 'moved';
-  person: Person;
+  personId: string;
+  person?: Person;
   comment?: string;
-  date: string;
   dateTime: string;
 };
 
 export type Job = {
   id: Id;
+  companyId: string;
+  creatorId: string;
   columnId: Id;
   title: string;
   description: string;

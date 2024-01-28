@@ -86,6 +86,7 @@ export default function JobsActivity({ activities, handler }: Props) {
     const newActivity: Activity = {
       id: 0,
       type: 'commented',
+      personId: userValue.user.id,
       person: {
         name: userValue.user.name || 'You',
         img: userValue.user.image || (
@@ -93,7 +94,6 @@ export default function JobsActivity({ activities, handler }: Props) {
         ),
       },
       comment,
-      date: 'Today at 5:59 PM',
       dateTime: '2024-01-27T17:59:00',
     };
 
@@ -270,20 +270,22 @@ export default function JobsActivity({ activities, handler }: Props) {
               </div>
               {activityItem.type === 'commented' ? (
                 <>
-                  {typeof activityItem.person.img === 'string' ? (
+                  {typeof activityItem.person?.img === 'string' ? (
                     <img
                       src={activityItem.person.img}
                       alt=""
                       className="relative mt-3 h-6 w-6 flex-none rounded-full bg-gray-50"
                     />
                   ) : (
-                    activityItem.person.img
+                    activityItem.person?.img || (
+                      <UserCircleIcon className="w-6 h-6 flex-shrink-0" />
+                    )
                   )}
                   <div className="flex-auto rounded-md p-3 ring-1 ring-inset ring-my-color3">
                     <div className="flex justify-between gap-x-4">
                       <div className="py-0.5 text-xs leading-5 text-my-color10">
                         <span className="font-medium text-gray-900">
-                          {activityItem.person.name}
+                          {activityItem.person?.name}
                         </span>{' '}
                         commented
                       </div>
@@ -291,7 +293,7 @@ export default function JobsActivity({ activities, handler }: Props) {
                         dateTime={activityItem.dateTime}
                         className="flex-none py-0.5 text-xs leading-5 text-my-color10"
                       >
-                        {activityItem.date}
+                        {activityItem.dateTime.split('T')[0]}
                       </time>
                     </div>
                     <p className="text-sm leading-6 text-my-color10">
@@ -313,7 +315,7 @@ export default function JobsActivity({ activities, handler }: Props) {
                   </div>
                   <p className="flex-auto py-0.5 text-xs leading-5 text-my-color10">
                     <span className="font-medium text-my-color10">
-                      {activityItem.person.name}
+                      {activityItem.person?.name}
                     </span>{' '}
                     {activityItem.type} the job.
                   </p>
@@ -321,7 +323,7 @@ export default function JobsActivity({ activities, handler }: Props) {
                     dateTime={activityItem.dateTime}
                     className="flex-none py-0.5 text-xs leading-5 text-my-color10"
                   >
-                    {activityItem.date}
+                    {activityItem.dateTime.split('T')[0]}
                   </time>
                 </>
               )}

@@ -76,7 +76,7 @@ export default function ColumnContainer({
       >
         <div className="flex gap-2">
           <div className="flex justify-center items-center bg-my-color7 px-2 py-1 text-sm rounded-full">
-            {jobs.length}
+            {jobs?.length}
           </div>
           {!editMode && column.title}
           {editMode && (
@@ -104,6 +104,7 @@ export default function ColumnContainer({
           <TrashIcon className="h-6 w-6" />
         </button>
       </div>
+
       {/* Column job container */}
       <div className="flex flex-grow flex-col gap-4 p-2 overflow-x-hidden overflow-y-auto">
         <SortableContext items={jobsIds}>

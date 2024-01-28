@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import {
   DndContext,
@@ -19,6 +19,8 @@ import JobCard from '@/components/JobCard';
 import ColumnContainer from '@/components/ColumnContainer';
 import { isClientCtx } from '@/components/ClientCtxProvider';
 import CreateJob from '@/components/CreateJob';
+import { useUserContext } from '@/components/UserProvider';
+import { toast } from './Toast';
 
 const defaultCols: Column[] = [
   {
@@ -35,142 +37,15 @@ const defaultCols: Column[] = [
   },
 ];
 
-const defaultJobs: Job[] = [
-  {
-    id: 1178,
-    columnId: 'todo',
-    title: 'Reprogram conveyer computer',
-    description:
-      "The conveyer's computer needs to be reprogrammed. Use the latest version.",
-    severity: 'Low',
-    activities: [
-      {
-        id: 0,
-        type: 'commented',
-        person: {
-          name: 'Chelsea Hagon',
-          img: 'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-        comment:
-          'Does anyone know when this will be finished? I need it for a project I am working on.',
-        date: '3d ago',
-        dateTime: '2023-01-23T15:56',
-      },
-      {
-        id: 1,
-        type: 'created',
-        person: { name: 'Chelsea Hagon' },
-        date: '7d ago',
-        dateTime: '2023-01-23T10:32',
-      },
-    ],
-  },
-  {
-    id: 1232,
-    columnId: 'todo',
-    title: 'Fix lathe',
-    description: 'The lathe is broken. It has a broken shaft.',
-    severity: 'High',
-    activities: [
-      {
-        id: 0,
-        type: 'viewed',
-        person: { name: 'Thomas Keizer' },
-        date: '7d ago',
-        dateTime: '2023-01-23T10:32',
-      },
-      {
-        id: 1,
-        type: 'viewed',
-        person: { name: 'Bill Knewls' },
-        date: '7d ago',
-        dateTime: '2023-01-23T10:32',
-      },
-      {
-        id: 3,
-        type: 'created',
-        person: { name: 'Matt Knox' },
-        date: '7d ago',
-        dateTime: '2023-01-23T10:32',
-      },
-    ],
-  },
-  {
-    id: 3113,
-    columnId: 'doing',
-    title: 'Tighten belt on conveyor',
-    description: 'The belt is loose. It should be tightened to avoid slipping.',
-    severity: 'Medium',
-    activities: [
-      {
-        id: 0,
-        type: 'started',
-        person: { name: 'Chelsea Hagon' },
-        date: '1d ago',
-        dateTime: '2023-01-29T10:32',
-      },
-      {
-        id: 1,
-        type: 'created',
-        person: { name: 'Chelsea Hagon' },
-        date: '7d ago',
-        dateTime: '2023-01-23T10:32',
-      },
-    ],
-  },
-  {
-    id: 8894,
-    columnId: 'done',
-    title: 'Replace cartoner fuse',
-    description: 'The cartoner will not power on. I think the fuse is blown.',
-    severity: 'Severe',
-    activities: [
-      {
-        id: 0,
-        type: 'finished',
-        person: { name: 'Alex Curren' },
-        date: '1d ago',
-        dateTime: '2023-01-24T09:20',
-      },
-      {
-        id: 1,
-        type: 'viewed',
-        person: { name: 'Alex Curren' },
-        date: '2d ago',
-        dateTime: '2023-01-24T09:12',
-      },
-      {
-        id: 2,
-        type: 'commented',
-        person: {
-          name: 'Chelsea Hagon',
-          img: 'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-        comment: 'Called Alex. He said the fuse is stuck.',
-        date: '3d ago',
-        dateTime: '2023-01-23T15:56',
-      },
-      {
-        id: 3,
-        type: 'edited',
-        person: { name: 'Chelsea Hagon' },
-        date: '6d ago',
-        dateTime: '2023-01-23T11:03',
-      },
-      {
-        id: 4,
-        type: 'created',
-        person: { name: 'Chelsea Hagon' },
-        date: '7d ago',
-        dateTime: '2023-01-23T10:32',
-      },
-    ],
-  },
-];
+interface Props {
+  jobs: Job[];
+}
 
-export default function KanbanBoard() {
+export default function KanbanBoard(props: Props) {
+  const userValue = useUserContext();
+
   const [columns, setColumns] = useState<Column[]>(defaultCols);
-  const [jobs, setJobs] = useState<Job[]>(defaultJobs);
+  const [jobs, setJobs] = useState<Job[]>(props.jobs);
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
   const [activeJob, setActiveJob] = useState<Job | null>(null);
   const [isCreateJobOpen, setIsCreateJobOpen] = useState(false);
@@ -178,6 +53,10 @@ export default function KanbanBoard() {
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
 
   const isClient = isClientCtx();
+
+  useEffect(() => {
+    setJobs(props.jobs);
+  }, [props.jobs]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -187,7 +66,7 @@ export default function KanbanBoard() {
     }),
   );
 
-  function createJob({
+  async function createJob({
     title,
     description,
     severity,
@@ -197,12 +76,32 @@ export default function KanbanBoard() {
     severity: 'Severe' | 'High' | 'Medium' | 'Low';
   }) {
     const newJob: Job = {
-      id: generateId(),
+      id: jobs.length + 1,
       columnId: 'todo',
       title,
       description,
       severity,
+      creatorId: userValue.user.id,
+      companyId: userValue.user.companyId,
     };
+
+    const res = await fetch('/api/job', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newJob),
+    });
+
+    if (!res.ok) {
+      toast({
+        title: 'Error',
+        message: 'Error creating job',
+        type: 'error',
+        duration: 2000,
+      });
+      return;
+    }
 
     setJobs([...jobs, newJob]);
   }
@@ -223,7 +122,7 @@ export default function KanbanBoard() {
 
   function createNewColumn() {
     const columnToAdd: Column = {
-      id: generateId(),
+      id: columns.length + 1,
       title: `Column ${columns.length + 1}`,
     };
 
@@ -325,11 +224,6 @@ export default function KanbanBoard() {
     }
   }
 
-  function generateId() {
-    /* Generate a random number between 0 and 10000 */
-    return Math.floor(Math.random() * 10001);
-  }
-
   return (
     <>
       <div className="flex justify-evenly py-4">
@@ -370,7 +264,7 @@ export default function KanbanBoard() {
                     updateColumn={updateColumn}
                     deleteJob={deleteJob}
                     updateJob={updateJob}
-                    jobs={jobs.filter((job) => job.columnId === col.id)}
+                    jobs={jobs?.filter((job) => job.columnId === col.id)}
                   />
                 ))}
               </SortableContext>

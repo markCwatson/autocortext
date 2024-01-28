@@ -78,7 +78,14 @@ export default async function DashboardLayout({
             <main className="flex w-full flex-1 flex-col overflow-hidden mt-4">
               <AiMessagesProvider>
                 <ClientCtxProvider>
-                  <UserProvider value={{ name: user.name, image: user.image }}>
+                  <UserProvider
+                    value={{
+                      id: user.id,
+                      name: user.name,
+                      image: user.image,
+                      companyId: user.companyId,
+                    }}
+                  >
                     {children}
                   </UserProvider>
                 </ClientCtxProvider>

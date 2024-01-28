@@ -99,7 +99,7 @@ class UsersRepository {
   }
 
   static async selectByCompanyId(
-    companyId: string,
+    companyId: ObjectId,
   ): Promise<UserModel[] | null> {
     const client = await Database.getClient();
     try {

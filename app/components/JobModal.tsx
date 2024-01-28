@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import JobsActivity from './JobsActivity';
 import { Activity, Job } from '@/types';
@@ -55,9 +55,20 @@ export default function JobModal(props: Props) {
     context = context.concat(
       actsCopy
         .sort((a, b) => b.id - a.id)
-        .map((activity) => {
+        .map(async (activity) => {
           if (activity.type === 'commented') {
-            return `${activity.person.name}: ${activity.comment}`;
+            const res = await fetch(`/api/user?id=${activity.personId}`, {
+              method: 'GET',
+            });
+            if (!res.ok) {
+              return toast({
+                title: 'Error',
+                message: `Cannot create context [status code: ${res.status}]`,
+                type: 'error',
+              });
+            }
+            const json = await res.json();
+            return `${json.name}: ${activity.comment}`;
           }
         })
         .join('\n'),
@@ -87,11 +98,7 @@ export default function JobModal(props: Props) {
           id: 0,
           type: 'commented',
           comment: `${json.data}`,
-          person: {
-            name: 'AI',
-            img: <CubeTransparentIcon className="w-4 h-4 flex-shrink-0" />,
-          },
-          date: 'Now',
+          personId: '65b593e92fdaaae09fb1ac1e', // todo: make a constant
           dateTime: `${Date.now()}`,
         };
 

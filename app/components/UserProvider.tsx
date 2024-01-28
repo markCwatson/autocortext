@@ -3,8 +3,10 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 
 export interface User {
-  name: string | null | undefined;
+  id: string;
+  name: string;
   image: string | null | undefined;
+  companyId: string;
 }
 
 interface UserValue {
