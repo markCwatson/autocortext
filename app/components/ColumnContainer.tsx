@@ -50,28 +50,28 @@ export default function ColumnContainer({
     transform: CSS.Transform.toString(transform),
   };
 
-  if (isDragging) {
-    return (
-      <div
-        ref={setNodeRef}
-        style={style}
-        className="bg-my-color1 opacity-40 border-2 border-red-600 w-[350px] min-h-[600px] max-h-[600px] rounded-md flex flex-col"
-      ></div>
-    );
-  }
+  // if (isDragging) {
+  //   return (
+  //     <div
+  //       ref={setNodeRef}
+  //       style={style}
+  //       className="bg-my-color1 opacity-40 border-2 border-red-600 w-[350px] min-h-[600px] max-h-[600px] rounded-md flex flex-col"
+  //     ></div>
+  //   );
+  // }
 
   return (
     <div
       ref={setNodeRef}
-      style={style}
+      // style={style}
       className="bg-my-color9 w-[350px] min-h-[600px] max-h-[600px] rounded-md flex flex-col"
     >
       {/* Column title */}
       <div
-        {...attributes}
-        {...listeners}
+        // {...attributes}
+        // {...listeners}
         onClick={() => {
-          setEditMode(true);
+          // setEditMode(true);
         }}
         className="bg-my-color9 text-md h-[60px] cursor-grab rounded-md rounded-b-none p-3 font-bold border-my-color7 border-2 flex items-center justify-between"
       >
@@ -96,14 +96,14 @@ export default function ColumnContainer({
             />
           )}
         </div>
-        <button
+        {/* <button
           onClick={() => {
             deleteColumn(column.id);
           }}
           className="stroke-gray-500 hover:stroke-white hover:bg-my-color7 rounded px-1 py-2"
         >
           <TrashIcon className="h-6 w-6" />
-        </button>
+        </button> */}
       </div>
 
       {/* Column job container */}

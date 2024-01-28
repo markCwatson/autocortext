@@ -146,15 +146,7 @@ export default function JobCard({ job, deleteJob, updateJob }: Props) {
           </div>
         </div>
       </div>
-      <div className="flex justify-between items-center pt-2.5 px-2.5">
-        <button
-          onClick={() => {
-            setOpenAiAssistant(true);
-          }}
-          className="stroke-white rounded opacity-60 hover:opacity-100 text-sm"
-        >
-          AI Assistant
-        </button>
+      <div className="flex justify-end items-center pt-2.5 px-2.5">
         <button
           onClick={() => {
             deleteJob(job.id);

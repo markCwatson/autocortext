@@ -1,18 +1,20 @@
 'use client';
 
-import { useState, Fragment, useEffect } from 'react';
+import { useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import JobsActivity from './JobsActivity';
-import { Activity, Job } from '@/types';
+import { Activity, Id } from '@/types';
 import {
   Bars2Icon,
+  CheckBadgeIcon,
   ChevronDoubleUpIcon,
   ChevronDownIcon,
   ChevronUpIcon,
-  CubeTransparentIcon,
+  ClockIcon,
 } from '@heroicons/react/20/solid';
 import { toast } from '@/components/Toast';
 import { JobsModel } from '@/repos/JobsRepository';
+import { Hourglass } from 'lucide-react';
 
 type Props = {
   title: string;
@@ -31,6 +33,27 @@ const severityMap = {
   High: <ChevronUpIcon className="h-5 w-5 text-yellow-600" />,
   Medium: <Bars2Icon className="h-5 w-5 text-blue-600" />,
   Low: <ChevronDownIcon className="h-5 w-5 text-green-600" />,
+};
+
+const columnMap = {
+  todo: (
+    <div className="flex gap-2 items-center justify-center">
+      <Hourglass className="h-5 w-5 text-red-600" />
+      Todo
+    </div>
+  ),
+  doing: (
+    <div className="flex gap-2 items-center justify-center">
+      <ClockIcon className="h-5 w-5 text-indigo-600" />
+      In Progress
+    </div>
+  ),
+  done: (
+    <div className="flex gap-2 items-center justify-center">
+      <CheckBadgeIcon className="h-5 w-5 text-green-600" />
+      Done
+    </div>
+  ),
 };
 
 export default function JobModal(props: Props) {
@@ -180,6 +203,17 @@ export default function JobModal(props: Props) {
                         <div className="flex justify-center items-center px-2 py-1 text-md">
                           <p>{'Job Refrence # '}</p>
                           <p className="pl-2">{props.job.id}</p>
+                        </div>
+                        <div className="flex flex-row gap-2 justify-center items-center">
+                          <p>{'Status: '}</p>
+
+                          <p className="">
+                            {
+                              columnMap[
+                                props.job.columnId as keyof typeof columnMap
+                              ]
+                            }
+                          </p>
                         </div>
                         <div className="flex flex-row gap-2 justify-center items-center">
                           <p className="">{severityMap[props.job.severity]}</p>
