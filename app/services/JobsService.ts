@@ -11,6 +11,10 @@ class JobsService {
   ): Promise<JobsModel[] | null> {
     return JobsRepository.getJobsByCompanyId(new ObjectId(companyId));
   }
+
+  static async delete(id: number, companyId: string) {
+    return JobsRepository.delete(id, new ObjectId(companyId));
+  }
 }
 
 export default JobsService;

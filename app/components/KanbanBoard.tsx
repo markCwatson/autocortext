@@ -14,7 +14,7 @@ import {
 } from '@dnd-kit/core';
 import { SortableContext, arrayMove } from '@dnd-kit/sortable';
 import { PlusIcon } from '@heroicons/react/20/solid';
-import { Column, Id, Job } from '@/types';
+import { Activity, Column, Id, Job } from '@/types';
 import JobCard from '@/components/JobCard';
 import ColumnContainer from '@/components/ColumnContainer';
 import { isClientCtx } from '@/components/ClientCtxProvider';
@@ -86,7 +86,7 @@ export default function KanbanBoard(props: Props) {
       companyId: userValue.user.companyId,
     };
 
-    const res = await fetch('/api/job', {
+    let res = await fetch('/api/job', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -104,11 +104,93 @@ export default function KanbanBoard(props: Props) {
       return;
     }
 
-    // todo: try to avoid using any type
-    setJobs([...(jobs as any), newJob as any]);
+    const createdJob = await res.json();
+
+    const createdActivity: Activity = {
+      id: 1,
+      type: 'created',
+      person: {
+        name: userValue.user.name,
+        img: userValue.user.image || '',
+      },
+      dateTime: new Date().toISOString(),
+      jobId: createdJob._id,
+    };
+
+    res = await fetch('/api/activity', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(createdActivity),
+    });
+
+    if (!res.ok) {
+      toast({
+        title: 'Error',
+        message: "Error creating 'created' action",
+        type: 'error',
+        duration: 2000,
+      });
+      return;
+    }
+
+    toast({
+      title: 'Success',
+      message: 'Job created',
+      type: 'success',
+      duration: 2000,
+    });
+
+    setJobs([...jobs, createdJob]);
   }
 
-  function deleteJob(id: Id) {
+  async function deleteJob(id: Id) {
+    let res = await fetch(`/api/job`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id, companyId: userValue.user.companyId }),
+    });
+
+    if (!res.ok) {
+      toast({
+        title: 'Error',
+        message: 'Error deleting job',
+        type: 'error',
+        duration: 2000,
+      });
+      return;
+    }
+
+    const deletedJob = await res.json();
+
+    res = await fetch(`/api/activity`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ jobId: deletedJob?._id }),
+    });
+
+    if (!res.ok) {
+      toast({
+        title: 'Error',
+        message: 'Error deleting job activities',
+        type: 'error',
+        duration: 2000,
+      });
+      return;
+    }
+
+    toast({
+      title: 'Success',
+      message: 'Job deleted',
+      type: 'success',
+      duration: 2000,
+    });
+
     const newJobs = jobs.filter((job) => job.id !== id);
     setJobs(newJobs);
   }

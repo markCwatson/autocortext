@@ -1,9 +1,11 @@
 import { JobsModel } from '@/repos/JobsRepository';
-import ActivitiesService from '@/services/ActivitiesService';
 import JobsService from '@/services/JobsService';
-import { ObjectId } from 'mongodb';
 import { NextRequest, NextResponse } from 'next/server';
-import { a } from 'react-spring';
+
+interface DeleteSchema {
+  id: number;
+  companyId: string;
+}
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
@@ -28,4 +30,10 @@ export async function POST(req: NextRequest) {
 
   const job = await JobsService.create(data);
   return NextResponse.json(job);
+}
+
+export async function DELETE(req: NextRequest) {
+  const { id, companyId } = (await req.json()) as DeleteSchema;
+  const deletedJob = await JobsService.delete(id, companyId);
+  return NextResponse.json(deletedJob);
 }

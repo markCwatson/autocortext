@@ -18,8 +18,6 @@ class JobsRepository {
       creatorId: new ObjectId(model.creatorId),
     };
 
-    // todo: add created activity
-
     try {
       const { insertedId } = await client
         .db()
@@ -94,6 +92,36 @@ class JobsRepository {
         .collection('jobs')
         .aggregate(pipeline)
         .toArray() as Promise<JobsModel[]>;
+    } catch (error: MongoServerError | any) {
+      throw new ApiError({
+        code: 500,
+        message: error.message,
+        explanation: null,
+      });
+    }
+  }
+
+  static async delete(id: number, companyId: ObjectId): Promise<Job> {
+    const client = await Database.getClient();
+
+    try {
+      const job = (await client
+        .db()
+        .collection('jobs')
+        .findOne({ id, companyId })) as Job | null;
+
+      if (!job) {
+        throw new ApiError({
+          code: 404,
+          message: 'Job not found',
+          explanation: 'The job you are trying to delete does not exist.',
+        });
+      }
+
+      await client.db().collection('jobs').deleteOne({ id, companyId });
+
+      // Return the deleted job
+      return job;
     } catch (error: MongoServerError | any) {
       throw new ApiError({
         code: 500,

@@ -46,6 +46,19 @@ class ActivitiesRepository {
       });
     }
   }
+
+  static async delete(jobId: ObjectId): Promise<void> {
+    const client = await Database.getClient();
+    try {
+      await client.db().collection('activities').deleteMany({ jobId });
+    } catch (error: MongoServerError | any) {
+      throw new ApiError({
+        code: 500,
+        message: error.message,
+        explanation: null,
+      });
+    }
+  }
 }
 
 export default ActivitiesRepository;

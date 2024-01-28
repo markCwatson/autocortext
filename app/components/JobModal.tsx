@@ -131,7 +131,6 @@ export default function JobModal(props: Props) {
         props.setActivities(newActivities);
       }
     } catch (err) {
-      console.log('err:', err);
       toast({
         title: 'Error',
         message: 'Error sending query. Please try again later.',
