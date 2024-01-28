@@ -7,6 +7,15 @@ export async function POST(request: Request) {
     throw new Error('Missing name, email, or password');
   }
 
+  if (name === 'AI') {
+    return new NextResponse(JSON.stringify({ message: 'Invalid name' }), {
+      status: 409,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
+
   // create user
   let createdUser = null;
   try {

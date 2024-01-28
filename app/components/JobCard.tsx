@@ -10,11 +10,22 @@ import {
   TrashIcon,
 } from '@heroicons/react/20/solid';
 import JobModal from './JobModal';
+import { JobsModel } from '@/repos/JobsRepository';
 
 interface Props {
-  job: Job;
+  job: JobsModel;
   deleteJob: (id: Id) => void;
-  updateJob: (id: Id, newJob: Job) => void;
+  updateJob: (
+    id: Id,
+    newJob: Job,
+    type?:
+      | 'created'
+      | 'commented'
+      | 'edited'
+      | 'started'
+      | 'finished'
+      | 'paused',
+  ) => void;
 }
 
 const severityMap = {
@@ -59,12 +70,16 @@ export default function JobCard({ job, deleteJob, updateJob }: Props) {
   };
 
   const handleSave = () => {
-    updateJob(job.id, {
-      ...job,
-      title: editedTitle,
-      description: editedDescription,
-      activities: editedActivities,
-    });
+    updateJob(
+      job.id,
+      {
+        ...job,
+        title: editedTitle,
+        description: editedDescription,
+        activities: editedActivities,
+      },
+      'edited',
+    );
     setEditMode(false);
   };
 
@@ -131,15 +146,7 @@ export default function JobCard({ job, deleteJob, updateJob }: Props) {
           </div>
         </div>
       </div>
-      <div className="flex justify-between items-center pt-2.5 px-2.5">
-        <button
-          onClick={() => {
-            setOpenAiAssistant(true);
-          }}
-          className="stroke-white rounded opacity-60 hover:opacity-100 text-sm"
-        >
-          AI Assistant
-        </button>
+      <div className="flex justify-end items-center pt-2.5 px-2.5">
         <button
           onClick={() => {
             deleteJob(job.id);

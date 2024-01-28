@@ -3,15 +3,18 @@
 import { useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import JobsActivity from './JobsActivity';
-import { Activity, Job } from '@/types';
+import { Activity, Id } from '@/types';
 import {
   Bars2Icon,
+  CheckBadgeIcon,
   ChevronDoubleUpIcon,
   ChevronDownIcon,
   ChevronUpIcon,
-  CubeTransparentIcon,
+  ClockIcon,
 } from '@heroicons/react/20/solid';
 import { toast } from '@/components/Toast';
+import { JobsModel } from '@/repos/JobsRepository';
+import { Hourglass } from 'lucide-react';
 
 type Props = {
   title: string;
@@ -21,7 +24,7 @@ type Props = {
   setActivities: (activities: Activity[]) => void;
   onSave: () => void;
   onClose: () => void;
-  job: Job;
+  job: JobsModel;
 };
 
 // todo: remove
@@ -30,6 +33,27 @@ const severityMap = {
   High: <ChevronUpIcon className="h-5 w-5 text-yellow-600" />,
   Medium: <Bars2Icon className="h-5 w-5 text-blue-600" />,
   Low: <ChevronDownIcon className="h-5 w-5 text-green-600" />,
+};
+
+const columnMap = {
+  todo: (
+    <div className="flex gap-2 items-center justify-center">
+      <Hourglass className="h-5 w-5 text-red-600" />
+      Todo
+    </div>
+  ),
+  doing: (
+    <div className="flex gap-2 items-center justify-center">
+      <ClockIcon className="h-5 w-5 text-indigo-600" />
+      In Progress
+    </div>
+  ),
+  done: (
+    <div className="flex gap-2 items-center justify-center">
+      <CheckBadgeIcon className="h-5 w-5 text-green-600" />
+      Done
+    </div>
+  ),
 };
 
 export default function JobModal(props: Props) {
@@ -57,7 +81,7 @@ export default function JobModal(props: Props) {
         .sort((a, b) => b.id - a.id)
         .map((activity) => {
           if (activity.type === 'commented') {
-            return `${activity.person.name}: ${activity.comment}`;
+            return `${activity.person?.name || 'Someone'}: ${activity.comment}`;
           }
         })
         .join('\n'),
@@ -81,34 +105,55 @@ export default function JobModal(props: Props) {
           type: 'error',
         });
       }
+
       const json = await result.json();
       if (json.data) {
         const newActivity: Activity = {
           id: 0,
+          jobId: props.job._id.toString(),
           type: 'commented',
           comment: `${json.data}`,
           person: {
             name: 'AI',
-            img: <CubeTransparentIcon className="w-4 h-4 flex-shrink-0" />,
           },
-          date: 'Now',
-          dateTime: `${Date.now()}`,
+          dateTime: `${new Date().toISOString().split('.')[0]}Z`,
         };
-
-        let newActivities: Activity[] = [];
-        acts.map((activity) => activity.id++);
-        newActivities = [newActivity, ...acts];
-        setActivities(newActivities);
-        props.setActivities(newActivities);
 
         toast({
           title: 'Success',
           message: `Answer received!`,
           duration: 3000,
         });
+
+        const res = await fetch('/api/activity', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newActivity),
+        });
+
+        if (!res.ok) {
+          toast({
+            title: 'Error',
+            message: 'Error creating job',
+            type: 'error',
+            duration: 2000,
+          });
+          return;
+        }
+
+        toast({
+          title: 'Success',
+          message: `Comment added`,
+          duration: 2000,
+        });
+
+        const newActivities = [...acts, newActivity];
+        setActivities(newActivities);
+        props.setActivities(newActivities);
       }
     } catch (err) {
-      console.log('err:', err);
       toast({
         title: 'Error',
         message: 'Error sending query. Please try again later.',
@@ -126,6 +171,7 @@ export default function JobModal(props: Props) {
             className="relative z-10"
             onClose={() => {
               setOpen(false);
+              props.onClose();
             }}
           >
             <Transition.Child
@@ -157,6 +203,17 @@ export default function JobModal(props: Props) {
                         <div className="flex justify-center items-center px-2 py-1 text-md">
                           <p>{'Job Refrence # '}</p>
                           <p className="pl-2">{props.job.id}</p>
+                        </div>
+                        <div className="flex flex-row gap-2 justify-center items-center">
+                          <p>{'Status: '}</p>
+
+                          <p className="">
+                            {
+                              columnMap[
+                                props.job.columnId as keyof typeof columnMap
+                              ]
+                            }
+                          </p>
                         </div>
                         <div className="flex flex-row gap-2 justify-center items-center">
                           <p className="">{severityMap[props.job.severity]}</p>
@@ -212,6 +269,7 @@ export default function JobModal(props: Props) {
                         <Tabs />
                       </div>
                       <JobsActivity
+                        jobId={props.job._id.toString()}
                         activities={activities}
                         handler={(event, acts) => {
                           props.setActivities(acts);

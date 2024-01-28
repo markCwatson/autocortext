@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import {
   DndContext,
@@ -14,11 +14,14 @@ import {
 } from '@dnd-kit/core';
 import { SortableContext, arrayMove } from '@dnd-kit/sortable';
 import { PlusIcon } from '@heroicons/react/20/solid';
-import { Column, Id, Job } from '@/types';
+import { Activity, Column, Id, Job } from '@/types';
 import JobCard from '@/components/JobCard';
 import ColumnContainer from '@/components/ColumnContainer';
 import { isClientCtx } from '@/components/ClientCtxProvider';
 import CreateJob from '@/components/CreateJob';
+import { useUserContext } from '@/components/UserProvider';
+import { toast } from './Toast';
+import { JobsModel } from '@/repos/JobsRepository';
 
 const defaultCols: Column[] = [
   {
@@ -35,149 +38,27 @@ const defaultCols: Column[] = [
   },
 ];
 
-const defaultJobs: Job[] = [
-  {
-    id: 1178,
-    columnId: 'todo',
-    title: 'Reprogram conveyer computer',
-    description:
-      "The conveyer's computer needs to be reprogrammed. Use the latest version.",
-    severity: 'Low',
-    activities: [
-      {
-        id: 0,
-        type: 'commented',
-        person: {
-          name: 'Chelsea Hagon',
-          img: 'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-        comment:
-          'Does anyone know when this will be finished? I need it for a project I am working on.',
-        date: '3d ago',
-        dateTime: '2023-01-23T15:56',
-      },
-      {
-        id: 1,
-        type: 'created',
-        person: { name: 'Chelsea Hagon' },
-        date: '7d ago',
-        dateTime: '2023-01-23T10:32',
-      },
-    ],
-  },
-  {
-    id: 1232,
-    columnId: 'todo',
-    title: 'Fix lathe',
-    description: 'The lathe is broken. It has a broken shaft.',
-    severity: 'High',
-    activities: [
-      {
-        id: 0,
-        type: 'viewed',
-        person: { name: 'Thomas Keizer' },
-        date: '7d ago',
-        dateTime: '2023-01-23T10:32',
-      },
-      {
-        id: 1,
-        type: 'viewed',
-        person: { name: 'Bill Knewls' },
-        date: '7d ago',
-        dateTime: '2023-01-23T10:32',
-      },
-      {
-        id: 3,
-        type: 'created',
-        person: { name: 'Matt Knox' },
-        date: '7d ago',
-        dateTime: '2023-01-23T10:32',
-      },
-    ],
-  },
-  {
-    id: 3113,
-    columnId: 'doing',
-    title: 'Tighten belt on conveyor',
-    description: 'The belt is loose. It should be tightened to avoid slipping.',
-    severity: 'Medium',
-    activities: [
-      {
-        id: 0,
-        type: 'started',
-        person: { name: 'Chelsea Hagon' },
-        date: '1d ago',
-        dateTime: '2023-01-29T10:32',
-      },
-      {
-        id: 1,
-        type: 'created',
-        person: { name: 'Chelsea Hagon' },
-        date: '7d ago',
-        dateTime: '2023-01-23T10:32',
-      },
-    ],
-  },
-  {
-    id: 8894,
-    columnId: 'done',
-    title: 'Replace cartoner fuse',
-    description: 'The cartoner will not power on. I think the fuse is blown.',
-    severity: 'Severe',
-    activities: [
-      {
-        id: 0,
-        type: 'finished',
-        person: { name: 'Alex Curren' },
-        date: '1d ago',
-        dateTime: '2023-01-24T09:20',
-      },
-      {
-        id: 1,
-        type: 'viewed',
-        person: { name: 'Alex Curren' },
-        date: '2d ago',
-        dateTime: '2023-01-24T09:12',
-      },
-      {
-        id: 2,
-        type: 'commented',
-        person: {
-          name: 'Chelsea Hagon',
-          img: 'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-        },
-        comment: 'Called Alex. He said the fuse is stuck.',
-        date: '3d ago',
-        dateTime: '2023-01-23T15:56',
-      },
-      {
-        id: 3,
-        type: 'edited',
-        person: { name: 'Chelsea Hagon' },
-        date: '6d ago',
-        dateTime: '2023-01-23T11:03',
-      },
-      {
-        id: 4,
-        type: 'created',
-        person: { name: 'Chelsea Hagon' },
-        date: '7d ago',
-        dateTime: '2023-01-23T10:32',
-      },
-    ],
-  },
-];
+interface KanbanBoardProps {
+  jobs: JobsModel[];
+  fetchJobs: (companyId: string) => void;
+}
 
-export default function KanbanBoard() {
+export default function KanbanBoard(props: KanbanBoardProps) {
+  const userValue = useUserContext();
+
   const [columns, setColumns] = useState<Column[]>(defaultCols);
-  const [jobs, setJobs] = useState<Job[]>(defaultJobs);
+  const [jobs, setJobs] = useState<JobsModel[]>(props.jobs);
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
-  const [activeJob, setActiveJob] = useState<Job | null>(null);
+  const [activeJob, setActiveJob] = useState<JobsModel | null>(null);
   const [isCreateJobOpen, setIsCreateJobOpen] = useState(false);
 
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
 
   const isClient = isClientCtx();
+
+  useEffect(() => {
+    setJobs(props.jobs);
+  }, [props.jobs]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -187,7 +68,7 @@ export default function KanbanBoard() {
     }),
   );
 
-  function createJob({
+  async function createJob({
     title,
     description,
     severity,
@@ -197,61 +78,222 @@ export default function KanbanBoard() {
     severity: 'Severe' | 'High' | 'Medium' | 'Low';
   }) {
     const newJob: Job = {
-      id: generateId(),
+      id: jobs.length + 1,
       columnId: 'todo',
       title,
       description,
       severity,
+      creatorId: userValue.user.id,
+      companyId: userValue.user.companyId,
     };
 
-    setJobs([...jobs, newJob]);
+    let res = await fetch('/api/job', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newJob),
+    });
+
+    if (!res.ok) {
+      toast({
+        title: 'Error',
+        message: 'Error creating job',
+        type: 'error',
+        duration: 2000,
+      });
+      return;
+    }
+
+    const createdJob = await res.json();
+
+    const createdActivity: Activity = {
+      id: 1,
+      type: 'created',
+      person: {
+        name: userValue.user.name,
+        img: userValue.user.image || '',
+      },
+      dateTime: new Date().toISOString(),
+      jobId: createdJob._id,
+    };
+
+    res = await fetch('/api/activity', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(createdActivity),
+    });
+
+    if (!res.ok) {
+      toast({
+        title: 'Error',
+        message: "Error creating 'created' action",
+        type: 'error',
+        duration: 2000,
+      });
+      return;
+    }
+
+    toast({
+      title: 'Success',
+      message: 'Job created',
+      type: 'success',
+      duration: 2000,
+    });
+
+    props.fetchJobs(userValue.user.companyId);
+    setJobs([...jobs, createdJob]);
   }
 
-  function deleteJob(id: Id) {
+  async function deleteJob(id: Id) {
+    let res = await fetch(`/api/job`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id, companyId: userValue.user.companyId }),
+    });
+
+    if (!res.ok) {
+      toast({
+        title: 'Error',
+        message: 'Error deleting job',
+        type: 'error',
+        duration: 2000,
+      });
+      return;
+    }
+
+    const deletedJob = await res.json();
+
+    res = await fetch(`/api/activity`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ jobId: deletedJob?._id }),
+    });
+
+    if (!res.ok) {
+      toast({
+        title: 'Error',
+        message: 'Error deleting job activities',
+        type: 'error',
+        duration: 2000,
+      });
+      return;
+    }
+
+    toast({
+      title: 'Success',
+      message: 'Job deleted',
+      type: 'success',
+      duration: 2000,
+    });
+
+    props.fetchJobs(userValue.user.companyId);
     const newJobs = jobs.filter((job) => job.id !== id);
     setJobs(newJobs);
   }
 
-  function updateJob(id: Id, newJob: Job) {
+  // toso: probably don't need id here
+  async function updateJob(
+    id: Id,
+    newJob: Job,
+    type?:
+      | 'created'
+      | 'commented'
+      | 'edited'
+      | 'started'
+      | 'paused'
+      | 'finished',
+  ) {
+    let res = await fetch(`/api/job`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ job: newJob }),
+    });
+
+    if (!res.ok) {
+      toast({
+        title: 'Error',
+        message: 'Error updating job',
+        type: 'error',
+        duration: 2000,
+      });
+      return;
+    }
+
+    if (type) {
+      const editedActivity: Activity = {
+        id: newJob.activities?.length ? newJob.activities?.length + 1 : 1,
+        type,
+        person: {
+          name: userValue.user.name,
+          img: userValue.user.image || '',
+        },
+        dateTime: new Date().toISOString(),
+        jobId: (newJob as JobsModel)._id, // todo: consider using only one type throughout
+      };
+
+      res = await fetch('/api/activity', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(editedActivity),
+      });
+
+      toast({
+        title: 'Success',
+        message: 'Job updated',
+        type: 'success',
+        duration: 2000,
+      });
+    }
+
     const newJobs = jobs.map((job) => {
       if (job.id !== id) return job;
       return { ...job, ...newJob };
     });
 
+    props.fetchJobs(userValue.user.companyId);
     setJobs(newJobs);
   }
 
-  function createNewColumn() {
-    const columnToAdd: Column = {
-      id: generateId(),
-      title: `Column ${columns.length + 1}`,
-    };
+  // function createNewColumn() {
+  //   const columnToAdd: Column = {
+  //     id: columns.length + 1,
+  //     title: `Column ${columns.length + 1}`,
+  //   };
 
-    setColumns([...columns, columnToAdd]);
-  }
+  //   setColumns([...columns, columnToAdd]);
+  // }
 
   function deleteColumn(id: Id) {
-    const filteredColumns = columns.filter((col) => col.id !== id);
-    setColumns(filteredColumns);
-
-    const newJobs = jobs.filter((t) => t.columnId !== id);
-    setJobs(newJobs);
+    // const filteredColumns = columns.filter((col) => col.id !== id);
+    // setColumns(filteredColumns);
+    // const newJobs = jobs.filter((job) => job.columnId !== id);
+    // setJobs(newJobs);
   }
 
   function updateColumn(id: Id, title: string) {
-    const newColumns = columns.map((col) => {
-      if (col.id !== id) return col;
-      return { ...col, title };
-    });
-
-    setColumns(newColumns);
+    // const newColumns = columns.map((col) => {
+    //   if (col.id !== id) return col;
+    //   return { ...col, title };
+    // });
+    // setColumns(newColumns);
   }
 
   function onDragStart(event: DragStartEvent) {
-    if (event.active.data.current?.type === 'Column') {
-      setActiveColumn(event.active.data.current.column);
-      return;
-    }
+    // if (event.active.data.current?.type === 'Column') {
+    //   setActiveColumn(event.active.data.current.column);
+    //   return;
+    // }
 
     if (event.active.data.current?.type === 'Job') {
       setActiveJob(event.active.data.current.job);
@@ -260,30 +302,30 @@ export default function KanbanBoard() {
   }
 
   function onDragEnd(event: DragEndEvent) {
-    setActiveColumn(null);
+    // setActiveColumn(null);
     setActiveJob(null);
 
-    const { active, over } = event;
-    if (!over) return;
+    // const { active, over } = event;
+    // if (!over) return;
 
-    const activeId = active.id;
-    const overId = over.id;
+    // const activeId = active.id;
+    // const overId = over.id;
 
-    if (activeId === overId) return;
+    // if (activeId === overId) return;
 
-    const isActiveAColumn = active.data.current?.type === 'Column';
-    if (!isActiveAColumn) return;
+    // const isActiveAColumn = active.data.current?.type === 'Column';
+    // if (!isActiveAColumn) return;
 
-    setColumns((columns) => {
-      const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
+    // setColumns((columns) => {
+    //   const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
 
-      const overColumnIndex = columns.findIndex((col) => col.id === overId);
+    //   const overColumnIndex = columns.findIndex((col) => col.id === overId);
 
-      return arrayMove(columns, activeColumnIndex, overColumnIndex);
-    });
+    //   return arrayMove(columns, activeColumnIndex, overColumnIndex);
+    // });
   }
 
-  function onDragOver(event: DragOverEvent) {
+  async function onDragOver(event: DragOverEvent) {
     const { active, over } = event;
     if (!over) return;
 
@@ -317,22 +359,34 @@ export default function KanbanBoard() {
     // Im dropping a Job over a column
     if (isActiveAJob && isOverAColumn) {
       setJobs((jobs) => {
-        const activeIndex = jobs.findIndex((t) => t.id === activeId);
-
+        const activeIndex = jobs.findIndex((job) => job.id === activeId);
         jobs[activeIndex].columnId = overId;
         return arrayMove(jobs, activeIndex, activeIndex);
       });
-    }
-  }
 
-  function generateId() {
-    /* Generate a random number between 0 and 10000 */
-    return Math.floor(Math.random() * 10001);
+      const updatedJob = jobs.find((job) => job.id === activeId);
+      if (updatedJob) {
+        switch (updatedJob.columnId) {
+          case 'doing':
+            await updateJob(updatedJob.id, updatedJob, 'started');
+            break;
+          case 'done':
+            await updateJob(updatedJob.id, updatedJob, 'finished');
+            break;
+          case 'todo':
+            await updateJob(updatedJob.id, updatedJob, 'paused');
+            break;
+          default:
+            await updateJob(updatedJob.id, updatedJob);
+            break;
+        }
+      }
+    }
   }
 
   return (
     <>
-      <div className="flex justify-evenly py-4">
+      <div className="flex justify-center py-4">
         <button
           className="flex gap-2 items-center border-my-color7 border-2 rounded-md p-2 hover:bg-my-color7 active:bg-black"
           onClick={() => {
@@ -340,9 +394,9 @@ export default function KanbanBoard() {
           }}
         >
           <PlusIcon className="h-6 w-6" />
-          Add a new job
+          Create a new job
         </button>
-        <button
+        {/* <button
           onClick={() => {
             createNewColumn();
           }}
@@ -350,7 +404,7 @@ export default function KanbanBoard() {
         >
           <PlusIcon className="h-6 w-6" />
           Add a column
-        </button>
+        </button> */}
       </div>
       <div className="m-auto flex w-full items-center overflow-x-scroll overflow-y-hidden px-4">
         <DndContext
@@ -361,19 +415,19 @@ export default function KanbanBoard() {
         >
           <div className="m-auto flex gap-4">
             <div className="flex gap-4">
-              <SortableContext items={columnsId}>
-                {columns.map((col) => (
-                  <ColumnContainer
-                    key={col.id}
-                    column={col}
-                    deleteColumn={deleteColumn}
-                    updateColumn={updateColumn}
-                    deleteJob={deleteJob}
-                    updateJob={updateJob}
-                    jobs={jobs.filter((job) => job.columnId === col.id)}
-                  />
-                ))}
-              </SortableContext>
+              {/* <SortableContext items={columnsId}> */}
+              {columns.map((col) => (
+                <ColumnContainer
+                  key={col.id}
+                  column={col}
+                  deleteColumn={deleteColumn}
+                  updateColumn={updateColumn}
+                  deleteJob={deleteJob}
+                  updateJob={updateJob}
+                  jobs={jobs?.filter((job) => job.columnId === col.id)}
+                />
+              ))}
+              {/* </SortableContext> */}
             </div>
           </div>
 

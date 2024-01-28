@@ -25,7 +25,7 @@ class UsersService {
       email,
       password: hashedPassword,
       role: 'user',
-      companyId: companyId ? new ObjectId(companyId) : undefined,
+      companyId: new ObjectId(companyId),
     });
   }
 
@@ -38,7 +38,7 @@ class UsersService {
   }
 
   static async getUsersByCompanyId(companyId: string): Promise<User[] | null> {
-    return UsersRepository.selectByCompanyId(companyId);
+    return UsersRepository.selectByCompanyId(new ObjectId(companyId));
   }
 
   static async delete(id: ObjectId): Promise<Boolean> {

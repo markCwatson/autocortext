@@ -1,8 +1,9 @@
 'use client';
 
-import { Fragment, useContext, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import {
+  CubeTransparentIcon,
   FaceFrownIcon,
   FaceSmileIcon,
   FireIcon,
@@ -63,6 +64,7 @@ const moods = [
 ];
 
 interface Props {
+  jobId: string;
   activities?: Activity[];
   handler: (
     e: React.FormEvent<HTMLFormElement>,
@@ -74,35 +76,43 @@ function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function JobsActivity({ activities, handler }: Props) {
+export default function JobsActivity({ jobId, activities, handler }: Props) {
   const userValue = useUserContext();
 
   const [selected, setSelected] = useState(moods[5]);
   const [comment, setComment] = useState('');
 
-  function onCommentSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onCommentSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const newActivity: Activity = {
-      id: 0,
+      jobId,
+      id: activities?.length ? activities.length + 1 : 1,
       type: 'commented',
       person: {
-        name: userValue.user.name || 'You',
-        img: userValue.user.image || (
-          <UserCircleIcon className="w-6 h-6 flex-shrink-0" />
-        ),
+        name: userValue.user.name,
+        img: userValue.user.image || '',
       },
       comment,
-      date: 'Today at 5:59 PM',
-      dateTime: '2024-01-27T17:59:00',
+      dateTime: `${new Date().toISOString().split('.')[0]}Z`,
     };
 
-    let newActivities: Activity[] = [];
-    if (activities) {
-      activities.map((activity) => activity.id++);
-      newActivities = [newActivity, ...activities];
-    } else {
-      newActivities = [newActivity];
+    const res = await fetch('/api/activity', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newActivity),
+    });
+
+    if (!res.ok) {
+      toast({
+        title: 'Error',
+        message: 'Error creating job',
+        type: 'error',
+        duration: 2000,
+      });
+      return;
     }
 
     toast({
@@ -112,6 +122,9 @@ export default function JobsActivity({ activities, handler }: Props) {
     });
 
     setComment('');
+    const newActivities = activities
+      ? [...activities, newActivity]
+      : [newActivity];
     handler(e, newActivities);
   }
 
@@ -256,7 +269,7 @@ export default function JobsActivity({ activities, handler }: Props) {
 
       <ul role="list" className="space-y-6">
         {activities &&
-          activities.map((activityItem, activityItemIdx) => (
+          activities.toReversed().map((activityItem, activityItemIdx) => (
             <li key={activityItem.id} className="relative flex gap-x-4">
               <div
                 className={classNames(
@@ -270,20 +283,25 @@ export default function JobsActivity({ activities, handler }: Props) {
               </div>
               {activityItem.type === 'commented' ? (
                 <>
-                  {typeof activityItem.person.img === 'string' ? (
+                  {typeof activityItem.person?.img === 'string' &&
+                  activityItem.person?.img !== '' ? (
                     <img
                       src={activityItem.person.img}
                       alt=""
                       className="relative mt-3 h-6 w-6 flex-none rounded-full bg-gray-50"
                     />
+                  ) : activityItem.person?.name === 'AI' ? (
+                    <CubeTransparentIcon className="w-4 h-4 flex-shrink-0" />
                   ) : (
-                    activityItem.person.img
+                    activityItem.person?.img || (
+                      <UserCircleIcon className="w-6 h-6 flex-shrink-0" />
+                    )
                   )}
                   <div className="flex-auto rounded-md p-3 ring-1 ring-inset ring-my-color3">
                     <div className="flex justify-between gap-x-4">
                       <div className="py-0.5 text-xs leading-5 text-my-color10">
                         <span className="font-medium text-gray-900">
-                          {activityItem.person.name}
+                          {activityItem.person?.name}
                         </span>{' '}
                         commented
                       </div>
@@ -291,7 +309,11 @@ export default function JobsActivity({ activities, handler }: Props) {
                         dateTime={activityItem.dateTime}
                         className="flex-none py-0.5 text-xs leading-5 text-my-color10"
                       >
-                        {activityItem.date}
+                        {`${
+                          activityItem.dateTime.split('T')[0]
+                        } at ${activityItem.dateTime
+                          .split('T')[1]
+                          .slice(0, -1)}`}
                       </time>
                     </div>
                     <p className="text-sm leading-6 text-my-color10">
@@ -313,7 +335,7 @@ export default function JobsActivity({ activities, handler }: Props) {
                   </div>
                   <p className="flex-auto py-0.5 text-xs leading-5 text-my-color10">
                     <span className="font-medium text-my-color10">
-                      {activityItem.person.name}
+                      {activityItem.person?.name}
                     </span>{' '}
                     {activityItem.type} the job.
                   </p>
@@ -321,7 +343,9 @@ export default function JobsActivity({ activities, handler }: Props) {
                     dateTime={activityItem.dateTime}
                     className="flex-none py-0.5 text-xs leading-5 text-my-color10"
                   >
-                    {activityItem.date}
+                    {`${
+                      activityItem.dateTime.split('T')[0]
+                    } at ${activityItem.dateTime.split('T')[1].slice(0, -1)}`}
                   </time>
                 </>
               )}

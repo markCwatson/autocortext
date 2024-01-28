@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongodb';
+
 export type Id = string | number;
 
 export type Column = {
@@ -7,28 +9,22 @@ export type Column = {
 
 export type Person = {
   name: string;
-  img?: string | React.JSX.Element;
+  img?: string;
 };
 
 export type Activity = {
   id: number;
-  type:
-    | 'created'
-    | 'commented'
-    | 'edited'
-    | 'viewed'
-    | 'started'
-    | 'finished'
-    | 'deleted'
-    | 'moved';
-  person: Person;
+  type: 'created' | 'commented' | 'edited' | 'started' | 'finished' | 'paused';
+  person?: Person;
   comment?: string;
-  date: string;
   dateTime: string;
+  jobId: string | ObjectId;
 };
 
 export type Job = {
   id: Id;
+  companyId: string;
+  creatorId: string;
   columnId: Id;
   title: string;
   description: string;
