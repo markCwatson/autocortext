@@ -8,7 +8,7 @@ export interface UserModel {
   email: string;
   password: string;
   role: string;
-  companyId?: ObjectId;
+  companyId: ObjectId;
 }
 
 class UsersRepository {

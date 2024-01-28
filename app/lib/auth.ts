@@ -50,7 +50,7 @@ export const authOptions: NextAuthOptions = {
             name: user.name,
             email: user.email,
             role: user.role,
-            companyId: user.companyId?.toString() || undefined,
+            companyId: user.companyId.toString(),
             image: undefined, // todo: store images (add to UserModel too)
           };
         }
