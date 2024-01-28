@@ -7,7 +7,7 @@ export type Column = {
 
 export type Person = {
   name: string;
-  img?: string | React.JSX.Element;
+  img?: string;
 };
 
 export type Activity = {
@@ -21,10 +21,10 @@ export type Activity = {
     | 'finished'
     | 'deleted'
     | 'moved';
-  personId: string;
   person?: Person;
   comment?: string;
   dateTime: string;
+  jobId: string;
 };
 
 export type Job = {

@@ -11,6 +11,10 @@ class JobsService {
   ): Promise<JobsModel[] | null> {
     return JobsRepository.getJobsByCompanyId(new ObjectId(companyId));
   }
+
+  static async addActivityToJobById(jobId: ObjectId, activityId: ObjectId) {
+    return JobsRepository.addActivityToJobById(jobId, activityId);
+  }
 }
 
 export default JobsService;

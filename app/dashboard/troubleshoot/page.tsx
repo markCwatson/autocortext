@@ -1,13 +1,14 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import KanbanBoard from '@/components/KanbanBoard';
 import { useUserContext } from '@/components/UserProvider';
 import { ArrowPathIcon } from '@heroicons/react/20/solid';
+import { JobsModel } from '@/repos/JobsRepository';
 
 export default function TroubleShooting() {
   const userValue = useUserContext();
-  const [jobs, setJobs] = React.useState(null);
+  const [jobs, setJobs] = useState<JobsModel[] | null>(null);
 
   useEffect(() => {
     async function fetchJobs() {

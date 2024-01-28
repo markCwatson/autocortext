@@ -1,18 +1,34 @@
 import { MongoServerError, ObjectId } from 'mongodb';
 import Database from '@/lib/db';
 import ApiError from '@/errors/ApiError';
-import { Person } from '@/types';
+import { Activity } from '@/types';
 
-export interface ActivitiesModel {
+export interface ActivitiesModel extends Activity {
   _id: ObjectId;
-  jobId: ObjectId;
-  personId: ObjectId;
-  person: Person;
-  description: string;
-  severity: 'Severe' | 'High' | 'Medium' | 'Low';
 }
 
 class ActivitiesRepository {
+  static async create(model: ActivitiesModel): Promise<ActivitiesModel | null> {
+    const client = await Database.getClient();
+
+    try {
+      const { insertedId } = await client
+        .db()
+        .collection('activities')
+        .insertOne(model);
+      return client
+        .db()
+        .collection('activities')
+        .findOne({ _id: insertedId }) as Promise<ActivitiesModel>;
+    } catch (error: MongoServerError | any) {
+      throw new ApiError({
+        code: 500,
+        message: error.message,
+        explanation: null,
+      });
+    }
+  }
+
   static async getActivitiesByIds(ids: ObjectId[]): Promise<ActivitiesModel[]> {
     const client = await Database.getClient();
     try {

@@ -12,6 +12,7 @@ import {
   CubeTransparentIcon,
 } from '@heroicons/react/20/solid';
 import { toast } from '@/components/Toast';
+import { JobsModel } from '@/repos/JobsRepository';
 
 type Props = {
   title: string;
@@ -21,7 +22,7 @@ type Props = {
   setActivities: (activities: Activity[]) => void;
   onSave: () => void;
   onClose: () => void;
-  job: Job;
+  job: JobsModel;
 };
 
 // todo: remove
@@ -55,20 +56,9 @@ export default function JobModal(props: Props) {
     context = context.concat(
       actsCopy
         .sort((a, b) => b.id - a.id)
-        .map(async (activity) => {
+        .map((activity) => {
           if (activity.type === 'commented') {
-            const res = await fetch(`/api/user?id=${activity.personId}`, {
-              method: 'GET',
-            });
-            if (!res.ok) {
-              return toast({
-                title: 'Error',
-                message: `Cannot create context [status code: ${res.status}]`,
-                type: 'error',
-              });
-            }
-            const json = await res.json();
-            return `${json.name}: ${activity.comment}`;
+            return `${activity.person?.name || 'Someone'}: ${activity.comment}`;
           }
         })
         .join('\n'),
@@ -92,27 +82,53 @@ export default function JobModal(props: Props) {
           type: 'error',
         });
       }
+
       const json = await result.json();
       if (json.data) {
         const newActivity: Activity = {
           id: 0,
+          jobId: props.job._id.toString(),
           type: 'commented',
           comment: `${json.data}`,
-          personId: '65b593e92fdaaae09fb1ac1e', // todo: make a constant
-          dateTime: `${Date.now()}`,
+          person: {
+            name: 'AI',
+          },
+          dateTime: `${new Date().toISOString().split('.')[0]}Z`,
         };
-
-        let newActivities: Activity[] = [];
-        acts.map((activity) => activity.id++);
-        newActivities = [newActivity, ...acts];
-        setActivities(newActivities);
-        props.setActivities(newActivities);
 
         toast({
           title: 'Success',
           message: `Answer received!`,
           duration: 3000,
         });
+
+        const res = await fetch('/api/activity', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newActivity),
+        });
+
+        if (!res.ok) {
+          toast({
+            title: 'Error',
+            message: 'Error creating job',
+            type: 'error',
+            duration: 2000,
+          });
+          return;
+        }
+
+        toast({
+          title: 'Success',
+          message: `Comment added`,
+          duration: 2000,
+        });
+
+        const newActivities = [...acts, newActivity];
+        setActivities(newActivities);
+        props.setActivities(newActivities);
       }
     } catch (err) {
       console.log('err:', err);
@@ -219,6 +235,7 @@ export default function JobModal(props: Props) {
                         <Tabs />
                       </div>
                       <JobsActivity
+                        jobId={props.job._id.toString()}
                         activities={activities}
                         handler={(event, acts) => {
                           props.setActivities(acts);

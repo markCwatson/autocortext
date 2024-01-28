@@ -21,6 +21,7 @@ import { isClientCtx } from '@/components/ClientCtxProvider';
 import CreateJob from '@/components/CreateJob';
 import { useUserContext } from '@/components/UserProvider';
 import { toast } from './Toast';
+import { JobsModel } from '@/repos/JobsRepository';
 
 const defaultCols: Column[] = [
   {
@@ -38,7 +39,7 @@ const defaultCols: Column[] = [
 ];
 
 interface Props {
-  jobs: Job[];
+  jobs: JobsModel[];
 }
 
 export default function KanbanBoard(props: Props) {

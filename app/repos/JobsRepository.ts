@@ -1,18 +1,12 @@
 import { MongoServerError, ObjectId } from 'mongodb';
 import ApiError from '@/errors/ApiError';
 import Database from '@/lib/db';
-import { ActivitiesModel } from './ActivitiesRepository';
+import { Activity, Job } from '@/types';
 
-export interface JobsModel {
+export interface JobsModel extends Job {
   _id: ObjectId;
-  companyId: ObjectId;
-  creatorId: ObjectId;
-  columnId: string;
-  title: string;
-  description: string;
-  severity: 'Severe' | 'High' | 'Medium' | 'Low';
   activityIds?: ObjectId[];
-  activities?: ActivitiesModel[];
+  activities?: Activity[];
 }
 
 class JobsRepository {
@@ -61,17 +55,6 @@ class JobsRepository {
       },
       { $unwind: { path: '$activities', preserveNullAndEmptyArrays: true } },
       {
-        $lookup: {
-          from: 'users',
-          localField: 'activities.personId',
-          foreignField: '_id',
-          as: 'activities.user',
-        },
-      },
-      {
-        $unwind: { path: '$activities.user', preserveNullAndEmptyArrays: true },
-      },
-      {
         $group: {
           _id: '$_id',
           id: { $first: '$id' },
@@ -98,10 +81,8 @@ class JobsRepository {
             _id: 1,
             dateTime: 1,
             type: 1,
-            person: {
-              name: '$activities.user.name',
-              image: '$activities.user.image',
-            },
+            person: 1,
+            comment: 1,
           },
         },
       },
@@ -113,6 +94,30 @@ class JobsRepository {
         .collection('jobs')
         .aggregate(pipeline)
         .toArray() as Promise<JobsModel[]>;
+    } catch (error: MongoServerError | any) {
+      throw new ApiError({
+        code: 500,
+        message: error.message,
+        explanation: null,
+      });
+    }
+  }
+
+  static async addActivityToJobById(
+    jobId: ObjectId,
+    activityId: ObjectId,
+  ): Promise<JobsModel | null> {
+    const client = await Database.getClient();
+
+    try {
+      await client
+        .db()
+        .collection('jobs')
+        .updateOne({ _id: jobId }, { $addToSet: { activityIds: activityId } });
+      return client
+        .db()
+        .collection('jobs')
+        .findOne({ _id: jobId }) as Promise<JobsModel>;
     } catch (error: MongoServerError | any) {
       throw new ApiError({
         code: 500,
