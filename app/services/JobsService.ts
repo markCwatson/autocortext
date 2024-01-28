@@ -1,8 +1,9 @@
 import JobsRepository, { JobsModel } from '@/repos/JobsRepository';
+import { Job } from '@/types';
 import { ObjectId } from 'mongodb';
 
 class JobsService {
-  static async create(model: JobsModel) {
+  static async create(model: JobsModel): Promise<JobsModel | null> {
     return JobsRepository.create(model);
   }
 
@@ -12,8 +13,12 @@ class JobsService {
     return JobsRepository.getJobsByCompanyId(new ObjectId(companyId));
   }
 
-  static async delete(id: number, companyId: string) {
+  static async delete(id: number, companyId: string): Promise<Job> {
     return JobsRepository.delete(id, new ObjectId(companyId));
+  }
+
+  static async update(job: JobsModel): Promise<JobsModel> {
+    return JobsRepository.update(job);
   }
 }
 

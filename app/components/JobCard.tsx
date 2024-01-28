@@ -15,7 +15,17 @@ import { JobsModel } from '@/repos/JobsRepository';
 interface Props {
   job: JobsModel;
   deleteJob: (id: Id) => void;
-  updateJob: (id: Id, newJob: Job) => void;
+  updateJob: (
+    id: Id,
+    newJob: Job,
+    type?:
+      | 'created'
+      | 'commented'
+      | 'edited'
+      | 'started'
+      | 'finished'
+      | 'paused',
+  ) => void;
 }
 
 const severityMap = {
@@ -60,12 +70,16 @@ export default function JobCard({ job, deleteJob, updateJob }: Props) {
   };
 
   const handleSave = () => {
-    updateJob(job.id, {
-      ...job,
-      title: editedTitle,
-      description: editedDescription,
-      activities: editedActivities,
-    });
+    updateJob(
+      job.id,
+      {
+        ...job,
+        title: editedTitle,
+        description: editedDescription,
+        activities: editedActivities,
+      },
+      'edited',
+    );
     setEditMode(false);
   };
 

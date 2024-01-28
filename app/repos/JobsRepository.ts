@@ -5,7 +5,6 @@ import { Activity, Job } from '@/types';
 
 export interface JobsModel extends Job {
   _id: ObjectId;
-  activityIds?: ObjectId[];
   activities?: Activity[];
 }
 
@@ -122,6 +121,43 @@ class JobsRepository {
 
       // Return the deleted job
       return job;
+    } catch (error: MongoServerError | any) {
+      throw new ApiError({
+        code: 500,
+        message: error.message,
+        explanation: null,
+      });
+    }
+  }
+
+  static async update(job: JobsModel): Promise<JobsModel> {
+    const client = await Database.getClient();
+    const { _id, companyId, creatorId, activities, ...jobToUpdate } = job;
+    const update = {
+      ...jobToUpdate,
+      companyId: new ObjectId(companyId),
+      creatorId: new ObjectId(creatorId),
+    };
+
+    try {
+      const updatedJob = (await client
+        .db()
+        .collection('jobs')
+        .findOneAndUpdate(
+          { _id: new ObjectId(_id) },
+          { $set: { ...update } },
+          { returnDocument: 'after' },
+        )) as JobsModel | null;
+
+      if (!updatedJob) {
+        throw new ApiError({
+          code: 404,
+          message: 'Job not found',
+          explanation: 'The job you are trying to update does not exist.',
+        });
+      }
+
+      return updatedJob;
     } catch (error: MongoServerError | any) {
       throw new ApiError({
         code: 500,

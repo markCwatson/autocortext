@@ -148,6 +148,7 @@ export default function JobModal(props: Props) {
             className="relative z-10"
             onClose={() => {
               setOpen(false);
+              props.onClose();
             }}
           >
             <Transition.Child

@@ -38,11 +38,12 @@ const defaultCols: Column[] = [
   },
 ];
 
-interface Props {
+interface KanbanBoardProps {
   jobs: JobsModel[];
+  fetchJobs: (companyId: string) => void;
 }
 
-export default function KanbanBoard(props: Props) {
+export default function KanbanBoard(props: KanbanBoardProps) {
   const userValue = useUserContext();
 
   const [columns, setColumns] = useState<Column[]>(defaultCols);
@@ -142,6 +143,7 @@ export default function KanbanBoard(props: Props) {
       duration: 2000,
     });
 
+    props.fetchJobs(userValue.user.companyId);
     setJobs([...jobs, createdJob]);
   }
 
@@ -191,16 +193,75 @@ export default function KanbanBoard(props: Props) {
       duration: 2000,
     });
 
+    props.fetchJobs(userValue.user.companyId);
     const newJobs = jobs.filter((job) => job.id !== id);
     setJobs(newJobs);
   }
 
-  function updateJob(id: Id, newJob: Job) {
+  // toso: probably don't need id here
+  async function updateJob(
+    id: Id,
+    newJob: Job,
+    type?:
+      | 'created'
+      | 'commented'
+      | 'edited'
+      | 'started'
+      | 'paused'
+      | 'finished',
+  ) {
+    let res = await fetch(`/api/job`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ job: newJob }),
+    });
+
+    if (!res.ok) {
+      toast({
+        title: 'Error',
+        message: 'Error updating job',
+        type: 'error',
+        duration: 2000,
+      });
+      return;
+    }
+
+    if (type) {
+      const editedActivity: Activity = {
+        id: newJob.activities?.length ? newJob.activities?.length + 1 : 1,
+        type,
+        person: {
+          name: userValue.user.name,
+          img: userValue.user.image || '',
+        },
+        dateTime: new Date().toISOString(),
+        jobId: (newJob as JobsModel)._id, // todo: consider using only one type throughout
+      };
+
+      res = await fetch('/api/activity', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(editedActivity),
+      });
+
+      toast({
+        title: 'Success',
+        message: 'Job updated',
+        type: 'success',
+        duration: 2000,
+      });
+    }
+
     const newJobs = jobs.map((job) => {
       if (job.id !== id) return job;
       return { ...job, ...newJob };
     });
 
+    props.fetchJobs(userValue.user.companyId);
     setJobs(newJobs);
   }
 
@@ -217,7 +278,7 @@ export default function KanbanBoard(props: Props) {
     const filteredColumns = columns.filter((col) => col.id !== id);
     setColumns(filteredColumns);
 
-    const newJobs = jobs.filter((t) => t.columnId !== id);
+    const newJobs = jobs.filter((job) => job.columnId !== id);
     setJobs(newJobs);
   }
 
@@ -266,7 +327,7 @@ export default function KanbanBoard(props: Props) {
     });
   }
 
-  function onDragOver(event: DragOverEvent) {
+  async function onDragOver(event: DragOverEvent) {
     const { active, over } = event;
     if (!over) return;
 
@@ -300,11 +361,28 @@ export default function KanbanBoard(props: Props) {
     // Im dropping a Job over a column
     if (isActiveAJob && isOverAColumn) {
       setJobs((jobs) => {
-        const activeIndex = jobs.findIndex((t) => t.id === activeId);
-
+        const activeIndex = jobs.findIndex((job) => job.id === activeId);
         jobs[activeIndex].columnId = overId;
         return arrayMove(jobs, activeIndex, activeIndex);
       });
+
+      const updatedJob = jobs.find((job) => job.id === activeId);
+      if (updatedJob) {
+        switch (updatedJob.columnId) {
+          case 'doing':
+            await updateJob(updatedJob.id, updatedJob, 'started');
+            break;
+          case 'done':
+            await updateJob(updatedJob.id, updatedJob, 'finished');
+            break;
+          case 'todo':
+            await updateJob(updatedJob.id, updatedJob, 'paused');
+            break;
+          default:
+            await updateJob(updatedJob.id, updatedJob);
+            break;
+        }
+      }
     }
   }
 
@@ -318,7 +396,7 @@ export default function KanbanBoard(props: Props) {
           }}
         >
           <PlusIcon className="h-6 w-6" />
-          Add a new job
+          Create a new job
         </button>
         <button
           onClick={() => {

@@ -14,15 +14,7 @@ export type Person = {
 
 export type Activity = {
   id: number;
-  type:
-    | 'created'
-    | 'commented'
-    | 'edited'
-    | 'viewed'
-    | 'started'
-    | 'finished'
-    | 'deleted'
-    | 'moved';
+  type: 'created' | 'commented' | 'edited' | 'started' | 'finished' | 'paused';
   person?: Person;
   comment?: string;
   dateTime: string;

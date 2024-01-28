@@ -10,25 +10,25 @@ export default function TroubleShooting() {
   const userValue = useUserContext();
   const [jobs, setJobs] = useState<JobsModel[] | null>(null);
 
-  useEffect(() => {
-    async function fetchJobs() {
-      try {
-        const response = await fetch(
-          `/api/job?companyId=${userValue.user.companyId}`,
-        );
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setJobs(data);
-      } catch (error) {
-        console.error('Error fetching jobs:', error);
-      }
+  async function fetchJobs(companyId: string) {
+    if (!companyId) {
+      return;
     }
 
-    if (userValue.user.companyId) {
-      fetchJobs();
+    try {
+      const response = await fetch(`/api/job?companyId=${companyId}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      setJobs(data);
+    } catch (error) {
+      console.error('Error fetching jobs:', error);
     }
+  }
+
+  useEffect(() => {
+    fetchJobs(userValue.user.companyId);
   }, []);
 
   useEffect(() => {}, [jobs]);
@@ -47,7 +47,7 @@ export default function TroubleShooting() {
 
   return (
     <>
-      <KanbanBoard jobs={jobs} />
+      <KanbanBoard jobs={jobs} fetchJobs={fetchJobs} />
     </>
   );
 }

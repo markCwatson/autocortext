@@ -1,10 +1,14 @@
-import { JobsModel } from '@/repos/JobsRepository';
 import JobsService from '@/services/JobsService';
 import { NextRequest, NextResponse } from 'next/server';
+import { JobsModel } from '@/repos/JobsRepository';
 
 interface DeleteSchema {
   id: number;
   companyId: string;
+}
+
+interface UpdateSchema {
+  job: JobsModel;
 }
 
 export async function GET(req: NextRequest) {
@@ -36,4 +40,10 @@ export async function DELETE(req: NextRequest) {
   const { id, companyId } = (await req.json()) as DeleteSchema;
   const deletedJob = await JobsService.delete(id, companyId);
   return NextResponse.json(deletedJob);
+}
+
+export async function PUT(req: NextRequest) {
+  const { job } = (await req.json()) as UpdateSchema;
+  const updatedJob = await JobsService.update(job);
+  return NextResponse.json(updatedJob);
 }
