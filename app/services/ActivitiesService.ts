@@ -2,17 +2,14 @@ import ActivitiesRepository, {
   ActivitiesModel,
 } from '@/repos/ActivitiesRepository';
 import { ObjectId } from 'mongodb';
-import JobsService from './JobsService';
+import { Activity } from '@/types';
 
 class ActivitiesService {
-  static async create(model: ActivitiesModel): Promise<ActivitiesModel | null> {
-    const activity = await ActivitiesRepository.create(model);
-    if (!activity) return null;
-    await JobsService.addActivityToJobById(
-      new ObjectId(model.jobId),
-      activity?._id,
-    );
-    return activity;
+  static async create(model: Activity): Promise<ActivitiesModel | null> {
+    return ActivitiesRepository.create({
+      ...model,
+      jobId: new ObjectId(model.jobId),
+    });
   }
 
   static async getActivitiesByIds(

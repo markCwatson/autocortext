@@ -4,7 +4,8 @@ import ApiError from '@/errors/ApiError';
 import { Activity } from '@/types';
 
 export interface ActivitiesModel extends Activity {
-  _id: ObjectId;
+  _id?: ObjectId;
+  jobId: ObjectId;
 }
 
 class ActivitiesRepository {

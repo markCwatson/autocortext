@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongodb';
+
 export type Id = string | number;
 
 export type Column = {
@@ -24,7 +26,7 @@ export type Activity = {
   person?: Person;
   comment?: string;
   dateTime: string;
-  jobId: string;
+  jobId: string | ObjectId;
 };
 
 export type Job = {

@@ -4,6 +4,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { TrashIcon } from '@heroicons/react/20/solid';
 import JobCard from '@/components/JobCard';
 import { Column, Id, Job } from '@/types';
+import { JobsModel } from '@/repos/JobsRepository';
 
 interface Props {
   column: Column;
@@ -11,7 +12,7 @@ interface Props {
   updateColumn: (id: Id, title: string) => void;
   updateJob: (id: Id, newJob: Job) => void;
   deleteJob: (id: Id) => void;
-  jobs: Job[];
+  jobs: JobsModel[];
 }
 
 export default function ColumnContainer({

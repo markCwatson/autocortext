@@ -46,9 +46,9 @@ export default function KanbanBoard(props: Props) {
   const userValue = useUserContext();
 
   const [columns, setColumns] = useState<Column[]>(defaultCols);
-  const [jobs, setJobs] = useState<Job[]>(props.jobs);
+  const [jobs, setJobs] = useState<JobsModel[]>(props.jobs);
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
-  const [activeJob, setActiveJob] = useState<Job | null>(null);
+  const [activeJob, setActiveJob] = useState<JobsModel | null>(null);
   const [isCreateJobOpen, setIsCreateJobOpen] = useState(false);
 
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
@@ -104,7 +104,8 @@ export default function KanbanBoard(props: Props) {
       return;
     }
 
-    setJobs([...jobs, newJob]);
+    // todo: try to avoid using any type
+    setJobs([...(jobs as any), newJob as any]);
   }
 
   function deleteJob(id: Id) {

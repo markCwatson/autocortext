@@ -10,9 +10,10 @@ import {
   TrashIcon,
 } from '@heroicons/react/20/solid';
 import JobModal from './JobModal';
+import { JobsModel } from '@/repos/JobsRepository';
 
 interface Props {
-  job: Job;
+  job: JobsModel;
   deleteJob: (id: Id) => void;
   updateJob: (id: Id, newJob: Job) => void;
 }

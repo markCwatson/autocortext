@@ -48,8 +48,8 @@ class JobsRepository {
       {
         $lookup: {
           from: 'activities',
-          localField: 'activityIds',
-          foreignField: '_id',
+          localField: '_id',
+          foreignField: 'jobId',
           as: 'activities',
         },
       },
@@ -94,30 +94,6 @@ class JobsRepository {
         .collection('jobs')
         .aggregate(pipeline)
         .toArray() as Promise<JobsModel[]>;
-    } catch (error: MongoServerError | any) {
-      throw new ApiError({
-        code: 500,
-        message: error.message,
-        explanation: null,
-      });
-    }
-  }
-
-  static async addActivityToJobById(
-    jobId: ObjectId,
-    activityId: ObjectId,
-  ): Promise<JobsModel | null> {
-    const client = await Database.getClient();
-
-    try {
-      await client
-        .db()
-        .collection('jobs')
-        .updateOne({ _id: jobId }, { $addToSet: { activityIds: activityId } });
-      return client
-        .db()
-        .collection('jobs')
-        .findOne({ _id: jobId }) as Promise<JobsModel>;
     } catch (error: MongoServerError | any) {
       throw new ApiError({
         code: 500,
