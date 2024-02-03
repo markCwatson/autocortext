@@ -69,6 +69,7 @@ interface Props {
   handler: (
     e: React.FormEvent<HTMLFormElement>,
     activities: Activity[],
+    isTaggedAi: boolean,
   ) => void;
 }
 
@@ -81,6 +82,40 @@ export default function JobsActivity({ jobId, activities, handler }: Props) {
 
   const [selected, setSelected] = useState(moods[5]);
   const [comment, setComment] = useState('');
+
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [suggestionIndex, setSuggestionIndex] = useState(-1);
+
+  // todo: fetch user suggestions from the server based on users in the company
+  const userSuggestions = ['@autocortext'];
+
+  const updateCommentAndCheckForSuggestions = (e: any) => {
+    const value = e.target.value;
+    setComment(value);
+
+    const parts = value.split(' ');
+    const lastPart = parts[parts.length - 1];
+
+    if (lastPart.startsWith('@')) {
+      setShowSuggestions(true);
+      const query = lastPart.substring(1); // Remove '@' to get the query part
+      const filteredSuggestions = userSuggestions.filter((suggestion) =>
+        suggestion.toLowerCase().includes(query.toLowerCase()),
+      );
+      setSuggestions(filteredSuggestions);
+    } else {
+      setShowSuggestions(false);
+    }
+  };
+
+  const selectSuggestion = (suggestion: string) => {
+    const parts = comment.split(' ');
+    parts.pop(); // Remove the last part that includes '@'
+    const newComment = `${parts.join(' ')} ${suggestion} `;
+    setComment(newComment);
+    setShowSuggestions(false);
+  };
 
   async function onCommentSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -121,12 +156,57 @@ export default function JobsActivity({ jobId, activities, handler }: Props) {
       duration: 2000,
     });
 
+    const isTaggedAi = comment.includes('@autocortext');
     setComment('');
     const newActivities = activities
       ? [...activities, newActivity]
       : [newActivity];
-    handler(e, newActivities);
+
+    handler(e, newActivities, isTaggedAi);
   }
+
+  function parseAndHighlightTags(text: string | undefined) {
+    if (!text) return null;
+
+    // Split the text into segments of tagged names and other text
+    const parts = text.split(/(\@\w+)/g);
+
+    return parts.map((part, index) => {
+      // Check if the part is a tagged name
+      if (part.startsWith('@')) {
+        // Render the tagged name with a highlight style
+        return (
+          <span key={index} className="text-blue-600">
+            {part}
+          </span>
+        );
+      } else {
+        // Render normal text
+        return part;
+      }
+    });
+  }
+
+  const renderSuggestions = () => {
+    if (showSuggestions && suggestions.length) {
+      return (
+        <ul className="absolute z-10 mt-1 max-h-60 w-40 overflow-auto rounded-md bg-white py-1 shadow-lg">
+          {suggestions.map((suggestion, index) => (
+            <li
+              key={index}
+              className={`cursor-pointer px-4 py-2 ${
+                index === suggestionIndex ? 'bg-gray-100' : 'bg-white'
+              }`}
+              onMouseDown={() => selectSuggestion(suggestion)}
+            >
+              {suggestion}
+            </li>
+          ))}
+        </ul>
+      );
+    }
+    return null;
+  };
 
   return (
     <>
@@ -157,8 +237,9 @@ export default function JobsActivity({ jobId, activities, handler }: Props) {
               className="block w-full resize-none border-0 bg-transparent py-1.5 text-my-color10 placeholder:text-my-color8 focus:ring-0 sm:text-sm sm:leading-6"
               placeholder="Add your comment..."
               value={comment}
-              onChange={(e) => setComment(e.target.value)}
+              onChange={updateCommentAndCheckForSuggestions}
             />
+            <div className="relative">{renderSuggestions()}</div>
           </div>
 
           <div className="absolute inset-x-0 bottom-0 flex justify-between py-2 pl-3 pr-2">
@@ -290,7 +371,7 @@ export default function JobsActivity({ jobId, activities, handler }: Props) {
                       alt=""
                       className="relative mt-3 h-6 w-6 flex-none rounded-full bg-gray-50"
                     />
-                  ) : activityItem.person?.name === 'AI' ? (
+                  ) : activityItem.person?.name === 'Auto Cortext' ? (
                     <CubeTransparentIcon className="w-4 h-4 flex-shrink-0" />
                   ) : (
                     activityItem.person?.img || (
@@ -317,7 +398,7 @@ export default function JobsActivity({ jobId, activities, handler }: Props) {
                       </time>
                     </div>
                     <p className="text-sm leading-6 text-my-color10">
-                      {activityItem.comment}
+                      {parseAndHighlightTags(activityItem.comment)}
                     </p>
                   </div>
                 </>

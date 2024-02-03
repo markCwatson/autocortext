@@ -114,7 +114,7 @@ export default function JobModal(props: Props) {
           type: 'commented',
           comment: `${json.data}`,
           person: {
-            name: 'AI',
+            name: 'Auto Cortext',
           },
           dateTime: `${new Date().toISOString().split('.')[0]}Z`,
         };
@@ -271,10 +271,10 @@ export default function JobModal(props: Props) {
                       <JobsActivity
                         jobId={props.job._id.toString()}
                         activities={activities}
-                        handler={(event, acts) => {
+                        handler={(event, acts, isTaggedAi) => {
                           props.setActivities(acts);
                           setActivities(acts);
-                          sendQuery(event, acts);
+                          if (isTaggedAi) sendQuery(event, acts);
                         }}
                       />
                     </div>

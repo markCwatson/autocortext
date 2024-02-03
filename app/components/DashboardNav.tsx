@@ -44,6 +44,21 @@ export const dashboardVariants = cva(
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
   {
+    name: 'Docs',
+    href: '/dashboard/docs',
+    icon: DocumentDuplicateIcon,
+  },
+  {
+    name: 'Troubleshoot',
+    href: '/dashboard/troubleshoot',
+    icon: BugAntIcon,
+  },
+  {
+    name: 'Maintenance',
+    href: '/dashboard/maintenance',
+    icon: CubeTransparentIcon,
+  },
+  {
     name: 'Admin',
     href: '/dashboard/admin',
     icon: UserGroupIcon,
@@ -57,21 +72,6 @@ const navigation = [
     name: 'Equipment',
     href: '/dashboard/equipment',
     icon: WrenchScrewdriverIcon,
-  },
-  {
-    name: 'Docs',
-    href: '/dashboard/docs',
-    icon: DocumentDuplicateIcon,
-  },
-  {
-    name: 'Reports',
-    href: '/dashboard/reports',
-    icon: CubeTransparentIcon,
-  },
-  {
-    name: 'Troubleshoot',
-    href: '/dashboard/troubleshoot',
-    icon: BugAntIcon,
   },
   {
     name: 'Help',

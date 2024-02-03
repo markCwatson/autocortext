@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     throw new Error('Missing name, email, or password');
   }
 
-  if (name === 'AI') {
+  if (name === 'Auto Cortext') {
     return new NextResponse(JSON.stringify({ message: 'Invalid name' }), {
       status: 409,
       headers: {

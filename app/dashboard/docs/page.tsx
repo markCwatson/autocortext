@@ -116,7 +116,7 @@ export default function Documentation() {
         ...prevMessages,
         {
           id: `${prevMessages.length + 1}`,
-          content: `AI: Hi ${session.data.user.name}, how can I help you?`,
+          content: `Auto Cortext: Hi ${session.data.user.name}, how can I help you?`,
           role: 'assistant',
         },
       ]);
@@ -158,7 +158,7 @@ export default function Documentation() {
           ...prevMessages,
           {
             id: `${prevMessages.length + 1}`,
-            content: `AI: ${json.data}`,
+            content: `Auto Cortext: ${json.data}`,
             role: 'assistant',
           },
         ]);
@@ -206,7 +206,7 @@ export default function Documentation() {
       ...prevMessages,
       {
         id: `${prevMessages.length + 1}`,
-        content: `AI: Perfect. Ask me about the file ${file}`,
+        content: `Auto Cortext: Perfect. Ask me about the file ${file}`,
         role: 'assistant',
       },
     ]);

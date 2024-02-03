@@ -43,7 +43,7 @@ export function AiMessageList({ messages }: Props) {
                   <p>{message.content.replace('User: ', '')}</p>
                 ) : (
                   <AnimatedText
-                    text={message.content.replace('AI: ', '')}
+                    text={message.content.replace('Auto Cortext: ', '')}
                     show={true}
                     animated={true}
                     animationDelay={500}

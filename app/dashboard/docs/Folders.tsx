@@ -43,7 +43,7 @@ export default function Folders({ callback }: FoldersProps) {
       {/** lubricants */}
       <TreeView>
         <TreeItem
-          label="oils"
+          label="lubricants"
           showIcons={true}
           isOpen={false}
           isFolder={true}
