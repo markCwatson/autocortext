@@ -424,9 +424,9 @@ export default function JobsActivity({ jobId, activities, handler }: Props) {
                     dateTime={activityItem.dateTime}
                     className="flex-none py-0.5 text-xs leading-5 text-my-color10"
                   >
-                    {`${
-                      activityItem.dateTime.split('T')[0]
-                    } at ${activityItem.dateTime.split('T')[1].slice(0, -1)}`}
+                    {`${activityItem.dateTime.split('T')[0]} at ${
+                      activityItem.dateTime.split('T')[1].split('.')[0]
+                    }`}
                   </time>
                 </>
               )}
