@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useEffect, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import JobsActivity from './JobsActivity';
 import { Activity, Id } from '@/types';
@@ -59,6 +59,7 @@ const columnMap = {
 export default function JobModal(props: Props) {
   const [open, setOpen] = useState(true);
   const [activities, setActivities] = useState(props.job.activities);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   function handleSave() {
     setOpen(false);
@@ -162,6 +163,17 @@ export default function JobModal(props: Props) {
     }
   }
 
+  const adjustHeight = () => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto'; // Reset height to recalculate
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  };
+
+  useEffect(() => {
+    adjustHeight();
+  }, [props.description]);
+
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="rounded-md bg-my-color3 text-my-color5 hover:bg-my-color8">
@@ -170,6 +182,8 @@ export default function JobModal(props: Props) {
             as="div"
             className="relative z-10"
             onClose={() => {
+              // reset the description to the original
+              props.setDescription(props.job.description);
               setOpen(false);
               props.onClose();
             }}
@@ -236,7 +250,8 @@ export default function JobModal(props: Props) {
                           <div className="flex flex-col justify-start gap-2 pb-2">
                             <p className="w-full pl-2 text-sm">Description:</p>
                             <textarea
-                              className="w-full p-2 rounded bg-transparent focus:outline-none"
+                              ref={textareaRef}
+                              className="w-full p-2 rounded bg-transparent focus:outline-none resize-none overflow-hidden"
                               value={props.description}
                               onChange={(e) =>
                                 props.setDescription(e.target.value)
@@ -250,6 +265,8 @@ export default function JobModal(props: Props) {
                     <div className="flex mt-5 gap-2 justify-start">
                       <button
                         onClick={() => {
+                          // reset the description to the original
+                          props.setDescription(props.job.description);
                           setOpen(false);
                           props.onClose();
                         }}

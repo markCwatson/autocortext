@@ -140,9 +140,9 @@ export default function JobCard({ job, deleteJob, updateJob }: Props) {
             <p className="my-auto w-full overflow-y-auto overflow-x-hidden whitespace-pre-wrap text-md">
               {job.title}
             </p>
-            <p className="my-auto w-full overflow-y-auto overflow-x-hidden whitespace-pre-wrap text-sm">
+            {/* <p className="my-auto w-full h-[80px] overflow-y-scroll overflow-x-hidden whitespace-pre-wrap text-sm">
               {job.description}
-            </p>
+            </p> */}
           </div>
         </div>
       </div>
