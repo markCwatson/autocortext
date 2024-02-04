@@ -1,5 +1,4 @@
 import { cn } from '@/lib/utils';
-import { Loader2 } from 'lucide-react';
 import React from 'react';
 import AnimatedText from './AnimatedText';
 import { AiMessage } from '@/components/AiMessagesProvider';
@@ -14,7 +13,7 @@ export function AiMessageList({ messages }: Props) {
 
   return (
     <div
-      className="flex flex-col gap-2 px-4 py-8 "
+      className="flex flex-col gap-4 px-4 py-8 "
       style={{ maxHeight: '100%', overflowY: 'auto' }}
     >
       {messages.map((message) => {
@@ -43,7 +42,7 @@ export function AiMessageList({ messages }: Props) {
                   <p>{message.content.replace('User: ', '')}</p>
                 ) : (
                   <AnimatedText
-                    text={message.content.replace('Auto Cortext: ', '')}
+                    text={message.content.replace('Auto Cortext:', '')}
                     show={true}
                     animated={true}
                     animationDelay={500}

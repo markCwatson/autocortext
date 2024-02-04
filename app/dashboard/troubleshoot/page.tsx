@@ -1,12 +1,13 @@
 'use client';
 
-import React, { CSSProperties, useEffect } from 'react';
+import { CSSProperties, use, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import AiHeader from '@/components/AiHeader';
 import { toast } from '@/components/Toast';
 import { AiMessage, useQueryContext } from '@/components/AiMessagesProvider';
 import { AiMessageList } from '@/components/AiMessageList';
 import AiPromptChat from '@/components/AiPromptChat';
+import OptionSelector from '@/components/OptionSelector';
 
 // todo: a lot of duplicate code here with docs page. refactor into a component
 
@@ -24,9 +25,40 @@ const columnStyle: CSSProperties = {
   height: '100%',
 };
 
+const machines = [
+  'None Selected',
+  'Cartoner',
+  'Conveyor',
+  'Lathe',
+  'Milling Option',
+  'Press',
+  'Punch',
+  'Saw',
+  'Shear',
+  'Welder',
+];
+
+const issueTypes = [
+  'None Selected',
+  'Electrical',
+  'Mechanical',
+  'Hydraulic',
+  'Pneumatic',
+  'Software',
+  'Hardware',
+  'Other',
+];
+
 export default function Reports() {
   const session = useSession();
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [isMachineSelected, setIsMachineSelected] = useState(false);
+  const [isIssueTypeSelected, setIsIssueTypeSelected] = useState(false);
+
+  const [displayMachineOptions, setDisplayMachineOptions] = useState(false);
+  const [displayIssueTypeOptions, setDisplayIssueTypeOptions] = useState(false);
+
   const { messages, setMessages } = useQueryContext();
 
   useEffect(() => {
@@ -37,14 +69,66 @@ export default function Reports() {
           id: `${prevMessages.length + 1}`,
           content: `Auto Cortext: Hello ${session.data.user.name}.
 
-        I am ready to assist you in generating reports, troubleshooting equipment failures, planning maitenance work, and more.
+        I am ready to assist you in troubleshooting problems with your equipment. If you explain the issue, I will suggest a solution.
 
-        Please ask me a question in the text box below.`,
+        What machine are you having trouble with?`,
           role: 'assistant',
         },
       ]);
     }
   }, [session]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setDisplayMachineOptions(true);
+    }, 3750);
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (isMachineSelected) setDisplayIssueTypeOptions(true);
+    }, 2000);
+  }, [isMachineSelected]);
+
+  function issueTypeSelectionHandler(selectedIssueType: string) {
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      {
+        id: `${prevMessages.length + 1}`,
+        content: `${
+          session.data!.user.name
+        } selected the ${selectedIssueType} system.`,
+        role: 'user',
+      },
+      {
+        id: `${prevMessages.length + 2}`,
+        content: `Auto Cortext: OK, tell me about the problem you are experiencing with the ${selectedIssueType} system`,
+        role: 'assistant',
+      },
+    ]);
+
+    setDisplayIssueTypeOptions(false);
+    setIsIssueTypeSelected(true);
+  }
+
+  function machineSelectionHandler(selectedMachine: string) {
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      {
+        id: `${prevMessages.length + 1}`,
+        content: `${session.data!.user.name} selected the ${selectedMachine}`,
+        role: 'user',
+      },
+      {
+        id: `${prevMessages.length + 2}`,
+        content: `Auto Cortext: Great! What system in the ${selectedMachine} are you having issues with?`,
+        role: 'assistant',
+      },
+    ]);
+
+    setDisplayMachineOptions(false);
+    setIsMachineSelected(true);
+  }
 
   async function sendQuery(event: any, newMessage: AiMessage) {
     event.preventDefault();
@@ -62,7 +146,7 @@ export default function Reports() {
     });
 
     try {
-      const response = await fetch('/api/openai', {
+      const response = await fetch('/api/read', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -127,9 +211,32 @@ export default function Reports() {
           />
           <div className="flex flex-col justify-center w-full h-full">
             <AiMessageList messages={messages} />
-            <div className="w-full px-4">
-              <AiPromptChat callback={sendQuery} isLoading={isLoading} />
-            </div>
+            {isMachineSelected && isIssueTypeSelected ? (
+              <div className="w-full px-4">
+                <AiPromptChat callback={sendQuery} isLoading={isLoading} />
+              </div>
+            ) : (
+              <>
+                {displayMachineOptions && (
+                  <div className="w-full px-4 fade-in">
+                    <OptionSelector
+                      title={'Select a machine: '}
+                      options={machines}
+                      handler={machineSelectionHandler}
+                    />
+                  </div>
+                )}
+                {displayIssueTypeOptions && (
+                  <div className="w-full px-4 fade-in">
+                    <OptionSelector
+                      title={'Select an issue type: '}
+                      options={issueTypes}
+                      handler={issueTypeSelectionHandler}
+                    />
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </div>
         {/* Right empty div */}
