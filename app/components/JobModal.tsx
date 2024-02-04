@@ -61,6 +61,8 @@ export default function JobModal(props: Props) {
   const [activities, setActivities] = useState(props.job.activities);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  console.log('JobModal', props.job);
+
   function handleSave() {
     setOpen(false);
     props.onSave();
@@ -262,24 +264,30 @@ export default function JobModal(props: Props) {
                         </Dialog.Description>
                       </div>
                     </div>
-                    <div className="flex mt-5 gap-2 justify-start">
-                      <button
-                        onClick={() => {
-                          // reset the description to the original
-                          props.setDescription(props.job.description);
-                          setOpen(false);
-                          props.onClose();
-                        }}
-                        className="rounded bg-black py-1 px-4 text-white"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        onClick={handleSave}
-                        className="rounded bg-indigo-600 py-1 px-4 text-white"
-                      >
-                        Save
-                      </button>
+                    <div className="flex mt-8 justify-between text-center align-center">
+                      <div className="flex gap-2 justify-start">
+                        <button
+                          onClick={() => {
+                            // reset the description to the original
+                            props.setDescription(props.job.description);
+                            setOpen(false);
+                            props.onClose();
+                          }}
+                          className="rounded bg-black py-1 px-4 text-white"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          onClick={handleSave}
+                          className="rounded bg-indigo-600 py-1 px-4 text-white"
+                        >
+                          Save
+                        </button>
+                      </div>
+                      <div className="flex gap-2 justify-center items-center text-my-color10">
+                        <p>{'Machine: '}</p>
+                        <p className="">{props.job.machine}</p>
+                      </div>
                     </div>
                     <div className="mt-6 rounded bg-my-color1 py-2 px-4 text-my-color10">
                       <div className="mb-4 border-b-2 rounded border-my-color3">

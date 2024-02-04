@@ -219,20 +219,24 @@ export default function Reports() {
               <>
                 {displayMachineOptions && (
                   <div className="w-full px-4 fade-in">
-                    <OptionSelector
-                      title={'Select a machine: '}
-                      options={machines}
-                      handler={machineSelectionHandler}
-                    />
+                    <div className="ml-6 w-1/2">
+                      <OptionSelector
+                        title={'Select a machine: '}
+                        options={machines}
+                        handler={machineSelectionHandler}
+                      />
+                    </div>
                   </div>
                 )}
                 {displayIssueTypeOptions && (
                   <div className="w-full px-4 fade-in">
-                    <OptionSelector
-                      title={'Select an issue type: '}
-                      options={issueTypes}
-                      handler={issueTypeSelectionHandler}
-                    />
+                    <div className="ml-6 w-1/2">
+                      <OptionSelector
+                        title={'Select an issue type: '}
+                        options={issueTypes}
+                        handler={issueTypeSelectionHandler}
+                      />
+                    </div>
                   </div>
                 )}
               </>

@@ -60,6 +60,7 @@ class JobsRepository {
           columnId: { $first: '$columnId' },
           title: { $first: '$title' },
           description: { $first: '$description' },
+          machine: { $first: '$machine' },
           severity: { $first: '$severity' },
           activities: { $push: '$activities' },
         },
@@ -73,6 +74,7 @@ class JobsRepository {
           columnId: 1,
           title: 1,
           description: 1,
+          machine: 1,
           severity: 1,
           activities: {
             _id: 1,

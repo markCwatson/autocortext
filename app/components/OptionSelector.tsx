@@ -21,7 +21,7 @@ export default function OptionSelector({
   };
 
   return (
-    <div className="ml-6 w-1/2">
+    <>
       <label
         htmlFor="location"
         className="block text-sm font-medium leading-6 text-my-color1"
@@ -42,6 +42,6 @@ export default function OptionSelector({
           </option>
         ))}
       </select>
-    </div>
+    </>
   );
 }

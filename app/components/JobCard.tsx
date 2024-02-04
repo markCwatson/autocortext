@@ -40,7 +40,6 @@ export default function JobCard({ job, deleteJob, updateJob }: Props) {
   const [editMode, setEditMode] = useState(false);
   const [editedTitle, setEditedTitle] = useState(job.title);
   const [editedDescription, setEditedDescription] = useState(job.description);
-  const [openAiAssistant, setOpenAiAssistant] = useState(false);
   const [editedActivities, setEditedActivities] = useState(job.activities);
 
   const {
@@ -136,7 +135,7 @@ export default function JobCard({ job, deleteJob, updateJob }: Props) {
           <p className="">{severityMap[job.severity]}</p>
         </div>
         <div onClick={toggleEditMode}>
-          <div className="flex flex-col gap-2 border border-gray-400 p-2.5 items-center text-left rounded-xl hover:ring-2 hover:ring-inset hover:ring-my-color5 cursor-grab relative job">
+          <div className="flex flex-col gap-2 border border-gray-400 p-2.5 items-center text-left rounded-md hover:ring-2 hover:ring-inset hover:ring-my-color5 cursor-grab relative job">
             <p className="my-auto w-full overflow-y-auto overflow-x-hidden whitespace-pre-wrap text-md">
               {job.title}
             </p>
@@ -146,7 +145,10 @@ export default function JobCard({ job, deleteJob, updateJob }: Props) {
           </div>
         </div>
       </div>
-      <div className="flex justify-end items-center pt-2.5 px-2.5">
+      <div className="flex justify-between items-center pt-2.5 px-2.5">
+        <div className="text-sm text-my-color1">
+          <p className="">{job.machine}</p>
+        </div>
         <button
           onClick={() => {
             deleteJob(job.id);

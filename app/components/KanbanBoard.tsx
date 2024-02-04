@@ -72,10 +72,12 @@ export default function KanbanBoard(props: KanbanBoardProps) {
     title,
     description,
     severity,
+    machine,
   }: {
     title: string;
     description: string;
     severity: 'Severe' | 'High' | 'Medium' | 'Low';
+    machine: string;
   }) {
     const newJob: Job = {
       id: jobs.length + 1,
@@ -83,6 +85,7 @@ export default function KanbanBoard(props: KanbanBoardProps) {
       title,
       description,
       severity,
+      machine,
       creatorId: userValue.user.id,
       companyId: userValue.user.companyId,
     };
@@ -460,8 +463,8 @@ export default function KanbanBoard(props: KanbanBoardProps) {
       </div>
       <CreateJob
         isOpen={isCreateJobOpen}
-        setJobDetails={({ title, description, severity }) => {
-          createJob({ title, description, severity });
+        setJobDetails={({ title, description, severity, machine }) => {
+          createJob({ title, description, severity, machine });
         }}
         setIsOpen={setIsCreateJobOpen}
       />

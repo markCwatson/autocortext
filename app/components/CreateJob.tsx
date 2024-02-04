@@ -8,9 +8,8 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   LinkIcon,
-  PlusIcon,
-  QuestionMarkCircleIcon,
 } from '@heroicons/react/20/solid';
+import OptionSelector from './OptionSelector';
 
 const team = [
   {
@@ -50,6 +49,19 @@ const team = [
   },
 ];
 
+const machines = [
+  'None Selected',
+  'Cartoner',
+  'Conveyor',
+  'Lathe',
+  'Milling Option',
+  'Press',
+  'Punch',
+  'Saw',
+  'Shear',
+  'Welder',
+];
+
 interface CreateJobProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
@@ -57,10 +69,12 @@ interface CreateJobProps {
     title,
     description,
     severity,
+    machine,
   }: {
     title: string;
     description: string;
     severity: 'Severe' | 'High' | 'Medium' | 'Low';
+    machine: string;
   }) => void;
 }
 
@@ -74,10 +88,16 @@ export default function CreateJob({
   const [severity, setSeverity] = useState<
     'Severe' | 'High' | 'Medium' | 'Low'
   >('Medium');
+  const [machine, setMachine] = useState(machines[0]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setJobDetails({ title: jobTitle, description: jobDescription, severity });
+    setJobDetails({
+      title: jobTitle,
+      description: jobDescription,
+      severity,
+      machine,
+    });
     setIsOpen(false);
   };
 
@@ -96,6 +116,10 @@ export default function CreateJob({
         setSeverity('Low');
         break;
     }
+  };
+
+  const handleMachineChange = (option: string) => {
+    setMachine(option);
   };
 
   return (
@@ -193,38 +217,12 @@ export default function CreateJob({
                               </div>
                             </div>
                             <div>
-                              <h3 className="text-sm font-medium leading-6 text-my-color1">
-                                Team Members
-                              </h3>
-                              <div className="mt-2">
-                                <div className="flex space-x-2">
-                                  {team.map((person) => (
-                                    <a
-                                      key={person.email}
-                                      href={person.href}
-                                      className="relative rounded-full hover:opacity-75"
-                                    >
-                                      <img
-                                        className="inline-block h-8 w-8 rounded-full"
-                                        src={person.imageUrl}
-                                        alt={person.name}
-                                      />
-                                    </a>
-                                  ))}
-                                  <button
-                                    type="button"
-                                    className="relative inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border-2 border-dashed border-gray-200 bg-white text-gray-400 hover:border-gray-300 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                  >
-                                    <span className="absolute -inset-2" />
-                                    <span className="sr-only">
-                                      Add team member
-                                    </span>
-                                    <PlusIcon
-                                      className="h-5 w-5"
-                                      aria-hidden="true"
-                                    />
-                                  </button>
-                                </div>
+                              <div className="mt-2 w-2/3">
+                                <OptionSelector
+                                  title="Select a machine"
+                                  options={machines}
+                                  handler={handleMachineChange}
+                                />
                               </div>
                             </div>
                             <fieldset>
@@ -339,20 +337,6 @@ export default function CreateJob({
                                   aria-hidden="true"
                                 />
                                 <span className="ml-2">Copy link</span>
-                              </a>
-                            </div>
-                            <div className="mt-4 flex text-sm">
-                              <a
-                                href="#"
-                                className="group inline-flex items-center text-my-color1 hover:text-gray-900"
-                              >
-                                <QuestionMarkCircleIcon
-                                  className="h-5 w-5 text-my-color1 group-hover:text-my-color1"
-                                  aria-hidden="true"
-                                />
-                                <span className="ml-2">
-                                  Learn more about sharing
-                                </span>
                               </a>
                             </div>
                           </div>

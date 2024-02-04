@@ -28,6 +28,7 @@ export type Job = {
   columnId: Id;
   title: string;
   description: string;
+  machine: string;
   severity: 'Severe' | 'High' | 'Medium' | 'Low';
   activities?: Activity[];
 };
