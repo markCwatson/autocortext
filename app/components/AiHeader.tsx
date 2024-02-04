@@ -61,7 +61,7 @@ export default function AiHeader({ dropDownList, messages }: AiHeaderProps) {
       }}
     >
       <DropdownButton
-        title={`${dropDownList[0]}`}
+        selection={dropDownList[0]}
         listItems={dropDownList}
         color="ghost"
       />

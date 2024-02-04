@@ -22,6 +22,9 @@ import CreateJob from '@/components/CreateJob';
 import { useUserContext } from '@/components/UserProvider';
 import { toast } from './Toast';
 import { JobsModel } from '@/repos/JobsRepository';
+import DropdownButton from './DropdownButton';
+import { machines } from '@/lib/machines';
+import OptionSelector from './OptionSelector';
 
 const defaultCols: Column[] = [
   {
@@ -51,6 +54,7 @@ export default function KanbanBoard(props: KanbanBoardProps) {
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
   const [activeJob, setActiveJob] = useState<JobsModel | null>(null);
   const [isCreateJobOpen, setIsCreateJobOpen] = useState(false);
+  const [filter, setFilter] = useState(machines[0]);
 
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
 
@@ -201,7 +205,7 @@ export default function KanbanBoard(props: KanbanBoardProps) {
     setJobs(newJobs);
   }
 
-  // toso: probably don't need id here
+  // todo: probably don't need id here
   async function updateJob(
     id: Id,
     newJob: Job,
@@ -389,7 +393,7 @@ export default function KanbanBoard(props: KanbanBoardProps) {
 
   return (
     <>
-      <div className="flex justify-center py-4">
+      <div className="flex justify-evenly items-center py-4">
         <button
           className="flex gap-2 items-center border-my-color7 border-2 rounded-md p-2 hover:bg-my-color7 active:bg-black"
           onClick={() => {
@@ -399,6 +403,15 @@ export default function KanbanBoard(props: KanbanBoardProps) {
           <PlusIcon className="h-6 w-6" />
           Create a new job
         </button>
+        <div className="flex justify-center items-center gap-2 z-10">
+          <p className="text-my-color1">Filter by machine:</p>
+          <DropdownButton
+            selection={filter}
+            listItems={machines}
+            color="ghost"
+            handler={(item) => setFilter(item)}
+          />
+        </div>
         {/* <button
           onClick={() => {
             createNewColumn();
@@ -427,7 +440,11 @@ export default function KanbanBoard(props: KanbanBoardProps) {
                   updateColumn={updateColumn}
                   deleteJob={deleteJob}
                   updateJob={updateJob}
-                  jobs={jobs?.filter((job) => job.columnId === col.id)}
+                  jobs={jobs?.filter(
+                    (job) =>
+                      job.columnId === col.id &&
+                      (filter !== machines[0] ? job.machine === filter : true),
+                  )}
                 />
               ))}
               {/* </SortableContext> */}
@@ -444,8 +461,10 @@ export default function KanbanBoard(props: KanbanBoardProps) {
                     updateColumn={updateColumn}
                     deleteJob={deleteJob}
                     updateJob={updateJob}
-                    jobs={jobs.filter(
-                      (job) => job.columnId === activeColumn.id,
+                    jobs={jobs.filter((job) =>
+                      job.columnId === activeColumn.id && filter !== machines[0]
+                        ? job.machine === filter
+                        : true,
                     )}
                   />
                 )}

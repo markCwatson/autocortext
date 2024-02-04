@@ -10,6 +10,7 @@ import {
   LinkIcon,
 } from '@heroicons/react/20/solid';
 import OptionSelector from './OptionSelector';
+import { machines } from '@/lib/machines';
 
 const team = [
   {
@@ -49,19 +50,6 @@ const team = [
   },
 ];
 
-const machines = [
-  'None Selected',
-  'Cartoner',
-  'Conveyor',
-  'Lathe',
-  'Milling Option',
-  'Press',
-  'Punch',
-  'Saw',
-  'Shear',
-  'Welder',
-];
-
 interface CreateJobProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
@@ -99,6 +87,9 @@ export default function CreateJob({
       machine,
     });
     setIsOpen(false);
+    setJobTitle('');
+    setJobDescription('');
+    setSeverity('Medium');
   };
 
   const handleSeverityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -347,7 +338,12 @@ export default function CreateJob({
                       <button
                         type="button"
                         className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                        onClick={() => setIsOpen(false)}
+                        onClick={() => {
+                          setIsOpen(false);
+                          setJobTitle('');
+                          setJobDescription('');
+                          setSeverity('Medium');
+                        }}
                       >
                         Cancel
                       </button>

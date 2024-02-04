@@ -1,7 +1,10 @@
-import { Fragment } from 'react';
+'use client';
+
+import { Fragment, useState } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { VariantProps, cva } from 'class-variance-authority';
+import { handler } from 'tailwindcss-animate';
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ');
@@ -37,22 +40,31 @@ const dropdownButtonVariants = cva(
 
 interface DropdownButtonProps
   extends VariantProps<typeof dropdownButtonVariants> {
-  title: any;
+  selection: any;
   listItems: string[];
+  handler?: (item: string) => void;
 }
 
 export default function DropdownButton({
-  title,
+  selection,
   listItems,
   size,
   color,
   chevron,
+  handler,
 }: DropdownButtonProps) {
+  const [selected, setSelected] = useState(selection);
+
+  const handleSelection = (item: string) => {
+    setSelected(item);
+    handler?.(item);
+  };
+
   return (
     <Menu as="div" className={'relative inline-block text-left'}>
       <div>
         <Menu.Button className={dropdownButtonVariants({ size, color })}>
-          {title}
+          {selected}
           {chevron === 'hidden' ? null : (
             <ChevronDownIcon
               className="-mr-1 h-5 w-5 text-my-color1"
@@ -85,6 +97,7 @@ export default function DropdownButton({
                             : 'text-gray-700',
                           'block px-4 py-2 text-sm',
                         )}
+                        onClick={() => handleSelection(item)}
                       >
                         {item}
                       </a>

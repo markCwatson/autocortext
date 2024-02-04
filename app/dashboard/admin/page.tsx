@@ -138,7 +138,7 @@ export default function Dashboard() {
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-1 pt-24">
             <div className="flex items-center">
               <DropdownButton
-                title="Sort"
+                selection="Sort"
                 listItems={['All users', 'Admin', 'Guests']}
                 color="ghost"
               />

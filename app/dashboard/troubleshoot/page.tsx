@@ -8,6 +8,7 @@ import { AiMessage, useQueryContext } from '@/components/AiMessagesProvider';
 import { AiMessageList } from '@/components/AiMessageList';
 import AiPromptChat from '@/components/AiPromptChat';
 import OptionSelector from '@/components/OptionSelector';
+import { machines } from '@/lib/machines';
 
 // todo: a lot of duplicate code here with docs page. refactor into a component
 
@@ -24,19 +25,6 @@ const mainContainerStyle: CSSProperties = {
 const columnStyle: CSSProperties = {
   height: '100%',
 };
-
-const machines = [
-  'None Selected',
-  'Cartoner',
-  'Conveyor',
-  'Lathe',
-  'Milling Option',
-  'Press',
-  'Punch',
-  'Saw',
-  'Shear',
-  'Welder',
-];
 
 const issueTypes = [
   'None Selected',
