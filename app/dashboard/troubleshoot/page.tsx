@@ -1,6 +1,6 @@
 'use client';
 
-import { CSSProperties, use, useEffect, useState } from 'react';
+import React, { CSSProperties, use, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import AiHeader from '@/components/AiHeader';
 import { toast } from '@/components/Toast';
@@ -9,6 +9,7 @@ import { AiMessageList } from '@/components/AiMessageList';
 import AiPromptChat from '@/components/AiPromptChat';
 import OptionSelector from '@/components/OptionSelector';
 import { machines } from '@/lib/machines';
+import { History } from '@/types';
 
 // todo: a lot of duplicate code here with docs page. refactor into a component
 
@@ -40,9 +41,21 @@ const issueTypes = [
 export default function Reports() {
   const session = useSession();
   const [isLoading, setIsLoading] = useState(false);
+  const [history, setHistory] = useState<History[]>([]);
 
   const [isMachineSelected, setIsMachineSelected] = useState(false);
   const [isIssueTypeSelected, setIsIssueTypeSelected] = useState(false);
+
+  const [machine, setMachine] = useState('None Selected');
+  const [companyId, setCompanyId] = useState('');
+  const [animate, setAnimate] = useState(false);
+  const [savedPrompt, setSavedPrompt] = useState<{
+    isMachineSelected: boolean;
+    isIssueTypeSelected: boolean;
+    displyMachine: boolean;
+    displayIssueType: boolean;
+    messages: AiMessage[];
+  } | null>(null);
 
   const [displayMachineOptions, setDisplayMachineOptions] = useState(false);
   const [displayIssueTypeOptions, setDisplayIssueTypeOptions] = useState(false);
@@ -63,20 +76,38 @@ export default function Reports() {
           role: 'assistant',
         },
       ]);
+
+      setCompanyId(session.data.user.companyId);
+      fetchHistory();
     }
   }, [session]);
 
   useEffect(() => {
     setTimeout(() => {
       setDisplayMachineOptions(true);
-    }, 3750);
+    }, 0);
   }, []);
+
+  useEffect(() => {}, [history]);
 
   useEffect(() => {
     setTimeout(() => {
       if (isMachineSelected) setDisplayIssueTypeOptions(true);
-    }, 2000);
+    }, 0);
   }, [isMachineSelected]);
+
+  async function fetchHistory() {
+    const companyId = session.data?.user.companyId;
+    if (!companyId) return;
+
+    const response = await fetch(`/api/history?companyId=${companyId}`);
+    if (response.ok) {
+      const data = await response.json();
+      setHistory(data);
+    }
+
+    return;
+  }
 
   function issueTypeSelectionHandler(selectedIssueType: string) {
     setMessages((prevMessages) => [
@@ -100,6 +131,8 @@ export default function Reports() {
   }
 
   function machineSelectionHandler(selectedMachine: string) {
+    setMachine(selectedMachine);
+
     setMessages((prevMessages) => [
       ...prevMessages,
       {
@@ -179,26 +212,98 @@ export default function Reports() {
     }
   }
 
+  function hanldeSelectHistory(
+    e: React.MouseEvent<HTMLButtonElement>,
+    index: number,
+  ) {
+    e.preventDefault();
+    const selectedHistoryMessages = history[index];
+
+    if (selectedHistoryMessages) {
+      setMessages(selectedHistoryMessages.messages);
+
+      if (!savedPrompt) {
+        setSavedPrompt({
+          isMachineSelected: isMachineSelected,
+          isIssueTypeSelected: isIssueTypeSelected,
+          displyMachine: displayMachineOptions,
+          displayIssueType: displayIssueTypeOptions,
+          messages: messages,
+        });
+
+        setDisplayIssueTypeOptions(false);
+        setDisplayMachineOptions(false);
+        setIsIssueTypeSelected(false);
+        setIsMachineSelected(false);
+      }
+    }
+  }
+
+  function restorePrompt() {
+    if (!savedPrompt) return;
+
+    setMessages(savedPrompt.messages);
+    setDisplayMachineOptions(savedPrompt.displyMachine);
+    setDisplayIssueTypeOptions(savedPrompt.displayIssueType);
+    setIsIssueTypeSelected(savedPrompt.isIssueTypeSelected);
+    setIsMachineSelected(savedPrompt.isMachineSelected);
+
+    setSavedPrompt(null);
+  }
+
   return (
     <main className="mx-auto px-4 sm:px-6 lg:px-8" style={mainContainerStyle}>
       <div
-        className="grid pt-2 grid-cols-1 lg:grid-cols-7 gap-x-4 gap-y-10"
+        className="grid pt-2 grid-cols-1 lg:grid-cols-11 gap-x-4 gap-y-10"
         style={columnStyle}
       >
         {/* Left empty div */}
         <div className="bg-transparent lg:visible lg:col-span-2" />
+        {/** History */}
+        <div className="lg:col-span-3 bg-my-color7 border rounded overflow-scroll">
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              textAlign: 'center',
+              padding: 13,
+              borderBottom: '1px solid #e5e7eb',
+            }}
+          >
+            <h2 className="text-lg font-semibold text-left">History</h2>
+            <button onClick={restorePrompt} className="border-b-2">
+              <div className="text-left">
+                <p className="text-left">Clear Selection</p>
+              </div>
+            </button>
+          </div>
+          <div className="flex flex-col gap-2 w-full h-full overflow-scroll p-4">
+            {history.map((item, index) => {
+              return (
+                <button
+                  onClick={(e) => hanldeSelectHistory(e, index)}
+                  className="text-left"
+                >
+                  <div key={index} className="text-left">
+                    <p className="text-left">{item.title}</p>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Chat Window */}
-        <div className="lg:col-span-3 pb-8 bg-my-color7 border rounded overflow-scroll">
+        <div className="lg:col-span-4 pb-8 bg-my-color7 border rounded overflow-scroll">
           <AiHeader
-            dropDownList={[
-              'auto-cortext-rev-0.0.1', // 'gpt-3.5-turbo-instruct',
-              'auto-cortext-rev-0.1.2', // 'gpt-3.5-turbo-1106',
-              'auto-cortext-rev-1.0.0', // gpt-4-1106-preview',
-            ]}
             messages={messages}
+            machine={machine}
+            companyId={companyId}
+            onSave={fetchHistory}
           />
           <div className="flex flex-col justify-center w-full h-full">
-            <AiMessageList messages={messages} />
+            <AiMessageList messages={messages} animate={animate} />
             {isMachineSelected && isIssueTypeSelected ? (
               <div className="w-full px-4">
                 <AiPromptChat callback={sendQuery} isLoading={isLoading} />

@@ -5,20 +5,28 @@ import { PDFDownloadLink } from '@react-pdf/renderer';
 import {
   ArrowDownOnSquareIcon,
   ClipboardDocumentCheckIcon,
+  InboxArrowDownIcon,
 } from '@heroicons/react/20/solid';
-import DropdownButton from '@/components/DropdownButton';
 import MyDocument from '@/components/MyDocument';
 import { toast } from '@/components/Toast';
 import { AiMessage } from './AiMessagesProvider';
 import { isClientCtx } from './ClientCtxProvider';
+import { Button } from './Button';
 
 interface AiHeaderProps {
-  dropDownList: string[];
   messages: AiMessage[];
+  machine?: string;
+  companyId?: string;
+  onSave?: () => void;
 }
 
-export default function AiHeader({ dropDownList, messages }: AiHeaderProps) {
-  const [isCopied, setIsCopied] = useState<boolean>(false);
+export default function AiHeader({
+  messages,
+  machine,
+  companyId,
+  onSave,
+}: AiHeaderProps) {
+  const [isCopied, setIsCopied] = useState(false);
   const [report, setReport] = useState('');
 
   const isClient = isClientCtx();
@@ -49,6 +57,31 @@ export default function AiHeader({ dropDownList, messages }: AiHeaderProps) {
     );
   };
 
+  const handleSave = async () => {
+    const res = await fetch('/api/history', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ machine, messages, companyId }),
+    });
+
+    if (res.ok) {
+      onSave?.();
+      return toast({
+        title: 'Success',
+        message: 'Report saved.',
+        type: 'success',
+      });
+    }
+
+    return toast({
+      title: 'Failed to save report.',
+      message: 'Please try again.',
+      type: 'error',
+    });
+  };
+
   return (
     <div
       style={{
@@ -60,11 +93,12 @@ export default function AiHeader({ dropDownList, messages }: AiHeaderProps) {
         borderBottom: '1px solid #e5e7eb',
       }}
     >
-      <DropdownButton
-        selection={dropDownList[0]}
-        listItems={dropDownList}
-        color="ghost"
-      />
+      {onSave && (
+        <Button variant={'outline'} size={'sm'} onClick={handleSave}>
+          <InboxArrowDownIcon className="h-6 w-6 mr-2" aria-hidden="true" />
+          Save
+        </Button>
+      )}
       <div className="flex items-center">
         <div className="flex items-center gap-2 md:gap-4">
           <button

@@ -254,14 +254,7 @@ export default function Documentation() {
           </div>
           {/** AI prompt */}
           <div className="pb-8 lg:col-span-2 bg-my-color7 border rounded overflow-scroll">
-            <AiHeader
-              dropDownList={[
-                'auto-cortext-rev-0.0.1', // 'gpt-3.5-turbo-instruct',
-                'auto-cortext-rev-0.1.2', // 'gpt-3.5-turbo-1106',
-                'auto-cortext-rev-1.0.0', // gpt-4-1106-preview',
-              ]}
-              messages={messages}
-            />
+            <AiHeader messages={messages} />
             <div className="flex flex-col justify-center w-full h-full">
               <AiMessageList messages={messages} />
               <div className="w-full px-4">

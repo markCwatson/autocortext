@@ -1,3 +1,4 @@
+import { AiMessage } from '@/components/AiMessagesProvider';
 import { ObjectId } from 'mongodb';
 
 export type Id = string | number;
@@ -31,4 +32,10 @@ export type Job = {
   machine: string;
   severity: 'Severe' | 'High' | 'Medium' | 'Low';
   activities?: Activity[];
+};
+
+export type History = {
+  title: string;
+  messages: AiMessage[];
+  companyId: string;
 };

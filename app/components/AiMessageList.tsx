@@ -6,9 +6,10 @@ import { CubeTransparentIcon, UserCircleIcon } from '@heroicons/react/20/solid';
 
 interface Props {
   messages: AiMessage[];
+  animate?: boolean;
 }
 
-export function AiMessageList({ messages }: Props) {
+export function AiMessageList({ messages, animate = true }: Props) {
   if (!messages) return <></>;
 
   return (
@@ -44,7 +45,7 @@ export function AiMessageList({ messages }: Props) {
                   <AnimatedText
                     text={message.content.replace('Auto Cortext:', '')}
                     show={true}
-                    animated={true}
+                    animated={animate}
                     animationDelay={500}
                   />
                 )}
