@@ -63,26 +63,26 @@ const navigation = [
     href: '/dashboard/admin',
     icon: UserGroupIcon,
   },
-  {
-    name: 'Data',
-    href: '/dashboard/data',
-    icon: PresentationChartBarIcon,
-  },
-  {
-    name: 'Equipment',
-    href: '/dashboard/equipment',
-    icon: WrenchScrewdriverIcon,
-  },
-  {
-    name: 'Help',
-    href: '/dashboard/help',
-    icon: QuestionMarkCircleIcon,
-  },
-  {
-    name: 'Privacy',
-    href: '/dashboard/privacy',
-    icon: NewspaperIcon,
-  },
+  // {
+  //   name: 'Data',
+  //   href: '/dashboard/data',
+  //   icon: PresentationChartBarIcon,
+  // },
+  // {
+  //   name: 'Equipment',
+  //   href: '/dashboard/equipment',
+  //   icon: WrenchScrewdriverIcon,
+  // },
+  // {
+  //   name: 'Help',
+  //   href: '/dashboard/help',
+  //   icon: QuestionMarkCircleIcon,
+  // },
+  // {
+  //   name: 'Privacy',
+  //   href: '/dashboard/privacy',
+  //   icon: NewspaperIcon,
+  // },
 ];
 
 function classNames(...classes: any) {
