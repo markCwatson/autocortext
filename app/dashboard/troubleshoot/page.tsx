@@ -49,6 +49,9 @@ export default function Reports() {
   const [machine, setMachine] = useState('None Selected');
   const [companyId, setCompanyId] = useState('');
   const [animate, setAnimate] = useState(false);
+  const [selectedFileIndex, setSelectedFileIndex] = useState<number | null>(
+    null,
+  );
   const [savedPrompt, setSavedPrompt] = useState<{
     isMachineSelected: boolean;
     isIssueTypeSelected: boolean;
@@ -218,6 +221,7 @@ export default function Reports() {
   ) {
     e.preventDefault();
     const selectedHistoryMessages = history[index];
+    setSelectedFileIndex(index);
 
     if (selectedHistoryMessages) {
       setMessages(selectedHistoryMessages.messages);
@@ -242,6 +246,7 @@ export default function Reports() {
   function restorePrompt() {
     if (!savedPrompt) return;
 
+    setSelectedFileIndex(null);
     setMessages(savedPrompt.messages);
     setDisplayMachineOptions(savedPrompt.displyMachine);
     setDisplayIssueTypeOptions(savedPrompt.displayIssueType);
@@ -278,12 +283,14 @@ export default function Reports() {
               </div>
             </button>
           </div>
-          <div className="flex flex-col gap-2 w-full h-full overflow-scroll p-4">
+          <div className="flex flex-col gap-2 w-full h-full overflow-scroll pt-4">
             {history.map((item, index) => {
               return (
                 <button
                   onClick={(e) => hanldeSelectHistory(e, index)}
-                  className="text-left"
+                  className={`text-left hover:bg-my-color5 hover:rounded pl-4 ${
+                    selectedFileIndex === index ? 'bg-my-color5' : ''
+                  }`}
                 >
                   <div key={index} className="text-left">
                     <p className="text-left">{item.title}</p>
