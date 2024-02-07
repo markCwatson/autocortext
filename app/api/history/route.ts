@@ -21,3 +21,13 @@ export async function GET(req: NextRequest) {
   const history = await HistoryService.getHistoryByCompanyId(companyId);
   return NextResponse.json(history);
 }
+
+export async function DELETE(req: NextRequest) {
+  const { _id, companyId } = await req.json();
+  if (!_id || !companyId) {
+    return NextResponse.json({ success: false });
+  }
+
+  const history = await HistoryService.delete(_id, companyId);
+  return NextResponse.json(history);
+}

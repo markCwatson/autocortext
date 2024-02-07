@@ -1,12 +1,23 @@
-import HistoryRepository from '@/repos/HistoryRepository';
+import HistoryRepository, { HistoryModel } from '@/repos/HistoryRepository';
+import { ObjectId } from 'mongodb';
 
 class HistoryService {
-  static async create(machine: string, messages: string[], companyId: string) {
-    await HistoryRepository.create(machine, messages, companyId);
+  static async create(
+    machine: string,
+    messages: string[],
+    companyId: string,
+  ): Promise<HistoryModel | null> {
+    return HistoryRepository.create(machine, messages, new ObjectId(companyId));
   }
 
-  static async getHistoryByCompanyId(companyId: string) {
-    return await HistoryRepository.getHistoryByCompanyId(companyId);
+  static async getHistoryByCompanyId(
+    companyId: string,
+  ): Promise<HistoryModel[] | null> {
+    return HistoryRepository.getHistoryByCompanyId(new ObjectId(companyId));
+  }
+
+  static async delete(_id: string, companyId: string): Promise<HistoryModel> {
+    return HistoryRepository.delete(new ObjectId(_id), new ObjectId(companyId));
   }
 }
 

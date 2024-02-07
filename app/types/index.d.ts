@@ -37,5 +37,5 @@ export type Job = {
 export type History = {
   title: string;
   messages: AiMessage[];
-  companyId: string;
+  companyId: string | ObjectId;
 };

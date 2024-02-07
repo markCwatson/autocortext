@@ -10,7 +10,8 @@ import AiPromptChat from '@/components/AiPromptChat';
 import OptionSelector from '@/components/OptionSelector';
 import { machines } from '@/lib/machines';
 import { History } from '@/types';
-import { ArrowPathIcon } from '@heroicons/react/20/solid';
+import { ArrowPathIcon, TrashIcon } from '@heroicons/react/20/solid';
+import { HistoryModel } from '@/repos/HistoryRepository';
 
 // todo: a lot of duplicate code here with docs page. refactor into a component
 
@@ -37,12 +38,13 @@ const issueTypes = [
   'Software',
   'Hardware',
   'Other',
+  'Unknown',
 ];
 
 export default function Reports() {
   const session = useSession();
   const [isLoading, setIsLoading] = useState(false);
-  const [history, setHistory] = useState<History[] | null>(null);
+  const [history, setHistory] = useState<HistoryModel[] | null>(null);
 
   const [isMachineSelected, setIsMachineSelected] = useState(false);
   const [isIssueTypeSelected, setIsIssueTypeSelected] = useState(false);
@@ -108,6 +110,43 @@ export default function Reports() {
     if (response.ok) {
       const data = await response.json();
       setHistory(data);
+    }
+
+    return;
+  }
+
+  async function deleteHistoryItem(_id: string) {
+    const companyId = session.data?.user.companyId;
+    if (!companyId) return;
+
+    const response = await fetch(`/api/history`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ _id, companyId }),
+    });
+
+    if (response.ok) {
+      const deletedHistoryItem = await response.json();
+      setHistory((prevHistory) => {
+        if (!prevHistory) return prevHistory;
+        return prevHistory.filter(
+          (item) => item._id !== deletedHistoryItem._id,
+        );
+      });
+
+      toast({
+        title: 'Success',
+        message: 'History item deleted',
+        type: 'success',
+      });
+    } else {
+      toast({
+        title: 'Error',
+        message: 'Error deleting history item',
+        type: 'error',
+      });
     }
 
     return;
@@ -279,7 +318,9 @@ export default function Reports() {
               borderBottom: '1px solid #e5e7eb',
             }}
           >
-            <h2 className="text-lg font-semibold text-left">History</h2>
+            <h2 className="text-lg font-semibold text-left">{`History ${
+              history ? `(${history.length})` : ''
+            }`}</h2>
             <button onClick={restorePrompt} className="border-b-2">
               <div className="text-left">
                 <p className="text-left">Clear Selection</p>
@@ -290,16 +331,28 @@ export default function Reports() {
             {history ? (
               history.map((item, index) => {
                 return (
-                  <button
-                    onClick={(e) => hanldeSelectHistory(e, index)}
-                    className={`text-left hover:bg-my-color5 hover:rounded pl-4 ${
+                  <div
+                    className={`flex justify-between items-center px-4 hover:bg-my-color5 hover:rounded pl-4 ${
                       selectedFileIndex === index ? 'bg-my-color5' : ''
                     }`}
                   >
-                    <div key={index} className="text-left">
-                      <p className="text-left">{item.title}</p>
-                    </div>
-                  </button>
+                    <button
+                      onClick={(e) => hanldeSelectHistory(e, index)}
+                      className="text-left"
+                    >
+                      <div key={index} className="text-left">
+                        <p className="text-left">{item.title}</p>
+                      </div>
+                    </button>
+                    <TrashIcon
+                      className={`w-4 h-4 cursor-pointer hover:opacity-100 ${
+                        selectedFileIndex === index
+                          ? 'opacity-100'
+                          : 'opacity-5'
+                      }`}
+                      onClick={() => deleteHistoryItem(item._id.toString())}
+                    />
+                  </div>
                 );
               })
             ) : (
