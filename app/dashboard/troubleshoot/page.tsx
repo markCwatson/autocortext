@@ -10,6 +10,7 @@ import AiPromptChat from '@/components/AiPromptChat';
 import OptionSelector from '@/components/OptionSelector';
 import { machines } from '@/lib/machines';
 import { History } from '@/types';
+import { ArrowPathIcon } from '@heroicons/react/20/solid';
 
 // todo: a lot of duplicate code here with docs page. refactor into a component
 
@@ -41,7 +42,7 @@ const issueTypes = [
 export default function Reports() {
   const session = useSession();
   const [isLoading, setIsLoading] = useState(false);
-  const [history, setHistory] = useState<History[]>([]);
+  const [history, setHistory] = useState<History[] | null>(null);
 
   const [isMachineSelected, setIsMachineSelected] = useState(false);
   const [isIssueTypeSelected, setIsIssueTypeSelected] = useState(false);
@@ -220,6 +221,8 @@ export default function Reports() {
     index: number,
   ) {
     e.preventDefault();
+    if (!history) return;
+
     const selectedHistoryMessages = history[index];
     setSelectedFileIndex(index);
 
@@ -284,20 +287,30 @@ export default function Reports() {
             </button>
           </div>
           <div className="flex flex-col gap-2 w-full h-full overflow-scroll pt-4">
-            {history.map((item, index) => {
-              return (
-                <button
-                  onClick={(e) => hanldeSelectHistory(e, index)}
-                  className={`text-left hover:bg-my-color5 hover:rounded pl-4 ${
-                    selectedFileIndex === index ? 'bg-my-color5' : ''
-                  }`}
-                >
-                  <div key={index} className="text-left">
-                    <p className="text-left">{item.title}</p>
-                  </div>
-                </button>
-              );
-            })}
+            {history ? (
+              history.map((item, index) => {
+                return (
+                  <button
+                    onClick={(e) => hanldeSelectHistory(e, index)}
+                    className={`text-left hover:bg-my-color5 hover:rounded pl-4 ${
+                      selectedFileIndex === index ? 'bg-my-color5' : ''
+                    }`}
+                  >
+                    <div key={index} className="text-left">
+                      <p className="text-left">{item.title}</p>
+                    </div>
+                  </button>
+                );
+              })
+            ) : (
+              <div className="flex flex-col py-24 w-full h-full items-center">
+                <ArrowPathIcon
+                  className="h-6 w-6 text-green-600 animate-spin"
+                  aria-hidden="true"
+                />
+                Loading history...
+              </div>
+            )}
           </div>
         </div>
 
