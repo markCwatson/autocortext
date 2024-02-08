@@ -115,6 +115,27 @@ export default function Reports() {
     return;
   }
 
+  async function handleSave() {
+    fetchHistory();
+
+    setMessages([
+      {
+        id: `1`,
+        content: `Auto Cortext: Hello ${session.data!.user.name}.
+
+      I am ready to assist you in troubleshooting problems with your equipment. If you explain the issue, I will suggest a solution.
+
+      What machine are you having trouble with?`,
+        role: 'assistant',
+      },
+    ]);
+
+    setDisplayMachineOptions(true);
+    setDisplayIssueTypeOptions(false);
+    setIsIssueTypeSelected(false);
+    setIsMachineSelected(false);
+  }
+
   async function deleteHistoryItem(_id: string) {
     const companyId = session.data?.user.companyId;
     if (!companyId) return;
@@ -373,7 +394,7 @@ export default function Reports() {
             messages={messages}
             machine={machine}
             companyId={companyId}
-            onSave={fetchHistory}
+            onSave={handleSave}
           />
           <div className="flex flex-col justify-center w-full h-full">
             <AiMessageList messages={messages} animate={animate} />
