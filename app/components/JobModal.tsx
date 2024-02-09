@@ -61,8 +61,6 @@ export default function JobModal(props: Props) {
   const [activities, setActivities] = useState(props.job.activities);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  console.log('JobModal', props.job);
-
   function handleSave() {
     setOpen(false);
     props.onSave();

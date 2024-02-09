@@ -12,7 +12,7 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
-import { SortableContext, arrayMove } from '@dnd-kit/sortable';
+import { arrayMove } from '@dnd-kit/sortable';
 import { PlusIcon } from '@heroicons/react/20/solid';
 import { Activity, Column, Id, Job } from '@/types';
 import JobCard from '@/components/JobCard';
@@ -24,7 +24,6 @@ import { toast } from './Toast';
 import { JobsModel } from '@/repos/JobsRepository';
 import DropdownButton from './DropdownButton';
 import { machines } from '@/lib/machines';
-import OptionSelector from './OptionSelector';
 
 const defaultCols: Column[] = [
   {
@@ -49,9 +48,9 @@ interface KanbanBoardProps {
 export default function KanbanBoard(props: KanbanBoardProps) {
   const userValue = useUserContext();
 
-  const [columns, setColumns] = useState<Column[]>(defaultCols);
+  const [columns, ] = useState<Column[]>(defaultCols);
   const [jobs, setJobs] = useState<JobsModel[]>(props.jobs);
-  const [activeColumn, setActiveColumn] = useState<Column | null>(null);
+  const [activeColumn, ] = useState<Column | null>(null);
   const [activeJob, setActiveJob] = useState<JobsModel | null>(null);
   const [isCreateJobOpen, setIsCreateJobOpen] = useState(false);
   const [filter, setFilter] = useState(machines[0]);
@@ -272,36 +271,7 @@ export default function KanbanBoard(props: KanbanBoardProps) {
     setJobs(newJobs);
   }
 
-  // function createNewColumn() {
-  //   const columnToAdd: Column = {
-  //     id: columns.length + 1,
-  //     title: `Column ${columns.length + 1}`,
-  //   };
-
-  //   setColumns([...columns, columnToAdd]);
-  // }
-
-  function deleteColumn(id: Id) {
-    // const filteredColumns = columns.filter((col) => col.id !== id);
-    // setColumns(filteredColumns);
-    // const newJobs = jobs.filter((job) => job.columnId !== id);
-    // setJobs(newJobs);
-  }
-
-  function updateColumn(id: Id, title: string) {
-    // const newColumns = columns.map((col) => {
-    //   if (col.id !== id) return col;
-    //   return { ...col, title };
-    // });
-    // setColumns(newColumns);
-  }
-
   function onDragStart(event: DragStartEvent) {
-    // if (event.active.data.current?.type === 'Column') {
-    //   setActiveColumn(event.active.data.current.column);
-    //   return;
-    // }
-
     if (event.active.data.current?.type === 'Job') {
       setActiveJob(event.active.data.current.job);
       return;
@@ -309,27 +279,7 @@ export default function KanbanBoard(props: KanbanBoardProps) {
   }
 
   function onDragEnd(event: DragEndEvent) {
-    // setActiveColumn(null);
     setActiveJob(null);
-
-    // const { active, over } = event;
-    // if (!over) return;
-
-    // const activeId = active.id;
-    // const overId = over.id;
-
-    // if (activeId === overId) return;
-
-    // const isActiveAColumn = active.data.current?.type === 'Column';
-    // if (!isActiveAColumn) return;
-
-    // setColumns((columns) => {
-    //   const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
-
-    //   const overColumnIndex = columns.findIndex((col) => col.id === overId);
-
-    //   return arrayMove(columns, activeColumnIndex, overColumnIndex);
-    // });
   }
 
   async function onDragOver(event: DragOverEvent) {
@@ -365,8 +315,13 @@ export default function KanbanBoard(props: KanbanBoardProps) {
 
     // Im dropping a Job over a column
     if (isActiveAJob && isOverAColumn) {
+      let previousColumn;
+
       setJobs((jobs) => {
         const activeIndex = jobs.findIndex((job) => job.id === activeId);
+        previousColumn = jobs[activeIndex].columnId;
+        if (previousColumn === overId) return jobs;
+
         jobs[activeIndex].columnId = overId;
         return arrayMove(jobs, activeIndex, activeIndex);
       });
@@ -375,12 +330,15 @@ export default function KanbanBoard(props: KanbanBoardProps) {
       if (updatedJob) {
         switch (updatedJob.columnId) {
           case 'doing':
+            if (previousColumn === 'doing') break;
             await updateJob(updatedJob.id, updatedJob, 'started');
             break;
           case 'done':
+            if (previousColumn === 'done') break;
             await updateJob(updatedJob.id, updatedJob, 'finished');
             break;
           case 'todo':
+            if (previousColumn === 'todo') break;
             await updateJob(updatedJob.id, updatedJob, 'paused');
             break;
           default:
@@ -412,15 +370,6 @@ export default function KanbanBoard(props: KanbanBoardProps) {
             handler={(item) => setFilter(item)}
           />
         </div>
-        {/* <button
-          onClick={() => {
-            createNewColumn();
-          }}
-          className="flex gap-2 items-center border-my-color7 border-2 rounded-md p-2 hover:bg-my-color7 active:bg-black"
-        >
-          <PlusIcon className="h-6 w-6" />
-          Add a column
-        </button> */}
       </div>
       <div className="m-auto flex w-full items-center overflow-x-scroll overflow-y-hidden px-4">
         <DndContext
@@ -431,13 +380,10 @@ export default function KanbanBoard(props: KanbanBoardProps) {
         >
           <div className="m-auto flex gap-4">
             <div className="flex gap-4">
-              {/* <SortableContext items={columnsId}> */}
               {columns.map((col) => (
                 <ColumnContainer
                   key={col.id}
                   column={col}
-                  deleteColumn={deleteColumn}
-                  updateColumn={updateColumn}
                   deleteJob={deleteJob}
                   updateJob={updateJob}
                   jobs={jobs?.filter(
@@ -447,7 +393,6 @@ export default function KanbanBoard(props: KanbanBoardProps) {
                   )}
                 />
               ))}
-              {/* </SortableContext> */}
             </div>
           </div>
 
@@ -457,8 +402,6 @@ export default function KanbanBoard(props: KanbanBoardProps) {
                 {activeColumn && (
                   <ColumnContainer
                     column={activeColumn}
-                    deleteColumn={deleteColumn}
-                    updateColumn={updateColumn}
                     deleteJob={deleteJob}
                     updateJob={updateJob}
                     jobs={jobs.filter((job) =>
