@@ -1,15 +1,12 @@
 'use client';
 
-import React, { useEffect, useState, useRef, CSSProperties } from 'react';
-import { type PutBlobResult } from '@vercel/blob';
-import { upload } from '@vercel/blob/client';
+import React, { useEffect, useState, CSSProperties } from 'react';
 import { useSession } from 'next-auth/react';
 import Search from '@/components/Search';
 import FileUpload from '@/components/FileUpload';
 import Folders from './Folders';
 import AiHeader from '@/components/AiHeader';
 import { AiMessage, useQueryContext } from '@/components/AiMessagesProvider';
-import { Button } from '@/components/Button';
 import { toast } from '@/components/Toast';
 import { ArrowUpTrayIcon } from '@heroicons/react/20/solid';
 import AiPromptChat from '@/components/AiPromptChat';
@@ -28,66 +25,6 @@ const placeholderStyle = {
   color: 'black',
   fontSize: '1rem',
 };
-
-function CreateEmbeddings() {
-  async function createIndexAndEmbeddings() {
-    try {
-      const result = await fetch('/api/setup', {
-        method: 'POST',
-      });
-      const json = await result.json();
-      console.log('result: ', json);
-    } catch (err) {
-      console.log('err:', err);
-    }
-  }
-
-  return (
-    <Button
-      className="w-[400px] mt-2"
-      variant="outline"
-      onClick={createIndexAndEmbeddings}
-    >
-      Create index and embeddings
-    </Button>
-  );
-}
-
-function UploadPdf() {
-  const inputFileRef = useRef<HTMLInputElement>(null);
-  const [blob, setBlob] = useState<PutBlobResult | null>(null);
-  return (
-    <>
-      <form
-        className="mt-4"
-        onSubmit={async (event) => {
-          event.preventDefault();
-
-          if (!inputFileRef.current?.files) {
-            throw new Error('No file selected');
-          }
-
-          const file = inputFileRef.current.files[0];
-
-          const newBlob = await upload(file.name, file, {
-            access: 'public',
-            handleUploadUrl: '/api/upload',
-          });
-
-          setBlob(newBlob);
-        }}
-      >
-        <input name="file" ref={inputFileRef} type="file" required />
-        <button type="submit">Upload</button>
-      </form>
-      {blob && (
-        <div>
-          Blob url: <a href={blob.url}>{blob.url}</a>
-        </div>
-      )}
-    </>
-  );
-}
 
 const navBarHeight = '170px';
 
@@ -260,11 +197,6 @@ export default function Documentation() {
               <div className="w-full px-4">
                 <AiPromptChat callback={sendQuery} isLoading={loading} />
               </div>
-              {/* todo: for now, remove this button from the UI once the embeddings are created ... 
-                ... will add a button to upload a pdf and create the embeddings from that
-                */}
-              {/* <CreateEmbeddings /> */}
-              {/* <UploadPdf /> */}
             </div>
           </div>
         </div>

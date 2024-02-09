@@ -18,10 +18,12 @@ export async function POST() {
     apiKey: process.env.PINECONE_API_KEY || '',
   });
 
+  const indexName = 'auto-cortext';
+  const vectorDimension = 3072;
+  
   try {
-    const indexName = 'my-test-pinecone-index';
-    const vectorDimension = 1536;
-    await createPineconeIndex({ client, indexName, vectorDimension });
+    await createPineconeIndex({
+      client, indexName, vectorDimension });
     await updatePinecone({ client, indexName, docs });
   } catch (err) {
     console.log('error: ', err);
