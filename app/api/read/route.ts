@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Pinecone } from '@pinecone-database/pinecone';
 import { queryPineconeVectorStoreAndQueryLLM } from '@/lib/pinecone';
 
-const indexName = 'my-test-pinecone-index';
+const indexName = 'auto-cortext';
 
 export async function POST(req: NextRequest) {
   const body = await req.json();

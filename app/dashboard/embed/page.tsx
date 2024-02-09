@@ -81,7 +81,7 @@ function Embed() {
 
   return (
     <div className="flex flex-col h-full w-full gap-4 justify-center items-center">
-      Be sure tou know what you are doing here...
+      Be sure you know what you are doing here...
       This functionality is only for testing purposes.
     <CreateEmbeddings />
     <UploadPdf />
