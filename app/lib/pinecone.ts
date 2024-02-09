@@ -48,7 +48,7 @@ export const queryPineconeVectorStoreAndQueryLLM = async ({
   if (queryResponse.matches.length) {
     // 7. Create an OpenAI instance and load the QAStuffChain
     const llm = new OpenAI({
-      modelName: 'gpt-3.5-turbo-0125',
+      modelName: 'gpt-4-0125-preview',
     });
     const chain = loadQAStuffChain(llm);
     // 8. Extract and concatenate page content from matched documents
