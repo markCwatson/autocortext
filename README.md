@@ -84,7 +84,7 @@ python3 ./scripts/convert/convert_pdf.py
 
 Text files will show up in the `/scripts/convert/text` folder. Move the PDF files to the `/scripts/convert/completed` folder when done. Talk to Mark about getting them to show up in the `/dashboard/docs` page.
 
-## Pinecone
+## Adding new vector embeddings
 
 To create vector embeddings from TXT docs, place them in the `/scripts/convert/text` folder, run the app in the local/dev environment, and go to the `http://localhost:3000/dashboard/embed` page. If you have the required access, you'll see "Create index and embeddings" button. When you click this button, the text files will be taken from the `/scripts/convert/text` folder, used to create vector embeddings, and uploaded to Pinecone. When done, move the text file(s) into the `/scripts/convert/completed` folder so it is not upserted to Pinecone again.
 
