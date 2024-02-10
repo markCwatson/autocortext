@@ -6,7 +6,7 @@ import { JobsModel } from '@/repos/JobsRepository';
 
 interface Props {
   column: Column;
-  updateJob: (id: Id, newJob: Job) => void;
+  updateJob: (newJob: Job) => void;
   deleteJob: (id: Id) => void;
   jobs: JobsModel[];
 }

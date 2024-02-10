@@ -83,7 +83,7 @@ export default function KanbanBoard(props: KanbanBoardProps) {
     machine: string;
   }) {
     const newJob: Job = {
-      id: jobs.length + 1,
+      id: props.jobs.length + 1,
       columnId: 'todo',
       title,
       description,
@@ -150,7 +150,6 @@ export default function KanbanBoard(props: KanbanBoardProps) {
     });
 
     props.fetchJobs(userValue.user.companyId as string);
-    setJobs([...jobs, createdJob]);
   }
 
   async function deleteJob(id: Id) {
@@ -200,14 +199,11 @@ export default function KanbanBoard(props: KanbanBoardProps) {
     });
 
     props.fetchJobs(userValue.user.companyId as string);
-    const newJobs = jobs.filter((job) => job.id !== id);
-    setJobs(newJobs);
   }
 
   // todo: probably don't need id here
   async function updateJob(
-    id: Id,
-    newJob: Job,
+    updatedJob: Job,
     type?:
       | 'created'
       | 'commented'
@@ -221,7 +217,7 @@ export default function KanbanBoard(props: KanbanBoardProps) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ job: newJob }),
+      body: JSON.stringify({ job: updatedJob }),
     });
 
     if (!res.ok) {
@@ -236,14 +232,14 @@ export default function KanbanBoard(props: KanbanBoardProps) {
 
     if (type) {
       const editedActivity: Activity = {
-        id: newJob.activities?.length ? newJob.activities?.length + 1 : 1,
+        id: updatedJob.activities?.length ? updatedJob.activities?.length + 1 : 1,
         type,
         person: {
           name: userValue.user.name,
           img: userValue.user.image || '',
         },
         dateTime: new Date().toISOString(),
-        jobId: (newJob as JobsModel)._id, // todo: consider using only one type throughout
+        jobId: (updatedJob as JobsModel)._id, // todo: consider using only one type throughout
       };
 
       res = await fetch('/api/activity', {
@@ -262,13 +258,7 @@ export default function KanbanBoard(props: KanbanBoardProps) {
       });
     }
 
-    const newJobs = jobs.map((job) => {
-      if (job.id !== id) return job;
-      return { ...job, ...newJob };
-    });
-
     props.fetchJobs(userValue.user.companyId as string);
-    setJobs(newJobs);
   }
 
   function onDragStart(event: DragStartEvent) {
@@ -296,10 +286,12 @@ export default function KanbanBoard(props: KanbanBoardProps) {
 
     if (!isActiveAJob) return;
 
+    const activeIndex = jobs.findIndex((job) => job.id === activeId);
+    let previousColumn = jobs[activeIndex].columnId;
+
     // Im dropping a Job over another Job
     if (isActiveAJob && isOverAJob) {
       setJobs((jobs) => {
-        const activeIndex = jobs.findIndex((job) => job.id === activeId);
         const overIndex = jobs.findIndex((job) => job.id === overId);
 
         if (jobs[activeIndex].columnId != jobs[overIndex].columnId) {
@@ -315,36 +307,33 @@ export default function KanbanBoard(props: KanbanBoardProps) {
 
     // Im dropping a Job over a column
     if (isActiveAJob && isOverAColumn) {
-      let previousColumn;
-
       setJobs((jobs) => {
-        const activeIndex = jobs.findIndex((job) => job.id === activeId);
-        previousColumn = jobs[activeIndex].columnId;
         if (previousColumn === overId) return jobs;
 
         jobs[activeIndex].columnId = overId;
         return arrayMove(jobs, activeIndex, activeIndex);
       });
 
-      const updatedJob = jobs.find((job) => job.id === activeId);
-      if (updatedJob) {
-        switch (updatedJob.columnId) {
-          case 'doing':
-            if (previousColumn === 'doing') break;
-            await updateJob(updatedJob.id, updatedJob, 'started');
-            break;
-          case 'done':
-            if (previousColumn === 'done') break;
-            await updateJob(updatedJob.id, updatedJob, 'finished');
-            break;
-          case 'todo':
-            if (previousColumn === 'todo') break;
-            await updateJob(updatedJob.id, updatedJob, 'paused');
-            break;
-          default:
-            await updateJob(updatedJob.id, updatedJob);
-            break;
-        }
+    }
+
+    const updatedJob = props.jobs.find((job) => job.id === activeId);
+    if (updatedJob) {
+      switch (updatedJob.columnId) {
+        case 'doing':
+          if (previousColumn === 'doing') break;
+          await updateJob(updatedJob, 'started');
+          break;
+        case 'done':
+          if (previousColumn === 'done') break;
+          await updateJob(updatedJob, 'finished');
+          break;
+        case 'todo':
+          if (previousColumn === 'todo') break;
+          await updateJob(updatedJob, 'paused');
+          break;
+        default:
+          await updateJob(updatedJob);
+          break;
       }
     }
   }
@@ -386,7 +375,7 @@ export default function KanbanBoard(props: KanbanBoardProps) {
                   column={col}
                   deleteJob={deleteJob}
                   updateJob={updateJob}
-                  jobs={jobs?.filter(
+                  jobs={props.jobs?.filter(
                     (job) =>
                       job.columnId === col.id &&
                       (filter !== machines[0] ? job.machine === filter : true),
@@ -404,7 +393,7 @@ export default function KanbanBoard(props: KanbanBoardProps) {
                     column={activeColumn}
                     deleteJob={deleteJob}
                     updateJob={updateJob}
-                    jobs={jobs.filter((job) =>
+                    jobs={props.jobs.filter((job) =>
                       job.columnId === activeColumn.id && filter !== machines[0]
                         ? job.machine === filter
                         : true,

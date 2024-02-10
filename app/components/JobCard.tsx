@@ -16,7 +16,6 @@ interface Props {
   job: JobsModel;
   deleteJob: (id: Id) => void;
   updateJob: (
-    id: Id,
     newJob: Job,
     type?:
       | 'created'
@@ -70,7 +69,6 @@ export default function JobCard({ job, deleteJob, updateJob }: Props) {
 
   const handleSave = () => {
     updateJob(
-      job.id,
       {
         ...job,
         title: editedTitle,
@@ -83,7 +81,7 @@ export default function JobCard({ job, deleteJob, updateJob }: Props) {
   };
 
   const handleClose = () => {
-    updateJob(job.id, {
+    updateJob({
       ...job,
       activities: editedActivities,
     });
