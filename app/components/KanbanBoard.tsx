@@ -278,18 +278,16 @@ export default function KanbanBoard(props: KanbanBoardProps) {
 
     const activeId = active.id;
     const overId = over.id;
-
     if (activeId === overId) return;
 
     const isActiveAJob = active.data.current?.type === 'Job';
-    const isOverAJob = over.data.current?.type === 'Job';
-
     if (!isActiveAJob) return;
 
     const activeIndex = jobs.findIndex((job) => job.id === activeId);
     let previousColumn = jobs[activeIndex].columnId;
 
     // Im dropping a Job over another Job
+    const isOverAJob = over.data.current?.type === 'Job';
     if (isActiveAJob && isOverAJob) {
       setJobs((jobs) => {
         const overIndex = jobs.findIndex((job) => job.id === overId);
@@ -303,9 +301,8 @@ export default function KanbanBoard(props: KanbanBoardProps) {
       });
     }
 
-    const isOverAColumn = over.data.current?.type === 'Column';
-
     // Im dropping a Job over a column
+    const isOverAColumn = over.data.current?.type === 'Column';
     if (isActiveAJob && isOverAColumn) {
       setJobs((jobs) => {
         if (previousColumn === overId) return jobs;
