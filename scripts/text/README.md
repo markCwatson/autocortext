@@ -1,0 +1,1 @@
+TXT files go in the `/scripts/convert/text` folder.

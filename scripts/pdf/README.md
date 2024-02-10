@@ -1,0 +1,1 @@
+PDF files go in the `/scripts/convert/pdf` folder.
