@@ -28,7 +28,7 @@ export default function TroubleShooting() {
   }
 
   useEffect(() => {
-    fetchJobs(userValue.user.companyId);
+    fetchJobs(userValue.user.companyId as string);
   }, []);
 
   useEffect(() => {}, [jobs]);

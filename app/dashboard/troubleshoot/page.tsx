@@ -83,7 +83,7 @@ export default function Reports() {
         },
       ]);
 
-      setCompanyId(session.data.user.companyId);
+      setCompanyId(session.data.user.companyId as string);
       fetchHistory();
     }
   }, [session]);

@@ -6,17 +6,26 @@ import { type PutBlobResult } from '@vercel/blob';
 import { upload } from '@vercel/blob/client';
 import { Button } from '@/components/Button';
 import { useUserContext } from '@/components/UserProvider';
+import { toast } from '@/components/Toast';
 
 function CreateEmbeddings() {
   async function createIndexAndEmbeddings() {
     try {
-      const result = await fetch('/api/setup', {
+      await fetch('/api/setup', {
         method: 'POST',
       });
-      const json = await result.json();
-      console.log('result: ', json);
+
+      toast({
+        title: 'Success',
+        message: 'Index and embeddings created',
+        type: 'success',
+      });
     } catch (err) {
-      console.log('err:', err);
+      toast({
+        title: 'Error',
+        message: 'Failed to create index and embeddings',
+        type: 'error',
+      })
     }
   }
 
@@ -71,7 +80,7 @@ function UploadPdf() {
 function Embed() {
   const userCxt = useUserContext();
 
-  if (userCxt?.user.name !== 'mark') {
+  if (userCxt?.user.role !== 'AscendAdmin') {
     return (
       <div className="flex flex-col h-full w-full gap-4 justify-center items-center">
         You do not have access to this page.
@@ -84,7 +93,7 @@ function Embed() {
       Be sure you know what you are doing here...
       This functionality is only for testing purposes.
     <CreateEmbeddings />
-    <UploadPdf />
+    {/* <UploadPdf /> */}
     </div>
   );
 }

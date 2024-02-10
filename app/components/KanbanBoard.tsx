@@ -89,8 +89,8 @@ export default function KanbanBoard(props: KanbanBoardProps) {
       description,
       severity,
       machine,
-      creatorId: userValue.user.id,
-      companyId: userValue.user.companyId,
+      creatorId: userValue.user.id!,
+      companyId: userValue.user.companyId as string,
     };
 
     let res = await fetch('/api/job', {
@@ -149,7 +149,7 @@ export default function KanbanBoard(props: KanbanBoardProps) {
       duration: 2000,
     });
 
-    props.fetchJobs(userValue.user.companyId);
+    props.fetchJobs(userValue.user.companyId as string);
     setJobs([...jobs, createdJob]);
   }
 
@@ -199,7 +199,7 @@ export default function KanbanBoard(props: KanbanBoardProps) {
       duration: 2000,
     });
 
-    props.fetchJobs(userValue.user.companyId);
+    props.fetchJobs(userValue.user.companyId as string);
     const newJobs = jobs.filter((job) => job.id !== id);
     setJobs(newJobs);
   }
@@ -267,7 +267,7 @@ export default function KanbanBoard(props: KanbanBoardProps) {
       return { ...job, ...newJob };
     });
 
-    props.fetchJobs(userValue.user.companyId);
+    props.fetchJobs(userValue.user.companyId as string);
     setJobs(newJobs);
   }
 

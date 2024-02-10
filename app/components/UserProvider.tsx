@@ -1,13 +1,9 @@
 'use client';
 
 import React, { createContext, useState, useContext, ReactNode } from 'react';
+import { User as NextAuthUser } from 'next-auth';
 
-export interface User {
-  id: string;
-  name: string;
-  image: string | null | undefined;
-  companyId: string;
-}
+export interface User extends NextAuthUser {}
 
 interface UserValue {
   user: User;

@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { ObjectId } from 'mongodb';
 import type { Session } from 'next-auth';
 import type { JWT } from 'next-auth/jwt';
 
@@ -12,12 +13,13 @@ declare module 'next-auth/jwt' {
 
 declare module 'next-auth' {
   interface User {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     role: string;
-    companyId: string;
-    image?: string;
+    companyId: string | ObjectId;
+    image?: string | null;
+    password?: string;
   }
 
   interface Session {

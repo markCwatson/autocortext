@@ -44,7 +44,7 @@ export const authOptions: NextAuthOptions = {
           .findOne({ email })) as UserModel;
 
         let ret = null;
-        if (user && bcrypt.compareSync(password, user.password)) {
+        if (user && bcrypt.compareSync(password, user.password!)) {
           ret = {
             id: user._id!.toString(),
             name: user.name,
@@ -66,9 +66,9 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         // Ensure the user's id and role are in the JWT
-        token.id = user.id;
+        token.id = user.id!;
         token.role = user.role;
-        token.companyId = user.companyId;
+        token.companyId = user.companyId as string;
       }
       return token;
     },

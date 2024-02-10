@@ -1,13 +1,10 @@
 import { MongoServerError, ObjectId } from 'mongodb';
 import Database from '@/lib/db';
 import ApiError from '@/errors/ApiError';
+import { User } from '@/components/UserProvider';
 
-export interface UserModel {
+export interface UserModel extends User {
   _id?: ObjectId;
-  name: string;
-  email: string;
-  password: string;
-  role: string;
   companyId: ObjectId;
 }
 

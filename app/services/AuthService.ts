@@ -14,7 +14,7 @@ class AuthService {
 
     const isCorrectPassword = await AuthService.isCorrectPassword(
       password,
-      user.password,
+      user.password!,
     );
     if (!isCorrectPassword) return null;
 
