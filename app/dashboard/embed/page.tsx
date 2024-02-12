@@ -5,7 +5,7 @@ import { useRef, useState } from 'react';
 import { type PutBlobResult } from '@vercel/blob';
 import { upload } from '@vercel/blob/client';
 import { Button } from '@/components/Button';
-import { useUserContext } from '@/components/UserProvider';
+import { useUserContext } from '@/providers/UserProvider';
 import { toast } from '@/components/Toast';
 
 function CreateEmbeddings() {
@@ -25,7 +25,7 @@ function CreateEmbeddings() {
         title: 'Error',
         message: 'Failed to create index and embeddings',
         type: 'error',
-      })
+      });
     }
   }
 
@@ -90,10 +90,10 @@ function Embed() {
 
   return (
     <div className="flex flex-col h-full w-full gap-4 justify-center items-center">
-      Be sure you know what you are doing here...
-      This functionality is only for testing purposes.
-    <CreateEmbeddings />
-    {/* <UploadPdf /> */}
+      Be sure you know what you are doing here... This functionality is only for
+      testing purposes.
+      <CreateEmbeddings />
+      {/* <UploadPdf /> */}
     </div>
   );
 }

@@ -6,7 +6,7 @@ import Search from '@/components/Search';
 import FileUpload from '@/components/FileUpload';
 import Folders from './Folders';
 import AiHeader from '@/components/AiHeader';
-import { AiMessage, useQueryContext } from '@/components/AiMessagesProvider';
+import { AiMessage, useQueryContext } from '@/providers/AiMessagesProvider';
 import { toast } from '@/components/Toast';
 import { ArrowUpTrayIcon } from '@heroicons/react/20/solid';
 import AiPromptChat from '@/components/AiPromptChat';

@@ -17,9 +17,9 @@ import { PlusIcon } from '@heroicons/react/20/solid';
 import { Activity, Column, Id, Job } from '@/types';
 import JobCard from '@/components/JobCard';
 import ColumnContainer from '@/components/ColumnContainer';
-import { isClientCtx } from '@/components/ClientCtxProvider';
+import { isClientCtx } from '@/providers/ClientCtxProvider';
 import CreateJob from '@/components/CreateJob';
-import { useUserContext } from '@/components/UserProvider';
+import { useUserContext } from '@/providers/UserProvider';
 import { toast } from './Toast';
 import { JobsModel } from '@/repos/JobsRepository';
 import DropdownButton from './DropdownButton';
@@ -48,9 +48,9 @@ interface KanbanBoardProps {
 export default function KanbanBoard(props: KanbanBoardProps) {
   const userValue = useUserContext();
 
-  const [columns, ] = useState<Column[]>(defaultCols);
+  const [columns] = useState<Column[]>(defaultCols);
   const [jobs, setJobs] = useState<JobsModel[]>(props.jobs);
-  const [activeColumn, ] = useState<Column | null>(null);
+  const [activeColumn] = useState<Column | null>(null);
   const [activeJob, setActiveJob] = useState<JobsModel | null>(null);
   const [isCreateJobOpen, setIsCreateJobOpen] = useState(false);
   const [filter, setFilter] = useState(machines[0]);
@@ -232,7 +232,9 @@ export default function KanbanBoard(props: KanbanBoardProps) {
 
     if (type) {
       const editedActivity: Activity = {
-        id: updatedJob.activities?.length ? updatedJob.activities?.length + 1 : 1,
+        id: updatedJob.activities?.length
+          ? updatedJob.activities?.length + 1
+          : 1,
         type,
         person: {
           name: userValue.user.name,
@@ -310,7 +312,6 @@ export default function KanbanBoard(props: KanbanBoardProps) {
         jobs[activeIndex].columnId = overId;
         return arrayMove(jobs, activeIndex, activeIndex);
       });
-
     }
 
     const updatedJob = props.jobs.find((job) => job.id === activeId);

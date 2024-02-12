@@ -4,7 +4,7 @@ import React, { CSSProperties, use, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import AiHeader from '@/components/AiHeader';
 import { toast } from '@/components/Toast';
-import { AiMessage, useQueryContext } from '@/components/AiMessagesProvider';
+import { AiMessage, useQueryContext } from '@/providers/AiMessagesProvider';
 import { AiMessageList } from '@/components/AiMessageList';
 import AiPromptChat from '@/components/AiPromptChat';
 import OptionSelector from '@/components/OptionSelector';

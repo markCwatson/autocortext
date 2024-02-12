@@ -1,5 +1,5 @@
 import { Button } from '@/components/Button';
-import { useQueryContext } from '@/components/AiMessagesProvider';
+import { useQueryContext } from '@/providers/AiMessagesProvider';
 import { Loader2 } from 'lucide-react';
 import { MouseEventHandler } from 'react';
 

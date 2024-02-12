@@ -7,10 +7,10 @@ import DashboardPage from '@/components/DashboardPage';
 import DialogModal from '@/components/DialogModal';
 import SignInButton from '@/components/SignInButton';
 import OrgNavBar from '@/components/OrgBar';
-import { AiMessagesProvider } from '@/components/AiMessagesProvider';
+import { AiMessagesProvider } from '@/providers/AiMessagesProvider';
 import { ArrowPathIcon } from '@heroicons/react/20/solid';
-import { ClientCtxProvider } from '@/components/ClientCtxProvider';
-import { UserProvider } from '@/components/UserProvider';
+import { ClientCtxProvider } from '@/providers/ClientCtxProvider';
+import { UserProvider } from '@/providers/UserProvider';
 
 export default async function DashboardLayout({
   children,

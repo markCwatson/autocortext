@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 import React from 'react';
 import AnimatedText from './AnimatedText';
-import { AiMessage } from '@/components/AiMessagesProvider';
+import { AiMessage } from '@/providers/AiMessagesProvider';
 import { CubeTransparentIcon, UserCircleIcon } from '@heroicons/react/20/solid';
 
 interface Props {

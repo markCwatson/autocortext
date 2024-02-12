@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import KanbanBoard from '@/components/KanbanBoard';
-import { useUserContext } from '@/components/UserProvider';
+import { useUserContext } from '@/providers/UserProvider';
 import { ArrowPathIcon } from '@heroicons/react/20/solid';
 import { JobsModel } from '@/repos/JobsRepository';
 

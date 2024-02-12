@@ -1,4 +1,4 @@
-import { AiMessage } from '@/components/AiMessagesProvider';
+import { AiMessage } from '@/providers/AiMessagesProvider';
 import { ObjectId } from 'mongodb';
 
 export type Id = string | number;

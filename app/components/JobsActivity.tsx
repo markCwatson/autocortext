@@ -16,7 +16,7 @@ import {
 import { Listbox, Transition } from '@headlessui/react';
 import { Activity } from '@/types';
 import { toast } from '@/components/Toast';
-import { useUserContext } from '@/components/UserProvider';
+import { useUserContext } from '@/providers/UserProvider';
 
 const moods = [
   {
