@@ -30,6 +30,8 @@ export default function AnimatedText({
         }, 15);
         return () => clearInterval(intervalId);
       }, animationDelay || 100);
+    } else if (show) {
+      setDisplayText(text);
     }
   }, [text, show, animated, animationDelay]);
 
