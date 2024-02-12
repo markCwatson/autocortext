@@ -30,24 +30,24 @@ export default function Folders({ callback }: FoldersProps) {
         >
           <TreeItem label="cartoners" showIcons={true} isFolder={true}>
             <TreeItem
-              label="endload_cartoner.pdf"
+              label="hs5160_user_manual.pdf"
               showIcons={false}
               onSelect={() => callback('endload_cartoner.pdf')}
             />
           </TreeItem>
           <TreeItem label="conveyers" showIcons={true} isFolder={true}>
             <TreeItem
-              label="siptu.pdf"
+              label="siptu_hs5160_user_manual.pdf"
               showIcons={false}
               onSelect={() => callback('siptu.pdf')}
             />
             <TreeItem
-              label="plc_logic.pdf"
+              label="siptu_hs5160_plc_program.pdf"
               showIcons={false}
               onSelect={() => callback('plc_logic.pdf')}
             />
             <TreeItem
-              label="electrical_schematics.pdf"
+              label="siptu_hs5160_schematics.pdf"
               showIcons={false}
               onSelect={() => callback('electrical_schematics.pdf')}
             />
