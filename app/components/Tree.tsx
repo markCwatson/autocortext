@@ -88,7 +88,7 @@ const TreeItem = ({
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col text-sm">
       <div className="group flex p-1 items-center hover:bg-my-color5 ">
         {showIcons ? (
           open ? (
