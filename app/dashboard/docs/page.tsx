@@ -129,11 +129,10 @@ export default function Documentation() {
 
   const docMap: DocMap = {
     'endload_cartoner.pdf': '/HS5160-SFC-ENT-117&118.pdf',
-    // 'https://t3xziqgvuko9aizs.public.blob.vercel-storage.com/HS5160-SFC-ENT-117&118-GkTYoB4zg1F4kOcXAo5aiXNivX1F0T.pdf',
     'siptu.pdf': '/HS5160-SFC-WSIPTU-115&116.pdf',
-    // 'https://t3xziqgvuko9aizs.public.blob.vercel-storage.com/HS5160-SFC-WSIPTU-115&116-jKpTudlZJFbkNvgVrp1p0mhpt9b5o4.pdf',
     'bench_lathe.pdf': '/fervi_bench_lathe.pdf',
-    // 'https://t3xziqgvuko9aizs.public.blob.vercel-storage.com/fervi_bench_lathe-8VpQpc7JyZ0g9yapQE8Zc8jI4jEnV7.pdf',
+    'electrical_schematics.pdf': '/SIPTU-Electrical-Schematics.pdf',
+    'plc_logic.pdf': '/SIPTU-PLC-Logic.pdf',
   };
 
   const handleSelectDocument = (file: string) => {

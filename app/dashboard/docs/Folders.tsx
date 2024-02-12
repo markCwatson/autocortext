@@ -7,15 +7,6 @@ interface FoldersProps {
 export default function Folders({ callback }: FoldersProps) {
   return (
     <>
-      {/** hr */}
-      <TreeView>
-        <TreeItem label="hr" showIcons={true} isOpen={false} isFolder={true}>
-          <TreeItem label="policies" showIcons={true} isFolder={true}>
-            <TreeItem label="safety.pdf" showIcons={false} />
-            <TreeItem label="vacation.pdf" showIcons={false} />
-          </TreeItem>
-        </TreeItem>
-      </TreeView>
       {/** standards */}
       <TreeView>
         <TreeItem
@@ -28,26 +19,6 @@ export default function Folders({ callback }: FoldersProps) {
             <TreeItem label="iso9001_2020.pdf" showIcons={false} />
           </TreeItem>
         </TreeItem>
-      </TreeView>
-      {/** tools */}
-      <TreeView>
-        <TreeItem label="tools" showIcons={true} isOpen={false} isFolder={true}>
-          <TreeItem label="screwdrivers" showIcons={true} isFolder={true}>
-            <TreeItem label="stanley.pdf" showIcons={false} />
-          </TreeItem>
-          <TreeItem label="hex" showIcons={true} isFolder={true}>
-            <TreeItem label="bosh.pdf" showIcons={false} />
-          </TreeItem>
-        </TreeItem>
-      </TreeView>
-      {/** lubricants */}
-      <TreeView>
-        <TreeItem
-          label="lubricants"
-          showIcons={true}
-          isOpen={false}
-          isFolder={true}
-        ></TreeItem>
       </TreeView>
       {/** machines */}
       <TreeView>
@@ -69,6 +40,16 @@ export default function Folders({ callback }: FoldersProps) {
               label="siptu.pdf"
               showIcons={false}
               onSelect={() => callback('siptu.pdf')}
+            />
+            <TreeItem
+              label="plc_logic.pdf"
+              showIcons={false}
+              onSelect={() => callback('plc_logic.pdf')}
+            />
+            <TreeItem
+              label="electrical_schematics.pdf"
+              showIcons={false}
+              onSelect={() => callback('electrical_schematics.pdf')}
             />
           </TreeItem>
           <TreeItem label="lathes" showIcons={true} isFolder={true}>
