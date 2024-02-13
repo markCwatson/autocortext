@@ -14,18 +14,15 @@ import {
 } from '@heroicons/react/24/outline';
 import {
   BugAntIcon,
-  CubeTransparentIcon,
-  NewspaperIcon,
-  PresentationChartBarIcon,
-  QuestionMarkCircleIcon,
+  ClockIcon,
   UserCircleIcon,
   UserGroupIcon,
-  WrenchScrewdriverIcon,
 } from '@heroicons/react/20/solid';
 import { usePathname } from 'next/navigation';
 import { toast } from './Toast';
 import { useSession } from 'next-auth/react';
 import LogoSvg from './LogoSvg';
+import classNames from '@/lib/classNames';
 
 export const dashboardVariants = cva(
   'w-full text-stone-700 dark:text-stone-300',
@@ -54,40 +51,16 @@ const navigation = [
     icon: BugAntIcon,
   },
   {
-    name: 'Maintenance',
-    href: '/dashboard/maintenance',
-    icon: CubeTransparentIcon,
+    name: 'Jobs',
+    href: '/dashboard/jobs',
+    icon: ClockIcon,
   },
   {
     name: 'Admin',
     href: '/dashboard/admin',
     icon: UserGroupIcon,
   },
-  // {
-  //   name: 'Data',
-  //   href: '/dashboard/data',
-  //   icon: PresentationChartBarIcon,
-  // },
-  // {
-  //   name: 'Equipment',
-  //   href: '/dashboard/equipment',
-  //   icon: WrenchScrewdriverIcon,
-  // },
-  // {
-  //   name: 'Help',
-  //   href: '/dashboard/help',
-  //   icon: QuestionMarkCircleIcon,
-  // },
-  // {
-  //   name: 'Privacy',
-  //   href: '/dashboard/privacy',
-  //   icon: NewspaperIcon,
-  // },
 ];
-
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ');
-}
 
 type Props = {
   user: Pick<User, 'name' | 'image' | 'email'>;

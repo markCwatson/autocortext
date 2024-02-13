@@ -20,6 +20,10 @@ class JobsService {
   static async update(job: JobsModel): Promise<JobsModel> {
     return JobsRepository.update(job);
   }
+
+  static async countJobsByCompanyId(companyId: string): Promise<number | null> {
+    return JobsRepository.countJobsByCompanyId(new ObjectId(companyId));
+  }
 }
 
 export default JobsService;

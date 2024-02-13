@@ -2,10 +2,7 @@
 
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
 import { Session } from 'next-auth/core/types';
-
-import { buttonVariants } from '@/components/Button';
 import SignOutButton from '@/components/SignOutButton';
 import SignInButton from '@/components/SignInButton';
 import { useState } from 'react';

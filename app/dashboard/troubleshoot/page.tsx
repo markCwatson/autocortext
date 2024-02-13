@@ -1,6 +1,7 @@
 'use client';
 
-import React, { CSSProperties, use, useEffect, useState } from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import AiHeader from '@/components/AiHeader';
 import { toast } from '@/components/Toast';
@@ -11,12 +12,18 @@ import OptionSelector from '@/components/OptionSelector';
 import { machines } from '@/lib/machines';
 import {
   ArrowPathIcon,
+  ClockIcon,
   CubeTransparentIcon,
+  DocumentDuplicateIcon,
   TrashIcon,
 } from '@heroicons/react/20/solid';
+import { MailIcon } from 'lucide-react';
 import { HistoryModel } from '@/repos/HistoryRepository';
 import DialogModal from '@/components/DialogModal';
 import Summary from '@/components/Summary';
+import { Button } from '@/components/Button';
+import classNames from '@/lib/classNames';
+import { Activity, Job } from '@/types';
 
 // todo: a lot of duplicate code here with docs page. refactor into a component
 
@@ -46,6 +53,12 @@ const issueTypes = [
   'Unknown',
 ];
 
+interface ButtonProps {
+  title: string;
+  icon: React.ForwardRefExoticComponent<any>;
+  handler: () => void;
+}
+
 export default function Reports() {
   const session = useSession();
   const [isLoading, setIsLoading] = useState(false);
@@ -74,6 +87,31 @@ export default function Reports() {
   const [showModal, setShowModal] = useState(false);
 
   const { messages, setMessages } = useQueryContext();
+
+  const router = useRouter();
+
+  const buttons: ButtonProps[] = [
+    {
+      title: 'Create Job',
+      icon: ClockIcon,
+      handler: createJob,
+    },
+    {
+      title: 'Summarize',
+      icon: CubeTransparentIcon,
+      handler: summarizeMessages,
+    },
+    // {
+    //   title: 'Share',
+    //   icon: MailIcon,
+    //   handler: () => null,
+    // },
+    // {
+    //   title: 'Open Docs',
+    //   icon: DocumentDuplicateIcon,
+    //   handler: () => null,
+    // },
+  ];
 
   useEffect(() => {
     if (session.data?.user.name && messages.length === 0) {
@@ -305,12 +343,56 @@ export default function Reports() {
     setSavedPrompt(null);
   }
 
-  async function handleSummarize(summarize: boolean) {
+  async function summarizeMessages() {
+    if (messages.length === 0) {
+      toast({
+        title: 'Error',
+        message: 'No messages to summarize.',
+        type: 'error',
+      });
+      return;
+    }
+
+    const res = await fetch('/api/openai/summarize', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ conversation: messages.map((m) => m.content) }),
+    });
+
+    if (res.ok) {
+      const { summary } = await res.json();
+
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          id: `${prevMessages.length + 1}`,
+          content: `Auto Cortext: Summary: ${summary}`,
+          role: 'assistant',
+        },
+      ]);
+
+      toast({
+        title: 'Success',
+        message: 'Summary generated.',
+        type: 'success',
+      });
+    } else {
+      toast({
+        title: 'Failed to generate summary.',
+        message: 'Please try again.',
+        type: 'error',
+      });
+    }
+  }
+
+  async function handleSave({ summarize }: { summarize: boolean }) {
     setShowModal(false);
     let messagesCopy = messages;
 
     if (summarize) {
-      const res = await fetch('/api/openai', {
+      const res = await fetch('/api/openai/summarize', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -387,6 +469,163 @@ export default function Reports() {
     setIsMachineSelected(false);
   }
 
+  // Function to parse the input string using regex
+  function parseInput(input: string): {
+    title: string;
+    description: string;
+    severity: string;
+  } {
+    // Define regex patterns for matching title, description, and severity
+    const titlePattern = /(?:job title|title):\s*(.+)/i;
+    const descriptionPattern = /description:\s*(.+)/i;
+    const severityPattern = /severity:\s*(.+)/i;
+
+    // Use regex to find matches
+    const titleMatch = input.match(titlePattern);
+    const descriptionMatch = input.match(descriptionPattern);
+    const severityMatch = input.match(severityPattern);
+
+    // Extract matched groups if matches are found, otherwise use empty strings
+    const title = titleMatch ? titleMatch[1].trim() : '';
+    const description = descriptionMatch ? descriptionMatch[1].trim() : '';
+    const severity = severityMatch ? severityMatch[1].trim() : '';
+
+    return { title, description, severity };
+  }
+
+  async function createJob() {
+    if (messages.length === 0) {
+      toast({
+        title: 'Error',
+        message: 'No messages to create job from.',
+        type: 'error',
+      });
+      return;
+    }
+
+    const resp = await fetch('/api/openai/create-job', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ conversation: messages.map((m) => m.content) }),
+    });
+
+    if (!resp.ok) {
+      toast({
+        title: 'Error',
+        message: 'Error creating job',
+        type: 'error',
+        duration: 2000,
+      });
+      return;
+    }
+
+    const { job } = await resp.json();
+    const { title, description, severity } = parseInput(job);
+
+    if (!title || !description || !severity) {
+      toast({
+        title: 'Error',
+        message: 'Error parsing job',
+        type: 'error',
+        duration: 2000,
+      });
+      return;
+    }
+
+    let severityFormatted =
+      severity.charAt(0).toUpperCase() + severity.slice(1).toLowerCase();
+    if (!['Severe', 'High', 'Medium', 'Low'].includes(severityFormatted)) {
+      severityFormatted = 'Medium';
+    }
+
+    const response = await fetch(
+      `/api/job?companyId=${session.data?.user.companyId}&count=true`,
+    );
+    if (!response.ok) {
+      toast({
+        title: 'Error',
+        message: 'Error creating job',
+        type: 'error',
+        duration: 2000,
+      });
+      return;
+    }
+    const count = await response.json();
+
+    const newJob: Job = {
+      id: count + 1,
+      columnId: 'todo',
+      title,
+      description,
+      severity: severityFormatted as 'Severe' | 'High' | 'Medium' | 'Low',
+      machine,
+      creatorId: session.data?.user.id!,
+      companyId: session.data?.user.companyId as string,
+    };
+
+    let res = await fetch('/api/job', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newJob),
+    });
+
+    if (!res.ok) {
+      toast({
+        title: 'Error',
+        message: 'Error creating job',
+        type: 'error',
+        duration: 2000,
+      });
+      return;
+    }
+
+    const createdJob = await res.json();
+
+    const createdActivity: Activity = {
+      id: 1,
+      type: 'created',
+      person: {
+        name: session.data?.user.name!,
+        img: session.data?.user.image || '',
+      },
+      dateTime: new Date().toISOString(),
+      jobId: createdJob._id,
+    };
+
+    res = await fetch('/api/activity', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(createdActivity),
+    });
+
+    if (!res.ok) {
+      toast({
+        title: 'Error',
+        message: "Error creating 'created' action",
+        type: 'error',
+        duration: 2000,
+      });
+
+      return;
+    }
+
+    toast({
+      title: 'Success',
+      message: 'Job created',
+      type: 'success',
+      duration: 2000,
+    });
+
+    handleSave({ summarize: false });
+    router.push('/dashboard/jobs');
+  }
+
   if (showModal) {
     return (
       <DialogModal
@@ -404,14 +643,14 @@ export default function Reports() {
           <button
             type="button"
             className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            onClick={() => handleSummarize(false)}
+            onClick={() => handleSave({ summarize: false })}
           >
             Skip for now
           </button>,
           <button
             type="button"
             className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            onClick={() => handleSummarize(true)}
+            onClick={() => handleSave({ summarize: false })}
           >
             Summarize
           </button>,
@@ -423,7 +662,7 @@ export default function Reports() {
   return (
     <main className="mx-auto px-4 sm:px-6 lg:px-8 " style={mainContainerStyle}>
       <div
-        className="grid pt-2 grid-cols-1 lg:grid-cols-11 gap-x-4 gap-y-10 "
+        className="grid pt-2 grid-cols-1 lg:grid-cols-12 gap-x-4 gap-y-10 "
         style={columnStyle}
       >
         {/* Left empty div */}
@@ -493,7 +732,6 @@ export default function Reports() {
             )}
           </div>
         </div>
-
         {/* Chat Window */}
         <div className="lg:col-span-4 pb-8 bg-my-color7 border rounded overflow-hidden">
           <AiHeader
@@ -536,8 +774,31 @@ export default function Reports() {
             )}
           </div>
         </div>
+        {/* Buttons */}
+        <div className="bg-transparent lg:visible lg:col-span-2">
+          <div className="w-full h-full pt-14">
+            <ul role="list" className="space-y-2 mx-4">
+              {buttons.map((b) => (
+                <li key={b.title}>
+                  <Button
+                    size={'lg'}
+                    onClick={b.handler}
+                    className={classNames(
+                      'text-my-color1 hover:bg-my-color4',
+                      'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
+                      'w-[80%] px-6 justify-start',
+                    )}
+                  >
+                    <b.icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                    {b.title}
+                  </Button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
         {/* Right empty div */}
-        <div className="bg-transparent hidden lg:visible lg:col-span-2" />
+        <div className="bg-transparent lg:visible lg:col-span-1" />
       </div>
     </main>
   );

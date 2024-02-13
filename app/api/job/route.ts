@@ -18,6 +18,16 @@ export async function GET(req: NextRequest) {
     return new Response('Company ID is required', { status: 400 });
   }
 
+  const count = url.searchParams.get('count');
+  if (count === 'true') {
+    let count = await JobsService.countJobsByCompanyId(companyId);
+    if (!count) {
+      return new Response('Job count not found', { status: 404 });
+    }
+
+    return NextResponse.json(count);
+  }
+
   let jobs = await JobsService.getJobsByCompanyId(companyId);
   if (!jobs) {
     return new Response('Jobs not found', { status: 404 });

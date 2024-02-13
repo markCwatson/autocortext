@@ -168,6 +168,22 @@ class JobsRepository {
       });
     }
   }
+
+  static async countJobsByCompanyId(
+    companyId: ObjectId,
+  ): Promise<number | null> {
+    const client = await Database.getClient();
+
+    try {
+      return client.db().collection('jobs').countDocuments({ companyId });
+    } catch (error: MongoServerError | any) {
+      throw new ApiError({
+        code: 500,
+        message: error.message,
+        explanation: null,
+      });
+    }
+  }
 }
 
 export default JobsRepository;
