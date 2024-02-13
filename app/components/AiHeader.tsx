@@ -57,31 +57,6 @@ export default function AiHeader({
     );
   };
 
-  const handleSave = async () => {
-    const res = await fetch('/api/history', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ machine, messages, companyId }),
-    });
-
-    if (res.ok) {
-      onSave?.();
-      return toast({
-        title: 'Success',
-        message: 'Report saved.',
-        type: 'success',
-      });
-    }
-
-    return toast({
-      title: 'Failed to save report.',
-      message: 'Please try again.',
-      type: 'error',
-    });
-  };
-
   return (
     <div
       style={{
@@ -94,7 +69,7 @@ export default function AiHeader({
       }}
     >
       {onSave && (
-        <Button variant={'outline'} size={'sm'} onClick={handleSave}>
+        <Button variant={'outline'} size={'sm'} onClick={onSave}>
           <InboxArrowDownIcon className="h-6 w-6 mr-2" aria-hidden="true" />
           Save
         </Button>

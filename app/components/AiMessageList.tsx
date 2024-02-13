@@ -15,7 +15,7 @@ export function AiMessageList({ messages, animate = true }: Props) {
   return (
     <div
       className="flex flex-col gap-4 px-4 py-8 "
-      style={{ maxHeight: '100%', overflowY: 'auto' }}
+      style={{ maxHeight: '100%', overflowY: 'scroll' }}
     >
       {messages.map((message) => {
         return (

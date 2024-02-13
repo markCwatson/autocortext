@@ -9,9 +9,14 @@ import { AiMessageList } from '@/components/AiMessageList';
 import AiPromptChat from '@/components/AiPromptChat';
 import OptionSelector from '@/components/OptionSelector';
 import { machines } from '@/lib/machines';
-import { History } from '@/types';
-import { ArrowPathIcon, TrashIcon } from '@heroicons/react/20/solid';
+import {
+  ArrowPathIcon,
+  CubeTransparentIcon,
+  TrashIcon,
+} from '@heroicons/react/20/solid';
 import { HistoryModel } from '@/repos/HistoryRepository';
+import DialogModal from '@/components/DialogModal';
+import Summary from '@/components/Summary';
 
 // todo: a lot of duplicate code here with docs page. refactor into a component
 
@@ -66,6 +71,8 @@ export default function Reports() {
   const [displayMachineOptions, setDisplayMachineOptions] = useState(false);
   const [displayIssueTypeOptions, setDisplayIssueTypeOptions] = useState(false);
 
+  const [showModal, setShowModal] = useState(false);
+
   const { messages, setMessages } = useQueryContext();
 
   useEffect(() => {
@@ -113,27 +120,6 @@ export default function Reports() {
     }
 
     return;
-  }
-
-  async function handleSave() {
-    fetchHistory();
-
-    setMessages([
-      {
-        id: `1`,
-        content: `Auto Cortext: Hello ${session.data!.user.name}.
-
-      I am ready to assist you in troubleshooting problems with your equipment. If you explain the issue, I will suggest a solution.
-
-      What machine are you having trouble with?`,
-        role: 'assistant',
-      },
-    ]);
-
-    setDisplayMachineOptions(true);
-    setDisplayIssueTypeOptions(false);
-    setIsIssueTypeSelected(false);
-    setIsMachineSelected(false);
   }
 
   async function deleteHistoryItem(_id: string) {
@@ -319,16 +305,131 @@ export default function Reports() {
     setSavedPrompt(null);
   }
 
+  async function handleSummarize(summarize: boolean) {
+    setShowModal(false);
+    let messagesCopy = messages;
+
+    if (summarize) {
+      const res = await fetch('/api/openai', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ conversation: messages.map((m) => m.content) }),
+      });
+
+      if (res.ok) {
+        const { summary } = await res.json();
+
+        messagesCopy.push({
+          id: `${messagesCopy.length + 1}`,
+          content: `Auto Cortext: Summary: ${summary}`,
+          role: 'assistant',
+        });
+
+        toast({
+          title: 'Success',
+          message: 'Summary generated.',
+          type: 'success',
+        });
+      } else {
+        toast({
+          title: 'Failed to generate summary.',
+          message: 'Please try again.',
+          type: 'error',
+        });
+      }
+    }
+
+    const res = await fetch('/api/history', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        machine,
+        messages: messagesCopy,
+        companyId,
+      }),
+    });
+
+    if (res.ok) {
+      toast({
+        title: 'Success',
+        message: 'Report saved.',
+        type: 'success',
+      });
+    } else {
+      toast({
+        title: 'Failed to save report.',
+        message: 'Please try again.',
+        type: 'error',
+      });
+    }
+
+    fetchHistory();
+
+    setMessages([
+      {
+        id: `1`,
+        content: `Auto Cortext: Hello ${session.data!.user.name}.
+
+      I am ready to assist you in troubleshooting problems with your equipment. If you explain the issue, I will suggest a solution.
+
+      What machine are you having trouble with?`,
+        role: 'assistant',
+      },
+    ]);
+
+    setDisplayMachineOptions(true);
+    setDisplayIssueTypeOptions(false);
+    setIsIssueTypeSelected(false);
+    setIsMachineSelected(false);
+  }
+
+  if (showModal) {
+    return (
+      <DialogModal
+        icon={
+          <CubeTransparentIcon
+            className="h-10 w-10 text-my-color10"
+            aria-hidden="true"
+          />
+        }
+        title={'Do you want to add a summary?'}
+        body={'You can add a summary of this conversation to this record.'}
+        show={true}
+        onClose={'/dashboard/troubleshoot'}
+        goToButtons={[
+          <button
+            type="button"
+            className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            onClick={() => handleSummarize(false)}
+          >
+            Skip for now
+          </button>,
+          <button
+            type="button"
+            className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            onClick={() => handleSummarize(true)}
+          >
+            Summarize
+          </button>,
+        ]}
+      />
+    );
+  }
+
   return (
-    <main className="mx-auto px-4 sm:px-6 lg:px-8" style={mainContainerStyle}>
+    <main className="mx-auto px-4 sm:px-6 lg:px-8 " style={mainContainerStyle}>
       <div
-        className="grid pt-2 grid-cols-1 lg:grid-cols-11 gap-x-4 gap-y-10"
+        className="grid pt-2 grid-cols-1 lg:grid-cols-11 gap-x-4 gap-y-10 "
         style={columnStyle}
       >
         {/* Left empty div */}
         <div className="bg-transparent lg:visible lg:col-span-2" />
         {/** History */}
-        <div className="lg:col-span-3 bg-my-color7 border rounded overflow-scroll">
+        <div className="lg:col-span-3 bg-my-color7 border rounded overflow-visible">
           <div
             style={{
               display: 'flex',
@@ -348,7 +449,9 @@ export default function Reports() {
               </div>
             </button>
           </div>
-          <div className="flex flex-col gap-2 w-full h-full overflow-scroll pt-4">
+          {/* todo: overflow-visible required here to allow summary popover.
+              This causes history list to grow. Consider doing something else. */}
+          <div className="flex flex-col gap-2 w-full h-full overflow-visible pt-4">
             {history ? (
               history.map((item, index) => {
                 return (
@@ -357,14 +460,17 @@ export default function Reports() {
                       selectedFileIndex === index ? 'bg-my-color5' : ''
                     }`}
                   >
-                    <button
-                      onClick={(e) => hanldeSelectHistory(e, index)}
-                      className="text-left"
-                    >
-                      <div key={index} className="text-left">
-                        <p className="text-left">{item.title}</p>
-                      </div>
-                    </button>
+                    <div className="flex items-center gap-2 ">
+                      <Summary messages={item.messages} />
+                      <button
+                        onClick={(e) => hanldeSelectHistory(e, index)}
+                        className="text-left"
+                      >
+                        <div key={index} className="text-left">
+                          <p className="text-left">{item.title}</p>
+                        </div>
+                      </button>
+                    </div>
                     <TrashIcon
                       className={`w-4 h-4 cursor-pointer hover:opacity-100 ${
                         selectedFileIndex === index
@@ -389,12 +495,12 @@ export default function Reports() {
         </div>
 
         {/* Chat Window */}
-        <div className="lg:col-span-4 pb-8 bg-my-color7 border rounded overflow-scroll">
+        <div className="lg:col-span-4 pb-8 bg-my-color7 border rounded overflow-hidden">
           <AiHeader
             messages={messages}
             machine={machine}
             companyId={companyId}
-            onSave={handleSave}
+            onSave={() => setShowModal(true)}
           />
           <div className="flex flex-col justify-center w-full h-full">
             <AiMessageList messages={messages} animate={animate} />
