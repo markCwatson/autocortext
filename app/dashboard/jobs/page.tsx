@@ -5,6 +5,7 @@ import KanbanBoard from '@/components/KanbanBoard';
 import { useUserContext } from '@/providers/UserProvider';
 import { ArrowPathIcon } from '@heroicons/react/20/solid';
 import { JobsModel } from '@/repos/JobsRepository';
+import { toast } from '@/components/Toast';
 
 export default function TroubleShooting() {
   const userValue = useUserContext();
@@ -23,7 +24,11 @@ export default function TroubleShooting() {
       const data = await response.json();
       setJobs(data);
     } catch (error) {
-      console.error('Error fetching jobs:', error);
+      toast({
+        title: 'Error',
+        message: 'Failed to fetch jobs',
+        type: 'error',
+      });
     }
   }
 
