@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { SortableContext, useSortable } from '@dnd-kit/sortable';
 import JobCard from '@/components/JobCard';
 import { Column, Id, Job } from '@/types';
@@ -18,9 +18,14 @@ export default function ColumnContainer({
   updateJob,
 }: Props) {
   const [editMode, setEditMode] = useState(false);
+  const [sortedJobs, setSortedJobs] = useState<JobsModel[]>(jobs);
 
   const jobsIds = useMemo(() => {
     return jobs.map((job) => job.id);
+  }, [jobs]);
+
+  useEffect(() => {
+    setSortedJobs(jobs.sort((a, b) => parseInt(a.id.toString()) - parseInt(b.id.toString())));
   }, [jobs]);
 
   const {
@@ -75,7 +80,7 @@ export default function ColumnContainer({
       {/* Column job container */}
       <div className="flex flex-grow flex-col gap-4 p-2 overflow-x-hidden overflow-y-auto">
         <SortableContext items={jobsIds}>
-          {jobs.map((job) => (
+          {sortedJobs.map((job) => (
             <JobCard
               key={job.id}
               job={job}

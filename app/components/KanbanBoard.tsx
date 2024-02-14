@@ -288,7 +288,7 @@ export default function KanbanBoard(props: KanbanBoardProps) {
     const activeIndex = jobs.findIndex((job) => job.id === activeId);
     let previousColumn = jobs[activeIndex].columnId;
 
-    // Im dropping a Job over another Job
+    // Dropping a Job over another Job
     const isOverAJob = over.data.current?.type === 'Job';
     if (isActiveAJob && isOverAJob) {
       setJobs((jobs) => {
@@ -303,7 +303,7 @@ export default function KanbanBoard(props: KanbanBoardProps) {
       });
     }
 
-    // Im dropping a Job over a column
+    // Dropping a Job over a column
     const isOverAColumn = over.data.current?.type === 'Column';
     if (isActiveAJob && isOverAColumn) {
       setJobs((jobs) => {
@@ -314,7 +314,7 @@ export default function KanbanBoard(props: KanbanBoardProps) {
       });
     }
 
-    const updatedJob = props.jobs.find((job) => job.id === activeId);
+    const updatedJob = props.jobs[activeIndex];
     if (updatedJob) {
       switch (updatedJob.columnId) {
         case 'doing':
