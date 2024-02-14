@@ -47,7 +47,8 @@ export default function ColumnContainer({
   return (
     <div
       ref={setNodeRef}
-      className="bg-my-color9 w-[350px] min-h-[600px] max-h-[600px] rounded-md flex flex-col"
+      className="bg-my-color9 w-[350px] rounded-md flex flex-col"
+      style={{ height: 'calc(100vh - 240px)' }} 
     >
       {/* Column title */}
       <div
