@@ -21,8 +21,8 @@ export default function ColumnContainer({
   const [sortedJobs, setSortedJobs] = useState<JobsModel[]>(jobs);
 
   const jobsIds = useMemo(() => {
-    return jobs.map((job) => job.id!);
-  }, [jobs]);
+    return sortedJobs.map((job) => job.id!);
+  }, [sortedJobs]);
 
   useEffect(() => {
     setSortedJobs(jobs.sort((a, b) => a.id! - b.id!));
