@@ -25,7 +25,7 @@ export default function ColumnContainer({
   }, [jobs]);
 
   useEffect(() => {
-    setSortedJobs(jobs.sort((a, b) => parseInt(a.id!.toString()) - parseInt(b.id!.toString())));
+    setSortedJobs(jobs.sort((a, b) => a.id! - b.id!));
   }, [jobs]);
 
   const {
