@@ -18,7 +18,7 @@ export default function ColumnContainer({
   updateJob,
 }: Props) {
   const [editMode, setEditMode] = useState(false);
-  const [sortedJobs, setSortedJobs] = useState<JobsModel[]>(jobs);
+  const [sortedJobs, setSortedJobs] = useState<JobsModel[]>([]);
 
   const jobsIds = useMemo(() => {
     return sortedJobs.map((job) => job.id!);
