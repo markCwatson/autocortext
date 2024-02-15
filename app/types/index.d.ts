@@ -23,7 +23,7 @@ export type Activity = {
 };
 
 export type Job = {
-  id: Id;
+  id?: number;
   companyId: string;
   creatorId: string;
   columnId: Id;

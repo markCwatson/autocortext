@@ -1,6 +1,7 @@
 import JobsService from '@/services/JobsService';
 import { NextRequest, NextResponse } from 'next/server';
 import { JobsModel } from '@/repos/JobsRepository';
+import CompanyService from '@/services/CompanyService';
 
 interface DeleteSchema {
   id: number;

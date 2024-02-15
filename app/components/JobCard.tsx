@@ -49,7 +49,7 @@ export default function JobCard({ job, deleteJob, updateJob }: Props) {
     transition,
     isDragging,
   } = useSortable({
-    id: job.id,
+    id: job.id!,
     data: {
       type: 'Job',
       job,
@@ -149,7 +149,7 @@ export default function JobCard({ job, deleteJob, updateJob }: Props) {
         </div>
         <button
           onClick={() => {
-            deleteJob(job.id);
+            deleteJob(job.id!);
           }}
           className="stroke-white rounded opacity-60 hover:opacity-100"
         >

@@ -21,11 +21,11 @@ export default function ColumnContainer({
   const [sortedJobs, setSortedJobs] = useState<JobsModel[]>(jobs);
 
   const jobsIds = useMemo(() => {
-    return jobs.map((job) => job.id);
+    return jobs.map((job) => job.id!);
   }, [jobs]);
 
   useEffect(() => {
-    setSortedJobs(jobs.sort((a, b) => parseInt(a.id.toString()) - parseInt(b.id.toString())));
+    setSortedJobs(jobs.sort((a, b) => parseInt(a.id!.toString()) - parseInt(b.id!.toString())));
   }, [jobs]);
 
   const {

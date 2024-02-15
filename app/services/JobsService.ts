@@ -1,10 +1,15 @@
 import JobsRepository, { JobsModel } from '@/repos/JobsRepository';
 import { Job } from '@/types';
 import { ObjectId } from 'mongodb';
+import CompanyService from './CompanyService';
 
 class JobsService {
   static async create(model: JobsModel): Promise<JobsModel | null> {
-    return JobsRepository.create(model);
+    const company = await CompanyService.incrementJobCountByCompanyId(model.companyId);
+    if (!company) {
+      return null;
+    }
+    return JobsRepository.create(model, company.jobCount);
   }
 
   static async getJobsByCompanyId(

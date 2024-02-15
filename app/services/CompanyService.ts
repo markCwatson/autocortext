@@ -21,6 +21,7 @@ class CompanyService {
       name,
       slug,
       createdAt: `${new Date()}`,
+      jobCount: 0,
     });
   }
 
@@ -40,6 +41,10 @@ class CompanyService {
 
   static async getAllCompanies(): Promise<Company[]> {
     return CompanyRepository.getAllCompanies();
+  }
+
+  static async incrementJobCountByCompanyId(companyId: string): Promise<CompanyModel | null> {
+    return CompanyRepository.incrementJobCountByCompanyId(companyId);
   }
 }
 

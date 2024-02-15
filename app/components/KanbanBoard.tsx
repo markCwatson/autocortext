@@ -83,7 +83,6 @@ export default function KanbanBoard(props: KanbanBoardProps) {
     machine: string;
   }) {
     const newJob: Job = {
-      id: props.jobs.length + 1,
       columnId: 'todo',
       title,
       description,
