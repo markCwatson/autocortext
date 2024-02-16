@@ -1,5 +1,6 @@
-import { useFormState } from "react-dom";
-import { uploadS3 } from '@/actions/uploadS3';
+'use client';
+
+import { useState } from 'react';
 import { Button } from '@/components/Button';
 
 interface FileUploadProps {
@@ -9,24 +10,36 @@ interface FileUploadProps {
   buttonSize: 'default' | 'sm' | 'lg' | 'nill';
 }
 
-const initialState = { message: '', status: '' };
-
 export default function FileUpload({
   buttonType,
   icon,
   text,
   buttonSize,
 }: FileUploadProps) {
-  const [state, formAction] = useFormState(uploadS3, initialState);
+  const [file, setFile] = useState<File>();
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    if (!event.target.files) return;
+    setFile(event.target.files[0]);
+  }
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    if (file) {
+      // todo: upload file to server
+      // see UploadPdf in doc page
+    }
+  };
 
   return (
     <>
-    <form action={formAction}>
+    <form onSubmit={handleSubmit}>
       <input
         id="file"
         type="file"
         accept=".pdf"
         style={{ display: 'none' }}
+        onChange={handleFileUpload}
       />
       <Button variant={buttonType} size={buttonSize}>
         <label htmlFor="file">
@@ -37,11 +50,6 @@ export default function FileUpload({
         </label>
       </Button>
       </form>
-      {state?.status && (
-        <div className={`pt-2 text-red-500`}>
-          {state?.message}
-        </div>
-      )}
     </>
   );
 }
