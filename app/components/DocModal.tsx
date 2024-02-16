@@ -5,12 +5,14 @@ import { Dialog, Transition } from '@headlessui/react';
 import { FileIcon, FolderClosed } from 'lucide-react';
 import { Button } from '@/components/Button';
 import classNames from '@/lib/classNames';
+import { toast } from './Toast';
 
 type Props = {
   show: boolean;
   onClose: () => void;
   setType: (type: 'file' | 'folder' | null) => void;
-  onFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onFileUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onFolderCreation: (folderName: string) => void;
 };
 
 export default function DocModal(props: Props) {
@@ -24,7 +26,15 @@ export default function DocModal(props: Props) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const folderName = formData.get('folderName');
-    console.log(folderName);
+    if (!folderName) {
+      toast({
+        title: 'Error',
+        message: 'Folder name is required',
+        type: 'error',
+      });
+    }
+
+    props.onFolderCreation(folderName as string);
     props.onClose();
   };
 
@@ -99,7 +109,7 @@ export default function DocModal(props: Props) {
                               type="text"
                               name="folderName"
                               placeholder="Folder Name"
-                              className=""
+                              className="text-my-color10"
                               required
                             />
                             <Button
@@ -135,7 +145,7 @@ export default function DocModal(props: Props) {
                               type="file"
                               accept=".pdf"
                               style={{ display: 'none' }}
-                              onChange={props.onFileChange}
+                              onChange={props.onFileUpload}
                             />
                             <Button
                               size={'lg'}

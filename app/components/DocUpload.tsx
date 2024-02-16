@@ -64,11 +64,59 @@ export default function DocUpload({
     }
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const uploadFolder = async (folderName: string) => {
+    setUploading(true);
+
+    try {
+      const response = await fetch(
+        `/api/doc?companyId=${companyId}&type=folder`,
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            name: folderName,
+            parentId: companyId,
+            parentPath: 'parentPath',
+            path: 'path',
+          }),
+        },
+      );
+
+      if (!response.ok) {
+        toast({
+          title: 'Error',
+          message: `Server status code: ${response.status}`,
+          type: 'error',
+        });
+        return;
+      }
+
+      toast({
+        title: 'Success',
+        message: 'Folder created successfully',
+        type: 'success',
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Error',
+        message: `Error creating folder: ${error.message}`,
+        type: 'error',
+      });
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (!files || files.length === 0) return;
     const file = files[0];
     uploadFile(file);
+    setIsOpenModal(false);
+    setType(null);
+  };
+
+  const handleFolderCreation = (folderName: string) => {
+    uploadFolder(folderName);
     setIsOpenModal(false);
     setType(null);
   };
@@ -95,7 +143,8 @@ export default function DocUpload({
         show={isOpenModal}
         setType={setType}
         onClose={() => setIsOpenModal(false)}
-        onFileChange={handleFileChange}
+        onFileUpload={handleFileUpload}
+        onFolderCreation={handleFolderCreation}
       />
     );
   }
