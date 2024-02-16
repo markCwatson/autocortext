@@ -162,7 +162,6 @@ export default function Documentation() {
                 <FileUpload
                   buttonType="outline"
                   buttonSize="default"
-                  id="file-upload-1"
                   text="Upload"
                   icon={<ArrowUpTrayIcon className="w-4 h-4 mx-auto mr-2" />}
                 />

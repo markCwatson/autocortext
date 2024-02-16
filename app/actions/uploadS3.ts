@@ -2,7 +2,6 @@
 
 import { revalidatePath } from "next/cache";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-import sharp from "sharp";
 
 const s3Client = new S3Client({
   region: process.env.NEXT_AWS_S3_REGION!,
@@ -13,15 +12,10 @@ const s3Client = new S3Client({
 });
 
 async function uploadFileToS3(file: Buffer, fileName: string) {
-  const fileBuffer = await sharp(file)
-    .jpeg({ quality: 50 })
-    .resize(800, 400)
-    .toBuffer();
-
   const params = {
     Bucket: process.env.NEXT_AWS_S3_BUCKET_NAME,
     Key: `${fileName}`,
-    Body: fileBuffer,
+    Body: file,
     ContentType: "file/pdf",
   };
 

@@ -7,7 +7,6 @@ interface FileUploadProps {
   icon?: React.ReactNode;
   text: string;
   buttonSize: 'default' | 'sm' | 'lg' | 'nill';
-  id: string;
 }
 
 const initialState = { message: '', status: '' };
@@ -17,7 +16,6 @@ export default function FileUpload({
   icon,
   text,
   buttonSize,
-  id,
 }: FileUploadProps) {
   const [state, formAction] = useFormState(uploadS3, initialState);
 
@@ -25,13 +23,13 @@ export default function FileUpload({
     <>
     <form action={formAction}>
       <input
-        id={id}
+        id="file"
         type="file"
         accept=".pdf"
         style={{ display: 'none' }}
       />
       <Button variant={buttonType} size={buttonSize}>
-        <label htmlFor={id}>
+        <label htmlFor="file">
           <div className="flex items-center text-center cursor-pointer">
             {icon}
             {text}
