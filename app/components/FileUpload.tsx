@@ -9,6 +9,7 @@ interface FileUploadProps {
   icon?: React.ReactNode;
   text: string;
   buttonSize: 'default' | 'sm' | 'lg' | 'nill';
+  companyId: string;
 }
 
 export default function FileUpload({
@@ -16,6 +17,7 @@ export default function FileUpload({
   icon,
   text,
   buttonSize,
+  companyId,
 }: FileUploadProps) {
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -26,7 +28,7 @@ export default function FileUpload({
     formData.append('file', file);
 
     try {
-      const response = await fetch('/api/pdf', {
+      const response = await fetch(`/api/pdf?companyId=${companyId}`, {
         method: 'POST',
         body: formData,
       });

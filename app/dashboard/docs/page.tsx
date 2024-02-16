@@ -164,6 +164,7 @@ export default function Documentation() {
                   buttonSize="default"
                   text="Upload"
                   icon={<ArrowUpTrayIcon className="w-4 h-4 mx-auto mr-2" />}
+                  companyId={session.data?.user.companyId as string}
                 />
               </div>
               <Search />

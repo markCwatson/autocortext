@@ -1,28 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-
-const s3Client = new S3Client({
-  region: process.env.NEXT_AWS_S3_REGION!,
-  credentials: {
-    accessKeyId: process.env.NEXT_AWS_S3_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.NEXT_AWS_S3_SECRET_ACCESS_KEY!,
-  },
-});
-
-async function uploadFileToS3(file: Buffer, fileName: string) {
-  const params = {
-    Bucket: process.env.NEXT_AWS_S3_BUCKET_NAME,
-    Key: `${fileName}`,
-    Body: file,
-    ContentType: 'application/pdf',
-  };
-
-  const command = new PutObjectCommand(params);
-  await s3Client.send(command);
-  return fileName;
-}
+import DocService from '@/services/DocService';
 
 export async function POST(req: NextRequest) {
+  const url = new URL(req.url);
+  const companyId = url.searchParams.get('companyId');
+  if (!companyId) {
+    return new Response('Company ID is required', { status: 400 });
+  }
+
   try {
     const formData = await req.formData();
     const fileEntry = formData.get('file');
@@ -35,10 +21,32 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const buffer = Buffer.from(await fileEntry.arrayBuffer());
-    const fileName = await uploadFileToS3(buffer, fileEntry.name);
+    const file = Buffer.from(await fileEntry.arrayBuffer());
+    const params = {
+      Bucket: process.env.NEXT_AWS_S3_BUCKET_NAME,
+      Key: `${fileEntry.name}`,
+      Body: file,
+      ContentType: 'application/pdf',
+    };
 
-    return NextResponse.json({ success: true, fileName });
+    const s3Client = new S3Client({
+      region: process.env.NEXT_AWS_S3_REGION!,
+      credentials: {
+        accessKeyId: process.env.NEXT_AWS_S3_ACCESS_KEY_ID!,
+        secretAccessKey: process.env.NEXT_AWS_S3_SECRET_ACCESS_KEY!,
+      },
+    });
+
+    await s3Client.send(new PutObjectCommand(params));
+    const doc = await DocService.create(fileEntry.name, companyId);
+    if (!doc) {
+      return NextResponse.json(
+        { error: 'Error creating document in the database' },
+        { status: 500 },
+      );
+    }
+
+    return NextResponse.json({ success: true });
   } catch (error) {
     return NextResponse.json(
       { error: (error as Error).message },
