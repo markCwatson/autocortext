@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Button } from '@/components/Button';
 import { toast } from './Toast';
 
@@ -17,73 +17,85 @@ export default function FileUpload({
   text,
   buttonSize,
 }: FileUploadProps) {
-  const [file, setFile] = useState<File>();
   const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    if (!event.target.files) return;
-    setFile(event.target.files[0]);
-  }
+  const uploadFile = async (file: File) => {
+    setUploading(true);
+    const formData = new FormData();
+    formData.append('file', file);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      if (!file) return;
-  
-      setUploading(true);
-      const formData = new FormData();
-      formData.append('file', file);
-  
-      try { 
-        const response = await fetch('/api/pdf', {
-          method: 'POST',
-          body: formData,
-        });
+    try {
+      const response = await fetch('/api/pdf', {
+        method: 'POST',
+        body: formData,
+      });
 
-        if (!response.ok) {
-          toast({
-            title: 'Error',
-            message: 'Error uploading file.',
-            type: 'error',
-          });
-        }
-
-        toast({
-          title: 'Success',
-          message: 'File uploaded successfully',
-          type: 'success',
-        });
-      } catch (error) {
+      if (!response.ok) {
         toast({
           title: 'Error',
-          message: `Error uploading file: ${error}`,
+          message: `Server status code: ${response.status}`,
           type: 'error',
         });
-      } finally {
-        setUploading(false);
-        setFile(undefined);
+        return;
       }
+
+      toast({
+        title: 'Success',
+        message: 'File uploaded successfully',
+        type: 'success',
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Error',
+        message: `Error uploading file: ${error.message}`,
+        type: 'error',
+      });
+    } finally {
+      setUploading(false);
     }
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+    const file = files[0];
+    uploadFile(file);
+  };
+
+  const handleButtonClick = () => {
+    if (uploading) {
+      toast({
+        title: 'Info',
+        message: 'Upload in progress. Please wait...',
+        type: 'success',
+      });
+      return;
+    }
+    fileInputRef.current?.click();
+  };
 
   return (
     <>
-    <form onSubmit={handleSubmit}>
       <input
-        id='file'
-        type='file'
-        accept='.pdf'
+        ref={fileInputRef}
+        id="file"
+        type="file"
+        accept=".pdf"
         style={{ display: 'none' }}
-        onChange={handleFileUpload}
+        onChange={handleFileChange}
       />
-      <Button variant={buttonType} size={buttonSize}>
-        <label htmlFor='file'>
-          <div className='flex items-center text-center cursor-pointer'>
-            {icon}
-            {text}
-          </div>
-        </label>
+      <Button
+        variant={buttonType}
+        size={buttonSize}
+        onClick={handleButtonClick}
+        disabled={uploading}
+      >
+        <div className="flex items-center text-center cursor-pointer">
+          {icon}
+          {text}
+        </div>
       </Button>
-      </form>
     </>
   );
 }
