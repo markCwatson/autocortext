@@ -3,12 +3,10 @@
 import React, { useEffect, useState, CSSProperties } from 'react';
 import { useSession } from 'next-auth/react';
 import Search from '@/components/Search';
-import FileUpload from '@/components/FileUpload';
-import Folders from './Folders';
+import DocStructure from '../../components/DocStructure';
 import AiHeader from '@/components/AiHeader';
 import { AiMessage, useQueryContext } from '@/providers/AiMessagesProvider';
 import { toast } from '@/components/Toast';
-import { ArrowUpTrayIcon } from '@heroicons/react/20/solid';
 import AiPromptChat from '@/components/AiPromptChat';
 import { AiMessageList } from '@/components/AiMessageList';
 
@@ -157,21 +155,12 @@ export default function Documentation() {
         >
           {/** Folders/files */}
           <div className="pb-8 lg:col-span-2 bg-my-color7 border rounded overflow-scroll">
-            <div className="flex justify-between items-center py-1 border-b">
-              <div className="ml-2 cursor-pointer text-my-color1 hover:bg-my-color5 hover:text-my-color9">
-                <FileUpload
-                  buttonType="outline"
-                  buttonSize="default"
-                  text="Upload"
-                  icon={<ArrowUpTrayIcon className="w-4 h-4 mx-auto mr-2" />}
-                  companyId={session.data?.user.companyId as string}
-                />
-              </div>
+            <div className="flex justify-end items-center py-1 border-b">
               <Search />
             </div>
             <div className="flex flex-col">
               <div className="pt-4 overflow-scroll">
-                <Folders callback={handleSelectDocument} />
+                <DocStructure callback={handleSelectDocument} />
               </div>
             </div>
           </div>

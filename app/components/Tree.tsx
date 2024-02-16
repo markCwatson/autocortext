@@ -7,7 +7,8 @@ import { PlusIcon, TrashIcon } from '@heroicons/react/20/solid';
 import DialogModal from '@/components/DialogModal';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import { toast } from '@/components/Toast';
-import FileUpload from '@/components/FileUpload';
+import DocUpload from '@/components/DocUpload';
+import { useSession } from 'next-auth/react';
 
 interface TreeItemProps {
   label: string;
@@ -26,6 +27,7 @@ const TreeItem = ({
   isOpen,
   isFolder,
 }: TreeItemProps) => {
+  const session = useSession();
   const [open, setOpen] = useState(isOpen);
   const [deleteSomething, setDeleteSomething] = useState({
     folder: false,
@@ -88,7 +90,7 @@ const TreeItem = ({
   }
 
   return (
-    <div className="flex flex-col text-sm">
+    <div className="flex flex-col text-sm ">
       <div className="group flex p-1 items-center hover:bg-my-color5 ">
         {showIcons ? (
           open ? (
@@ -111,12 +113,12 @@ const TreeItem = ({
         </span>
         <div className="flex ml-auto invisible group-hover:visible">
           {isFolder ? (
-            <FileUpload
+            <DocUpload
               buttonType="ghost"
               buttonSize="nill"
               text=""
               icon={<PlusIcon className="w-5 h-5 cursor-pointer" />}
-              companyId="123" // todo: replace with actual company id
+              companyId={session.data?.user?.companyId as string}
             />
           ) : null}
           <TrashIcon
@@ -139,7 +141,7 @@ interface TreeViewProps {
 }
 
 const TreeView = ({ children }: TreeViewProps) => {
-  return <div className="px-8">{children}</div>;
+  return <div className="px-4 overflow-visible">{children}</div>;
 };
 
 export { TreeView, TreeItem };

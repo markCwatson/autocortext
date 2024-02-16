@@ -1,32 +1,34 @@
-import md5 from 'md5';
+// import md5 from 'md5';
 import { FOLDER, FILE } from '@/lib/constants';
 
-// Define a type for entry which can be a file or a folder
-interface Entry {
-  parentID: string;
+// Define a type for doc which can be a file or a folder
+interface Doc {
+  companyId: string;
+  parentId: string;
   name: string;
   type: typeof FILE | typeof FOLDER;
   path?: string;
+  url?: string;
   parentPath?: string;
-  children?: string[];
+  childrenIds?: string[];
   // Index signature
   [key: string]: any;
 }
 
-// Define a type for the data structure holding the file system entries
+// Define a type for the data structure holding the file system docs (i.e. files/folders)
 type FileSystemData = {
-  [key: string]: Entry;
+  [key: string]: Doc;
 };
 
 // Function to search for entries with the same name and type under a specific parent
-const getNumDuplicates = (arr: FileSystemData, entry: Entry): number => {
+const getNumDuplicates = (fsData: FileSystemData, doc: Doc): number => {
   let numDuplicates = 0;
 
-  // Iterate over children of the parent entry to find duplicates
-  arr[entry.parentID].children?.forEach((elementId) => {
+  // Iterate over childrenIds of the parent entry to find duplicates
+  fsData[doc.parentId].childrenIds?.forEach((elementId) => {
     if (
-      arr[elementId].name.includes(entry.name) &&
-      arr[elementId].type === entry.type
+      fsData[elementId].name.includes(doc.name) &&
+      fsData[elementId].type === doc.type
     ) {
       numDuplicates++;
     }
@@ -36,11 +38,11 @@ const getNumDuplicates = (arr: FileSystemData, entry: Entry): number => {
 };
 
 // Function to add a new file or folder entry
-export const addEntry = (
-  data: FileSystemData,
-  newEntry: Entry,
+export const addDoc = (
+  fsData: FileSystemData,
+  newEntry: Doc,
 ): FileSystemData => {
-  let numDuplicates = getNumDuplicates(data, newEntry);
+  let numDuplicates = getNumDuplicates(fsData, newEntry);
 
   // If duplicates are found, modify the name to avoid conflict
   if (numDuplicates > 0) {
@@ -65,44 +67,44 @@ export const addEntry = (
       : `${newEntry.parentPath}/${newEntry.name}`;
 
   if (newEntry.type === FOLDER) {
-    newEntry.children = [];
+    newEntry.childrenIds = [];
   }
 
   // Generating a unique ID for the entry using md5 hash
-  const id = md5(newEntry.path + newEntry.type);
-  data[id] = newEntry; // Adding the entry to the data structure
-  data[newEntry.parentID].children?.push(id); // Updating the parent's children array
-  localStorage.setItem('fileSystem', JSON.stringify(data)); // Persisting the updated data to local storage
+  // const id = md5(newEntry.path + newEntry.type);
+  // fsData[id] = newEntry; // Adding the entry to the data structure
+  // fsData[newEntry.parentId].childrenIds?.push(id); // Updating the parent's childrenIds array
+  // localStorage.setItem('fileSystem', JSON.stringify(fsData)); // Persisting the updated data to local storage
 
-  return { ...data };
+  return { ...fsData };
 };
 
 // Function to delete an entry (file or folder)
-export const deleteEntry = (
-  data: FileSystemData,
+export const deleteDoc = (
+  fsData: FileSystemData,
   entryID: string,
 ): FileSystemData => {
-  const entry = data[entryID];
+  const doc = fsData[entryID];
 
-  // If the entry is a folder, recursively delete its children
-  if (entry.type === FOLDER) {
-    entry.children?.forEach((id) => {
-      deleteEntry(data, id);
+  // If the doc is a folder, recursively delete its childrenIds
+  if (doc.type === FOLDER) {
+    doc.childrenIds?.forEach((id) => {
+      deleteDoc(fsData, id);
     });
   }
 
-  // Removing the entry from its parent's children array
-  let parentID = data[entryID].parentID;
-  let index = data[parentID].children?.indexOf(entryID);
+  // Removing the doc from its parent's childrenIds array
+  let parentId = fsData[entryID].parentId;
+  let index = fsData[parentId].childrenIds?.indexOf(entryID);
 
   if (index !== -1 && index !== undefined) {
-    data[parentID].children?.splice(index, 1);
+    fsData[parentId].childrenIds?.splice(index, 1);
   }
 
-  delete data[entryID];
-  localStorage.setItem('fileSystem', JSON.stringify(data));
+  delete fsData[entryID];
+  localStorage.setItem('fileSystem', JSON.stringify(fsData));
 
-  return { ...data };
+  return { ...fsData };
 };
 
 // Utility function for deep cloning objects or arrays
@@ -120,26 +122,26 @@ const cloneObj = (obj: any): any => {
 };
 
 // Function to generate a tree structure from a list of entries
-export const generateTreeFromList = (_list: FileSystemData): Entry[] => {
-  const root: Entry[] = []; // Array to hold root entries
+export const generateTreeFromList = (_list: FileSystemData): Doc[] => {
+  const root: Doc[] = []; // Array to hold root entries
   let list = cloneObj(_list); // Creating a deep copy of the list
 
   Object.keys(list).forEach((nodeID) => {
-    if (!list[nodeID].parentID) {
+    if (!list[nodeID].parentId) {
       return root.push(list[nodeID]); // Adding root entries
     }
 
-    let parentID = list[nodeID].parentID;
+    let parentId = list[nodeID].parentId;
 
-    if (list[parentID]) {
-      let index = list[parentID].children?.indexOf(nodeID);
+    if (list[parentId]) {
+      let index = list[parentId].childrenIds?.indexOf(nodeID);
 
       if (index !== -1) {
-        list[parentID].children?.splice(index, 1);
+        list[parentId].childrenIds?.splice(index, 1);
       }
 
       if (list[nodeID].type === FOLDER) {
-        list[parentID].children?.push(list[nodeID]); // Reordering children for folders
+        list[parentId].childrenIds?.push(list[nodeID]); // Reordering childrenIds for folders
       }
     }
   });
@@ -151,17 +153,18 @@ export const generateTreeFromList = (_list: FileSystemData): Entry[] => {
 export const showPathEntries = (
   parentPath: string,
   fileSystem: FileSystemData,
-): Entry[] | undefined => {
-  // Returning children of the entry identified by parentPath and FOLDER type
-  return fileSystem[md5(parentPath + FOLDER)]
-    ? fileSystem[md5(parentPath + FOLDER)].children?.map(
-        (childrenID) => fileSystem[childrenID],
-      )
-    : [];
+): Doc[] | undefined => {
+  // Returning childrenIds of the entry identified by parentPath and FOLDER type
+  // return fileSystem[md5(parentPath + FOLDER)]
+  //   ? fileSystem[md5(parentPath + FOLDER)].childrenIds?.map(
+  //       (childrenIdsID) => fileSystem[childrenIdsID],
+  //     )
+  //   : [];
+  return [];
 };
 
 // Function to compare two entries for equality
-export const entriesAreSame = (x: Entry, y: Entry): boolean => {
+export const entriesAreSame = (x: Doc, y: Doc): boolean => {
   for (var p in x) {
     // Check property existence in both objects
     if (x.hasOwnProperty(p) !== y.hasOwnProperty(p)) {

@@ -1,0 +1,171 @@
+'use client';
+
+import { useState, Fragment, useRef } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
+import { FileIcon, FolderClosed } from 'lucide-react';
+import { Button } from '@/components/Button';
+import classNames from '@/lib/classNames';
+
+type Props = {
+  show: boolean;
+  onClose: () => void;
+  setType: (type: 'file' | 'folder' | null) => void;
+  onFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+export default function DocModal(props: Props) {
+  const [selectedType, setSelectedType] = useState<'file' | 'folder' | null>(
+    null,
+  );
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFolderSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const folderName = formData.get('folderName');
+    console.log(folderName);
+    props.onClose();
+  };
+
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <div className="rounded-md bg-my-color3 dark:bg-my-color10 text-my-color5 hover:bg-my-color8 h-11">
+        <Transition.Root show={props.show} as={Fragment}>
+          <Dialog as="div" className="relative z-10" onClose={props.onClose}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-my-color9 bg-opacity-90 transition-opacity" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 z-10 overflow-y-auto">
+              <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                  enterTo="opacity-100 translate-y-0 sm:scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                  leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                >
+                  <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+                    <div>
+                      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-ful">
+                        <div className="flex gap-4 text-green-600 animate-bounce">
+                          <FolderClosed
+                            className="h-8 w-8 shrink-0"
+                            aria-hidden="true"
+                          />
+                          {selectedType !== 'folder' && (
+                            <FileIcon
+                              className="h-8 w-8 shrink-0"
+                              aria-hidden="true"
+                            />
+                          )}
+                        </div>
+                      </div>
+                      <div className="mt-3 text-center sm:mt-5">
+                        <Dialog.Title
+                          as="h3"
+                          className="text-base font-semibold leading-6 text-gray-900"
+                        >
+                          {`Add a new ${
+                            selectedType === 'folder' ? 'folder' : 'item'
+                          }`}
+                        </Dialog.Title>
+                        <div className="mt-2">
+                          <p className="text-sm text-gray-500">
+                            {selectedType === 'folder'
+                              ? 'Provide the folder name...'
+                              : 'Create a folder or add a file...'}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-5">
+                      {selectedType === 'folder' ? (
+                        // Render form for folder name input
+                        <form onSubmit={handleFolderSubmit}>
+                          <div className="flex justify-between">
+                            <input
+                              type="text"
+                              name="folderName"
+                              placeholder="Folder Name"
+                              className=""
+                              required
+                            />
+                            <Button
+                              type="submit"
+                              className="button-class-names"
+                            >
+                              Create Folder
+                            </Button>
+                          </div>
+                        </form>
+                      ) : (
+                        // Render buttons to select file or folder
+                        <div className="flex justify-evenly gap-8 mx-8">
+                          <Button
+                            size={'lg'}
+                            onClick={() => setSelectedType('folder')}
+                            className={classNames(
+                              'text-my-color1 hover:bg-my-color4',
+                              'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
+                              'w-full px-6 justify-start',
+                            )}
+                          >
+                            <FolderClosed
+                              className="h-4 w-4 shrink-0"
+                              aria-hidden="true"
+                            />
+                            Folder
+                          </Button>
+                          <>
+                            <input
+                              ref={fileInputRef}
+                              id="file"
+                              type="file"
+                              accept=".pdf"
+                              style={{ display: 'none' }}
+                              onChange={props.onFileChange}
+                            />
+                            <Button
+                              size={'lg'}
+                              onClick={() => {
+                                props.setType('file');
+                                fileInputRef.current?.click();
+                              }}
+                              className={classNames(
+                                'text-my-color1 hover:bg-my-color4',
+                                'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
+                                'w-full px-6 justify-start',
+                              )}
+                            >
+                              <FileIcon
+                                className="h-4 w-4 shrink-0"
+                                aria-hidden="true"
+                              />
+                              File
+                            </Button>
+                          </>
+                        </div>
+                      )}
+                    </div>
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition.Root>
+      </div>
+    </div>
+  );
+}

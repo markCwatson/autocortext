@@ -4,23 +4,9 @@ interface FoldersProps {
   callback: (path: string) => void;
 }
 
-export default function Folders({ callback }: FoldersProps) {
+export default function DocStructure({ callback }: FoldersProps) {
   return (
     <>
-      {/** standards */}
-      <TreeView>
-        <TreeItem
-          label="standards"
-          showIcons={true}
-          isOpen={false}
-          isFolder={true}
-        >
-          <TreeItem label="iso9001" showIcons={true} isFolder={true}>
-            <TreeItem label="iso9001_2020.pdf" showIcons={false} />
-          </TreeItem>
-        </TreeItem>
-      </TreeView>
-      {/** machines */}
       <TreeView>
         <TreeItem
           label="machines"
@@ -59,9 +45,6 @@ export default function Folders({ callback }: FoldersProps) {
               onSelect={() => callback('bench_lathe.pdf')}
             />
           </TreeItem>
-          <TreeItem label="drill_presses" showIcons={true} isFolder={true} />
-          <TreeItem label="welders" showIcons={true} isFolder={true} />
-          <TreeItem label="cnc" showIcons={true} isFolder={true} />
         </TreeItem>
       </TreeView>
     </>

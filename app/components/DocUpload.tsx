@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/Button';
-import { toast } from './Toast';
+import { toast } from '@/components/Toast';
+import DocModal from '@/components/DocModal';
 
 interface FileUploadProps {
   buttonType: 'outline' | 'ghost';
@@ -12,26 +13,31 @@ interface FileUploadProps {
   companyId: string;
 }
 
-export default function FileUpload({
+export default function DocUpload({
   buttonType,
   icon,
   text,
   buttonSize,
   companyId,
 }: FileUploadProps) {
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [type, setType] = useState<'file' | 'folder' | null>(null);
   const [uploading, setUploading] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const uploadFile = async (file: File) => {
     setUploading(true);
     const formData = new FormData();
     formData.append('file', file);
+    console.log('formData', formData);
 
     try {
-      const response = await fetch(`/api/pdf?companyId=${companyId}`, {
-        method: 'POST',
-        body: formData,
-      });
+      const response = await fetch(
+        `/api/doc?companyId=${companyId}&type=file`,
+        {
+          method: 'POST',
+          body: formData,
+        },
+      );
 
       if (!response.ok) {
         toast({
@@ -63,9 +69,16 @@ export default function FileUpload({
     if (!files || files.length === 0) return;
     const file = files[0];
     uploadFile(file);
+    setIsOpenModal(false);
+    setType(null);
   };
 
   const handleButtonClick = () => {
+    if (!type) {
+      setIsOpenModal(true);
+      return;
+    }
+
     if (uploading) {
       toast({
         title: 'Info',
@@ -74,30 +87,30 @@ export default function FileUpload({
       });
       return;
     }
-    fileInputRef.current?.click();
   };
 
-  return (
-    <>
-      <input
-        ref={fileInputRef}
-        id="file"
-        type="file"
-        accept=".pdf"
-        style={{ display: 'none' }}
-        onChange={handleFileChange}
+  if (isOpenModal) {
+    return (
+      <DocModal
+        show={isOpenModal}
+        setType={setType}
+        onClose={() => setIsOpenModal(false)}
+        onFileChange={handleFileChange}
       />
-      <Button
-        variant={buttonType}
-        size={buttonSize}
-        onClick={handleButtonClick}
-        disabled={uploading}
-      >
-        <div className="flex items-center text-center cursor-pointer">
-          {icon}
-          {text}
-        </div>
-      </Button>
-    </>
+    );
+  }
+
+  return (
+    <Button
+      variant={buttonType}
+      size={buttonSize}
+      onClick={handleButtonClick}
+      disabled={uploading}
+    >
+      <div className="flex items-center text-center cursor-pointer">
+        {icon}
+        {text}
+      </div>
+    </Button>
   );
 }
