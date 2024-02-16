@@ -39,3 +39,9 @@ export type History = {
   messages: AiMessage[];
   companyId: string | ObjectId;
 };
+
+export type Doc = {
+  path: string;
+  url: string;
+  companyId: string | ObjectId;
+};

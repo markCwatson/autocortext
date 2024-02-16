@@ -1,11 +1,15 @@
-import { Button, buttonVariants } from '@/components/Button';
+'use client';
+
+import { useState, useRef } from 'react';
+import { Button } from '@/components/Button';
+import { toast } from './Toast';
 
 interface FileUploadProps {
   buttonType: 'outline' | 'ghost';
   icon?: React.ReactNode;
   text: string;
   buttonSize: 'default' | 'sm' | 'lg' | 'nill';
-  id: string;
+  companyId: string;
 }
 
 export default function FileUpload({
@@ -13,34 +17,86 @@ export default function FileUpload({
   icon,
   text,
   buttonSize,
-  id,
+  companyId,
 }: FileUploadProps) {
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files) return;
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const file = event.target.files[0];
-    if (file) {
-      // todo: upload file to server
-      // see UploadPdf in doc page
+  const uploadFile = async (file: File) => {
+    setUploading(true);
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch(`/api/pdf?companyId=${companyId}`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        toast({
+          title: 'Error',
+          message: `Server status code: ${response.status}`,
+          type: 'error',
+        });
+        return;
+      }
+
+      toast({
+        title: 'Success',
+        message: 'File uploaded successfully',
+        type: 'success',
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Error',
+        message: `Error uploading file: ${error.message}`,
+        type: 'error',
+      });
+    } finally {
+      setUploading(false);
     }
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+    const file = files[0];
+    uploadFile(file);
+  };
+
+  const handleButtonClick = () => {
+    if (uploading) {
+      toast({
+        title: 'Info',
+        message: 'Upload in progress. Please wait...',
+        type: 'success',
+      });
+      return;
+    }
+    fileInputRef.current?.click();
   };
 
   return (
     <>
       <input
-        id={id}
+        ref={fileInputRef}
+        id="file"
         type="file"
         accept=".pdf"
         style={{ display: 'none' }}
-        onChange={handleFileUpload}
+        onChange={handleFileChange}
       />
-      <Button variant={buttonType} size={buttonSize}>
-        <label htmlFor={id}>
-          <div className="flex items-center text-center cursor-pointer">
-            {icon}
-            {text}
-          </div>
-        </label>
+      <Button
+        variant={buttonType}
+        size={buttonSize}
+        onClick={handleButtonClick}
+        disabled={uploading}
+      >
+        <div className="flex items-center text-center cursor-pointer">
+          {icon}
+          {text}
+        </div>
       </Button>
     </>
   );

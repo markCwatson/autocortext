@@ -114,9 +114,9 @@ const TreeItem = ({
             <FileUpload
               buttonType="ghost"
               buttonSize="nill"
-              id="file-upload-2"
               text=""
               icon={<PlusIcon className="w-5 h-5 cursor-pointer" />}
+              companyId="123" // todo: replace with actual company id
             />
           ) : null}
           <TrashIcon
