@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { TreeItem, TreeView } from '@/components/Tree';
-import { FOLDER } from '@/lib/constants';
+import { FILE, FOLDER } from '@/lib/constants';
 import { DocModel } from '@/repos/DocRepository';
 import { Loader2 } from 'lucide-react';
 
@@ -10,12 +10,22 @@ interface FoldersProps {
   selectDoc: (url: string, name: string) => void;
   docs: DocModel[] | null;
   fetchDocs: (companyId: string) => void;
+  onDeleteDoc: ({
+    companyId,
+    docId,
+    type,
+  }: {
+    companyId: string;
+    docId: string;
+    type: typeof FOLDER | typeof FILE;
+  }) => void;
 }
 
 export default function DocStructure({
   selectDoc,
   docs,
   fetchDocs,
+  onDeleteDoc,
 }: FoldersProps) {
   const [openNodes, setOpenNodes] = useState<Record<string, boolean>>({});
 
@@ -43,9 +53,9 @@ export default function DocStructure({
         showIcons={true}
         isOpen={!!openNodes[node.path]}
         fetchDocs={fetchDocs}
+        onDeleteDoc={onDeleteDoc}
         onSelect={() => {
           if (node.type === FOLDER) {
-            console.log('openNodes', openNodes);
             toggleNode(node.path);
           } else {
             selectDoc(node.url, node.name);

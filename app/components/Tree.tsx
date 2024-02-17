@@ -1,25 +1,32 @@
 'use client';
 
 import { FileIcon, FolderClosed, FolderOpen } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSpring, animated } from 'react-spring';
 import { TrashIcon } from '@heroicons/react/20/solid';
-import DialogModal from '@/components/DialogModal';
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
-import { toast } from '@/components/Toast';
 import DocUpload from '@/components/DocUpload';
 import { useSession } from 'next-auth/react';
+import { FILE, FOLDER } from '@/lib/constants';
 
 interface TreeItemProps {
   label: string;
   children?: React.ReactNode;
-  onSelect?: () => void;
-  showIcons?: boolean;
-  isOpen?: boolean;
+  onSelect: () => void;
+  showIcons: boolean;
+  isOpen: boolean;
   isFolder?: boolean;
   id: string;
   path: string;
   fetchDocs: (companyId: string) => void;
+  onDeleteDoc: ({
+    companyId,
+    docId,
+    type,
+  }: {
+    companyId: string;
+    docId: string;
+    type: typeof FOLDER | typeof FILE;
+  }) => void;
 }
 
 const TreeItem = ({
@@ -32,75 +39,19 @@ const TreeItem = ({
   id,
   path,
   fetchDocs,
+  onDeleteDoc,
 }: TreeItemProps) => {
   const session = useSession();
-  const [deleteSomething, setDeleteSomething] = useState({
-    folder: false,
-    file: false,
-  });
   const expand = useSpring({ height: isOpen ? 'auto' : 0 });
-
-  function handleDelete(isDelete: boolean) {
-    const { folder } = deleteSomething;
-    setDeleteSomething({ folder: false, file: false });
-    if (!isDelete) return;
-
-    // doesn't actually delete anything
-    toast({
-      title: 'Deleted',
-      message: `Successfully deleted ${folder ? 'folder' : 'file'}`,
-      type: 'success',
-    });
-  }
-
-  if (deleteSomething.folder || deleteSomething.file) {
-    return (
-      <DialogModal
-        icon={
-          <ExclamationTriangleIcon
-            className="h-10 w-10 text-orange-600"
-            aria-hidden="true"
-          />
-        }
-        title={`Delete ${deleteSomething.folder ? 'folder' : 'file'}`}
-        body={'Are you sure? This cannot be undone.'}
-        show={true}
-        onClose={'/dashboard/docs'}
-        goToButtons={[
-          <button
-            type="button"
-            className="inline-flex w-full justify-center rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            onClick={() => handleDelete(false)}
-          >
-            Cancel
-          </button>,
-          <button
-            type="button"
-            className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            onClick={() => handleDelete(true)}
-          >
-            Confirm
-          </button>,
-        ]}
-      />
-    );
-  }
-
-  function handleClick() {
-    if (onSelect) {
-      onSelect();
-      return;
-    }
-  }
 
   return (
     <div className="flex flex-col text-sm ">
       <div className="group flex p-1 items-center hover:bg-my-color5 ">
         {isFolder && showIcons ? (
           isOpen ? (
-            <FolderOpen onClick={handleClick} className="cursor-pointer" />
+            <FolderOpen onClick={onSelect} className="cursor-pointer" />
           ) : (
-            <FolderClosed onClick={handleClick} className="cursor-pointer" />
+            <FolderClosed onClick={onSelect} className="cursor-pointer" />
           )
         ) : null}
         {!isFolder ? (
@@ -109,10 +60,10 @@ const TreeItem = ({
               padding: '3px',
               cursor: 'pointer',
             }}
-            onClick={handleClick}
+            onClick={onSelect}
           />
         ) : null}
-        <span className="pl-2 cursor-pointer" onClick={handleClick}>
+        <span className="pl-2 cursor-pointer" onClick={onSelect}>
           {label}
         </span>
         <div className="flex ml-auto invisible group-hover:visible">
@@ -127,7 +78,11 @@ const TreeItem = ({
           <TrashIcon
             className="ml-2 w-5 h-5 cursor-pointer"
             onClick={() =>
-              setDeleteSomething({ file: !!!isFolder, folder: !!isFolder })
+              onDeleteDoc({
+                companyId: session.data?.user?.companyId as string,
+                docId: id,
+                type: isFolder ? FOLDER : FILE,
+              })
             }
           />
         </div>

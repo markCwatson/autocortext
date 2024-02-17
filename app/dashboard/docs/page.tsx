@@ -10,6 +10,9 @@ import AiPromptChat from '@/components/AiPromptChat';
 import { AiMessageList } from '@/components/AiMessageList';
 import { DocModel } from '@/repos/DocRepository';
 import { useUserContext } from '@/providers/UserProvider';
+import DialogModal from '@/components/DialogModal';
+import { ExclamationTriangleIcon } from '@heroicons/react/20/solid';
+import { FOLDER, FILE } from '@/lib/constants';
 
 const iFrameHeight = '100%';
 const iFrameWidth = '100%';
@@ -45,6 +48,189 @@ export default function Documentation() {
   const [selectedDocument, setSelectedDocument] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [docs, setDocs] = useState<DocModel[] | null>(null);
+  const [deleteConfig, setDeleteConfig] = useState<{
+    companyId?: string;
+    docId?: string;
+    type?: typeof FOLDER | typeof FILE;
+  }>({});
+
+  useEffect(() => {
+    if (messages.length === 0) {
+      setMessages([
+        {
+          id: '1',
+          content: `Auto Cortext: Hi ${userValue.user.name}, how can I help you?`,
+          role: 'assistant',
+        },
+      ]);
+    }
+
+    fetchDocs(userValue.user.companyId as string);
+  }, []);
+
+  useEffect(() => {}, [deleteConfig]);
+
+  console.log('deleteConfig:', deleteConfig);
+
+  // depth-first recursive function to find a document by id from children
+  const findDocById = (doc: DocModel, docId: string): DocModel | null => {
+    if (doc._id.toString() === docId) {
+      return doc;
+    }
+
+    if (doc.children && Array.isArray(doc.children)) {
+      for (let i = 0; i < doc.children.length; i++) {
+        const result = findDocById(doc.children[i], docId);
+        if (result) {
+          return result;
+        }
+      }
+    }
+
+    return null;
+  };
+
+  if (deleteConfig.type === FOLDER) {
+    const root = docs![0];
+    const doc = findDocById(root, deleteConfig.docId!);
+    if (!doc) {
+      return null;
+    }
+
+    if (doc._id.toString() === deleteConfig.docId) {
+      if (doc.childrenIds.length > 0) {
+        return (
+          <DialogModal
+            icon={
+              <ExclamationTriangleIcon
+                className="h-10 w-10 text-orange-600"
+                aria-hidden="true"
+              />
+            }
+            title={`Cannot delete folder`}
+            body={'The folder should be empty.'}
+            show={true}
+            onClose={'/dashboard/docs'}
+            goToButtons={[
+              <button
+                type="button"
+                className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={() => deleteDoc(false)}
+              >
+                Go Back
+              </button>,
+            ]}
+          />
+        );
+      } else {
+        return (
+          <DialogModal
+            icon={
+              <ExclamationTriangleIcon
+                className="h-10 w-10 text-orange-600"
+                aria-hidden="true"
+              />
+            }
+            title={`Delete folder`}
+            body={'Are you sure? This cannot be undone.'}
+            show={true}
+            onClose={'/dashboard/docs'}
+            goToButtons={[
+              <button
+                type="button"
+                className="inline-flex w-full justify-center rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={() => deleteDoc(false)}
+              >
+                Cancel
+              </button>,
+              <button
+                type="button"
+                className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={() => deleteDoc(true)}
+              >
+                Confirm
+              </button>,
+            ]}
+          />
+        );
+      }
+    }
+  }
+
+  if (deleteConfig.type === FILE) {
+    return (
+      <DialogModal
+        icon={
+          <ExclamationTriangleIcon
+            className="h-10 w-10 text-orange-600"
+            aria-hidden="true"
+          />
+        }
+        title={`Delete file`}
+        body={'Are you sure? This cannot be undone.'}
+        show={true}
+        onClose={'/dashboard/docs'}
+        goToButtons={[
+          <button
+            type="button"
+            className="inline-flex w-full justify-center rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            onClick={() => deleteDoc(false)}
+          >
+            Cancel
+          </button>,
+          <button
+            type="button"
+            className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            onClick={() => deleteDoc(true)}
+          >
+            Confirm
+          </button>,
+        ]}
+      />
+    );
+  }
+
+  async function deleteDoc(isDelete: boolean) {
+    if (!isDelete) {
+      return setDeleteConfig({});
+    }
+
+    try {
+      const response = await fetch(
+        `/api/doc?companyId=${deleteConfig.companyId}&docId=${deleteConfig.docId}&type=${deleteConfig.type}`,
+        {
+          method: 'DELETE',
+        },
+      );
+
+      if (!response.ok) {
+        toast({
+          title: 'Error',
+          message: 'Failed to delete document',
+          type: 'error',
+        });
+      }
+
+      toast({
+        title: 'Success',
+        message: 'Document deleted',
+        type: 'success',
+      });
+
+      const data = await response.json();
+      if (data) {
+        fetchDocs(userValue.user.companyId as string);
+      }
+    } catch (error) {
+      toast({
+        title: 'Error',
+        message: 'Failed to delete document',
+        type: 'error',
+      });
+    } finally {
+      setDeleteConfig({});
+    }
+  }
 
   async function fetchDocs(companyId: string) {
     if (!companyId) {
@@ -70,20 +256,6 @@ export default function Documentation() {
       });
     }
   }
-
-  useEffect(() => {
-    if (messages.length === 0) {
-      setMessages([
-        {
-          id: '1',
-          content: `Auto Cortext: Hi ${userValue.user.name}, how can I help you?`,
-          role: 'assistant',
-        },
-      ]);
-    }
-
-    fetchDocs(userValue.user.companyId as string);
-  }, []);
 
   async function sendQuery(e: any, newMessage: AiMessage) {
     e.preventDefault();
@@ -143,11 +315,6 @@ export default function Documentation() {
     }
   }
 
-  // todo: link urls to accounts and remove this
-  useEffect(() => {
-    console.log('selectedDocument: ', selectedDocument);
-  }, [selectedDocument]);
-
   const handleSelectDocument = (url: string, name: string) => {
     setSelectedDocument(url);
 
@@ -179,6 +346,7 @@ export default function Documentation() {
                   selectDoc={handleSelectDocument}
                   docs={docs}
                   fetchDocs={fetchDocs}
+                  onDeleteDoc={setDeleteConfig}
                 />
               </div>
             </div>

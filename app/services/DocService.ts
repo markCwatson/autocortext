@@ -79,6 +79,26 @@ class DocService {
     return DocRepository.getAllByCompanyId(companyId);
   }
 
+  static async getDocById(docId: string): Promise<DocModel | null> {
+    return DocRepository.getDocById(new ObjectId(docId));
+  }
+
+  static async delete({
+    companyId,
+    docId,
+    type,
+  }: {
+    companyId: string;
+    docId: string;
+    type: typeof FILE | typeof FOLDER;
+  }): Promise<boolean> {
+    const docs = await DocRepository.getAllByCompanyId(companyId);
+    const fsData = DocService.convertDocModelsToFileSystemData(docs);
+
+    await DocService.deleteDoc(fsData, docId);
+    return true;
+  }
+
   // Function to generate a tree structure from a list of entries
   static generateTreeFromList(docs: DocModel[]): Doc[] {
     const fsData = DocService.convertDocModelsToFileSystemData(docs);
@@ -147,13 +167,15 @@ class DocService {
   }
 
   // Function to delete an entry (file or folder)
-  private static deleteDoc(
+  private static async deleteDoc(
     fsData: FileSystemData,
-    entryID: string,
-  ): FileSystemData {
-    const doc = fsData[entryID];
+    docId: string,
+  ): Promise<FileSystemData> {
+    const doc = fsData[docId];
 
     // If the doc is a folder, recursively delete its childrenIds
+    // note: UI does not allow deletion of folders with children at this time (Feb 17, 2024)
+    // so this code should not be executed
     if (doc.type === FOLDER) {
       doc.childrenIds?.forEach((id) => {
         DocService.deleteDoc(fsData, id);
@@ -161,15 +183,18 @@ class DocService {
     }
 
     // Removing the doc from its parent's childrenIds array
-    let parentId = fsData[entryID].parentId;
-    let index = fsData[parentId as string].childrenIds?.indexOf(entryID);
+    let parentId = fsData[docId].parentId;
+    let index = fsData[parentId as string].childrenIds?.indexOf(docId);
 
     if (index !== -1 && index !== undefined) {
       fsData[parentId as string].childrenIds?.splice(index, 1);
+      await DocRepository.updateOne(new ObjectId(parentId), {
+        $pull: { childrenIds: new ObjectId(docId) },
+      });
     }
 
-    delete fsData[entryID];
-    localStorage.setItem('fileSystem', JSON.stringify(fsData));
+    await DocRepository.delete(new ObjectId(docId));
+    delete fsData[docId];
 
     return { ...fsData };
   }

@@ -39,6 +39,14 @@ class DocRepository {
       .toArray() as Promise<DocModel[]>;
   }
 
+  static async getDocById(docId: ObjectId): Promise<DocModel | null> {
+    const client = await Database.getClient();
+    return client
+      .db()
+      .collection('docs')
+      .findOne({ _id: docId }) as Promise<DocModel | null>;
+  }
+
   static async updateParentChildrenIds(
     parentId: ObjectId,
     childId: ObjectId,
@@ -51,6 +59,50 @@ class DocRepository {
         { _id: new ObjectId(parentId) },
         { $push: { childrenIds: childId } },
       );
+  }
+
+  static async delete(docId: ObjectId): Promise<void> {
+    const client = await Database.getClient();
+    try {
+      await client.db().collection('docs').deleteOne({ _id: docId });
+    } catch (error: MongoServerError | any) {
+      throw new ApiError({
+        code: 500,
+        message: error.message,
+        explanation: null,
+      });
+    }
+  }
+
+  static async updateOne(
+    docId: ObjectId,
+    update: Partial<Doc>,
+  ): Promise<DocModel> {
+    const client = await Database.getClient();
+    try {
+      if (update.$pull) {
+        await client
+          .db()
+          .collection('docs')
+          .updateOne({ _id: docId }, { $pull: update.$pull });
+      } else {
+        await client
+          .db()
+          .collection('docs')
+          .updateOne({ _id: docId }, { $set: update });
+      }
+
+      return client
+        .db()
+        .collection('docs')
+        .findOne({ _id: docId }) as Promise<DocModel>;
+    } catch (error: MongoServerError | any) {
+      throw new ApiError({
+        code: 500,
+        message: error.message,
+        explanation: null,
+      });
+    }
   }
 }
 

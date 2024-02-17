@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import {
+  S3Client,
+  PutObjectCommand,
+  DeleteObjectCommand,
+} from '@aws-sdk/client-s3';
 import DocService from '@/services/DocService';
 import { FILE, FOLDER } from '@/lib/constants';
 
@@ -115,4 +119,53 @@ export async function GET(req: NextRequest) {
 
   const docTree = DocService.generateTreeFromList(docs);
   return NextResponse.json(docTree);
+}
+
+export async function DELETE(req: NextRequest) {
+  const url = new URL(req.url);
+  const companyId = url.searchParams.get('companyId');
+  const docId = url.searchParams.get('docId');
+  const type = url.searchParams.get('type');
+  if (!companyId || !docId || !type) {
+    return new Response('Company ID, document ID, and type are required', {
+      status: 400,
+    });
+  }
+
+  const doc = await DocService.getDocById(docId);
+  if (!doc) {
+    return new Response('Document not found', { status: 404 });
+  }
+
+  if (type !== FILE && type !== FOLDER) {
+    return new Response('Invalid document type', { status: 400 });
+  }
+
+  if (type === FILE) {
+    const s3Client = new S3Client({
+      region: process.env.NEXT_AWS_S3_REGION!,
+      credentials: {
+        accessKeyId: process.env.NEXT_AWS_S3_ACCESS_KEY_ID!,
+        secretAccessKey: process.env.NEXT_AWS_S3_SECRET_ACCESS_KEY!,
+      },
+    });
+
+    const params = {
+      Bucket: process.env.NEXT_AWS_S3_BUCKET_NAME,
+      Key: doc.name,
+    };
+
+    await s3Client.send(new DeleteObjectCommand(params));
+  }
+
+  const deleted = await DocService.delete({
+    companyId,
+    docId,
+    type: type as typeof FILE | typeof FOLDER,
+  });
+  if (!deleted) {
+    return new Response('Failed to delete document', { status: 500 });
+  }
+
+  return NextResponse.json({ success: true });
 }
