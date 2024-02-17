@@ -38,3 +38,5 @@ next-env.d.ts
 
 google.json
 google.cors.json
+
+/lambda_project/venv

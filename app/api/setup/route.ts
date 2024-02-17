@@ -28,6 +28,9 @@ export async function POST(req: NextRequest) {
     await updatePinecone({ client, indexName, docs });
   } catch (err) {
     console.log('error: ', err);
+    return NextResponse.json({
+      data: 'error creating index and loading data into pinecone...',
+    });
   }
 
   return NextResponse.json({

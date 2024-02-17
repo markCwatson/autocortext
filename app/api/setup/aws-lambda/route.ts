@@ -2,12 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Pinecone } from '@pinecone-database/pinecone';
 import { createPineconeIndex, updatePinecone } from '@/lib/pinecone';
 
+// Vercel's max duration is up to 5 mins.
+// We are getting 15 second timeouts so increasing to 60 seconds.
+export const maxDuration = 120;
+
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  console.log('body: ', body);
 
-  const docs = body.doc;
-  if (!docs) {
+  const doc = body.doc;
+  if (!doc) {
     return NextResponse.json({
       data: 'no docs found in the request...',
     });
@@ -26,9 +29,12 @@ export async function POST(req: NextRequest) {
       indexName,
       vectorDimension,
     });
-    await updatePinecone({ client, indexName, docs });
+    await updatePinecone({ client, indexName, docs: [doc] });
   } catch (err) {
     console.log('error: ', err);
+    return NextResponse.json({
+      data: 'error creating index and loading data into pinecone...',
+    });
   }
 
   return NextResponse.json({
