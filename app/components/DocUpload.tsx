@@ -10,12 +10,14 @@ interface FileUploadProps {
   companyId: string;
   parentId: string;
   parentPath: string;
+  fetchDocs: (companyId: string) => void;
 }
 
 export default function DocUpload({
   companyId,
   parentId,
   parentPath,
+  fetchDocs,
 }: FileUploadProps) {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [type, setType] = useState<'file' | 'folder' | null>(null);
@@ -60,6 +62,7 @@ export default function DocUpload({
       });
     } finally {
       setUploading(false);
+      fetchDocs(companyId);
     }
   };
 
@@ -73,9 +76,9 @@ export default function DocUpload({
           method: 'POST',
           body: JSON.stringify({
             name: folderName,
-            parentId: companyId,
-            parentPath: 'parentPath',
-            path: 'path',
+            parentId,
+            parentPath,
+            path: `${parentPath}/${folderName}`,
           }),
         },
       );
@@ -102,6 +105,7 @@ export default function DocUpload({
       });
     } finally {
       setUploading(false);
+      fetchDocs(companyId);
     }
   };
 

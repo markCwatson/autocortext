@@ -148,26 +148,14 @@ export default function Documentation() {
     console.log('selectedDocument: ', selectedDocument);
   }, [selectedDocument]);
 
-  interface DocMap {
-    [key: string]: string;
-  }
-
-  const docMap: DocMap = {
-    'endload_cartoner.pdf': '/HS5160-SFC-ENT-117&118.pdf',
-    'siptu.pdf': '/HS5160-SFC-WSIPTU-115&116.pdf',
-    'bench_lathe.pdf': '/fervi_bench_lathe.pdf',
-    'electrical_schematics.pdf': '/SIPTU-Electrical-Schematics.pdf',
-    'plc_logic.pdf': '/SIPTU-PLC-Logic.pdf',
-  };
-
-  const handleSelectDocument = (file: string) => {
-    setSelectedDocument(docMap[file]);
+  const handleSelectDocument = (url: string, name: string) => {
+    setSelectedDocument(url);
 
     setMessages((prevMessages) => [
       ...prevMessages,
       {
         id: `${prevMessages.length + 1}`,
-        content: `Auto Cortext: Perfect. Ask me about the file ${file}`,
+        content: `Auto Cortext: Perfect. Ask me about the file ${name}`,
         role: 'assistant',
       },
     ]);
@@ -187,7 +175,11 @@ export default function Documentation() {
             </div>
             <div className="flex flex-col">
               <div className="pt-4 overflow-scroll">
-                <DocStructure selectDoc={handleSelectDocument} docs={docs} />
+                <DocStructure
+                  selectDoc={handleSelectDocument}
+                  docs={docs}
+                  fetchDocs={fetchDocs}
+                />
               </div>
             </div>
           </div>

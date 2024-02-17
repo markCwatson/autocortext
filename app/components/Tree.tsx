@@ -1,7 +1,7 @@
 'use client';
 
 import { FileIcon, FolderClosed, FolderOpen } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { TrashIcon } from '@heroicons/react/20/solid';
 import DialogModal from '@/components/DialogModal';
@@ -17,8 +17,9 @@ interface TreeItemProps {
   showIcons?: boolean;
   isOpen?: boolean;
   isFolder?: boolean;
-  parentId: string;
-  parentPath: string;
+  id: string;
+  path: string;
+  fetchDocs: (companyId: string) => void;
 }
 
 const TreeItem = ({
@@ -28,16 +29,16 @@ const TreeItem = ({
   showIcons,
   isOpen,
   isFolder,
-  parentId,
-  parentPath,
+  id,
+  path,
+  fetchDocs,
 }: TreeItemProps) => {
   const session = useSession();
-  const [open, setOpen] = useState(isOpen);
   const [deleteSomething, setDeleteSomething] = useState({
     folder: false,
     file: false,
   });
-  const expand = useSpring({ height: open ? 'auto' : 0 });
+  const expand = useSpring({ height: isOpen ? 'auto' : 0 });
 
   function handleDelete(isDelete: boolean) {
     const { folder } = deleteSomething;
@@ -90,14 +91,13 @@ const TreeItem = ({
       onSelect();
       return;
     }
-    setOpen(!open);
   }
 
   return (
     <div className="flex flex-col text-sm ">
       <div className="group flex p-1 items-center hover:bg-my-color5 ">
         {isFolder && showIcons ? (
-          open ? (
+          isOpen ? (
             <FolderOpen onClick={handleClick} className="cursor-pointer" />
           ) : (
             <FolderClosed onClick={handleClick} className="cursor-pointer" />
@@ -118,9 +118,10 @@ const TreeItem = ({
         <div className="flex ml-auto invisible group-hover:visible">
           {isFolder ? (
             <DocUpload
+              fetchDocs={fetchDocs}
               companyId={session.data?.user?.companyId as string}
-              parentId={parentId}
-              parentPath={parentPath}
+              parentId={id} // the id is the parent id where doc is being created
+              parentPath={path} // the path is the parent path where doc is being created
             />
           ) : null}
           <TrashIcon

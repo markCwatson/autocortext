@@ -23,7 +23,10 @@ class DocService {
     parentPath: string;
   }): Promise<DocModel | null> {
     const newDoc: Doc = {
-      url: '',
+      url:
+        type === FILE
+          ? `https://${process.env.NEXT_AWS_S3_BUCKET_NAME}.s3.${process.env.NEXT_AWS_S3_REGION}.amazonaws.com/${name}`
+          : '',
       companyId: new ObjectId(companyId),
       path: '',
       parentId: new ObjectId(parentId),
@@ -41,7 +44,6 @@ class DocService {
     // If duplicates are found, modify the name to avoid conflict
     if (numDuplicates > 0) {
       if (newDoc.type === FILE) {
-        newDoc.url = `https://${process.env.NEXT_AWS_S3_BUCKET_NAME}.s3.${process.env.NEXT_AWS_S3_REGION}.amazonaws.com/${name}`;
         let temp = newDoc.name.split('.');
 
         if (temp.length > 1) {
@@ -124,9 +126,15 @@ class DocService {
   // Function to search for entries with the same name and type under a specific parent
   private static getNumDuplicates(fsData: FileSystemData, doc: Doc): number {
     let numDuplicates = 0;
+    if (
+      !fsData[doc.parentId as string] ||
+      fsData[doc.parentId as string].childrenIds?.length === 0
+    ) {
+      return numDuplicates;
+    }
 
     // Iterate over childrenIds of the parent entry to find duplicates
-    fsData[doc.parentId as string].childrenIds?.forEach((elementId) => {
+    fsData[doc.parentId as string].childrenIds.forEach((elementId) => {
       if (
         fsData[elementId].name.includes(doc.name) &&
         fsData[elementId].type === doc.type
