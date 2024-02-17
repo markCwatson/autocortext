@@ -6,16 +6,17 @@ import { Doc } from '@/types';
 export interface DocModel extends Doc {
   _id: ObjectId;
   companyId: ObjectId;
+  parentId: ObjectId;
 }
 
 class DocRepository {
-  static async create({ url, companyId, path }: Doc): Promise<DocModel> {
+  static async create(doc: Doc): Promise<DocModel> {
     try {
       const client = await Database.getClient();
       const { insertedId } = await client
         .db()
         .collection('docs')
-        .insertOne({ url, companyId, path });
+        .insertOne(doc);
       return client
         .db()
         .collection('docs')
@@ -36,6 +37,20 @@ class DocRepository {
       .collection('docs')
       .find({ companyId: new ObjectId(companyId) })
       .toArray() as Promise<DocModel[]>;
+  }
+
+  static async updateParentChildrenIds(
+    parentId: ObjectId,
+    childId: ObjectId,
+  ): Promise<void> {
+    const client = await Database.getClient();
+    await client
+      .db()
+      .collection('docs')
+      .updateOne(
+        { _id: new ObjectId(parentId) },
+        { $push: { childrenIds: childId } },
+      );
   }
 }
 

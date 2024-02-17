@@ -1,13 +1,14 @@
 'use client';
 
 import { FileIcon, FolderClosed, FolderOpen } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSpring, animated } from 'react-spring';
-import { PlusIcon, TrashIcon } from '@heroicons/react/20/solid';
+import { TrashIcon } from '@heroicons/react/20/solid';
 import DialogModal from '@/components/DialogModal';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import { toast } from '@/components/Toast';
-import FileUpload from '@/components/FileUpload';
+import DocUpload from '@/components/DocUpload';
+import { useSession } from 'next-auth/react';
 
 interface TreeItemProps {
   label: string;
@@ -16,6 +17,9 @@ interface TreeItemProps {
   showIcons?: boolean;
   isOpen?: boolean;
   isFolder?: boolean;
+  id: string;
+  path: string;
+  fetchDocs: (companyId: string) => void;
 }
 
 const TreeItem = ({
@@ -25,13 +29,16 @@ const TreeItem = ({
   showIcons,
   isOpen,
   isFolder,
+  id,
+  path,
+  fetchDocs,
 }: TreeItemProps) => {
-  const [open, setOpen] = useState(isOpen);
+  const session = useSession();
   const [deleteSomething, setDeleteSomething] = useState({
     folder: false,
     file: false,
   });
-  const expand = useSpring({ height: open ? 'auto' : 0 });
+  const expand = useSpring({ height: isOpen ? 'auto' : 0 });
 
   function handleDelete(isDelete: boolean) {
     const { folder } = deleteSomething;
@@ -84,14 +91,13 @@ const TreeItem = ({
       onSelect();
       return;
     }
-    setOpen(!open);
   }
 
   return (
-    <div className="flex flex-col text-sm">
+    <div className="flex flex-col text-sm ">
       <div className="group flex p-1 items-center hover:bg-my-color5 ">
-        {showIcons ? (
-          open ? (
+        {isFolder && showIcons ? (
+          isOpen ? (
             <FolderOpen onClick={handleClick} className="cursor-pointer" />
           ) : (
             <FolderClosed onClick={handleClick} className="cursor-pointer" />
@@ -111,12 +117,11 @@ const TreeItem = ({
         </span>
         <div className="flex ml-auto invisible group-hover:visible">
           {isFolder ? (
-            <FileUpload
-              buttonType="ghost"
-              buttonSize="nill"
-              text=""
-              icon={<PlusIcon className="w-5 h-5 cursor-pointer" />}
-              companyId="123" // todo: replace with actual company id
+            <DocUpload
+              fetchDocs={fetchDocs}
+              companyId={session.data?.user?.companyId as string}
+              parentId={id} // the id is the parent id where doc is being created
+              parentPath={path} // the path is the parent path where doc is being created
             />
           ) : null}
           <TrashIcon
@@ -139,7 +144,7 @@ interface TreeViewProps {
 }
 
 const TreeView = ({ children }: TreeViewProps) => {
-  return <div className="px-8">{children}</div>;
+  return <div className="px-4 overflow-visible">{children}</div>;
 };
 
 export { TreeView, TreeItem };
