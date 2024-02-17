@@ -1,16 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Pinecone } from '@pinecone-database/pinecone';
-import { DirectoryLoader } from 'langchain/document_loaders/fs/directory';
-import { TextLoader } from 'langchain/document_loaders/fs/text';
 import { createPineconeIndex, updatePinecone } from '@/lib/pinecone';
 
 export async function POST(req: NextRequest) {
-  // for creating embeddings locally
-  const loader = new DirectoryLoader('./scripts/convert/text', {
-    '.txt': (path) => new TextLoader(path),
-  });
+  const body = await req.json();
+  console.log('body: ', body);
 
-  const docs = await loader.load();
+  const docs = body.doc;
+  if (!docs) {
+    return NextResponse.json({
+      data: 'no docs found in the request...',
+    });
+  }
 
   const client = new Pinecone({
     apiKey: process.env.PINECONE_API_KEY || '',

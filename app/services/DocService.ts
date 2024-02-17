@@ -212,49 +212,6 @@ class DocService {
       Object.entries(obj).map(([k, v]) => [k, DocService.cloneObj(v)]),
     );
   }
-
-  // Function to display entries of a specific path
-  private static showPathEntries(
-    parentPath: string,
-    fileSystem: FileSystemData,
-  ): Doc[] | undefined {
-    // Returning childrenIds of the entry identified by parentPath and FOLDER type
-    // return fileSystem[md5(parentPath + FOLDER)]
-    //   ? fileSystem[md5(parentPath + FOLDER)].childrenIds?.map(
-    //       (childrenIdsID) => fileSystem[childrenIdsID],
-    //     )
-    //   : [];
-    return [];
-  }
-
-  // Function to compare two entries for equality
-  private static entriesAreSame(x: Doc, y: Doc): boolean {
-    for (var p in x) {
-      // Check property existence in both objects
-      if (x.hasOwnProperty(p) !== y.hasOwnProperty(p)) {
-        return false;
-      }
-
-      if (x[p] === null && y[p] !== null) {
-        return false;
-      }
-
-      if (x[p] === null && y[p] !== null) {
-        return false;
-      }
-
-      // Recursively compare objects
-      if (typeof x[p] === 'object') {
-        if (!DocService.entriesAreSame(x[p], y[p])) {
-          return false;
-        }
-      } else if (x[p] != y[p]) {
-        return false; // Direct comparison for non-objects
-      }
-    }
-
-    return true;
-  }
 }
 
 export default DocService;
