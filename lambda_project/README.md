@@ -4,7 +4,7 @@ This is required ebcause `PyPDF2` is not supported in AWS Lambda runtime environ
 
 Create a new directory for Lambda project.
 
-Note: this lambda function is configured with 256 MB memory and a 10 minute timeout.
+Note: this lambda function is configured with 256 MB memory and a 15 minute timeout.
 
 ```python
 mkdir lambda_project && cd lambda_project
