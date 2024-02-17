@@ -1,14 +1,15 @@
 'use client';
 
 import React, { useEffect, useState, CSSProperties } from 'react';
-import { useSession } from 'next-auth/react';
 import Search from '@/components/Search';
-import DocStructure from '../../components/DocStructure';
+import DocStructure from '@/components/DocStructure';
 import AiHeader from '@/components/AiHeader';
 import { AiMessage, useQueryContext } from '@/providers/AiMessagesProvider';
 import { toast } from '@/components/Toast';
 import AiPromptChat from '@/components/AiPromptChat';
 import { AiMessageList } from '@/components/AiMessageList';
+import { DocModel } from '@/repos/DocRepository';
+import { useUserContext } from '@/providers/UserProvider';
 
 const iFrameHeight = '100%';
 const iFrameWidth = '100%';
@@ -38,25 +39,51 @@ const columnStyle: CSSProperties = {
 };
 
 export default function Documentation() {
-  const [selectedDocument, setSelectedDocument] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const session = useSession();
-
+  const userValue = useUserContext();
   const { messages, setMessages } = useQueryContext();
 
+  const [selectedDocument, setSelectedDocument] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+  const [docs, setDocs] = useState<DocModel[] | null>(null);
+
+  async function fetchDocs(companyId: string) {
+    if (!companyId) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/doc?companyId=${companyId}`);
+      if (!response.ok) {
+        toast({
+          title: 'Error',
+          message: 'Failed to fetch documents',
+          type: 'error',
+        });
+      }
+      const data = await response.json();
+      setDocs(data);
+    } catch (error) {
+      toast({
+        title: 'Error',
+        message: 'Failed to fetch documents',
+        type: 'error',
+      });
+    }
+  }
+
   useEffect(() => {
-    if (session.data?.user.name && messages.length === 0) {
-      setMessages((prevMessages) => [
-        ...prevMessages,
+    if (messages.length === 0) {
+      setMessages([
         {
-          id: `${prevMessages.length + 1}`,
-          content: `Auto Cortext: Hi ${session.data.user.name}, how can I help you?`,
+          id: '1',
+          content: `Auto Cortext: Hi ${userValue.user.name}, how can I help you?`,
           role: 'assistant',
         },
       ]);
     }
-  }, [session]);
+
+    fetchDocs(userValue.user.companyId as string);
+  }, []);
 
   async function sendQuery(e: any, newMessage: AiMessage) {
     e.preventDefault();
@@ -160,7 +187,7 @@ export default function Documentation() {
             </div>
             <div className="flex flex-col">
               <div className="pt-4 overflow-scroll">
-                <DocStructure callback={handleSelectDocument} />
+                <DocStructure selectDoc={handleSelectDocument} docs={docs} />
               </div>
             </div>
           </div>

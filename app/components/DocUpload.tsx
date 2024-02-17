@@ -4,21 +4,18 @@ import { useState } from 'react';
 import { Button } from '@/components/Button';
 import { toast } from '@/components/Toast';
 import DocModal from '@/components/DocModal';
+import { PlusIcon } from '@heroicons/react/20/solid';
 
 interface FileUploadProps {
-  buttonType: 'outline' | 'ghost';
-  icon?: React.ReactNode;
-  text: string;
-  buttonSize: 'default' | 'sm' | 'lg' | 'nill';
   companyId: string;
+  parentId: string;
+  parentPath: string;
 }
 
 export default function DocUpload({
-  buttonType,
-  icon,
-  text,
-  buttonSize,
   companyId,
+  parentId,
+  parentPath,
 }: FileUploadProps) {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [type, setType] = useState<'file' | 'folder' | null>(null);
@@ -29,6 +26,8 @@ export default function DocUpload({
     const formData = new FormData();
     formData.append('file', file);
     console.log('formData', formData);
+    formData.append('parentId', parentId);
+    formData.append('parentPath', parentPath);
 
     try {
       const response = await fetch(
@@ -151,14 +150,13 @@ export default function DocUpload({
 
   return (
     <Button
-      variant={buttonType}
-      size={buttonSize}
+      variant="ghost"
+      size="nill"
       onClick={handleButtonClick}
       disabled={uploading}
     >
       <div className="flex items-center text-center cursor-pointer">
-        {icon}
-        {text}
+        <PlusIcon className="w-5 h-5 cursor-pointer" />
       </div>
     </Button>
   );

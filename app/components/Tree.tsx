@@ -3,7 +3,7 @@
 import { FileIcon, FolderClosed, FolderOpen } from 'lucide-react';
 import React, { useState } from 'react';
 import { useSpring, animated } from 'react-spring';
-import { PlusIcon, TrashIcon } from '@heroicons/react/20/solid';
+import { TrashIcon } from '@heroicons/react/20/solid';
 import DialogModal from '@/components/DialogModal';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import { toast } from '@/components/Toast';
@@ -17,6 +17,8 @@ interface TreeItemProps {
   showIcons?: boolean;
   isOpen?: boolean;
   isFolder?: boolean;
+  parentId: string;
+  parentPath: string;
 }
 
 const TreeItem = ({
@@ -26,6 +28,8 @@ const TreeItem = ({
   showIcons,
   isOpen,
   isFolder,
+  parentId,
+  parentPath,
 }: TreeItemProps) => {
   const session = useSession();
   const [open, setOpen] = useState(isOpen);
@@ -92,7 +96,7 @@ const TreeItem = ({
   return (
     <div className="flex flex-col text-sm ">
       <div className="group flex p-1 items-center hover:bg-my-color5 ">
-        {showIcons ? (
+        {isFolder && showIcons ? (
           open ? (
             <FolderOpen onClick={handleClick} className="cursor-pointer" />
           ) : (
@@ -114,11 +118,9 @@ const TreeItem = ({
         <div className="flex ml-auto invisible group-hover:visible">
           {isFolder ? (
             <DocUpload
-              buttonType="ghost"
-              buttonSize="nill"
-              text=""
-              icon={<PlusIcon className="w-5 h-5 cursor-pointer" />}
               companyId={session.data?.user?.companyId as string}
+              parentId={parentId}
+              parentPath={parentPath}
             />
           ) : null}
           <TrashIcon

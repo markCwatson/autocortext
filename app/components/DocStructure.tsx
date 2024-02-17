@@ -1,52 +1,41 @@
 import { TreeItem, TreeView } from '@/components/Tree';
+import { FOLDER } from '@/lib/constants';
+import { DocModel } from '@/repos/DocRepository';
+import { Doc } from '@/types';
+import { Loader2 } from 'lucide-react';
 
 interface FoldersProps {
-  callback: (path: string) => void;
+  selectDoc: (path: string) => void;
+  docs: DocModel[] | null;
 }
 
-export default function DocStructure({ callback }: FoldersProps) {
+const renderTreeItems = (nodes: Doc[]) => {
+  return nodes.map((node) => (
+    <TreeItem
+      key={node.path} // Assuming each node has a unique path or id
+      label={node.name}
+      isFolder={node.type === FOLDER}
+      parentId={node.parentId as string}
+      parentPath={node.parentPath}
+      showIcons={true}
+      isOpen={true}
+      onSelect={() => {
+        // Handle selection (e.g., open folder or file)
+      }}
+    >
+      {node.children && renderTreeItems(node.children)}
+    </TreeItem>
+  ));
+};
+
+export default function DocStructure({ selectDoc, docs }: FoldersProps) {
   return (
-    <>
-      <TreeView>
-        <TreeItem
-          label="machines"
-          showIcons={true}
-          isOpen={true}
-          isFolder={true}
-        >
-          <TreeItem label="cartoners" showIcons={true} isFolder={true}>
-            <TreeItem
-              label="hs5160_manual.pdf"
-              showIcons={false}
-              onSelect={() => callback('endload_cartoner.pdf')}
-            />
-          </TreeItem>
-          <TreeItem label="conveyers" showIcons={true} isFolder={true}>
-            <TreeItem
-              label="siptu_hs5160_manual.pdf"
-              showIcons={false}
-              onSelect={() => callback('siptu.pdf')}
-            />
-            <TreeItem
-              label="siptu_hs5160_plc.pdf"
-              showIcons={false}
-              onSelect={() => callback('plc_logic.pdf')}
-            />
-            <TreeItem
-              label="siptu_hs5160_schematics.pdf"
-              showIcons={false}
-              onSelect={() => callback('electrical_schematics.pdf')}
-            />
-          </TreeItem>
-          <TreeItem label="lathes" showIcons={true} isFolder={true}>
-            <TreeItem
-              label="bench_lathe.pdf"
-              showIcons={false}
-              onSelect={() => callback('bench_lathe.pdf')}
-            />
-          </TreeItem>
-        </TreeItem>
-      </TreeView>
-    </>
+    <div>
+      {docs ? (
+        <TreeView>{renderTreeItems(docs)}</TreeView>
+      ) : (
+        <Loader2 className="h-6 w-6 animate-spin text-green-600" />
+      )}
+    </div>
   );
 }

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import DocService from '@/services/DocService';
+import { FILE, FOLDER } from '@/lib/constants';
 
 export async function POST(req: NextRequest) {
   const url = new URL(req.url);
@@ -10,10 +11,22 @@ export async function POST(req: NextRequest) {
     return new Response('Company ID and type required', { status: 400 });
   }
 
-  if (type === 'file') {
+  if (type === FILE) {
     try {
       const formData = await req.formData();
       const fileEntry = formData.get('file');
+      if (!fileEntry) {
+        return new Response('File is required', { status: 400 });
+      }
+
+      const parentId = formData.get('parentId');
+      const parentPath = formData.get('parentPath');
+      if (!parentId || !parentPath) {
+        return NextResponse.json(
+          { error: 'Parent ID and parent path are required' },
+          { status: 400 },
+        );
+      }
 
       // Type guard to assert fileEntry is a File
       if (!(fileEntry instanceof Blob)) {
@@ -40,7 +53,13 @@ export async function POST(req: NextRequest) {
       });
 
       await s3Client.send(new PutObjectCommand(params));
-      const doc = await DocService.createFile(fileEntry.name, companyId);
+      const doc = await DocService.create({
+        name: fileEntry.name,
+        companyId,
+        parentId: parentId as string,
+        type: FILE,
+        parentPath: parentPath as string,
+      });
       if (!doc) {
         return NextResponse.json(
           { error: 'Error creating file in the database' },
@@ -55,7 +74,7 @@ export async function POST(req: NextRequest) {
         { status: 400 },
       );
     }
-  } else if (type === 'folder') {
+  } else if (type === FOLDER) {
     const { name, parentId, parentPath, path } = await req.json();
     if (!name || !parentId || !parentPath || !path) {
       return NextResponse.json(
@@ -64,12 +83,12 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const doc = await DocService.createFolder({
+    const doc = await DocService.create({
       name,
       parentId,
       parentPath,
       companyId,
-      path,
+      type: FOLDER,
     });
     if (!doc) {
       return NextResponse.json(
@@ -80,4 +99,20 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true });
   }
+}
+
+export async function GET(req: NextRequest) {
+  const url = new URL(req.url);
+  const companyId = url.searchParams.get('companyId');
+  if (!companyId) {
+    return new Response('Company ID required', { status: 400 });
+  }
+
+  const docs = await DocService.getAllByCompanyId(companyId);
+  if (!docs) {
+    return new Response('Failed to fetch documents', { status: 500 });
+  }
+
+  const docTree = DocService.generateTreeFromList(docs);
+  return NextResponse.json(docTree);
 }

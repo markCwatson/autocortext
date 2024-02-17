@@ -47,4 +47,7 @@ export type Doc = {
   url: string;
   parentId: string | ObjectId;
   companyId: string | ObjectId;
+  type: 'file' | 'folder';
+  childrenIds: string[];
+  [key: string]: any;
 };

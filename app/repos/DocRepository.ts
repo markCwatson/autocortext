@@ -10,40 +10,13 @@ export interface DocModel extends Doc {
 }
 
 class DocRepository {
-  static async createFile({ url, companyId, path }: Doc): Promise<DocModel> {
+  static async create(doc: Doc): Promise<DocModel> {
     try {
       const client = await Database.getClient();
       const { insertedId } = await client
         .db()
         .collection('docs')
-        .insertOne({ url, companyId, path });
-      return client
-        .db()
-        .collection('docs')
-        .findOne({ _id: insertedId }) as Promise<DocModel>;
-    } catch (error: MongoServerError | any) {
-      throw new ApiError({
-        code: 500,
-        message: error.message,
-        explanation: null,
-      });
-    }
-  }
-
-  static async createFolder({
-    name,
-    parentId,
-    parentPath,
-    companyId,
-    path,
-    url,
-  }: Doc): Promise<DocModel> {
-    try {
-      const client = await Database.getClient();
-      const { insertedId } = await client
-        .db()
-        .collection('docs')
-        .insertOne({ name, parentId, parentPath, companyId, path, url });
+        .insertOne(doc);
       return client
         .db()
         .collection('docs')
@@ -64,6 +37,20 @@ class DocRepository {
       .collection('docs')
       .find({ companyId: new ObjectId(companyId) })
       .toArray() as Promise<DocModel[]>;
+  }
+
+  static async updateParentChildrenIds(
+    parentId: ObjectId,
+    childId: ObjectId,
+  ): Promise<void> {
+    const client = await Database.getClient();
+    await client
+      .db()
+      .collection('docs')
+      .updateOne(
+        { _id: new ObjectId(parentId) },
+        { $push: { childrenIds: childId } },
+      );
   }
 }
 
