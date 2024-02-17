@@ -5,6 +5,7 @@ import { Button } from '@/components/Button';
 import { toast } from '@/components/Toast';
 import DocModal from '@/components/DocModal';
 import { PlusIcon } from '@heroicons/react/20/solid';
+import { FILE, FOLDER } from '@/lib/constants';
 
 interface FileUploadProps {
   companyId: string;
@@ -20,23 +21,106 @@ export default function DocUpload({
   fetchDocs,
 }: FileUploadProps) {
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [type, setType] = useState<'file' | 'folder' | null>(null);
+  const [type, setType] = useState<typeof FILE | typeof FOLDER | null>(null);
   const [uploading, setUploading] = useState(false);
 
-  const uploadFile = async (file: File) => {
-    setUploading(true);
-    const formData = new FormData();
-    formData.append('file', file);
-    console.log('formData', formData);
-    formData.append('parentId', parentId);
-    formData.append('parentPath', parentPath);
+  const uploadFileToS3 = async (file: File) => {
+    const fileName = `${Date.now()}-${file.name.replaceAll(' ', '_')}`;
 
+    // Request a signed URL from API
+    const response = await fetch('/api/doc/s3-upload-url', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        fileName,
+        contentType: file.type,
+      }),
+    });
+
+    if (!response.ok) {
+      toast({
+        title: 'Error',
+        message: 'Failed to get signed URL from server',
+        type: 'error',
+      });
+    }
+
+    const { url } = await response.json();
+
+    // Use the signed URL to upload the file to S3
+    // Note: cors was enabled on the S3 bucket to allow PUT requests
+    const s3Response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': file.type,
+      },
+      body: file,
+    });
+
+    if (!s3Response.ok) {
+      toast({
+        title: 'Error',
+        message: 'Failed to upload file to S3',
+        type: 'error',
+      });
+    }
+
+    return { success: true, name: fileName };
+  };
+
+  const handleFileUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+    const file = files[0];
+
+    try {
+      setUploading(true);
+      const { success, name } = await uploadFileToS3(file);
+      if (success) {
+        const result = await addFileToDatabase(name);
+        if (!result) {
+          toast({
+            title: 'Error',
+            message: 'Error uploading file to database',
+            type: 'error',
+          });
+        } else {
+          toast({
+            title: 'Success',
+            message: 'File uploaded successfully',
+            type: 'success',
+          });
+        }
+      }
+    } catch (error: any) {
+      toast({
+        title: 'Error',
+        message: `Error uploading file: ${error.message}`,
+        type: 'error',
+      });
+    } finally {
+      setUploading(false);
+      setIsOpenModal(false);
+      setType(null);
+      fetchDocs(companyId);
+    }
+  };
+
+  const addFileToDatabase = async (name: string): Promise<boolean> => {
     try {
       const response = await fetch(
         `/api/doc?companyId=${companyId}&type=file`,
         {
           method: 'POST',
-          body: formData,
+          body: JSON.stringify({
+            parentId,
+            parentPath,
+            name,
+          }),
         },
       );
 
@@ -46,23 +130,16 @@ export default function DocUpload({
           message: `Server status code: ${response.status}`,
           type: 'error',
         });
-        return;
       }
 
-      toast({
-        title: 'Success',
-        message: 'File uploaded successfully',
-        type: 'success',
-      });
+      return true;
     } catch (error: any) {
       toast({
         title: 'Error',
         message: `Error uploading file: ${error.message}`,
         type: 'error',
       });
-    } finally {
-      setUploading(false);
-      fetchDocs(companyId);
+      return false;
     }
   };
 
@@ -109,15 +186,6 @@ export default function DocUpload({
     }
   };
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (!files || files.length === 0) return;
-    const file = files[0];
-    uploadFile(file);
-    setIsOpenModal(false);
-    setType(null);
-  };
-
   const handleFolderCreation = (folderName: string) => {
     uploadFolder(folderName);
     setIsOpenModal(false);
@@ -144,6 +212,7 @@ export default function DocUpload({
     return (
       <DocModal
         show={isOpenModal}
+        isUploading={uploading}
         setType={setType}
         onClose={() => setIsOpenModal(false)}
         onFileUpload={handleFileUpload}

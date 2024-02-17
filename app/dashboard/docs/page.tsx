@@ -70,8 +70,6 @@ export default function Documentation() {
 
   useEffect(() => {}, [deleteConfig]);
 
-  console.log('deleteConfig:', deleteConfig);
-
   // depth-first recursive function to find a document by id from children
   const findDocById = (doc: DocModel, docId: string): DocModel | null => {
     if (doc._id.toString() === docId) {

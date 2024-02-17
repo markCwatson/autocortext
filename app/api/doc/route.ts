@@ -1,9 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {
-  S3Client,
-  PutObjectCommand,
-  DeleteObjectCommand,
-} from '@aws-sdk/client-s3';
+import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import DocService from '@/services/DocService';
 import { FILE, FOLDER } from '@/lib/constants';
 
@@ -17,48 +13,10 @@ export async function POST(req: NextRequest) {
 
   if (type === FILE) {
     try {
-      const formData = await req.formData();
-      const fileEntry = formData.get('file');
-      if (!fileEntry) {
-        return new Response('File is required', { status: 400 });
-      }
+      const { name, parentId, parentPath } = await req.json();
 
-      const parentId = formData.get('parentId');
-      const parentPath = formData.get('parentPath');
-      if (!parentId || !parentPath) {
-        return NextResponse.json(
-          { error: 'Parent ID and parent path are required' },
-          { status: 400 },
-        );
-      }
-
-      // Type guard to assert fileEntry is a File
-      if (!(fileEntry instanceof Blob)) {
-        return NextResponse.json(
-          { error: 'File is required and must be a valid file.' },
-          { status: 400 },
-        );
-      }
-
-      const file = Buffer.from(await fileEntry.arrayBuffer());
-      const params = {
-        Bucket: process.env.NEXT_AWS_S3_BUCKET_NAME,
-        Key: `${fileEntry.name}`,
-        Body: file,
-        ContentType: 'application/pdf',
-      };
-
-      const s3Client = new S3Client({
-        region: process.env.NEXT_AWS_S3_REGION!,
-        credentials: {
-          accessKeyId: process.env.NEXT_AWS_S3_ACCESS_KEY_ID!,
-          secretAccessKey: process.env.NEXT_AWS_S3_SECRET_ACCESS_KEY!,
-        },
-      });
-
-      await s3Client.send(new PutObjectCommand(params));
       const doc = await DocService.create({
-        name: fileEntry.name,
+        name,
         companyId,
         parentId: parentId as string,
         type: FILE,
