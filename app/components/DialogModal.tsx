@@ -80,11 +80,9 @@ export default function DialogModal(props: Props) {
                         </div>
                       </div>
                     </div>
-                    <div className="flex mt-5 sm:mt-6 justify-evenly">
+                    <div className="flex mt-5 sm:mt-6 justify-center gap-8">
                       {props.goToButtons ? (
-                        props.goToButtons.map((button) => (
-                          <div className="mx-6">{button}</div>
-                        ))
+                        props.goToButtons.map((button) => <div>{button}</div>)
                       ) : (
                         <button
                           type="button"

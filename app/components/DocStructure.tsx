@@ -27,7 +27,9 @@ export default function DocStructure({
   fetchDocs,
   onDeleteDoc,
 }: FoldersProps) {
-  const [openNodes, setOpenNodes] = useState<Record<string, boolean>>({});
+  const [openNodes, setOpenNodes] = useState<Record<string, boolean>>({
+    '/': true,
+  });
 
   const toggleNode = (path: string) => {
     setOpenNodes((prevOpenNodes) => ({

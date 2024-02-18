@@ -193,11 +193,6 @@ export default function DocUpload({
   };
 
   const handleButtonClick = () => {
-    if (!type) {
-      setIsOpenModal(true);
-      return;
-    }
-
     if (uploading) {
       toast({
         title: 'Info',
@@ -206,6 +201,8 @@ export default function DocUpload({
       });
       return;
     }
+
+    setIsOpenModal(true);
   };
 
   if (isOpenModal) {

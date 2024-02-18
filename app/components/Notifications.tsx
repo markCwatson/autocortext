@@ -14,14 +14,14 @@ export default function Notifications() {
   const [notifications, setNotifications] = useState<NotificationModel[]>([]);
 
   // todo: consider using AWS AppSync to subscribe to new notifications
-  // instead of polling the server every 30 seconds. This would reduce
+  // instead of polling the server every x seconds. This would reduce
   // the load on the server and improve the user experience.
   useEffect(() => {
     // Fetch notifications immediately when the component mounts
     fetchNotifications();
 
-    // Set up a timer to fetch notifications every 20 seconds
-    const interval = setInterval(fetchNotifications, 20000);
+    // Set up a timer to fetch notifications every 10 seconds
+    const interval = setInterval(fetchNotifications, 10000);
 
     // Clean up the interval when the component unmounts
     return () => clearInterval(interval);

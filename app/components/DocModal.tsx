@@ -7,6 +7,7 @@ import { toast } from '@/components/Toast';
 import { FILE, FOLDER } from '@/lib/constants';
 import DocCreateFolder from '@/components/DocCreateFolder';
 import DocTypeSelector from '@/components/DocTypeSelector';
+import { Button } from './Button';
 
 type Props = {
   show: boolean;
@@ -21,8 +22,6 @@ export default function DocModal(props: Props) {
   const [selectedType, setSelectedType] = useState<
     typeof FILE | typeof FOLDER | null
   >(null);
-
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFolderSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -54,7 +53,7 @@ export default function DocModal(props: Props) {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <div className="fixed inset-0 bg-my-color9 bg-opacity-90 transition-opacity" />
+              <div className="fixed inset-0 bg-my-color9 bg-opacity-95 transition-opacity" />
             </Transition.Child>
 
             <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -113,17 +112,17 @@ export default function DocModal(props: Props) {
                           />
                         ) : (
                           <DocTypeSelector
-                            ref={fileInputRef}
                             onFileUpload={props.onFileUpload}
                             setType={props.setType}
                             setSelectedType={setSelectedType}
+                            onClose={props.onClose}
                           />
                         )}
                       </div>
                     ) : (
                       <div className="flex flex-col justify-center items-center text-my-color10">
                         <Loader2 className="w-8 h-8 text-green-600 animate-spin" />
-                        Uploading...
+                        <p className="text-sm">Uploading...</p>
                       </div>
                     )}
                   </Dialog.Panel>
