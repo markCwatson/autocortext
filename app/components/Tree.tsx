@@ -45,24 +45,26 @@ const TreeItem = ({
   const expand = useSpring({ height: isOpen ? 'auto' : 0 });
 
   return (
-    <div className="flex flex-col text-sm ">
-      <div className="group flex p-1 items-center hover:bg-my-color5 ">
-        {isFolder && showIcons ? (
-          isOpen ? (
-            <FolderOpen onClick={onSelect} className="cursor-pointer" />
-          ) : (
-            <FolderClosed onClick={onSelect} className="cursor-pointer" />
-          )
-        ) : null}
-        {!isFolder ? (
-          <FileIcon
-            style={{
-              padding: '3px',
-              cursor: 'pointer',
-            }}
-            onClick={onSelect}
-          />
-        ) : null}
+    <div className="flex flex-col text-sm">
+      <div className="group flex p-1 items-center hover:bg-my-color5">
+        <div>
+          {isFolder && showIcons ? (
+            isOpen ? (
+              <FolderOpen
+                onClick={onSelect}
+                className="cursor-pointer w-5 h-5"
+              />
+            ) : (
+              <FolderClosed
+                onClick={onSelect}
+                className="cursor-pointer w-5 h-5"
+              />
+            )
+          ) : null}
+          {!isFolder ? (
+            <FileIcon className="cursor-pointer w-4 h-4" onClick={onSelect} />
+          ) : null}
+        </div>
         <span className="pl-2 cursor-pointer" onClick={onSelect}>
           {label}
         </span>
@@ -76,7 +78,7 @@ const TreeItem = ({
             />
           ) : null}
           <TrashIcon
-            className="ml-2 w-5 h-5 cursor-pointer"
+            className="ml-2 w-4 h-4 cursor-pointer"
             onClick={() =>
               onDeleteDoc({
                 companyId: session.data?.user?.companyId as string,
@@ -87,7 +89,7 @@ const TreeItem = ({
           />
         </div>
       </div>
-      <animated.div style={expand} className="pl-8 overflow-hidden">
+      <animated.div style={expand} className="pl-5 overflow-hidden">
         {children}
       </animated.div>
     </div>
@@ -99,7 +101,7 @@ interface TreeViewProps {
 }
 
 const TreeView = ({ children }: TreeViewProps) => {
-  return <div className="px-4 overflow-visible">{children}</div>;
+  return <div className="px-2 overflow-visible">{children}</div>;
 };
 
 export { TreeView, TreeItem };

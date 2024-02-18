@@ -339,7 +339,7 @@ export default function Documentation() {
               <Search />
             </div>
             <div className="flex flex-col">
-              <div className="pt-4 overflow-scroll">
+              <div className="pt-2 overflow-scroll">
                 <DocStructure
                   selectDoc={handleSelectDocument}
                   docs={docs}
