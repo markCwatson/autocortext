@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
 
     await NotificationService.create(companyId, {
       title: 'Auto Coretex ready',
-      description: `Auto Coretex jhas been trained on the new file: ${d.metadata.source}`,
+      description: `Auto Coretex has been trained on the new file: ${d.metadata.source}`,
     });
   }
 
