@@ -1,17 +1,11 @@
 import NotificationRepository, {
   NotificationModel,
 } from '@/repos/NotificationRepository';
+import { Notification } from '@/types';
 import { ObjectId } from 'mongodb';
 
 class NotificationService {
-  static async create(
-    companyId: string,
-    data: {
-      title: string;
-      description: string;
-      id?: string;
-    },
-  ): Promise<boolean> {
+  static async create(companyId: string, data: Notification): Promise<boolean> {
     const notification = await NotificationRepository.create(
       new ObjectId(companyId),
       data,

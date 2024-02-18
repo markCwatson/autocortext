@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
 
   const data = await req.json();
   if (!data.title || !data.description) {
+    // it's ok if recipientId is not provided (means it's a global notification)
     return NextResponse.json(
       { error: 'title and description are required' },
       { status: 400 },

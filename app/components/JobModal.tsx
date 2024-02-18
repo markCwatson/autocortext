@@ -293,6 +293,7 @@ export default function JobModal(props: Props) {
                       </div>
                       <JobsActivity
                         jobId={props.job._id.toString()}
+                        jobRefNumber={props.job.id!}
                         activities={activities}
                         handler={(event, acts, isTaggedAi) => {
                           props.setActivities(acts);

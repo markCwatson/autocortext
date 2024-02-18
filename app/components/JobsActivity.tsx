@@ -66,6 +66,7 @@ const moods = [
 
 interface Props {
   jobId: string;
+  jobRefNumber: number;
   activities?: Activity[];
   handler: (
     e: React.FormEvent<HTMLFormElement>,
@@ -74,7 +75,12 @@ interface Props {
   ) => void;
 }
 
-export default function JobsActivity({ jobId, activities, handler }: Props) {
+export default function JobsActivity({
+  jobId,
+  jobRefNumber,
+  activities,
+  handler,
+}: Props) {
   const userValue = useUserContext();
 
   const [selected, setSelected] = useState(moods[5]);
@@ -134,8 +140,8 @@ export default function JobsActivity({ jobId, activities, handler }: Props) {
         },
         body: JSON.stringify({
           title: `${userValue.user.name} mentioned you`,
-          description: `${userValue.user.name} mentioned you on job Ref# ${jobId}`,
-          id: selectedSuggestion?.id,
+          description: `${userValue.user.name} mentioned you on job Ref# ${jobRefNumber}`,
+          recipientId: selectedSuggestion?.id,
         }),
       },
     );
@@ -245,18 +251,33 @@ export default function JobsActivity({ jobId, activities, handler }: Props) {
   function parseAndHighlightTags(text: string | undefined) {
     if (!text) return null;
 
-    // Split the text into segments of tagged names and other text
-    const parts = text.split(/(\@\w+)/g);
+    // This regex matches an @ symbol followed by a word (first name),
+    // optionally followed by spaces and another word (last name), capturing only these two words.
+    // It assumes names are separated by a single space and both are required.
+    const parts = text.split(
+      /(@[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:\s+[a-zA-ZÀ-ÖØ-öø-ÿ]+)?)/g,
+    );
 
     return parts.map((part, index) => {
       // Check if the part is a tagged name
       if (part.startsWith('@')) {
-        // Render the tagged name with a highlight style
-        return (
-          <span key={index} className="text-blue-600">
-            {part}
-          </span>
-        );
+        // Check if the part has both first and last name by splitting on spaces
+        const nameParts = part.split(/\s+/);
+        if (nameParts.length === 2) {
+          // Ensure only first and last names are highlighted
+          // Render the tagged name with a highlight style
+          return (
+            <span key={index} className="text-blue-600">
+              {part}
+            </span>
+          );
+        } else {
+          // If there are more than two names, only highlight the first and last name
+          // and return the rest as normal text. This step is needed to correct the logic
+          // as per user requirement but based on the current regex, this else block might not be needed.
+          // This placeholder is for further logic adjustment if the regex is modified to match more complex patterns.
+          return part;
+        }
       } else {
         // Render normal text
         return part;
