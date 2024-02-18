@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
       indexName,
       vectorDimension,
     });
-    await updatePinecone({ client, indexName, docs: [doc] });
+    await updatePinecone({ client, indexName, docs: doc });
   } catch (err) {
     console.log('error: ', err);
     return NextResponse.json({
