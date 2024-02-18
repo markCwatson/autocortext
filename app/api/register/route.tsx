@@ -2,7 +2,7 @@ import UsersService from '@/services/UsersService';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
-  const { name, email, password } = await request.json();
+  const { name, email, password, companyName } = await request.json();
   if (!name || !email || !password) {
     throw new Error('Missing name, email, or password');
   }
@@ -20,7 +20,12 @@ export async function POST(request: Request) {
   let createdUser = null;
   try {
     // todo: associate user with a company
-    createdUser = await UsersService.create({ name, email, password });
+    createdUser = await UsersService.create({
+      name,
+      email,
+      password,
+      companyName,
+    });
     if (!createdUser) {
       return new NextResponse(
         JSON.stringify({ message: 'Error creating user' }),
