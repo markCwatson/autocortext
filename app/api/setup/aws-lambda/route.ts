@@ -40,14 +40,16 @@ export async function POST(req: NextRequest) {
   }
 
   // doc.metadata.source is the key on AWS which is the name of the file in our DB
-  const companyId = await DocService.getCompanyIdByFilename(
-    doc.metadata.source,
-  );
+  for (const d of doc) {
+    const companyId = await DocService.getCompanyIdByFilename(
+      d.metadata.source,
+    );
 
-  await NotificationService.create(companyId, {
-    title: 'Auto Coretex ready',
-    description: `Auto Coretex jhas been trained on the new file: ${doc.metadata.source}`,
-  });
+    await NotificationService.create(companyId, {
+      title: 'Auto Coretex ready',
+      description: `Auto Coretex jhas been trained on the new file: ${d.metadata.source}`,
+    });
+  }
 
   return NextResponse.json({
     data: 'successfully created index and loaded data into pinecone...',
