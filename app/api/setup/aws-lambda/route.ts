@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Pinecone } from '@pinecone-database/pinecone';
 import { createPineconeIndex, updatePinecone } from '@/lib/pinecone';
+import NotificationService from '@/services/NotificationService';
+import DocService from '@/services/DocService';
 
 // Vercel's max duration is up to 5 mins.
 // We are getting 15 second timeouts so increasing to 120 seconds.
@@ -36,6 +38,16 @@ export async function POST(req: NextRequest) {
       data: 'error creating index and loading data into pinecone...',
     });
   }
+
+  // doc.metadata.source is the key on AWS which is the name of the file in our DB
+  const companyId = await DocService.getCompanyIdByFilename(
+    doc.metadata.source,
+  );
+
+  await NotificationService.create(companyId, {
+    title: 'Auto Coretex ready',
+    description: `Auto Coretex jhas been trained on the new file: ${doc.metadata.source}`,
+  });
 
   return NextResponse.json({
     data: 'successfully created index and loaded data into pinecone...',

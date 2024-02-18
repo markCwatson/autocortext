@@ -99,6 +99,11 @@ class DocService {
     return true;
   }
 
+  static async getCompanyIdByFilename(filename: string): Promise<string> {
+    const doc = await DocRepository.getDocByFilename(filename);
+    return doc?.companyId.toString() || '';
+  }
+
   // Function to generate a tree structure from a list of entries
   static generateTreeFromList(docs: DocModel[]): Doc[] {
     const fsData = DocService.convertDocModelsToFileSystemData(docs);

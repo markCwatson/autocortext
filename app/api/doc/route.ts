@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
       const { name, parentId, parentPath } = await req.json();
 
       const doc = await DocService.create({
-        name,
+        name, // name is used as key on AWS S3
         companyId,
         parentId: parentId as string,
         type: FILE,

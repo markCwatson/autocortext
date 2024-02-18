@@ -47,6 +47,14 @@ class DocRepository {
       .findOne({ _id: docId }) as Promise<DocModel | null>;
   }
 
+  static async getDocByFilename(filename: string): Promise<DocModel | null> {
+    const client = await Database.getClient();
+    return client
+      .db()
+      .collection('docs')
+      .findOne({ name: filename }) as Promise<DocModel | null>;
+  }
+
   static async updateParentChildrenIds(
     parentId: ObjectId,
     childId: ObjectId,

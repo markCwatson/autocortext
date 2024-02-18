@@ -1,30 +1,75 @@
 'use client';
 
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { BellAlertIcon } from '@heroicons/react/20/solid';
-import classNames from '@/lib/classNames';
 import { useUserContext } from '@/providers/UserProvider';
+import NotificationCard from '@/components/NotificationCard';
+import { toast } from '@/components/Toast';
+import { NotificationModel } from '@/repos/NotificationRepository';
 
 export default function Notifications() {
   const userValue = useUserContext();
 
-  const [notifications, setNotifications] = useState<string[]>([
-    'notification 1',
-    'notification 2',
-    'notification 3',
-    'notification 4',
-    'notification 5',
-    `${userValue.user.name}`,
-  ]);
+  const [notifications, setNotifications] = useState<NotificationModel[]>([]);
 
-  const handleSelection = () => {};
+  // todo: consider using AWS AppSync to subscribe to new notifications
+  // instead of polling the server every 30 seconds. This would reduce
+  // the load on the server and improve the user experience.
+  useEffect(() => {
+    // Fetch notifications immediately when the component mounts
+    fetchNotifications();
+
+    // Set up a timer to fetch notifications every 20 seconds
+    const interval = setInterval(fetchNotifications, 20000);
+
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(interval);
+  }, []);
+
+  const fetchNotifications = async () => {
+    const response = await fetch(
+      `/api/notify?companyId=${userValue.user.companyId}`,
+    );
+    if (!response.ok) {
+      toast({
+        title: 'Error',
+        message: 'Failed to fetch notifications',
+        type: 'error',
+      });
+      return;
+    }
+
+    const data = await response.json();
+    setNotifications(data);
+  };
+
+  const markNotificationAsRead = async (id: string) => {
+    const response = await fetch(`/api/notify?id=${id}`, {
+      method: 'PUT',
+    });
+    if (!response.ok) {
+      toast({
+        title: 'Error',
+        message: 'Failed to mark notification as read',
+        type: 'error',
+      });
+      return;
+    }
+
+    fetchNotifications();
+  };
 
   return (
-    <Menu as="div" className={'relative inline-block text-left'}>
+    <Menu as="div" className={'relative inline-block text-center'}>
       <div>
-        <Menu.Button>
+        <Menu.Button className={'flex items-center'}>
           <BellAlertIcon className="h-6 w-6" />
+          {notifications.length > 0 && (
+            <div className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 flex items-center justify-center bg-red-500 rounded-full h-4 w-4">
+              <span className="text-xs text-white">{notifications.length}</span>
+            </div>
+          )}
         </Menu.Button>
       </div>
 
@@ -37,24 +82,33 @@ export default function Notifications() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <div className="py-1">
-            {notifications.map((item) => (
-              <Menu.Item key={item}>
-                {({ active }) => (
-                  <a
-                    href="#"
-                    className={classNames(
-                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'block px-4 py-2 text-sm',
-                    )}
-                    onClick={handleSelection}
-                  >
-                    {item}
-                  </a>
-                )}
+        <Menu.Items className="absolute -left-0 transform -translate-x-3/4 z-100 mt-2 w-72 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <div className="p-2">
+            {notifications.length > 0 ? (
+              notifications.map((item, index) => (
+                <Menu.Item key={item._id!.toString()}>
+                  {({ active }) => (
+                    <NotificationCard
+                      title={item.title}
+                      description={item.description}
+                      buttonText={'Clear'}
+                      onClick={() => {
+                        markNotificationAsRead(item._id!.toString());
+                      }}
+                    />
+                  )}
+                </Menu.Item>
+              ))
+            ) : (
+              <Menu.Item
+                as={'div'}
+                className="flex items-center justify-center h-32"
+              >
+                <div className="text-center text-my-color8 text-sm">
+                  No new notifications
+                </div>
               </Menu.Item>
-            ))}
+            )}
           </div>
         </Menu.Items>
       </Transition>

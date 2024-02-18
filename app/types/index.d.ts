@@ -51,3 +51,9 @@ export type Doc = {
   childrenIds: string[];
   [key: string]: any;
 };
+
+export type Notification = {
+  title: string;
+  description: string;
+  buttonText: string;
+};
