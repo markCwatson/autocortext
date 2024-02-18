@@ -3,7 +3,7 @@ import { Pinecone } from '@pinecone-database/pinecone';
 import { createPineconeIndex, updatePinecone } from '@/lib/pinecone';
 
 // Vercel's max duration is up to 5 mins.
-// We are getting 15 second timeouts so increasing to 60 seconds.
+// We are getting 15 second timeouts so increasing to 120 seconds.
 export const maxDuration = 120;
 
 export async function POST(req: NextRequest) {

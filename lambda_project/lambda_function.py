@@ -45,14 +45,10 @@ def lambda_handler(event, context):
                 # Join all text into a single string
                 full_text = "\n".join(text_content)
 
-            # Prepare payload for the API request
-            payload = json.dumps({"fileName": object_key, "doc": full_text})
-            logger.info("Sending extracted text to API")
-
             # Send `full_text` to API using http.client
+            logger.info("Sending extracted text to API")
             conn = http.client.HTTPSConnection("ascend-six.vercel.app")
             headers = {'Content-type': 'application/json'}
-            # Example of sending a single document's text with metadata
             payload = json.dumps({
                 "doc": [
                     {
