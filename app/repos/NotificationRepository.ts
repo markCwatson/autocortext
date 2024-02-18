@@ -10,10 +10,7 @@ export interface NotificationModel extends Notification {
 class NotificationRepository {
   static async create(
     companyId: ObjectId,
-    model: {
-      title: string;
-      description: string;
-    },
+    model: Notification,
   ): Promise<NotificationModel> {
     const client = await Database.getClient();
     try {

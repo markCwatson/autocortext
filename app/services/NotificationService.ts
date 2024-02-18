@@ -9,6 +9,7 @@ class NotificationService {
     data: {
       title: string;
       description: string;
+      id?: string;
     },
   ): Promise<boolean> {
     const notification = await NotificationRepository.create(

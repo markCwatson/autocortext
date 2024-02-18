@@ -41,7 +41,20 @@ export default function Notifications() {
     }
 
     const data = await response.json();
-    setNotifications(data);
+    if (!data) {
+      return;
+    }
+
+    // if there is a recipientId, only show notifications for the current user
+    const displayedNotifications = data.filter(
+      (notification: NotificationModel) => {
+        return (
+          !notification.recipientId ||
+          notification.recipientId === userValue.user.id
+        );
+      },
+    );
+    setNotifications(displayedNotifications);
   };
 
   const markNotificationAsRead = async (id: string) => {
@@ -82,7 +95,7 @@ export default function Notifications() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute -left-0 transform -translate-x-3/4 z-100 mt-2 w-72 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute -left-0 transform -translate-x-3/4 z-50 mt-2 w-72 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="p-2">
             {notifications.length > 0 ? (
               notifications.map((item, index) => (
@@ -91,7 +104,6 @@ export default function Notifications() {
                     <NotificationCard
                       title={item.title}
                       description={item.description}
-                      buttonText={'Clear'}
                       onClick={() => {
                         markNotificationAsRead(item._id!.toString());
                       }}

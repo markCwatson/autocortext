@@ -3,7 +3,6 @@ import { ObjectId } from 'mongodb';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
-  // Parse the URL and extract query parameters
   const url = new URL(req.url);
   const companyId = url.searchParams.get('id');
 

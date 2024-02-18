@@ -3,7 +3,7 @@
 import { useState, Fragment, useEffect, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import JobsActivity from './JobsActivity';
-import { Activity, Id } from '@/types';
+import { Activity } from '@/types';
 import {
   Bars2Icon,
   CheckBadgeIcon,

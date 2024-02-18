@@ -33,7 +33,7 @@ export default function Summary({ messages }: SummaryProps) {
         leaveFrom="opacity-100 translate-y-0"
         leaveTo="opacity-0 translate-y-1"
       >
-        <Popover.Panel className="absolute z-100 left-1/2 transform -translate-x-1/2  px-2">
+        <Popover.Panel className="absolute z-50 left-1/2 transform -translate-x-1/2  px-2">
           <div className="w-screen max-w-md flex-auto overflow-hidden rounded-sm bg-my-color1 text-sm leading-6 shadow-lg ring-1 ring-my-color10/5">
             <div className="p-2">
               <div className="group relative flex gap-x-6 rounded-lg p-2">

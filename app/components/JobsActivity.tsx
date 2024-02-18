@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment, useState } from 'react';
+import { Fragment, use, useEffect, useState } from 'react';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import {
   CubeTransparentIcon,
@@ -17,6 +17,7 @@ import { Listbox, Transition } from '@headlessui/react';
 import { Activity } from '@/types';
 import { toast } from '@/components/Toast';
 import { useUserContext } from '@/providers/UserProvider';
+import classNames from '@/lib/classNames';
 
 const moods = [
   {
@@ -73,22 +74,88 @@ interface Props {
   ) => void;
 }
 
-function classNames(...classes: any[]) {
-  return classes.filter(Boolean).join(' ');
-}
-
 export default function JobsActivity({ jobId, activities, handler }: Props) {
   const userValue = useUserContext();
 
   const [selected, setSelected] = useState(moods[5]);
   const [comment, setComment] = useState('');
 
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<
+    { name: string; id?: string }[]
+  >([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [suggestionIndex, setSuggestionIndex] = useState(-1);
+  const [selectedSuggestion, setSelectedSuggestion] = useState<{
+    name: string;
+    id?: string;
+  } | null>(null);
 
   // todo: fetch user suggestions from the server based on users in the company
-  const userSuggestions = ['@autocortext'];
+
+  useEffect(() => {
+    fetchUserSuggestions();
+  }, []);
+
+  const fetchUserSuggestions = async () => {
+    const res = await fetch(
+      `/api/company/users?companyId=${userValue.user.companyId}`,
+    );
+    if (!res.ok) {
+      toast({
+        title: 'Error',
+        message: 'Error fetching user suggestions',
+        type: 'error',
+        duration: 2000,
+      });
+      return;
+    }
+
+    const data = await res.json();
+    const users = data.map((user: { name: string; id: string }) => ({
+      name: `@${user.name}`,
+      id: user.id,
+    }));
+    setSuggestions((prev) => [
+      {
+        name: '@autocortext',
+        id: null,
+      },
+      ...users,
+    ]);
+  };
+
+  const sendNotificationToMentionedUser = async () => {
+    const res = await fetch(
+      `/api/notify?companyId=${userValue.user.companyId}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: `${userValue.user.name} mentioned you`,
+          description: `${userValue.user.name} mentioned you on job Ref# ${jobId}`,
+          id: selectedSuggestion?.id,
+        }),
+      },
+    );
+
+    if (!res.ok) {
+      toast({
+        title: 'Error',
+        message: 'Error sending notification to mentioned user',
+        type: 'error',
+        duration: 2000,
+      });
+      return;
+    }
+
+    toast({
+      title: 'Success',
+      message: `Notification sent to ${selectedSuggestion?.name}`,
+      duration: 2000,
+    });
+  };
 
   const updateCommentAndCheckForSuggestions = (e: any) => {
     const value = e.target.value;
@@ -100,8 +167,8 @@ export default function JobsActivity({ jobId, activities, handler }: Props) {
     if (lastPart.startsWith('@')) {
       setShowSuggestions(true);
       const query = lastPart.substring(1); // Remove '@' to get the query part
-      const filteredSuggestions = userSuggestions.filter((suggestion) =>
-        suggestion.toLowerCase().includes(query.toLowerCase()),
+      const filteredSuggestions = suggestions.filter((suggestion) =>
+        suggestion.name.toLowerCase().includes(query.toLowerCase()),
       );
       setSuggestions(filteredSuggestions);
     } else {
@@ -109,12 +176,18 @@ export default function JobsActivity({ jobId, activities, handler }: Props) {
     }
   };
 
-  const selectSuggestion = (suggestion: string) => {
+  const selectSuggestion = ({ name, id }: { name: string; id: string }) => {
+    // Add the selected suggestion to the comment
     const parts = comment.split(' ');
     parts.pop(); // Remove the last part that includes '@'
-    const newComment = `${parts.join(' ')} ${suggestion} `;
+    const newComment = `${parts.join(' ')} ${name} `;
     setComment(newComment);
+
+    // Hide the suggestions
     setShowSuggestions(false);
+
+    // To send notification to the selected user
+    setSelectedSuggestion({ name, id });
   };
 
   async function onCommentSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -156,6 +229,10 @@ export default function JobsActivity({ jobId, activities, handler }: Props) {
       duration: 2000,
     });
 
+    if (selectedSuggestion) {
+      await sendNotificationToMentionedUser();
+    }
+
     const isTaggedAi = comment.includes('@autocortext');
     setComment('');
     const newActivities = activities
@@ -188,18 +265,20 @@ export default function JobsActivity({ jobId, activities, handler }: Props) {
   }
 
   const renderSuggestions = () => {
-    if (showSuggestions && suggestions.length) {
+    if (showSuggestions && suggestions.length > 0) {
       return (
-        <ul className="absolute z-10 mt-1 max-h-60 w-40 overflow-auto rounded-md bg-white py-1 shadow-lg">
+        <ul className="absolute z-50 mt-1 max-h-60 w-40 overflow-auto rounded-md bg-white py-1 shadow-lg">
           {suggestions.map((suggestion, index) => (
             <li
               key={index}
               className={`cursor-pointer px-4 py-2 ${
                 index === suggestionIndex ? 'bg-gray-100' : 'bg-white'
               }`}
-              onMouseDown={() => selectSuggestion(suggestion)}
+              onMouseDown={() =>
+                selectSuggestion({ name: suggestion.name, id: suggestion.id! })
+              }
             >
-              {suggestion}
+              {suggestion.name}
             </li>
           ))}
         </ul>
@@ -226,7 +305,7 @@ export default function JobsActivity({ jobId, activities, handler }: Props) {
           className="relative flex-auto"
           onSubmit={(event) => onCommentSubmit(event)}
         >
-          <div className="overflow-hidden rounded-lg pb-12 shadow-sm ring-1 ring-inset ring-my-color10 focus-within:ring-2 focus-within:ring-indigo-600">
+          <div className="overflow-visible rounded-lg pb-12 shadow-sm ring-1 ring-inset ring-my-color10 focus-within:ring-2 focus-within:ring-indigo-600">
             <label htmlFor="comment" className="sr-only">
               Add your comment
             </label>
