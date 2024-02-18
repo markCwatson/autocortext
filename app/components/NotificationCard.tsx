@@ -1,12 +1,16 @@
+import React from 'react';
 import { Notification } from '@/types';
 
 interface NotificationCardProps extends Notification {
   onClick: () => void;
 }
 
-export default function NotificationCard(props: NotificationCardProps) {
+const NotificationCard = React.forwardRef<
+  HTMLDivElement,
+  NotificationCardProps
+>((props, ref) => {
   return (
-    <div className="bg-white rounded-lg border shadow-md m-1">
+    <div ref={ref} className="bg-white rounded-lg border shadow-md m-1">
       <div className="px-2 p-4">
         <div className="flex items-center justify-between">
           <div>
@@ -30,4 +34,6 @@ export default function NotificationCard(props: NotificationCardProps) {
       </div>
     </div>
   );
-}
+});
+
+export default NotificationCard;

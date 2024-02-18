@@ -3,16 +3,16 @@
 import { useState, Fragment, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { FileIcon, FolderClosed, Loader2 } from 'lucide-react';
-import { Button } from '@/components/Button';
-import classNames from '@/lib/classNames';
-import { toast } from './Toast';
+import { toast } from '@/components/Toast';
 import { FILE, FOLDER } from '@/lib/constants';
+import DocCreateFolder from '@/components/DocCreateFolder';
+import DocTypeSelector from '@/components/DocTypeSelector';
 
 type Props = {
   show: boolean;
   isUploading: boolean;
   onClose: () => void;
-  setType: (type: 'file' | 'folder' | null) => void;
+  setType: (type: typeof FILE | typeof FOLDER) => void;
   onFileUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onFolderCreation: (folderName: string) => void;
 };
@@ -77,7 +77,7 @@ export default function DocModal(props: Props) {
                             className="h-8 w-8 shrink-0"
                             aria-hidden="true"
                           />
-                          {selectedType !== 'folder' && (
+                          {selectedType !== FOLDER && (
                             <FileIcon
                               className="h-8 w-8 shrink-0"
                               aria-hidden="true"
@@ -92,12 +92,12 @@ export default function DocModal(props: Props) {
                             className="text-base font-semibold leading-6 text-gray-900"
                           >
                             {`Add a new ${
-                              selectedType === 'folder' ? 'folder' : 'item'
+                              selectedType === FOLDER ? FOLDER : 'item'
                             }`}
                           </Dialog.Title>
                           <div className="mt-2">
                             <p className="text-sm text-gray-500">
-                              {selectedType === 'folder'
+                              {selectedType === FOLDER
                                 ? 'Provide the folder name...'
                                 : 'Create a folder or add a file...'}
                             </p>
@@ -107,72 +107,17 @@ export default function DocModal(props: Props) {
                     </div>
                     {!props.isUploading ? (
                       <div className="mt-5">
-                        {selectedType === 'folder' ? (
-                          // Render form for folder name input
-                          <form onSubmit={handleFolderSubmit}>
-                            <div className="flex justify-between">
-                              <input
-                                type="text"
-                                name="folderName"
-                                placeholder="Folder Name"
-                                className="text-my-color10"
-                                required
-                              />
-                              <Button
-                                type="submit"
-                                className="button-class-names"
-                              >
-                                Create Folder
-                              </Button>
-                            </div>
-                          </form>
+                        {selectedType === FOLDER ? (
+                          <DocCreateFolder
+                            handleFolderSubmit={handleFolderSubmit}
+                          />
                         ) : (
-                          // Render buttons to select file or folder
-                          <div className="flex justify-evenly gap-8 mx-8">
-                            <Button
-                              size={'lg'}
-                              onClick={() => setSelectedType('folder')}
-                              className={classNames(
-                                'text-my-color1 hover:bg-my-color4',
-                                'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
-                                'w-full px-6 justify-start',
-                              )}
-                            >
-                              <FolderClosed
-                                className="h-4 w-4 shrink-0"
-                                aria-hidden="true"
-                              />
-                              Folder
-                            </Button>
-                            <>
-                              <input
-                                ref={fileInputRef}
-                                id="file"
-                                type="file"
-                                accept=".pdf"
-                                style={{ display: 'none' }}
-                                onChange={props.onFileUpload}
-                              />
-                              <Button
-                                size={'lg'}
-                                onClick={() => {
-                                  props.setType('file');
-                                  fileInputRef.current?.click();
-                                }}
-                                className={classNames(
-                                  'text-my-color1 hover:bg-my-color4',
-                                  'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
-                                  'w-full px-6 justify-start',
-                                )}
-                              >
-                                <FileIcon
-                                  className="h-4 w-4 shrink-0"
-                                  aria-hidden="true"
-                                />
-                                File
-                              </Button>
-                            </>
-                          </div>
+                          <DocTypeSelector
+                            ref={fileInputRef}
+                            onFileUpload={props.onFileUpload}
+                            setType={props.setType}
+                            setSelectedType={setSelectedType}
+                          />
                         )}
                       </div>
                     ) : (
