@@ -14,10 +14,8 @@ import {
   ArrowPathIcon,
   ClockIcon,
   CubeTransparentIcon,
-  DocumentDuplicateIcon,
   TrashIcon,
 } from '@heroicons/react/20/solid';
-import { MailIcon } from 'lucide-react';
 import { HistoryModel } from '@/repos/HistoryRepository';
 import DialogModal from '@/components/DialogModal';
 import Summary from '@/components/Summary';
@@ -101,16 +99,6 @@ export default function Reports() {
       icon: CubeTransparentIcon,
       handler: summarizeMessages,
     },
-    // {
-    //   title: 'Share',
-    //   icon: MailIcon,
-    //   handler: () => null,
-    // },
-    // {
-    //   title: 'Open Docs',
-    //   icon: DocumentDuplicateIcon,
-    //   handler: () => null,
-    // },
   ];
 
   useEffect(() => {
@@ -636,7 +624,9 @@ export default function Reports() {
           />
         }
         title={'Do you want to add a summary?'}
-        body={'You can add a summary of this conversation to this record.'}
+        body={
+          'If you want, Auto Cortext can add a summary of this conversation to this record. This is convenient when reviewing past conversations.'
+        }
         show={true}
         onClose={'/dashboard/troubleshoot'}
         goToButtons={[
@@ -650,7 +640,7 @@ export default function Reports() {
           <button
             type="button"
             className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            onClick={() => handleSave({ summarize: false })}
+            onClick={() => handleSave({ summarize: true })}
           >
             Summarize
           </button>,

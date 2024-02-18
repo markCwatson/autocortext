@@ -70,6 +70,7 @@ export default function DocModal(props: Props) {
                 >
                   <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
                     <div>
+                      {/** Title icons */}
                       <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-ful">
                         <div className="flex gap-4 text-green-600 animate-bounce">
                           <FolderClosed
