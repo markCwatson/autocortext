@@ -7,13 +7,14 @@ interface CreateUserInput {
   email: string;
   name: string;
   companyId?: string;
+  companyName: string;
 }
 
 export type User = UserModel;
 
 class UsersService {
   static async create(body: CreateUserInput): Promise<any> {
-    const { password, email, name, companyId } = body;
+    const { password, email, name, companyId, companyName } = body;
     const user = await UsersRepository.selectByEmail(email);
     if (user) {
       return null;
@@ -26,6 +27,7 @@ class UsersService {
       password: hashedPassword,
       role: 'user',
       companyId: new ObjectId(companyId),
+      companyName,
     });
   }
 
