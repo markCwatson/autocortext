@@ -59,7 +59,19 @@ export default async function DashboardLayout({
     <>
       <Preview />
       <Navbar />
-      <OrgNavBar companyId={user.companyId as string} />
+      <UserProvider
+        value={{
+          id: user.id,
+          name: user.name,
+          image: user.image,
+          companyId: user.companyId,
+          companyName: user.companyName,
+          role: user.role,
+          email: user.email,
+        }}
+      >
+        <OrgNavBar />
+      </UserProvider>
       <div className="mx-auto flex flex-col space-y-6">
         <div
           className="p-0 grid gap-12 md:grid-cols-[115px_1fr] bg-my-color8"
@@ -84,6 +96,7 @@ export default async function DashboardLayout({
                       name: user.name,
                       image: user.image,
                       companyId: user.companyId,
+                      companyName: user.companyName,
                       role: user.role,
                       email: user.email,
                     }}

@@ -4,11 +4,7 @@ import { Fragment, useState } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { VariantProps, cva } from 'class-variance-authority';
-import { handler } from 'tailwindcss-animate';
-
-function classNames(...classes: any[]) {
-  return classes.filter(Boolean).join(' ');
-}
+import classNames from '@/lib/classNames';
 
 const dropdownButtonVariants = cva(
   'inline-flex w-full justify-center gap-x-1.5 px-2 text-sm font-semibold shadow-sm',

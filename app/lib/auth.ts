@@ -51,6 +51,7 @@ export const authOptions: NextAuthOptions = {
             email: user.email,
             role: user.role,
             companyId: user.companyId.toString(),
+            companyName: user.companyName,
             image: undefined, // todo: store images (add to UserModel too)
           };
         }
@@ -69,6 +70,7 @@ export const authOptions: NextAuthOptions = {
         token.id = user.id!;
         token.role = user.role;
         token.companyId = user.companyId as string;
+        token.companyName = user.companyName;
       }
       return token;
     },
@@ -77,6 +79,7 @@ export const authOptions: NextAuthOptions = {
       session.user.id = token.id;
       session.user.role = token.role;
       session.user.companyId = token.companyId;
+      session.user.companyName = token.companyName;
       return session;
     },
   },
