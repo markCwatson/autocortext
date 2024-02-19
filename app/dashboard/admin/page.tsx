@@ -1,235 +1,347 @@
 'use client';
 
-import { Fragment, useState } from 'react';
-import { Dialog, Disclosure, Transition } from '@headlessui/react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
-import {
-  FunnelIcon,
-  MinusIcon,
-  PlusIcon,
-  Squares2X2Icon,
-} from '@heroicons/react/20/solid';
-import Table from '@/components/Table';
-import { columns, users } from './users';
-import { filters } from './filters';
+import React, { CSSProperties, useEffect, useState } from 'react';
 import DropdownButton from '@/components/DropdownButton';
+import Table, { TableColumn } from '@/components/Table';
+import { NAV_BAR_HEIGHT } from '@/lib/constants';
+import { ArrowPathIcon } from '@heroicons/react/20/solid';
+import { Button } from '@/components/Button';
+import { Building2Icon, UserCheck2 } from 'lucide-react';
+import classNames from '@/lib/classNames';
+import { toast } from '@/components/Toast';
+import { useUserContext } from '@/providers/UserProvider';
+import { Company } from '@/services/CompanyService';
+import { User } from 'next-auth';
+import { CompanyModel } from '@/repos/CompanyRepository';
 
-function classNames(...classes: any[]) {
-  return classes.filter(Boolean).join(' ');
+const columnStyle: CSSProperties = {
+  height: '100%',
+};
+
+const mainContainerStyle: CSSProperties = {
+  height: `calc(100vh - ${NAV_BAR_HEIGHT})`,
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  overflow: 'hidden',
+};
+
+interface ButtonProps {
+  title: string;
+  icon:
+    | React.ForwardRefExoticComponent<any>
+    | React.FC<React.SVGProps<SVGSVGElement>>;
+  handler: () => void;
 }
 
+const userColumns: TableColumn[] = [
+  {
+    header: 'User',
+    accessor: 'user',
+    render: (user: User) => (
+      <div className="text-sm font-medium leading-6 text-white">
+        {user.name}
+      </div>
+    ),
+  },
+  {
+    header: 'Role',
+    accessor: 'user',
+    render: (user: User) => {
+      const statusColor =
+        user.role === 'AscendAdmin'
+          ? 'text-green-400 bg-green-400/10'
+          : 'text-rose-400 bg-rose-400/10';
+
+      return (
+        <div className="flex items-center justify-end gap-x-2 sm:justify-start">
+          <div className={statusColor + ' flex-none rounded-full p-1'}>
+            <div className="h-1.5 w-1.5 rounded-full bg-current" />
+          </div>
+          <div className="hidden text-white sm:block">{user.role}</div>
+        </div>
+      );
+    },
+  },
+  {
+    header: 'Email',
+    accessor: 'user',
+    render: (user: User) => {
+      return <div className="hidden text-white sm:block">{user.email}</div>;
+    },
+  },
+];
+
+const companyColumns: TableColumn[] = [
+  {
+    header: 'Company name',
+    accessor: 'company',
+    render: (company: Company) => (
+      <div className="flex items-center gap-x-4">
+        <div className="truncate text-sm font-medium leading-6 text-white">
+          {company.name}
+        </div>
+      </div>
+    ),
+  },
+];
+
 export default function Dashboard() {
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const userValue = useUserContext();
+  const [users, setUsers] = useState<User[] | null>(null);
+  const [companies, setCompanies] = useState<any[]>([]);
+  const [selectedCompany, setSelectedCompany] = useState<{
+    companyId: string | null;
+    companyName: string;
+  }>({
+    companyId: null,
+    companyName: '',
+  });
+
+  useEffect(() => {
+    fetchUsers();
+    fetchCompanies();
+
+    if (userValue.user.role !== 'AscendAdmin') {
+      setSelectedCompany({
+        companyId: userValue.user.companyId as string,
+        companyName: userValue.user.companyName,
+      });
+    }
+  }, [selectedCompany]);
+
+  const fetchUsers = async () => {
+    if (!selectedCompany.companyId) return;
+
+    const res = await fetch(
+      `/api/company/users?companyId=${selectedCompany.companyId as string}`,
+    );
+    if (!res.ok) {
+      toast({
+        title: 'Error',
+        message: 'Error fetching users',
+        type: 'error',
+        duration: 2000,
+      });
+      return;
+    }
+
+    const data = await res.json();
+    setUsers(data);
+  };
+
+  const fetchCompanies = async () => {
+    const res = await fetch('/api/company/all');
+    if (!res.ok) {
+      toast({
+        title: 'Error',
+        message: 'Error fetching companies',
+        type: 'error',
+        duration: 2000,
+      });
+      return;
+    }
+
+    const data = await res.json();
+    setCompanies(data);
+  };
+
+  const createCompany = async () => {
+    const name = prompt('Enter company name');
+    if (!name) return;
+
+    try {
+      const res = await fetch('/api/company', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name }),
+      });
+
+      if (!res.ok) {
+        toast({
+          title: 'Error',
+          message: 'Error creating company',
+          type: 'error',
+          duration: 2000,
+        });
+        return;
+      }
+
+      toast({
+        title: 'Success',
+        message: 'Company and index created!',
+        type: 'success',
+        duration: 2000,
+      });
+
+      fetchCompanies();
+    } catch (error) {
+      console.log('error on page:', error);
+      toast({
+        title: 'Error',
+        message: 'Something went wrong while creating an account',
+        type: 'error',
+        duration: 2000,
+      });
+    }
+  };
+
+  const createUser = async () => {
+    const name = prompt('Enter user name');
+    if (!name) return;
+    const password = prompt('Enter temporary password');
+    if (!password) return;
+    const email = prompt('Enter email');
+    if (!email) return;
+
+    try {
+      const response = await fetch('/api/user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          password,
+          email,
+          name,
+          companyId: selectedCompany.companyId,
+          companyName: selectedCompany.companyName,
+        }),
+      });
+
+      if (!response.ok) {
+        toast({
+          title: 'Error creating account',
+          message: 'Please try again later.',
+          type: 'error',
+        });
+        return;
+      }
+
+      toast({
+        title: 'Success',
+        message: 'Account created!',
+      });
+
+      fetchUsers();
+    } catch (error) {
+      console.log('error on page:', error);
+      toast({
+        title: 'Error resigering',
+        message: `${error}`,
+        type: 'error',
+      });
+    }
+  };
+
+  const buttons: ButtonProps[] = [
+    {
+      title: 'Create company',
+      icon: Building2Icon,
+      handler: createCompany,
+    },
+    {
+      title: 'Create account',
+      icon: UserCheck2,
+      handler: createUser,
+    },
+  ];
 
   return (
-    <div className="bg-my-color8">
-      <div>
-        {/* Mobile filter dialog */}
-        <Transition.Root show={mobileFiltersOpen} as={Fragment}>
-          <Dialog
-            as="div"
-            className="relative z-40 lg:hidden"
-            onClose={setMobileFiltersOpen}
-          >
-            <Transition.Child
-              as={Fragment}
-              enter="transition-opacity ease-linear duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="transition-opacity ease-linear duration-300"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <div className="fixed inset-0 bg-black bg-opacity-25" />
-            </Transition.Child>
-
-            <div className="fixed inset-0 z-40 flex">
-              <Transition.Child
-                as={Fragment}
-                enter="transition ease-in-out duration-300 transform"
-                enterFrom="translate-x-full"
-                enterTo="translate-x-0"
-                leave="transition ease-in-out duration-300 transform"
-                leaveFrom="translate-x-0"
-                leaveTo="translate-x-full"
-              >
-                <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
-                  <div className="flex items-center justify-between px-4">
-                    <h2 className="text-lg font-medium text-gray-900">
-                      Filters
-                    </h2>
-                    <button
-                      type="button"
-                      className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
-                      onClick={() => setMobileFiltersOpen(false)}
-                    >
-                      <span className="sr-only">Close menu</span>
-                      <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
-                  </div>
-
-                  {/* Filters */}
-                  <form className="mt-4 border-t border-gray-200">
-                    {filters.map((section) => (
-                      <Disclosure
-                        as="div"
-                        key={section.id}
-                        className="border-t border-gray-200 px-4 py-6"
-                      >
-                        {({ open }) => (
-                          <>
-                            <h3 className="-mx-2 -my-3 flow-root">
-                              <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                                <span className="font-medium text-gray-900">
-                                  {section.name}
-                                </span>
-                                <span className="ml-6 flex items-center">
-                                  {open ? (
-                                    <MinusIcon
-                                      className="h-5 w-5"
-                                      aria-hidden="true"
-                                    />
-                                  ) : (
-                                    <PlusIcon
-                                      className="h-5 w-5"
-                                      aria-hidden="true"
-                                    />
-                                  )}
-                                </span>
-                              </Disclosure.Button>
-                            </h3>
-                            <Disclosure.Panel className="pt-6">
-                              <div className="space-y-6">
-                                {section.options.map((option, optionIdx) => (
-                                  <div
-                                    key={option.value}
-                                    className="flex items-center"
-                                  >
-                                    <input
-                                      id={`filter-mobile-${section.id}-${optionIdx}`}
-                                      name={`${section.id}[]`}
-                                      defaultValue={option.value}
-                                      type="checkbox"
-                                      defaultChecked={option.checked}
-                                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                    />
-                                    <label
-                                      htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                                      className="ml-3 min-w-0 flex-1 text-gray-500"
-                                    >
-                                      {option.label}
-                                    </label>
-                                  </div>
-                                ))}
-                              </div>
-                            </Disclosure.Panel>
-                          </>
-                        )}
-                      </Disclosure>
-                    ))}
-                  </form>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </Dialog>
-        </Transition.Root>
-
-        <main className="mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-baseline justify-between border-b border-gray-200 pb-1 pt-24">
-            <div className="flex items-center">
-              <DropdownButton
-                selection="Sort"
-                listItems={['All users', 'Admin', 'Guests']}
-                color="ghost"
+    <main className="mx-auto px-4 sm:px-6 lg:px-8 " style={mainContainerStyle}>
+      <div
+        className="grid pt-2 grid-cols-1 lg:grid-cols-12 gap-x-4 gap-y-10 "
+        style={columnStyle}
+      >
+        {/* Left empty div */}
+        <div className="bg-transparent lg:visible lg:col-span-1" />
+        {/** Companies */}
+        <div className="lg:col-span-3 bg-my-color8 border rounded overflow-visible">
+          {/* <DropdownButton
+            selection="Filter by name"
+            listItems={['Coming soon']}
+            color="ghost"
+          /> */}
+          {/* todo: overflow-visible required here to allow summary popover.
+            This causes history list to grow. Consider doing something else. */}
+          <div className="flex flex-col gap-2 w-full h-full overflow-visible pt-4">
+            {companies.length > 0 ? (
+              <Table
+                data={companies}
+                columns={companyColumns}
+                onSelect={(selected: CompanyModel) =>
+                  setSelectedCompany({
+                    companyId: selected._id ? selected._id.toString() : null,
+                    companyName: selected.name,
+                  })
+                }
               />
-              <button
-                type="button"
-                className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
-              >
-                <span className="sr-only">View grid</span>
-                <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
-                onClick={() => setMobileFiltersOpen(true)}
-              >
-                <span className="sr-only">Filters</span>
-                <FunnelIcon className="h-5 w-5" aria-hidden="true" />
-              </button>
-            </div>
-          </div>
-
-          <section aria-labelledby="products-heading" className="pb-24 pt-1">
-            <div className="grid pt-2 grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
-              {/* Filters */}
-              <form className="hidden pt-4 lg:block">
-                {filters.map((section) => (
-                  <Disclosure
-                    as="div"
-                    key={section.id}
-                    className="border-b border-gray-200 py-6"
-                  >
-                    {({ open }) => (
-                      <>
-                        <h3 className="-my-3 flow-root">
-                          <Disclosure.Button className="flex w-full items-center justify-between bg-my-color8 py-3 text-sm text-gray-400 hover:text-gray-500">
-                            <span className="font-medium text-my-color1">
-                              {section.name}
-                            </span>
-                            <span className="ml-6 flex items-center">
-                              {open ? (
-                                <MinusIcon
-                                  className="h-5 w-5"
-                                  aria-hidden="true"
-                                />
-                              ) : (
-                                <PlusIcon
-                                  className="h-5 w-5"
-                                  aria-hidden="true"
-                                />
-                              )}
-                            </span>
-                          </Disclosure.Button>
-                        </h3>
-                        <Disclosure.Panel className="pt-6">
-                          <div className="space-y-4">
-                            {section.options.map((option, optionIdx) => (
-                              <div
-                                key={option.value}
-                                className="flex items-center"
-                              >
-                                <input
-                                  id={`filter-${section.id}-${optionIdx}`}
-                                  name={`${section.id}[]`}
-                                  defaultValue={option.value}
-                                  type="checkbox"
-                                  defaultChecked={option.checked}
-                                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                />
-                                <label
-                                  htmlFor={`filter-${section.id}-${optionIdx}`}
-                                  className="ml-3 text-sm text-my-color1"
-                                >
-                                  {option.label}
-                                </label>
-                              </div>
-                            ))}
-                          </div>
-                        </Disclosure.Panel>
-                      </>
-                    )}
-                  </Disclosure>
-                ))}
-              </form>
-
-              <div className="lg:col-span-3">
-                <Table data={users} columns={columns} />
+            ) : (
+              <div className="flex flex-col py-24 w-full h-full items-center">
+                <ArrowPathIcon
+                  className="h-6 w-6 text-green-600 animate-spin"
+                  aria-hidden="true"
+                />
+                Loading companies...
               </div>
-            </div>
-          </section>
-        </main>
+            )}
+          </div>
+        </div>
+        {/* Users */}
+        <div className="lg:col-span-5 pb-8 bg-my-color8 border rounded overflow-scroll">
+          {/* <DropdownButton
+            selection="Filter by role"
+            listItems={['All users', 'Admin', 'Users', 'Guests']}
+            color="ghost"
+          /> */}
+          <div className="flex flex-col gap-2 w-full h-full overflow-visible pt-4">
+            {users ? (
+              <Table data={users} columns={userColumns} />
+            ) : selectedCompany.companyId ? (
+              <div className="flex flex-col py-24 w-full h-full items-center">
+                <ArrowPathIcon
+                  className="h-6 w-6 text-green-600 animate-spin"
+                  aria-hidden="true"
+                />
+                Loading users...
+              </div>
+            ) : (
+              <div className="flex flex-col py-24 w-full h-full items-center">
+                <Building2Icon
+                  className="h-6 w-6 text-green-600 animate-bounce mb-4"
+                  aria-hidden="true"
+                />
+                Select a company to view users
+              </div>
+            )}
+          </div>
+        </div>
+        {/* Buttons */}
+        <div className="bg-transparent lg:visible lg:col-span-2">
+          <div className="w-full h-full pt-14">
+            <ul role="list" className="space-y-2 mx-1">
+              {buttons.map((b) => (
+                <li key={b.title}>
+                  <Button
+                    size={'lg'}
+                    onClick={b.handler}
+                    className={classNames(
+                      'text-my-color1 hover:bg-my-color4',
+                      'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
+                      'w-full px-10 justify-start',
+                    )}
+                  >
+                    <b.icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                    {b.title}
+                  </Button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        {/* Right empty div */}
+        <div className="bg-transparent lg:visible lg:col-span-1" />
       </div>
-    </div>
+    </main>
   );
 }

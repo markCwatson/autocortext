@@ -7,4 +7,6 @@ const DELETE_ENTRY = '__delete_entry__';
 const LOCAL = '__local__';
 const GLOBAL = '__global__';
 
-export { FILE, FOLDER, ADD_ENTRY, DELETE_ENTRY, LOCAL, GLOBAL };
+const NAV_BAR_HEIGHT = '170px';
+
+export { FILE, FOLDER, ADD_ENTRY, DELETE_ENTRY, LOCAL, GLOBAL, NAV_BAR_HEIGHT };

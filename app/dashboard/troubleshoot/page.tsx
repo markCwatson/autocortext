@@ -18,13 +18,12 @@ import { Button } from '@/components/Button';
 import classNames from '@/lib/classNames';
 import { Activity, Job } from '@/types';
 import LogoBrainSvg from '@/components/LogoBrainSvg';
+import { NAV_BAR_HEIGHT } from '@/lib/constants';
 
 // todo: a lot of duplicate code here with docs page. refactor into a component
 
-const navBarHeight = '170px';
-
 const mainContainerStyle: CSSProperties = {
-  height: `calc(100vh - ${navBarHeight})`,
+  height: `calc(100vh - ${NAV_BAR_HEIGHT})`,
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
@@ -100,7 +99,7 @@ export default function Troubleshoot() {
       handler: machineSelectionHandler,
     },
     {
-      title: 'Select issue type:',
+      title: 'Select system:',
       options: issueTypes,
       handler: issueTypeSelectionHandler,
     },

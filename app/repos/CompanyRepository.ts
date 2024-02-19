@@ -5,7 +5,7 @@ import ApiError from '@/errors/ApiError';
 export interface CompanyModel {
   _id?: ObjectId;
   name: string;
-  slug: string;
+  index: string;
   createdAt: string;
   jobCount: number;
 }
@@ -64,13 +64,13 @@ class CompanyRepository {
     }
   }
 
-  static async selectBySlug(slug: string): Promise<CompanyModel | null> {
+  static async selectByIndex(index: string): Promise<CompanyModel | null> {
     const client = await Database.getClient();
     try {
       return client
         .db()
         .collection('companies')
-        .findOne({ slug }) as Promise<CompanyModel | null>;
+        .findOne({ index }) as Promise<CompanyModel | null>;
     } catch (error: MongoServerError | any) {
       throw new ApiError({
         code: 500,
@@ -95,20 +95,21 @@ class CompanyRepository {
     }
   }
 
-  static async incrementJobCountByCompanyId(companyId: string): Promise<CompanyModel | null> {
+  static async incrementJobCountByCompanyId(
+    companyId: string,
+  ): Promise<CompanyModel | null> {
     const client = await Database.getClient();
     try {
       await client
         .db()
         .collection('companies')
-        .updateOne(
-          { _id: new ObjectId(companyId) },
-          { $inc: { jobCount: 1 } }
-        );
+        .updateOne({ _id: new ObjectId(companyId) }, { $inc: { jobCount: 1 } });
       return client
         .db()
         .collection('companies')
-        .findOne({ _id: new ObjectId(companyId) }) as Promise<CompanyModel | null>;
+        .findOne({
+          _id: new ObjectId(companyId),
+        }) as Promise<CompanyModel | null>;
     } catch (error: MongoServerError | any) {
       throw new ApiError({
         code: 500,

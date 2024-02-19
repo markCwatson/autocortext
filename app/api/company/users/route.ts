@@ -16,7 +16,12 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json(
     users.map((user: UserModel) => {
-      return { name: user.name, id: user._id };
+      return {
+        name: user.name,
+        id: user._id,
+        email: user.email,
+        role: user.role,
+      };
     }),
   );
 }

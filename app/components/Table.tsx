@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export interface TableColumn {
   header: string;
@@ -10,11 +10,17 @@ interface TableProps {
   data: any[];
   columns: TableColumn[];
   className?: string;
+  onSelect?: (selection: any) => void;
 }
 
-export default function Table({ data, columns, className }: TableProps) {
+export default function Table({
+  data,
+  columns,
+  className,
+  onSelect,
+}: TableProps) {
   return (
-    <div className={`bg-my-color8 ${className}`}>
+    <div className={`bg-inherit ${className}`}>
       <table className="mt-1 w-full whitespace-nowrap text-left">
         <thead className="border-b border-white/10 text-sm leading-6 text-white">
           <tr>
@@ -35,7 +41,8 @@ export default function Table({ data, columns, className }: TableProps) {
               {columns.map((column, colIndex) => (
                 <td
                   key={colIndex}
-                  className="py-4 pl-4 pr-4 sm:pl-6 lg:pl-8 text-sm leading-6"
+                  className="py-4 pl-4 pr-4 sm:pl-6 lg:pl-8 text-sm leading-6 hover:bg-my-color6 cursor-pointer transition-colors duration-200"
+                  onClick={() => onSelect && onSelect(item)}
                 >
                   {column.render ? column.render(item) : item[column.accessor]}
                 </td>

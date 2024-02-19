@@ -4,23 +4,26 @@ import UsersService, { User } from '@/services/UsersService';
 
 interface CreateCompanyInput {
   name: string;
-  slug: string;
 }
 
 export type Company = CompanyModel;
 
 class CompanyService {
-  static async create(body: CreateCompanyInput): Promise<any> {
-    const { name, slug } = body;
-    const company = await CompanyRepository.selectBySlug(slug);
+  static async create(body: CreateCompanyInput): Promise<CompanyModel | null> {
+    const { name } = body;
+
+    // generate index for Pinecone
+    let index = name.toLowerCase().replace(' ', '-');
+    index = `${index}-${Math.floor(Math.random() * 100000)}`;
+    const company = await CompanyRepository.selectByIndex(index);
     if (company) {
       return null;
     }
 
     return CompanyRepository.create({
       name,
-      slug,
-      createdAt: `${new Date()}`,
+      index,
+      createdAt: `${new Date().toISOString().split('.')[0]}Z`,
       jobCount: 0,
     });
   }
@@ -43,7 +46,9 @@ class CompanyService {
     return CompanyRepository.getAllCompanies();
   }
 
-  static async incrementJobCountByCompanyId(companyId: string): Promise<CompanyModel | null> {
+  static async incrementJobCountByCompanyId(
+    companyId: string,
+  ): Promise<CompanyModel | null> {
     return CompanyRepository.incrementJobCountByCompanyId(companyId);
   }
 }

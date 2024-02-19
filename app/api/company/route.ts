@@ -2,6 +2,16 @@ import CompanyService from '@/services/CompanyService';
 import { ObjectId } from 'mongodb';
 import { NextRequest, NextResponse } from 'next/server';
 
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+  const company = await CompanyService.create(body);
+  if (!company) {
+    return new Response('Error occured creating company', { status: 400 });
+  }
+
+  return NextResponse.json(company);
+}
+
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const companyId = url.searchParams.get('id');
