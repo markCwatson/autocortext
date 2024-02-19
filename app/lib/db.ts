@@ -22,7 +22,6 @@ const connectToDatabase = async (): Promise<MongoClient> => {
     } catch (error) {
       console.error('Failed to connect to database:', error);
       isConnected = false;
-      throw error;
     }
   }
 
