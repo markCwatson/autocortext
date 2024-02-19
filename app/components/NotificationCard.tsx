@@ -1,5 +1,6 @@
 import React from 'react';
 import { Notification } from '@/types';
+import LogoBrainSvg from './LogoBrainSvg';
 
 interface NotificationCardProps extends Notification {
   onClick: () => void;
@@ -18,7 +19,16 @@ const NotificationCard = React.forwardRef<
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-left text-sm font-semibold leading-6 text-my-color10 border-b">
-              {props.title}
+              {props.title === 'Auto Cortext trained' ? (
+                <div className="flex gap-2">
+                  <div>
+                    <LogoBrainSvg className="w-6 h-6 animate-pulse" />
+                  </div>
+                  <span>{props.title}</span>
+                </div>
+              ) : (
+                <span>{props.title}</span>
+              )}
             </h3>
             <div className="text-left mt-2 max-w-xl text-xs text-my-color9">
               <p>{props.description}</p>

@@ -243,7 +243,9 @@ const Dashboard = React.forwardRef<HTMLDivElement, DashboardProps>(
                     ) : (
                       <UserCircleIcon className="w-6 h-6" />
                     )}
-                    <span aria-hidden="true">{user.name}</span>
+                    <span aria-hidden="true" className="text-xs">
+                      {user.name}
+                    </span>
                   </a>
                 </div>
                 <nav className="flex flex-1 flex-col">

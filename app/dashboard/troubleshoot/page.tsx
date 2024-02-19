@@ -10,18 +10,14 @@ import { AiMessageList } from '@/components/AiMessageList';
 import AiPromptChat from '@/components/AiPromptChat';
 import OptionSelector from '@/components/OptionSelector';
 import { machines } from '@/lib/machines';
-import {
-  ArrowPathIcon,
-  ClockIcon,
-  CubeTransparentIcon,
-  TrashIcon,
-} from '@heroicons/react/20/solid';
+import { ArrowPathIcon, ClockIcon, TrashIcon } from '@heroicons/react/20/solid';
 import { HistoryModel } from '@/repos/HistoryRepository';
 import DialogModal from '@/components/DialogModal';
 import Summary from '@/components/Summary';
 import { Button } from '@/components/Button';
 import classNames from '@/lib/classNames';
 import { Activity, Job } from '@/types';
+import LogoBrainSvg from '@/components/LogoBrainSvg';
 
 // todo: a lot of duplicate code here with docs page. refactor into a component
 
@@ -53,7 +49,9 @@ const issueTypes = [
 
 interface ButtonProps {
   title: string;
-  icon: React.ForwardRefExoticComponent<any>;
+  icon:
+    | React.ForwardRefExoticComponent<any>
+    | React.FC<React.SVGProps<SVGSVGElement>>;
   handler: () => void;
 }
 
@@ -96,7 +94,7 @@ export default function Reports() {
     },
     {
       title: 'Summarize',
-      icon: CubeTransparentIcon,
+      icon: LogoBrainSvg,
       handler: summarizeMessages,
     },
   ];
@@ -618,8 +616,8 @@ export default function Reports() {
     return (
       <DialogModal
         icon={
-          <CubeTransparentIcon
-            className="h-10 w-10 text-my-color10"
+          <LogoBrainSvg
+            className="h-10 w-10 text-my-color10 animate-pulse"
             aria-hidden="true"
           />
         }

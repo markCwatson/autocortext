@@ -2,7 +2,8 @@ import { cn } from '@/lib/utils';
 import React from 'react';
 import AnimatedText from './AnimatedText';
 import { AiMessage } from '@/providers/AiMessagesProvider';
-import { CubeTransparentIcon, UserCircleIcon } from '@heroicons/react/20/solid';
+import { UserCircleIcon } from '@heroicons/react/20/solid';
+import LogoBrainSvg from '@/components/LogoBrainSvg';
 
 interface Props {
   messages: AiMessage[];
@@ -21,13 +22,13 @@ export function AiMessageList({ messages, animate = true }: Props) {
         return (
           <div
             key={message.id}
-            className={cn('flex items-center gap-2 p-0 m-0', {
+            className={cn('flex items-start gap-2 p-0 m-0', {
               'justify-end pl-2': message.role === 'user',
               'justify-start pr-2': message.role === 'assistant',
             })}
           >
             {message.role === 'assistant' && (
-              <CubeTransparentIcon className="w-4 h-4 flex-shrink-0" />
+              <LogoBrainSvg className="w-6 h-6 flex-shrink-0 animate-pulse" />
             )}
 
             <div className="flex-1 min-w-0" style={{ maxWidth: '70%' }}>

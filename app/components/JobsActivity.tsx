@@ -1,9 +1,8 @@
 'use client';
 
-import { Fragment, use, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import {
-  CubeTransparentIcon,
   FaceFrownIcon,
   FaceSmileIcon,
   FireIcon,
@@ -18,6 +17,7 @@ import { Activity } from '@/types';
 import { toast } from '@/components/Toast';
 import { useUserContext } from '@/providers/UserProvider';
 import classNames from '@/lib/classNames';
+import LogoBrainSvg from '@/components/LogoBrainSvg';
 
 const moods = [
   {
@@ -473,7 +473,7 @@ export default function JobsActivity({
                       className="relative mt-3 h-6 w-6 flex-none rounded-full bg-gray-50"
                     />
                   ) : activityItem.person?.name === 'Auto Cortext' ? (
-                    <CubeTransparentIcon className="w-4 h-4 flex-shrink-0" />
+                    <LogoBrainSvg className="w-6 h-6 flex-shrink-0 animate-pulse" />
                   ) : (
                     activityItem.person?.img || (
                       <UserCircleIcon className="w-6 h-6 flex-shrink-0" />
