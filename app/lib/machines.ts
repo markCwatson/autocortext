@@ -1,7 +1,7 @@
 export const machines = [
   'None Selected',
-  'Cartoner',
-  'Conveyor',
+  'Enterprise Cartoner',
+  'SIPTU Conveyor',
   'Lathe',
   'Milling Option',
   'Press',
