@@ -46,8 +46,8 @@ export async function POST(req: NextRequest) {
     );
 
     await NotificationService.create(companyId, {
-      title: 'Auto Coretex ready',
-      description: `Auto Coretex has been trained on the new file: ${d.metadata.source}`,
+      title: 'Auto Cortext trained',
+      description: `Auto Cortext has been trained on the new file: ${d.metadata.source}`,
       dateTime: `${new Date().toISOString().split('.')[0]}Z`,
     });
   }
