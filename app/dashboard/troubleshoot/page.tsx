@@ -28,7 +28,7 @@ const mainContainerStyle: CSSProperties = {
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
-  overflow: 'auto',
+  overflow: 'hidden',
 };
 
 const columnStyle: CSSProperties = {
@@ -55,7 +55,7 @@ interface ButtonProps {
   handler: () => void;
 }
 
-export default function Reports() {
+export default function Troubleshoot() {
   const session = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const [history, setHistory] = useState<HistoryModel[] | null>(null);
@@ -65,10 +65,10 @@ export default function Reports() {
 
   const [machine, setMachine] = useState('None Selected');
   const [companyId, setCompanyId] = useState('');
-  const [animate, setAnimate] = useState(false);
-  const [selectedFileIndex, setSelectedFileIndex] = useState<number | null>(
-    null,
-  );
+  const [animate, setAnimate] = useState(true);
+  const [selectedHistoryIndex, setSelectedHistoryIndex] = useState<
+    number | null
+  >(null);
   const [savedPrompt, setSavedPrompt] = useState<{
     isMachineSelected: boolean;
     isIssueTypeSelected: boolean;
@@ -120,17 +120,27 @@ export default function Reports() {
   }, [session]);
 
   useEffect(() => {
+    if (selectedHistoryIndex !== null) {
+      return;
+    }
+
+    if (displayMachineOptions || displayIssueTypeOptions) {
+      return;
+    }
+
     setTimeout(() => {
       setDisplayMachineOptions(true);
-    }, 0);
-  }, []);
+    }, 2000);
+  }, [selectedHistoryIndex]);
 
   useEffect(() => {}, [history]);
 
   useEffect(() => {
     setTimeout(() => {
-      if (isMachineSelected) setDisplayIssueTypeOptions(true);
-    }, 0);
+      if (isMachineSelected) {
+        setDisplayIssueTypeOptions(true);
+      }
+    }, 1000);
   }, [isMachineSelected]);
 
   async function fetchHistory() {
@@ -202,6 +212,7 @@ export default function Reports() {
 
     setDisplayIssueTypeOptions(false);
     setIsIssueTypeSelected(true);
+    setAnimate(true);
   }
 
   function machineSelectionHandler(selectedMachine: string) {
@@ -223,6 +234,7 @@ export default function Reports() {
 
     setDisplayMachineOptions(false);
     setIsMachineSelected(true);
+    setAnimate(true);
   }
 
   async function sendQuery(event: any, newMessage: AiMessage) {
@@ -233,12 +245,7 @@ export default function Reports() {
       .join('\n');
 
     setIsLoading(true);
-
-    toast({
-      title: 'Success',
-      message: `Sending query...`,
-      duration: 2000,
-    });
+    setAnimate(true);
 
     try {
       const response = await fetch('/api/read', {
@@ -294,10 +301,11 @@ export default function Reports() {
     if (!history) return;
 
     const selectedHistoryMessages = history[index];
-    setSelectedFileIndex(index);
+    setSelectedHistoryIndex(index);
 
     if (selectedHistoryMessages) {
       setMessages(selectedHistoryMessages.messages);
+      setAnimate(false);
 
       if (!savedPrompt) {
         setSavedPrompt({
@@ -319,8 +327,9 @@ export default function Reports() {
   function restorePrompt() {
     if (!savedPrompt) return;
 
-    setSelectedFileIndex(null);
+    setSelectedHistoryIndex(null);
     setMessages(savedPrompt.messages);
+    setAnimate(false);
     setDisplayMachineOptions(savedPrompt.displyMachine);
     setDisplayIssueTypeOptions(savedPrompt.displayIssueType);
     setIsIssueTypeSelected(savedPrompt.isIssueTypeSelected);
@@ -684,7 +693,7 @@ export default function Reports() {
                 return (
                   <div
                     className={`flex justify-between items-center px-4 hover:bg-my-color5 hover:rounded pl-4 ${
-                      selectedFileIndex === index ? 'bg-my-color5' : ''
+                      selectedHistoryIndex === index ? 'bg-my-color5' : ''
                     }`}
                   >
                     <div className="flex items-center gap-2 ">
@@ -700,7 +709,7 @@ export default function Reports() {
                     </div>
                     <TrashIcon
                       className={`w-4 h-4 cursor-pointer hover:opacity-100 ${
-                        selectedFileIndex === index
+                        selectedHistoryIndex === index
                           ? 'opacity-100'
                           : 'opacity-5'
                       }`}
@@ -729,7 +738,10 @@ export default function Reports() {
             onSave={() => setShowModal(true)}
           />
           <div className="flex flex-col justify-center w-full h-full">
-            <AiMessageList messages={messages} animate={animate} />
+            <AiMessageList
+              messages={messages}
+              animate={!selectedHistoryIndex && animate}
+            />
             {isMachineSelected && isIssueTypeSelected ? (
               <div className="w-full px-4">
                 <AiPromptChat callback={sendQuery} isLoading={isLoading} />

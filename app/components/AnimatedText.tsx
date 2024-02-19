@@ -33,7 +33,7 @@ export default function AnimatedText({
     } else if (show) {
       setDisplayText(text);
     }
-  }, [text, show, animated, animationDelay]);
+  }, [text]);
 
   const renderedText = displayText.split('\n').map((line: any, index: any) => (
     <React.Fragment key={index}>
