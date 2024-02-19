@@ -219,6 +219,29 @@ export default function Documentation() {
       if (data) {
         fetchDocs(userValue.user.companyId as string);
       }
+
+      const res = await fetch(
+        `/api/notify?companyId=${userValue.user.companyId}`,
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            title: `${userValue.user.name} deleted a file`,
+            description: `${userValue.user.name} deleted the file ${data.name} from ${data.path}`,
+            recipientId: null,
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+
+      if (!res.ok) {
+        toast({
+          title: 'Error',
+          message: `Failed to send notification to company`,
+          type: 'error',
+        });
+      }
     } catch (error) {
       toast({
         title: 'Error',
