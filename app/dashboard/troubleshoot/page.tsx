@@ -55,36 +55,30 @@ interface ButtonProps {
   handler: () => void;
 }
 
+interface issueOptionsProps {
+  title: string;
+  options: string[];
+  handler: (selected: string) => void;
+}
+
 export default function Troubleshoot() {
   const session = useSession();
+  const { messages, setMessages } = useQueryContext();
+  const router = useRouter();
+
   const [isLoading, setIsLoading] = useState(false);
   const [history, setHistory] = useState<HistoryModel[] | null>(null);
-
-  const [isMachineSelected, setIsMachineSelected] = useState(false);
-  const [isIssueTypeSelected, setIsIssueTypeSelected] = useState(false);
-
   const [machine, setMachine] = useState('None Selected');
+  const [issueType, setIssueType] = useState('None Selected');
   const [companyId, setCompanyId] = useState('');
   const [animate, setAnimate] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [selectedHistoryIndex, setSelectedHistoryIndex] = useState<
     number | null
   >(null);
   const [savedPrompt, setSavedPrompt] = useState<{
-    isMachineSelected: boolean;
-    isIssueTypeSelected: boolean;
-    displyMachine: boolean;
-    displayIssueType: boolean;
     messages: AiMessage[];
   } | null>(null);
-
-  const [displayMachineOptions, setDisplayMachineOptions] = useState(false);
-  const [displayIssueTypeOptions, setDisplayIssueTypeOptions] = useState(false);
-
-  const [showModal, setShowModal] = useState(false);
-
-  const { messages, setMessages } = useQueryContext();
-
-  const router = useRouter();
 
   const buttons: ButtonProps[] = [
     {
@@ -99,6 +93,19 @@ export default function Troubleshoot() {
     },
   ];
 
+  const issueOptions: issueOptionsProps[] = [
+    {
+      title: 'Select machine:',
+      options: machines,
+      handler: machineSelectionHandler,
+    },
+    {
+      title: 'Select issue type:',
+      options: issueTypes,
+      handler: issueTypeSelectionHandler,
+    },
+  ];
+
   useEffect(() => {
     if (session.data?.user.name && messages.length === 0) {
       setMessages((prevMessages) => [
@@ -107,9 +114,7 @@ export default function Troubleshoot() {
           id: `${prevMessages.length + 1}`,
           content: `Auto Cortext: Hello ${session.data.user.name}.
 
-        I am ready to assist you in troubleshooting problems with your equipment. If you explain the issue, I will suggest a solution.
-
-        What machine are you having trouble with?`,
+        What machine are you having trouble with? Please select a machine from the side menu.`,
           role: 'assistant',
         },
       ]);
@@ -119,29 +124,7 @@ export default function Troubleshoot() {
     }
   }, [session]);
 
-  useEffect(() => {
-    if (selectedHistoryIndex !== null) {
-      return;
-    }
-
-    if (displayMachineOptions || displayIssueTypeOptions) {
-      return;
-    }
-
-    setTimeout(() => {
-      setDisplayMachineOptions(true);
-    }, 2000);
-  }, [selectedHistoryIndex]);
-
   useEffect(() => {}, [history]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      if (isMachineSelected) {
-        setDisplayIssueTypeOptions(true);
-      }
-    }, 1000);
-  }, [isMachineSelected]);
 
   async function fetchHistory() {
     const companyId = session.data?.user.companyId;
@@ -194,29 +177,43 @@ export default function Troubleshoot() {
   }
 
   function issueTypeSelectionHandler(selectedIssueType: string) {
+    setIssueType(selectedIssueType);
+
+    let nextMessage: string;
+    if (machine === 'None Selected') {
+      nextMessage = `Auto Cortext: You need to select a machine so I can help you with the ${selectedIssueType} system.`;
+    } else {
+      nextMessage = `Auto Cortext: OK, tell me about the problem you are experiencing with the ${selectedIssueType} system in the ${machine}.`;
+    }
+
     setMessages((prevMessages) => [
       ...prevMessages,
       {
         id: `${prevMessages.length + 1}`,
         content: `${
           session.data!.user.name
-        } selected the ${selectedIssueType} system.`,
+        } is having issues with the ${selectedIssueType} system.`,
         role: 'user',
       },
       {
         id: `${prevMessages.length + 2}`,
-        content: `Auto Cortext: OK, tell me about the problem you are experiencing with the ${selectedIssueType} system`,
+        content: nextMessage,
         role: 'assistant',
       },
     ]);
 
-    setDisplayIssueTypeOptions(false);
-    setIsIssueTypeSelected(true);
     setAnimate(true);
   }
 
   function machineSelectionHandler(selectedMachine: string) {
     setMachine(selectedMachine);
+
+    let nextMessage: string;
+    if (issueType === 'None Selected') {
+      nextMessage = `Auto Cortext: Great! What system in the ${selectedMachine} are you having issues with?`;
+    } else {
+      nextMessage = `Auto Cortext: OK, tell me about the problem you are experiencing with the ${issueType} system in the ${selectedMachine}.`;
+    }
 
     setMessages((prevMessages) => [
       ...prevMessages,
@@ -227,13 +224,11 @@ export default function Troubleshoot() {
       },
       {
         id: `${prevMessages.length + 2}`,
-        content: `Auto Cortext: Great! What system in the ${selectedMachine} are you having issues with?`,
+        content: nextMessage,
         role: 'assistant',
       },
     ]);
 
-    setDisplayMachineOptions(false);
-    setIsMachineSelected(true);
     setAnimate(true);
   }
 
@@ -309,17 +304,8 @@ export default function Troubleshoot() {
 
       if (!savedPrompt) {
         setSavedPrompt({
-          isMachineSelected: isMachineSelected,
-          isIssueTypeSelected: isIssueTypeSelected,
-          displyMachine: displayMachineOptions,
-          displayIssueType: displayIssueTypeOptions,
           messages: messages,
         });
-
-        setDisplayIssueTypeOptions(false);
-        setDisplayMachineOptions(false);
-        setIsIssueTypeSelected(false);
-        setIsMachineSelected(false);
       }
     }
   }
@@ -330,10 +316,6 @@ export default function Troubleshoot() {
     setSelectedHistoryIndex(null);
     setMessages(savedPrompt.messages);
     setAnimate(false);
-    setDisplayMachineOptions(savedPrompt.displyMachine);
-    setDisplayIssueTypeOptions(savedPrompt.displayIssueType);
-    setIsIssueTypeSelected(savedPrompt.isIssueTypeSelected);
-    setIsMachineSelected(savedPrompt.isMachineSelected);
 
     setSavedPrompt(null);
   }
@@ -457,11 +439,6 @@ export default function Troubleshoot() {
         role: 'assistant',
       },
     ]);
-
-    setDisplayMachineOptions(true);
-    setDisplayIssueTypeOptions(false);
-    setIsIssueTypeSelected(false);
-    setIsMachineSelected(false);
   }
 
   // Function to parse the input string using regex
@@ -741,36 +718,12 @@ export default function Troubleshoot() {
             <AiMessageList
               messages={messages}
               animate={!selectedHistoryIndex && animate}
+              animationTextDelay={12}
             />
-            {isMachineSelected && isIssueTypeSelected ? (
+            {machine !== 'None Selected' && (
               <div className="w-full px-4">
                 <AiPromptChat callback={sendQuery} isLoading={isLoading} />
               </div>
-            ) : (
-              <>
-                {displayMachineOptions && (
-                  <div className="w-full px-4 fade-in">
-                    <div className="ml-6 w-1/2">
-                      <OptionSelector
-                        title={'Select a machine: '}
-                        options={machines}
-                        handler={machineSelectionHandler}
-                      />
-                    </div>
-                  </div>
-                )}
-                {displayIssueTypeOptions && (
-                  <div className="w-full px-4 fade-in">
-                    <div className="ml-6 w-1/2">
-                      <OptionSelector
-                        title={'Select an issue type: '}
-                        options={issueTypes}
-                        handler={issueTypeSelectionHandler}
-                      />
-                    </div>
-                  </div>
-                )}
-              </>
             )}
           </div>
         </div>
@@ -786,7 +739,7 @@ export default function Troubleshoot() {
                     className={classNames(
                       'text-my-color1 hover:bg-my-color4',
                       'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
-                      'w-[80%] px-6 justify-start',
+                      'w-full px-10 justify-start',
                     )}
                   >
                     <b.icon className="h-4 w-4 shrink-0" aria-hidden="true" />
@@ -795,6 +748,21 @@ export default function Troubleshoot() {
                 </li>
               ))}
             </ul>
+            <div className="mt-10">
+              <ul role="list" className="space-y-2 mx-4">
+                {issueOptions.map((o) => (
+                  <li>
+                    <div className="w-full">
+                      <OptionSelector
+                        title={o.title}
+                        options={o.options}
+                        handler={o.handler}
+                      />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
         {/* Right empty div */}

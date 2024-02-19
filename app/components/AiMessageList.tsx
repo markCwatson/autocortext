@@ -8,9 +8,16 @@ import LogoBrainSvg from '@/components/LogoBrainSvg';
 interface Props {
   messages: AiMessage[];
   animate?: boolean;
+  animationDelay?: number;
+  animationTextDelay?: number;
 }
 
-export function AiMessageList({ messages, animate = true }: Props) {
+export function AiMessageList({
+  messages,
+  animate = true,
+  animationDelay,
+  animationTextDelay,
+}: Props) {
   if (!messages) return <></>;
 
   return (
@@ -47,7 +54,8 @@ export function AiMessageList({ messages, animate = true }: Props) {
                     text={message.content.replace('Auto Cortext:', '')}
                     show={true}
                     animated={animate}
-                    animationDelay={500}
+                    animationDelay={animationDelay}
+                    animationTextDelay={animationTextDelay}
                   />
                 )}
               </div>

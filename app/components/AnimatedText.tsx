@@ -6,6 +6,7 @@ interface AnimatedTextProps {
   text: string;
   show: boolean;
   animationDelay?: number;
+  animationTextDelay?: number;
   animated?: boolean;
 }
 
@@ -13,7 +14,8 @@ export default function AnimatedText({
   text,
   show,
   animated,
-  animationDelay,
+  animationDelay = 15,
+  animationTextDelay = 100,
 }: AnimatedTextProps) {
   const [displayText, setDisplayText] = useState(animated ? '' : text);
 
@@ -27,9 +29,9 @@ export default function AnimatedText({
           if (i > text.length) {
             clearInterval(intervalId);
           }
-        }, 15);
+        }, animationTextDelay);
         return () => clearInterval(intervalId);
-      }, animationDelay || 100);
+      }, animationDelay);
     } else if (show) {
       setDisplayText(text);
     }
