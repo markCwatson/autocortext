@@ -258,8 +258,8 @@ const Dashboard = React.forwardRef<HTMLDivElement, DashboardProps>(
                               href={item.href}
                               className={classNames(
                                 path === item.href
-                                  ? 'bg-my-color2 text-my-color10 dark:bg-my-color9 dark:text-my-color2'
-                                  : 'text-my-color10 dark:text-my-color2 hover:text-my-color1 hover:bg-my-color4 dark:hover:bg-my-color8',
+                                  ? 'bg-my-color9 text-my-color2'
+                                  : 'text-my-color2 hover:opacity-70 cursor-pointer',
                                 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
                               )}
                             >

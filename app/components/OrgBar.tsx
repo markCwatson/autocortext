@@ -22,10 +22,10 @@ export default function OrgNavBar() {
 
             <div className="flex items-center">
               <div className="flex items-center gap-2 md:gap-4">
-                <MailIcon className="h-6 w-6" />
-                <ChatBubbleLeftIcon className="h-6 w-6" />
+                <MailIcon className="h-6 w-6 hover:opacity-70 hover:cursor-not-allowed" />
+                <ChatBubbleLeftIcon className="h-6 w-6 hover:opacity-70 hover:cursor-not-allowed" />
                 <Notifications />
-                <Cog8ToothIcon className="h-6 w-6" />
+                <Cog8ToothIcon className="h-6 w-6 hover:opacity-70 hover:cursor-not-allowed" />
               </div>
             </div>
           </div>

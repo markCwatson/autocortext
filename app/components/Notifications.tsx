@@ -77,7 +77,12 @@ export default function Notifications() {
   };
 
   return (
-    <Menu as="div" className={'relative inline-block text-center'}>
+    <Menu
+      as="div"
+      className={
+        'relative inline-block text-center hover:opacity-70 cursor-pointer'
+      }
+    >
       <div>
         <Menu.Button className={'flex items-center'}>
           <BellAlertIcon className="h-6 w-6" />
