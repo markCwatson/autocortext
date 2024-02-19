@@ -3,6 +3,8 @@ import { Pinecone } from '@pinecone-database/pinecone';
 import { createPineconeIndex, updatePinecone } from '@/lib/pinecone';
 import NotificationService from '@/services/NotificationService';
 import DocService from '@/services/DocService';
+import CompanyService from '@/services/CompanyService';
+import { VECTOR_DIMENSION } from '@/lib/constants';
 
 // Vercel's max duration is up to 5 mins.
 // We are getting 15 second timeouts so increasing to 120 seconds.
@@ -22,14 +24,18 @@ export async function POST(req: NextRequest) {
     apiKey: process.env.PINECONE_API_KEY || '',
   });
 
-  const indexName = 'auto-cortext';
-  const vectorDimension = 3072;
+  const indexName = await DocService.getIndexByDocName(doc[0].metadata.source);
+  if (!indexName) {
+    return NextResponse.json({
+      data: 'no index found for the given doc...',
+    });
+  }
 
   try {
     await createPineconeIndex({
       client,
       indexName,
-      vectorDimension,
+      vectorDimension: VECTOR_DIMENSION,
     });
     await updatePinecone({ client, indexName, docs: doc });
   } catch (err) {

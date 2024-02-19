@@ -1,6 +1,8 @@
 import { ObjectId } from 'mongodb';
 import CompanyRepository, { CompanyModel } from '@/repos/CompanyRepository';
 import UsersService, { User } from '@/services/UsersService';
+import DocService from './DocService';
+import { FOLDER } from '@/lib/constants';
 
 interface CreateCompanyInput {
   name: string;
@@ -15,17 +17,28 @@ class CompanyService {
     // generate index for Pinecone
     let index = name.toLowerCase().replace(' ', '-');
     index = `${index}-${Math.floor(Math.random() * 100000)}`;
-    const company = await CompanyRepository.selectByIndex(index);
+    let company = await CompanyRepository.selectByIndex(index);
     if (company) {
       return null;
     }
 
-    return CompanyRepository.create({
+    company = await CompanyRepository.create({
       name,
       index,
       createdAt: `${new Date().toISOString().split('.')[0]}Z`,
       jobCount: 0,
     });
+    if (!company) return null;
+
+    await DocService.create({
+      name: 'root',
+      parentId: null,
+      parentPath: null,
+      companyId: company._id!.toString(),
+      type: FOLDER,
+    });
+
+    return company;
   }
 
   static async delete(id: ObjectId): Promise<Boolean> {
@@ -50,6 +63,11 @@ class CompanyService {
     companyId: string,
   ): Promise<CompanyModel | null> {
     return CompanyRepository.incrementJobCountByCompanyId(companyId);
+  }
+
+  static async getIndexByCompanyId(companyId: string): Promise<string | null> {
+    const company = await CompanyRepository.selectById(new ObjectId(companyId));
+    return company?.index || null;
   }
 }
 

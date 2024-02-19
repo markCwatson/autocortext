@@ -14,8 +14,8 @@ export default function AnimatedText({
   text,
   show,
   animated,
-  animationDelay = 15,
-  animationTextDelay = 100,
+  animationDelay = 100,
+  animationTextDelay = 15,
 }: AnimatedTextProps) {
   const [displayText, setDisplayText] = useState(animated ? '' : text);
 

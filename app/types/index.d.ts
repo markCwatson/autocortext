@@ -42,10 +42,10 @@ export type History = {
 
 export type Doc = {
   name: string;
-  parentPath: string;
+  parentPath: string | null;
   path: string;
   url: string;
-  parentId: string | ObjectId;
+  parentId: string | ObjectId | null;
   companyId: string | ObjectId;
   type: 'file' | 'folder';
   childrenIds: string[];

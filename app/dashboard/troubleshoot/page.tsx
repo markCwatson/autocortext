@@ -234,6 +234,8 @@ export default function Troubleshoot() {
   async function sendQuery(event: any, newMessage: AiMessage) {
     event.preventDefault();
     if (!messages) return;
+    if (!session.data) return;
+
     const context = [...messages, newMessage]
       .map((message) => message.content)
       .join('\n');
@@ -242,13 +244,16 @@ export default function Troubleshoot() {
     setAnimate(true);
 
     try {
-      const response = await fetch('/api/read', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `/api/read?companyId=${session.data.user.companyId as string}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(context),
         },
-        body: JSON.stringify(context),
-      });
+      );
 
       if (!response?.ok) {
         return toast({

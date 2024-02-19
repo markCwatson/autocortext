@@ -15,6 +15,7 @@ import {
 import { toast } from '@/components/Toast';
 import { JobsModel } from '@/repos/JobsRepository';
 import { Hourglass } from 'lucide-react';
+import { useUserContext } from '@/providers/UserProvider';
 
 type Props = {
   title: string;
@@ -57,6 +58,8 @@ const columnMap = {
 };
 
 export default function JobModal(props: Props) {
+  const userValue = useUserContext();
+
   const [open, setOpen] = useState(true);
   const [activities, setActivities] = useState(props.job.activities);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -95,10 +98,13 @@ export default function JobModal(props: Props) {
     });
 
     try {
-      const result = await fetch('/api/read', {
-        method: 'POST',
-        body: JSON.stringify(context),
-      });
+      const result = await fetch(
+        `/api/read?companyId=${userValue.user.companyId as string}`,
+        {
+          method: 'POST',
+          body: JSON.stringify(context),
+        },
+      );
       if (!result?.ok) {
         return toast({
           title: 'Error',

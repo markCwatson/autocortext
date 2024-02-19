@@ -1,8 +1,9 @@
-import DocRepository, { DocModel } from '@/repos/DocRepository';
 import { ObjectId } from 'mongodb';
 import { FOLDER, FILE } from '@/lib/constants';
 import { Doc } from '@/types';
 import ApiError from '@/errors/ApiError';
+import DocRepository, { DocModel } from '@/repos/DocRepository';
+import CompanyService from '@/services/CompanyService';
 
 // Define a type for the data structure holding the file system docs (i.e. files/folders)
 type FileSystemData = {
@@ -19,9 +20,9 @@ class DocService {
   }: {
     name: string;
     companyId: string;
-    parentId: string;
+    parentId: string | null;
     type: typeof FILE | typeof FOLDER;
-    parentPath: string;
+    parentPath: string | null;
   }): Promise<DocModel | null> {
     const newDoc: Doc = {
       url:
@@ -30,7 +31,7 @@ class DocService {
           : '',
       companyId: new ObjectId(companyId),
       path: '',
-      parentId: new ObjectId(parentId),
+      parentId: parentId ? new ObjectId(parentId) : null,
       name,
       parentPath,
       type,
@@ -62,7 +63,9 @@ class DocService {
     newDoc.path =
       newDoc.parentPath === '/'
         ? `${newDoc.parentPath}${newDoc.name}`
-        : `${newDoc.parentPath}/${newDoc.name}`;
+        : newDoc.parentPath !== null
+        ? `${newDoc.parentPath}/${newDoc.name}`
+        : '/';
 
     const doc = await DocRepository.create(newDoc);
     if (!doc) return null;
@@ -112,6 +115,16 @@ class DocService {
   static async getCompanyIdByFilename(filename: string): Promise<string> {
     const doc = await DocRepository.getDocByFilename(filename);
     return doc?.companyId.toString() || '';
+  }
+
+  static async getIndexByDocName(docName: string): Promise<string | null> {
+    const doc = await DocRepository.getDocByFilename(docName);
+    if (!doc) return null;
+
+    const index = await CompanyService.getIndexByCompanyId(
+      doc.companyId.toString(),
+    );
+    return index;
   }
 
   // Function to generate a tree structure from a list of entries
@@ -201,7 +214,7 @@ class DocService {
     let parentId = fsData[docId].parentId;
     let index = fsData[parentId as string].childrenIds?.indexOf(docId);
 
-    if (index !== -1 && index !== undefined) {
+    if (index !== -1 && index !== undefined && parentId) {
       fsData[parentId as string].childrenIds?.splice(index, 1);
       await DocRepository.updateOne(new ObjectId(parentId), {
         $pull: { childrenIds: new ObjectId(docId) },

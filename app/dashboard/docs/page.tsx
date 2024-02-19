@@ -295,10 +295,13 @@ export default function Documentation() {
     });
 
     try {
-      const result = await fetch('/api/read', {
-        method: 'POST',
-        body: JSON.stringify(context),
-      });
+      const result = await fetch(
+        `/api/read?companyId=${userValue.user.companyId as string}`,
+        {
+          method: 'POST',
+          body: JSON.stringify(context),
+        },
+      );
 
       if (!result?.ok) {
         return toast({
