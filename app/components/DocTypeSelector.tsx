@@ -6,7 +6,6 @@ import { FILE, FOLDER } from '@/lib/constants';
 
 interface Props {
   onFileUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  setType: (type: typeof FILE | typeof FOLDER) => void;
   setSelectedType: (type: typeof FILE | typeof FOLDER) => void;
   onClose: () => void;
 }
@@ -16,7 +15,6 @@ const DocTypeSelector: React.FC<Props> = (props) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileOptionSelect = () => {
-    props.setType(FILE);
     setIsContinueVisible(true);
   };
 

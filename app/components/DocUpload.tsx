@@ -1,27 +1,26 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from '@/components/Button';
+import { PlusIcon } from 'lucide-react';
+import { useUserContext } from '@/providers/UserProvider';
 import { toast } from '@/components/Toast';
+import { Button } from '@/components/Button';
 import DocModal from '@/components/DocModal';
-import { PlusIcon } from '@heroicons/react/20/solid';
-import { FILE, FOLDER } from '@/lib/constants';
 
 interface FileUploadProps {
-  companyId: string;
   parentId: string;
   parentPath: string;
   fetchDocs: (companyId: string) => void;
 }
 
 export default function DocUpload({
-  companyId,
   parentId,
   parentPath,
   fetchDocs,
 }: FileUploadProps) {
+  const userValue = useUserContext();
+
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [type, setType] = useState<typeof FILE | typeof FOLDER | null>(null);
   const [uploading, setUploading] = useState(false);
 
   const uploadFileToS3 = async (file: File) => {
@@ -94,6 +93,29 @@ export default function DocUpload({
             message: 'File uploaded successfully',
             type: 'success',
           });
+
+          const res = await fetch(
+            `/api/notify?companyId=${userValue.user.companyId}`,
+            {
+              method: 'POST',
+              body: JSON.stringify({
+                title: `${userValue.user.name} uploaded a file`,
+                description: `${userValue.user.name} uploaded the file ${name} to ${parentPath}`,
+                recipientId: null,
+              }),
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            },
+          );
+
+          if (!res.ok) {
+            toast({
+              title: 'Error',
+              message: `Failed to send notification to company`,
+              type: 'error',
+            });
+          }
         }
       }
     } catch (error: any) {
@@ -105,15 +127,14 @@ export default function DocUpload({
     } finally {
       setUploading(false);
       setIsOpenModal(false);
-      setType(null);
-      fetchDocs(companyId);
+      fetchDocs(userValue.user.companyId as string);
     }
   };
 
   const addFileToDatabase = async (name: string): Promise<boolean> => {
     try {
       const response = await fetch(
-        `/api/doc?companyId=${companyId}&type=file`,
+        `/api/doc?companyId=${userValue.user.companyId}&type=file`,
         {
           method: 'POST',
           body: JSON.stringify({
@@ -148,7 +169,7 @@ export default function DocUpload({
 
     try {
       const response = await fetch(
-        `/api/doc?companyId=${companyId}&type=folder`,
+        `/api/doc?companyId=${userValue.user.companyId}&type=folder`,
         {
           method: 'POST',
           body: JSON.stringify({
@@ -182,14 +203,13 @@ export default function DocUpload({
       });
     } finally {
       setUploading(false);
-      fetchDocs(companyId);
+      fetchDocs(userValue.user.companyId as string);
     }
   };
 
   const handleFolderCreation = (folderName: string) => {
     uploadFolder(folderName);
     setIsOpenModal(false);
-    setType(null);
   };
 
   const handleButtonClick = () => {
@@ -210,7 +230,6 @@ export default function DocUpload({
       <DocModal
         show={isOpenModal}
         isUploading={uploading}
-        setType={setType}
         onClose={() => setIsOpenModal(false)}
         onFileUpload={handleFileUpload}
         onFolderCreation={handleFolderCreation}

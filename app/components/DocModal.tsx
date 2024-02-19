@@ -13,7 +13,6 @@ type Props = {
   show: boolean;
   isUploading: boolean;
   onClose: () => void;
-  setType: (type: typeof FILE | typeof FOLDER) => void;
   onFileUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onFolderCreation: (folderName: string) => void;
 };
@@ -113,7 +112,6 @@ export default function DocModal(props: Props) {
                         ) : (
                           <DocTypeSelector
                             onFileUpload={props.onFileUpload}
-                            setType={props.setType}
                             setSelectedType={setSelectedType}
                             onClose={props.onClose}
                           />

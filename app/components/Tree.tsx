@@ -72,7 +72,6 @@ const TreeItem = ({
           {isFolder ? (
             <DocUpload
               fetchDocs={fetchDocs}
-              companyId={session.data?.user?.companyId as string}
               parentId={id} // the id is the parent id where doc is being created
               parentPath={path} // the path is the parent path where doc is being created
             />
