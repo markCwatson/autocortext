@@ -1,0 +1,25 @@
+This provides the .l5k program export overview of Encoder routine within the PLC from the SIPTU HS5160 machine from Kliklok-Woodman, a conveyor. Use this program to understand the logic so that it can be queried in the future. What will often be asked is information about why a program may not be working, so this document provides the information necessary to answer this.
+(MAIN := "R01_Homing",
+	                 MODE := 0,
+	                 DisableFlag := 0,
+	                 UseAsFolder := 0)
+		TAG
+			EncoderHomed : BOOL (RADIX := Decimal) := 0;
+			HomeDelaytimer : TIMER  := [43454,1000,0];
+			HomingState : DINT (RADIX := Decimal) := 10;
+			MAHCommand : MOTION_INSTRUCTION  := [33554432,0,0,0,0,0,0,0,0];
+			MASDCommand : MOTION_INSTRUCTION  := [536870912,0,2,1,0,0,0,0,0];
+			MASRCommand : MOTION_INSTRUCTION  := [536870912,0,0,1,0,0,0,0,0];
+			ServoAxis OF Encoder ;
+		END_TAG
+
+		ROUTINE R01_Homing 
+				N: EQU(HomingState,0)XIO(EncoderHomed)XIO(PML_State.Sts_Aborted)TON(HomeDelaytimer,?,?)XIC(HomeDelaytimer.DN)MOV(10,HomingState);
+				N: EQU(HomingState,10)GRT(ServoAxis.ActualVelocity,0.1)MOV(30,HomingState);
+				N: EQU(HomingState,30)[MAH(ServoAxis,MAHCommand) ,[XIC(MAHCommand.IP) ,XIC(MAHCommand.ER) ] MOV(40,HomingState) ];
+				N: EQU(HomingState,40)[XIC(MAHCommand.PC) OTL(EncoderHomed) ,XIC(MAHCommand.ER) ,LES(ServoAxis.ActualVelocity,0.05) ]MOV(0,HomingState);
+				N: XIC(S:FS)OTU(EncoderHomed);
+		END_ROUTINE
+
+		CHILD_PROGRAMS
+		END_CHILD_PROGRAMS

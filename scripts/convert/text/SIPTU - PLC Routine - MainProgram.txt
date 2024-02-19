@@ -1,0 +1,254 @@
+This provides the .l5k program export overview of MainProgram routine within the PLC from the SIPTU HS5160 machine from Kliklok-Woodman, a conveyor. Use this program to understand the logic so that it can be queried in the future. What will often be asked is information about why a program may not be working, so this document provides the information necessary to answer this.
+(MAIN := "P00_MainRoutine",
+	                     MODE := 0,
+	                     DisableFlag := 0,
+	                     UseAsFolder := 0)
+		TAG
+			GluePhotoEyeJamTImer : TIMER  := [3194814,480,0];
+			GluePressureBCD : DINT (RADIX := Decimal) := 0;
+			GluePressureDecimal : DINT (RADIX := Decimal) := 0;
+			JamTimerDuration : REAL (RADIX := Float) := 5.00000000e+003;
+			LongBlinkOffTimer : TIMER  := [-1072216313,500,451];
+			LongBlinkTimer : TIMER  := [-1070170701,1500,971];
+			LSGlueFaultEnabledHMI : BOOL (RADIX := Decimal) := 0;
+			MTR_Temp_Dwell : TIMER  := [-1073037101,15000,12973];
+			NonMCR_Faults_Cleared_Timer : TIMER  := [-1607041613,750,750];
+			NotAbortedWDelayTimer : TIMER  := [-1607041613,3000,3004];
+			PhasingBelt1JamTimer : TIMER  := [3939808,5000,0];
+			PhasingBelt2JamTimer : TIMER  := [3940676,5000,0];
+			PhasingBelt3JamTimer : TIMER  := [2404849,5000,0];
+			PhasingBelt4JamTimer : TIMER  := [2400050,5000,0];
+			PressureSwitchTimer : TIMER  := [4159602,1500,0];
+			RegPhotoEyeJamTImer : TIMER  := [891480,4000,0];
+			ResetDurationTimer : TIMER  := [0,0,0];
+			RTSJamTimer : TIMER  := [1040459,5000,0];
+			testjrl : REAL (RADIX := Float) := 8.00000000e+002;
+			testjrl2 : BOOL (RADIX := Decimal) := 1;
+			TuckGluePhotoEyeJamTImer : TIMER  := [892333,4000,0];
+			TurnSectionPhotoEyeJamTImer : TIMER  := [894237,4000,0];
+		END_TAG
+
+		ROUTINE P00_MainRoutine 
+				N: JSR(R01_StartUpScan,0);
+				N: JSR(R03_FaultLogic,0);
+				N: JSR(R06_FaultStatus,0);
+				N: JSR(R09_Outputs,0);
+				N: JSR(R10_Recipe,0);
+		END_ROUTINE
+
+		ROUTINE R01_StartUpScan 
+				N: NOP();
+		END_ROUTINE
+
+		ROUTINE R03_FaultLogic 
+				N: XIC(Estop_OperatorsPanel)OTL(ErrorNum[1])OTL(FaultPresent)EQU(StopFor1,0)MOV(1,StopFor1);
+				N: XIO(Estop_OperatorsPanel)XIC(ResetSignal)[OTU(ErrorNum[1]) ,XIC(ResetSignal) EQU(StopFor1,1) MOV(0,StopFor1) ];
+				N: XIC(Estop_RTSMain)OTL(ErrorNum[2])OTL(FaultPresent)EQU(StopFor1,0)MOV(2,StopFor1);
+				N: XIO(Estop_RTSMain)XIC(ResetSignal)[OTU(ErrorNum[2]) ,XIC(ResetSignal) EQU(StopFor1,2) MOV(0,StopFor1) ];
+				N: XIC(Estop_RTSAux)XIO(Reset_Active)OTL(ErrorNum[3])OTL(FaultPresent)EQU(StopFor1,0)MOV(3,StopFor1);
+				N: XIO(Estop_RTSAux)XIC(ResetSignal)[OTU(ErrorNum[3]) ,XIC(ResetSignal) EQU(StopFor1,3) MOV(0,StopFor1) ];
+				N: XIC(AlwaysOff)OTL(ErrorNum[4])OTL(FaultPresent)EQU(StopFor1,0)MOV(4,StopFor1);
+				N: XIO(AlwaysOff)[OTU(ErrorNum[4]) ,XIC(ResetSignal) EQU(StopFor1,4) MOV(0,StopFor1) ];
+				N: XIC(AlwaysOff)OTL(ErrorNum[5])OTL(FaultPresent)EQU(StopFor1,0)MOV(5,StopFor1);
+				N: XIO(AlwaysOff)[OTU(ErrorNum[5]) ,XIC(ResetSignal) EQU(StopFor1,5) MOV(0,StopFor1) ];
+				N: XIC(DoorInterlock_RTSInfeedSide)OTL(ErrorNum[16])OTL(FaultPresent)EQU(StopFor1,0)MOV(16,StopFor1);
+				N: XIO(DoorInterlock_RTSInfeedSide)XIC(ResetSignal)[OTU(ErrorNum[16]) ,XIC(ResetSignal) EQU(StopFor1,16) MOV(0,StopFor1) ];
+				N: XIC(DoorInterlock_RTSConveyorSide)OTL(ErrorNum[17])OTL(FaultPresent)EQU(StopFor1,0)MOV(17,StopFor1);
+				N: XIO(DoorInterlock_RTSConveyorSide)XIC(ResetSignal)[OTU(ErrorNum[17]) ,XIC(ResetSignal) EQU(StopFor1,17) MOV(0,StopFor1) ];
+				N: XIC(DoorInterlock_RTSAbortSide)OTL(ErrorNum[18])OTL(FaultPresent)EQU(StopFor1,0)MOV(18,StopFor1);
+				N: XIO(DoorInterlock_RTSAbortSide)XIC(ResetSignal)[OTU(ErrorNum[18]) ,XIC(ResetSignal) EQU(StopFor1,18) MOV(0,StopFor1) ];
+				N: XIC(DoorInterlock_RTSDischargeSide)OTL(ErrorNum[19])OTL(FaultPresent)EQU(StopFor1,0)MOV(19,StopFor1);
+				N: XIO(DoorInterlock_RTSDischargeSide)XIC(ResetSignal)[OTU(ErrorNum[19]) ,XIC(ResetSignal) EQU(StopFor1,19) MOV(0,StopFor1) ];
+				N: XIC(AlwaysOff)OTL(ErrorNum[20])OTL(FaultPresent)EQU(StopFor1,0)MOV(20,StopFor1);
+				N: XIO(AlwaysOff)[OTU(ErrorNum[20]) ,XIC(ResetSignal) EQU(StopFor1,20) MOV(0,StopFor1) ];
+				N: XIC(AlwaysOff)OTL(ErrorNum[21])OTL(FaultPresent)EQU(StopFor1,0)MOV(21,StopFor1);
+				N: XIO(AlwaysOff)[OTU(ErrorNum[21]) ,XIC(ResetSignal) EQU(StopFor1,21) MOV(0,StopFor1) ];
+				N: XIC(AlwaysOff)OTL(ErrorNum[22])OTL(FaultPresent)EQU(StopFor1,0)MOV(22,StopFor1);
+				N: XIO(AlwaysOff)[OTU(ErrorNum[22]) ,XIC(ResetSignal) EQU(StopFor1,22) MOV(0,StopFor1) ];
+				N: XIC(AlwaysOff)OTL(ErrorNum[23])OTL(FaultPresent)EQU(StopFor1,0)MOV(23,StopFor1);
+				N: XIO(AlwaysOff)[OTU(ErrorNum[23]) ,XIC(ResetSignal) EQU(StopFor1,23) MOV(0,StopFor1) ];
+				N: XIC(AlwaysOff)OTL(ErrorNum[24])OTL(FaultPresent)EQU(StopFor1,0)MOV(24,StopFor1);
+				N: XIO(AlwaysOff)[OTU(ErrorNum[24]) ,XIC(ResetSignal) EQU(StopFor1,24) MOV(0,StopFor1) ];
+				N: AFI()XIC(CIP_Sync_Fault_Enable)XIC(PML_State.Sts_Execute)[XIO(AOI_AxisConsumeCIPSync3.Sts_IP) ,XIC(AOI_AxisConsumeCIPSync3.Sts_ER) ]XIO(PML_State.Sts_Aborted)TON(CIP_Sync_Timeout,?,?)XIC(CIP_Sync_Timeout.DN)OTL(ErrorNum[27])OTL(FaultPresent)EQU(StopFor1,0)MOV(27,StopFor1);
+				N: [XIC(AOI_AxisConsumeCIPSync3.Sts_IP) XIO(AOI_AxisConsumeCIPSync3.Sts_ER) ,XIO(CIP_Sync_Fault_Enable) ][OTU(ErrorNum[27]) ,XIC(ResetSignal) EQU(StopFor1,27) MOV(0,StopFor1) ];
+				N: XIO(MCRIinput)XIO(ResetSignal)XIO(FaultCurrentlyPresent)TON(MCRFaultDelayTimer,?,?)XIC(MCRFaultDelayTimer.DN)OTL(ErrorNum[29])OTL(FaultPresent)EQU(StopFor1,0)MOV(29,StopFor1);
+				N: [XIC(MCRIinput) ,XIC(FaultCurrentlyPresent) ,XIC(ResetSignal) ][OTU(ErrorNum[29]) ,XIC(ResetSignal) EQU(StopFor1,29) MOV(0,StopFor1) ];
+				N: [XIC(S:FS) ,XIC(BootUp_Timer.EN) ]TON(BootUp_Timer,?,?);
+				N: [NEQ(MTR_MeteringBelt.AxisFault,0) ,XIC(MTR_MeteringBelt.ModuleFault) ]OTL(ErrorNum[30])OTL(FaultPresent)EQU(StopFor1,0)MOV(30,StopFor1);
+				N: EQU(MTR_MeteringBelt.AxisFault,0)XIO(MTR_MeteringBelt.ModuleFault)XIC(ResetSignal)[OTU(ErrorNum[30]) ,EQU(StopFor1,30) MOV(0,StopFor1) ];
+				N: XIC(MeteringBelt_Tags.InitializeFault)OTL(ErrorNum[31])OTL(FaultPresent)EQU(StopFor1,0)MOV(31,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[31]) OTU(MeteringBelt_Tags.InitializeFault) ,EQU(StopFor1,31) MOV(0,StopFor1) ];
+				N: XIC(MeteringBelt_Tags.CamFault)OTL(ErrorNum[32])OTL(FaultPresent)EQU(StopFor1,0)MOV(32,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[32]) OTU(MeteringBelt_Tags.CamFault) ,EQU(StopFor1,32) MOV(0,StopFor1) ];
+				N: XIC(MeteringBelt_Tags.Homing_Fault)OTL(ErrorNum[33])OTL(FaultPresent)EQU(StopFor1,0)MOV(33,StopFor1);
+				N: XIC(ResetSignal)[OTU(MeteringBelt_Tags.Homing_Fault) OTU(ErrorNum[33]) ,EQU(StopFor1,33) MOV(0,StopFor1) ];
+				N: [NEQ(MTR_PhasingBelt2.AxisFault,0) ,XIC(MTR_PhasingBelt2.ModuleFault) ]OTL(ErrorNum[34])OTL(FaultPresent)EQU(StopFor1,0)MOV(34,StopFor1);
+				N: EQU(MTR_PhasingBelt2.AxisFault,0)XIO(MTR_PhasingBelt2.ModuleFault)XIC(ResetSignal)[OTU(ErrorNum[34]) ,EQU(StopFor1,34) MOV(0,StopFor1) ];
+				N: XIC(PhasingBelt2_Tags.InitializeFault)OTL(ErrorNum[35])OTL(FaultPresent)EQU(StopFor1,0)MOV(35,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[35]) OTU(PhasingBelt2_Tags.InitializeFault) ,EQU(StopFor1,35) MOV(0,StopFor1) ];
+				N: XIC(PhasingBelt2_Tags.CamFault)OTL(ErrorNum[36])OTL(FaultPresent)EQU(StopFor1,0)MOV(36,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[36]) OTU(PhasingBelt2_Tags.CamFault) ,EQU(StopFor1,36) MOV(0,StopFor1) ];
+				N: XIC(PhasingBelt2_Tags.Homing_Fault)OTL(ErrorNum[37])OTL(FaultPresent)EQU(StopFor1,0)MOV(37,StopFor1);
+				N: XIC(ResetSignal)[OTU(PhasingBelt2_Tags.Homing_Fault) OTU(ErrorNum[37]) ,EQU(StopFor1,37) MOV(0,StopFor1) ];
+				N: [NEQ(MTR_PhasingBelt3.AxisFault,0) ,XIC(MTR_PhasingBelt3.ModuleFault) ]OTL(ErrorNum[38])OTL(FaultPresent)EQU(StopFor1,0)MOV(38,StopFor1);
+				N: EQU(MTR_PhasingBelt3.AxisFault,0)XIO(MTR_PhasingBelt3.ModuleFault)XIC(ResetSignal)[OTU(ErrorNum[38]) ,EQU(StopFor1,38) MOV(0,StopFor1) ];
+				N: XIC(PhasingBelt3_Tags.InitializeFault)OTL(ErrorNum[39])OTL(FaultPresent)EQU(StopFor1,0)MOV(39,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[39]) OTU(PhasingBelt3_Tags.InitializeFault) ,EQU(StopFor1,39) MOV(0,StopFor1) ];
+				N: XIC(PhasingBelt3_Tags.CamFault)OTL(ErrorNum[40])OTL(FaultPresent)EQU(StopFor1,0)MOV(40,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[40]) OTU(PhasingBelt3_Tags.CamFault) ,EQU(StopFor1,40) MOV(0,StopFor1) ];
+				N: XIC(PhasingBelt3_Tags.Homing_Fault)OTL(ErrorNum[41])OTL(FaultPresent)EQU(StopFor1,0)MOV(41,StopFor1);
+				N: XIC(ResetSignal)[OTU(PhasingBelt3_Tags.Homing_Fault) OTU(ErrorNum[41]) ,EQU(StopFor1,41) MOV(0,StopFor1) ];
+				N: [NEQ(MTR_PhasingBelt4.AxisFault,0) ,XIC(MTR_PhasingBelt4.ModuleFault) ]OTL(ErrorNum[42])OTL(FaultPresent)EQU(StopFor1,0)MOV(42,StopFor1);
+				N: EQU(MTR_PhasingBelt4.AxisFault,0)XIO(MTR_PhasingBelt4.ModuleFault)XIC(ResetSignal)[OTU(ErrorNum[42]) ,EQU(StopFor1,42) MOV(0,StopFor1) ];
+				N: XIC(PhasingBelt4_Tags.InitializeFault)OTL(ErrorNum[43])OTL(FaultPresent)EQU(StopFor1,0)MOV(43,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[43]) OTU(PhasingBelt4_Tags.InitializeFault) ,EQU(StopFor1,43) MOV(0,StopFor1) ];
+				N: XIC(PhasingBelt4_Tags.CamFault)OTL(ErrorNum[44])OTL(FaultPresent)EQU(StopFor1,0)MOV(44,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[44]) OTU(PhasingBelt4_Tags.CamFault) ,EQU(StopFor1,44) MOV(0,StopFor1) ];
+				N: XIC(PhasingBelt4_Tags.Homing_Fault)OTL(ErrorNum[45])OTL(FaultPresent)EQU(StopFor1,0)MOV(45,StopFor1);
+				N: XIC(ResetSignal)[OTU(PhasingBelt4_Tags.Homing_Fault) OTU(ErrorNum[45]) ,EQU(StopFor1,45) MOV(0,StopFor1) ];
+				N: [NEQ(MTR_AccelBelt.AxisFault,0) ,XIC(MTR_AccelBelt.ModuleFault) ]OTL(ErrorNum[46])OTL(FaultPresent)EQU(StopFor1,0)MOV(46,StopFor1);
+				N: EQU(MTR_AccelBelt.AxisFault,0)XIO(MTR_AccelBelt.ModuleFault)XIC(ResetSignal)[OTU(ErrorNum[46]) ,EQU(StopFor1,46) MOV(0,StopFor1) ];
+				N: XIC(AccelBelt_Tags.InitializeFault)OTL(ErrorNum[47])OTL(FaultPresent)EQU(StopFor1,0)MOV(47,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[47]) OTU(AccelBelt_Tags.InitializeFault) ,EQU(StopFor1,47) MOV(0,StopFor1) ];
+				N: XIC(AccelBelt_Tags.CamFault)OTL(ErrorNum[48])OTL(FaultPresent)EQU(StopFor1,0)MOV(48,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[48]) OTU(AccelBelt_Tags.CamFault) ,EQU(StopFor1,48) MOV(0,StopFor1) ];
+				N: XIC(AccelBelt_Tags.Homing_Fault)OTL(ErrorNum[49])OTL(FaultPresent)EQU(StopFor1,0)MOV(49,StopFor1);
+				N: XIC(ResetSignal)[OTU(AccelBelt_Tags.Homing_Fault) OTU(ErrorNum[49]) ,EQU(StopFor1,49) MOV(0,StopFor1) ];
+				N: [NEQ(MTR_PhasingBelt1.AxisFault,0) ,XIC(MTR_PhasingBelt1.ModuleFault) ]OTL(ErrorNum[50])OTL(FaultPresent)EQU(StopFor1,0)MOV(50,StopFor1);
+				N: EQU(MTR_PhasingBelt1.AxisFault,0)XIO(MTR_PhasingBelt1.ModuleFault)XIC(ResetSignal)[OTU(ErrorNum[50]) ,EQU(StopFor1,50) MOV(0,StopFor1) ];
+				N: XIC(PhasingBelt1_Tags.InitializeFault)OTL(ErrorNum[51])OTL(FaultPresent)EQU(StopFor1,0)MOV(51,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[51]) OTU(PhasingBelt1_Tags.InitializeFault) ,EQU(StopFor1,51) MOV(0,StopFor1) ];
+				N: XIC(PhasingBelt1_Tags.CamFault)OTL(ErrorNum[52])OTL(FaultPresent)EQU(StopFor1,0)MOV(52,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[52]) OTU(PhasingBelt1_Tags.CamFault) ,EQU(StopFor1,52) MOV(0,StopFor1) ];
+				N: XIC(PhasingBelt1_Tags.Homing_Fault)OTL(ErrorNum[53])OTL(FaultPresent)EQU(StopFor1,0)MOV(53,StopFor1);
+				N: XIC(ResetSignal)[OTU(PhasingBelt1_Tags.Homing_Fault) OTU(ErrorNum[53]) ,EQU(StopFor1,53) MOV(0,StopFor1) ];
+				N: XIC(AlwaysOff)OTL(ErrorNum[54])OTL(FaultPresent)EQU(StopFor1,0)MOV(54,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[54]) ,EQU(StopFor1,54) MOV(0,StopFor1) ];
+				N: XIC(RTS_Tags.InitializeFault)OTL(ErrorNum[55])OTL(FaultPresent)EQU(StopFor1,0)MOV(55,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[55]) OTU(RTS_Tags.InitializeFault) ,EQU(StopFor1,55) MOV(0,StopFor1) ];
+				N: XIC(RTS_Tags.CamFault)OTL(ErrorNum[56])OTL(FaultPresent)EQU(StopFor1,0)MOV(56,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[56]) OTU(RTS_Tags.CamFault) ,EQU(StopFor1,56) MOV(0,StopFor1) ];
+				N: XIC(RTS_Tags.Homing_Fault)OTL(ErrorNum[57])OTL(FaultPresent)EQU(StopFor1,0)MOV(57,StopFor1);
+				N: XIC(ResetSignal)[OTU(RTS_Tags.Homing_Fault) OTU(ErrorNum[57]) ,EQU(StopFor1,57) MOV(0,StopFor1) ];
+				N: XIC(ResetSignal)[OTU(RTS_Tags.Homing_Fault) OTU(ErrorNum[63]) ,EQU(StopFor1,63) MOV(0,StopFor1) ];
+				N: [GRT(VirtualMaster.ActualVelocity,0.05) CPT(JamTimerDuration,1500*(1/VirtualMaster.ActualVelocity)) ,LEQ(MTR_PhasingBelt2.ActualVelocity,0.05) MOV(5000,JamTimerDuration) ,MOV(JamTimerDuration,PhasingBelt1JamTimer.PRE) ,MOV(JamTimerDuration,PhasingBelt2JamTimer.PRE) ,MOV(JamTimerDuration,PhasingBelt3JamTimer.PRE) ,MOV(JamTimerDuration,PhasingBelt4JamTimer.PRE) ,MOV(JamTimerDuration,RTSJamTimer.PRE) ];
+				N: XIC(PressureFaultEnabledHMI)XIO(PML_State.Sts_Aborted)XIO(PressureSensor)TON(PressureSwitchTimer,?,?)XIC(PressureSwitchTimer.DN)OTL(ErrorNum[71])OTL(FaultPresent)EQU(StopFor1,0)MOV(71,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[71]) ,EQU(StopFor1,71) MOV(0,StopFor1) ];
+				N: XIO(ErrorNum[71])XIO(PML_State.Sts_Aborted)OTE(DumpValveEnable);
+				N: XIC(RTS_Tags.OverTorque_fault)OTL(ErrorNum[74])OTL(FaultPresent)EQU(StopFor1,0)MOV(74,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[74]) OTU(RTS_Tags.OverTorque_fault) ,EQU(StopFor1,74) MOV(0,StopFor1) ];
+				N: XIC(MeteringBelt_Tags.OverTorque_fault)OTL(ErrorNum[75])OTL(FaultPresent)EQU(StopFor1,0)MOV(75,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[75]) OTU(MeteringBelt_Tags.OverTorque_fault) ,EQU(StopFor1,75) MOV(0,StopFor1) ];
+				N: XIC(PhasingBelt3_Tags.OverTorque_fault)OTL(ErrorNum[76])OTL(FaultPresent)EQU(StopFor1,0)MOV(76,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[76]) OTU(PhasingBelt3_Tags.OverTorque_fault) ,EQU(StopFor1,76) MOV(0,StopFor1) ];
+				N: XIC(PhasingBelt2_Tags.OverTorque_fault)OTL(ErrorNum[77])OTL(FaultPresent)EQU(StopFor1,0)MOV(77,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[77]) OTU(PhasingBelt2_Tags.OverTorque_fault) ,EQU(StopFor1,77) MOV(0,StopFor1) ];
+				N: XIC(PhasingBelt4_Tags.OverTorque_fault)OTL(ErrorNum[78])OTL(FaultPresent)EQU(StopFor1,0)MOV(78,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[78]) OTU(PhasingBelt4_Tags.OverTorque_fault) ,EQU(StopFor1,78) MOV(0,StopFor1) ];
+				N: XIC(AccelBelt_Tags.OverTorque_fault)OTL(ErrorNum[79])OTL(FaultPresent)EQU(StopFor1,0)MOV(79,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[79]) OTU(AccelBelt_Tags.OverTorque_fault) ,EQU(StopFor1,79) MOV(0,StopFor1) ];
+				N: XIC(PhasingBelt1_Tags.OverTorque_fault)OTL(ErrorNum[80])OTL(FaultPresent)EQU(StopFor1,0)MOV(80,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[80]) OTU(PhasingBelt1_Tags.OverTorque_fault) ,EQU(StopFor1,80) MOV(0,StopFor1) ];
+				N: XIC(NotAbortedWDelayTimer.DN)XIC(MTR_MeteringBelt.SafeTorqueOffInhibit)OTL(ErrorNum[81])OTL(FaultPresent)EQU(StopFor1,0)MOV(81,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[81]) ,EQU(StopFor1,81) MOV(0,StopFor1) ];
+				N: XIC(NotAbortedWDelayTimer.DN)XIC(MTR_PhasingBelt3.SafeTorqueOffInhibit)OTL(ErrorNum[82])OTL(FaultPresent)EQU(StopFor1,0)MOV(82,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[82]) ,EQU(StopFor1,82) MOV(0,StopFor1) ];
+				N: XIC(NotAbortedWDelayTimer.DN)XIC(MTR_PhasingBelt2.SafeTorqueOffInhibit)OTL(ErrorNum[83])OTL(FaultPresent)EQU(StopFor1,0)MOV(83,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[83]) ,EQU(StopFor1,83) MOV(0,StopFor1) ];
+				N: XIC(NotAbortedWDelayTimer.DN)XIC(MTR_PhasingBelt4.SafeTorqueOffInhibit)OTL(ErrorNum[84])OTL(FaultPresent)EQU(StopFor1,0)MOV(84,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[84]) ,EQU(StopFor1,84) MOV(0,StopFor1) ];
+				N: XIC(NotAbortedWDelayTimer.DN)XIC(MTR_AccelBelt.SafeTorqueOffInhibit)OTL(ErrorNum[85])OTL(FaultPresent)EQU(StopFor1,0)MOV(85,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[85]) ,EQU(StopFor1,85) MOV(0,StopFor1) ];
+				N: XIC(NotAbortedWDelayTimer.DN)XIC(MTR_PhasingBelt1.SafeTorqueOffInhibit)OTL(ErrorNum[86])OTL(FaultPresent)EQU(StopFor1,0)MOV(86,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[86]) ,EQU(StopFor1,86) MOV(0,StopFor1) ];
+				N: XIC(ResetSignal)[OTU(ErrorNum[88]) ,EQU(StopFor1,88) MOV(0,StopFor1) ];
+				N: XIC(DischargeJamEnabled)XIO(AlwaysOff)XIO(PML_State.Sts_Starting)TON(DischargeJamTimer,?,?);
+				N: XIC(DischargeJamTimer.DN)OTL(ErrorNum[90])OTL(FaultPresent)EQU(StopFor1,0)MOV(90,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[90]) ,EQU(StopFor1,90) MOV(0,StopFor1) ];
+				N: XIC(InfeedSolenoidFault)OTL(ErrorNum[91])OTL(FaultPresent)EQU(StopFor1,0)MOV(91,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[91]) OTU(InfeedSolenoidFault) ,EQU(StopFor1,91) MOV(0,StopFor1) ];
+				N: XIC(DischargeSolenoidFault)OTL(ErrorNum[92])OTL(FaultPresent)EQU(StopFor1,0)MOV(92,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[92]) OTU(DischargeSolenoidFault) ,EQU(StopFor1,92) MOV(0,StopFor1) ];
+				N: XIC(MTR_PhasingBelt1.Registration1InputStatus)GRT(VirtualMaster.ActualVelocity,0.1)TON(PhasingBelt1JamTimer,?,?)XIC(PhasingBelt1JamTimer.DN)OTL(ErrorNum[93])OTL(FaultPresent)EQU(StopFor1,0)MOV(93,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[93]) ,EQU(StopFor1,93) MOV(0,StopFor1) ];
+				N: XIC(MTR_PhasingBelt2.Registration1InputStatus)GRT(VirtualMaster.ActualVelocity,0.1)TON(PhasingBelt2JamTimer,?,?)XIC(PhasingBelt2JamTimer.DN)OTL(ErrorNum[94])OTL(FaultPresent)EQU(StopFor1,0)MOV(94,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[94]) ,EQU(StopFor1,94) MOV(0,StopFor1) ];
+				N: XIC(MTR_PhasingBelt3.Registration1InputStatus)GRT(VirtualMaster.ActualVelocity,0.1)TON(PhasingBelt3JamTimer,?,?)XIC(PhasingBelt3JamTimer.DN)OTL(ErrorNum[95])OTL(FaultPresent)EQU(StopFor1,0)MOV(95,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[95]) ,EQU(StopFor1,95) MOV(0,StopFor1) ];
+				N: XIC(MTR_PhasingBelt4.Registration1InputStatus)GRT(VirtualMaster.ActualVelocity,0.1)TON(PhasingBelt4JamTimer,?,?)XIC(PhasingBelt4JamTimer.DN)OTL(ErrorNum[96])OTL(FaultPresent)EQU(StopFor1,0)MOV(96,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[96]) ,EQU(StopFor1,96) MOV(0,StopFor1) ];
+				N: XIC(AlwaysOff)GRT(VirtualMaster.ActualVelocity,0.1)TON(RTSJamTimer,?,?)XIC(RTSJamTimer.DN)OTL(ErrorNum[97])OTL(FaultPresent)EQU(StopFor1,0)MOV(97,StopFor1);
+				N: XIC(ResetSignal)[OTU(ErrorNum[97]) ,EQU(StopFor1,97) MOV(0,StopFor1) ];
+				N: [ADD(error_index,1,error_index) ,GEQ(error_index,127) MOV(0,error_index) ];
+				N: [XIC(S:FS) ,XIC(Sercos_bootup_timer.TT) ,XIC(Sercos_bootup_timer.DN) ]TON(Sercos_bootup_timer,?,?);
+				N: XIO(ErrorNum[error_index])TON(FaultsClearedTimer,?,?);
+				N: [XIO(ErrorNum[error_index]) ,EQU(error_index,29) ]TON(NonMCR_Faults_Cleared_Timer,?,?);
+				N: [XIO(PML_State.Sts_Aborting) XIO(FaultPresent) ,XIC(ForceOutputOn3.0) ]XIO(ForceOutputOff3.0)OTE(PLCSafetyInterlock);
+				N: NEQ(error_index,29)XIC(ErrorNum[error_index])OTL(FaultCurrentlyPresent);
+				N: XIC(FaultsClearedTimer.DN)XIC(ResetSignal)XIC(Sercos_bootup_timer.DN)OTU(FaultPresent);
+				N: XIC(NonMCR_Faults_Cleared_Timer.DN)XIO(ErrorNum[29])XIC(Sercos_bootup_timer.DN)OTU(FaultCurrentlyPresent);
+				N: [XIC(ResetActive) XIO(MCRIinput) ,XIC(ForceOutputOn3.5) ][OTE(ResetSignal) ,[XIC(PLCSafetyInterlock) XIO(MCRIinput) TON(SafetyResetDelayTimer,?,?) XIC(SafetyResetDelayTimer.DN) ,XIC(ForceOutputOn3.5) ] XIO(ForceOutputOff3.5) OTE(SafetyResetOutput) ,[XIC(MCRIinput) TON(ServoResetDelayTimer,?,?) XIC(ServoResetDelayTimer.DN) ,XIC(FaultPresent) ] OTE(ClearServoFaults) ];
+				N: XIO(PML_State.Sts_Aborted)XIC(MCRIinput)TON(NotAbortedWDelayTimer,?,?);
+		END_ROUTINE
+
+		ROUTINE R06_FaultStatus 
+				N: XIC(ErrorNum[0])[CTU(Fault_Counter[0],?,?) ,RTO(Fault_Timer[0],?,?) ,XIC(Fault_Timer[0].DN) CTU(Fault_Min[0],?,?) RES(Fault_Timer[0]) ,XIC(Fault_Min[0].DN) CTU(Fault_Hr[0],?,?) RES(Fault_Min[0]) ,XIC(Fault_Hr[0].DN) CTU(Fault_Yr[0],?,?) RES(Fault_Hr[0]) ];
+				N: XIC(ErrorNum[1])[CTU(Fault_Counter[1],?,?) ,RTO(Fault_Timer[1],?,?) ,XIC(Fault_Timer[1].DN) CTU(Fault_Min[1],?,?) RES(Fault_Timer[1]) ,XIC(Fault_Min[1].DN) CTU(Fault_Hr[1],?,?) RES(Fault_Min[1]) ,XIC(Fault_Hr[1].DN) CTU(Fault_Yr[1],?,?) RES(Fault_Hr[1]) ];
+				N: XIC(ErrorNum[2])[CTU(Fault_Counter[2],?,?) ,RTO(Fault_Timer[2],?,?) ,XIC(Fault_Timer[2].DN) CTU(Fault_Min[2],?,?) RES(Fault_Timer[2]) ,XIC(Fault_Min[2].DN) CTU(Fault_Hr[2],?,?) RES(Fault_Min[2]) ,XIC(Fault_Hr[2].DN) CTU(Fault_Yr[2],?,?) RES(Fault_Hr[2]) ];
+				N: XIC(ErrorNum[3])[CTU(Fault_Counter[3],?,?) ,RTO(Fault_Timer[3],?,?) ,XIC(Fault_Timer[3].DN) CTU(Fault_Min[3],?,?) RES(Fault_Timer[3]) ,XIC(Fault_Min[3].DN) CTU(Fault_Hr[3],?,?) RES(Fault_Min[3]) ,XIC(Fault_Hr[3].DN) CTU(Fault_Yr[3],?,?) RES(Fault_Hr[3]) ];
+				N: XIC(ErrorNum[4])[CTU(Fault_Counter[4],?,?) ,RTO(Fault_Timer[4],?,?) ,XIC(Fault_Timer[4].DN) CTU(Fault_Min[4],?,?) RES(Fault_Timer[4]) ,XIC(Fault_Min[4].DN) CTU(Fault_Hr[4],?,?) RES(Fault_Min[4]) ,XIC(Fault_Hr[4].DN) CTU(Fault_Yr[4],?,?) RES(Fault_Hr[4]) ];
+				N: XIC(ErrorNum[5])[CTU(Fault_Counter[5],?,?) ,RTO(Fault_Timer[5],?,?) ,XIC(Fault_Timer[5].DN) CTU(Fault_Min[5],?,?) RES(Fault_Timer[5]) ,XIC(Fault_Min[5].DN) CTU(Fault_Hr[5],?,?) RES(Fault_Min[5]) ,XIC(Fault_Hr[5].DN) CTU(Fault_Yr[5],?,?) RES(Fault_Hr[5]) ];
+				N: XIC(ErrorNum[6])[CTU(Fault_Counter[6],?,?) ,RTO(Fault_Timer[6],?,?) ,XIC(Fault_Timer[6].DN) CTU(Fault_Min[6],?,?) RES(Fault_Timer[6]) ,XIC(Fault_Min[6].DN) CTU(Fault_Hr[6],?,?) RES(Fault_Min[6]) ,XIC(Fault_Hr[6].DN) CTU(Fault_Yr[6],?,?) RES(Fault_Hr[6]) ];
+				N: XIC(ErrorNum[7])[CTU(Fault_Counter[7],?,?) ,RTO(Fault_Timer[7],?,?) ,XIC(Fault_Timer[7].DN) CTU(Fault_Min[7],?,?) RES(Fault_Timer[7]) ,XIC(Fault_Min[7].DN) CTU(Fault_Hr[7],?,?) RES(Fault_Min[7]) ,XIC(Fault_Hr[7].DN) CTU(Fault_Yr[7],?,?) RES(Fault_Hr[7]) ];
+				N: XIC(ErrorNum[8])[CTU(Fault_Counter[8],?,?) ,RTO(Fault_Timer[8],?,?) ,XIC(Fault_Timer[8].DN) CTU(Fault_Min[8],?,?) RES(Fault_Timer[8]) ,XIC(Fault_Min[8].DN) CTU(Fault_Hr[8],?,?) RES(Fault_Min[8]) ,XIC(Fault_Hr[8].DN) CTU(Fault_Yr[8],?,?) RES(Fault_Hr[8]) ];
+				N: XIC(ErrorNum[9])[CTU(Fault_Counter[9],?,?) ,RTO(Fault_Timer[9],?,?) ,XIC(Fault_Timer[9].DN) CTU(Fault_Min[9],?,?) RES(Fault_Timer[9]) ,XIC(Fault_Min[9].DN) CTU(Fault_Hr[9],?,?) RES(Fault_Min[9]) ,XIC(Fault_Hr[9].DN) CTU(Fault_Yr[9],?,?) RES(Fault_Hr[9]) ];
+				N: XIC(ErrorNum[10])[CTU(Fault_Counter[10],?,?) ,RTO(Fault_Timer[10],?,?) ,XIC(Fault_Timer[10].DN) CTU(Fault_Min[10],?,?) RES(Fault_Timer[10]) ,XIC(Fault_Min[10].DN) CTU(Fault_Hr[10],?,?) RES(Fault_Min[10]) ,XIC(Fault_Hr[10].DN) CTU(Fault_Yr[10],?,?) RES(Fault_Hr[10]) ];
+				N: XIC(ErrorNum[11])[CTU(Fault_Counter[11],?,?) ,RTO(Fault_Timer[11],?,?) ,XIC(Fault_Timer[11].DN) CTU(Fault_Min[11],?,?) RES(Fault_Timer[11]) ,XIC(Fault_Min[11].DN) CTU(Fault_Hr[11],?,?) RES(Fault_Min[11]) ,XIC(Fault_Hr[11].DN) CTU(Fault_Yr[11],?,?) RES(Fault_Hr[11]) ];
+				N: XIC(ErrorNum[12])[CTU(Fault_Counter[12],?,?) ,RTO(Fault_Timer[12],?,?) ,XIC(Fault_Timer[12].DN) CTU(Fault_Min[12],?,?) RES(Fault_Timer[12]) ,XIC(Fault_Min[12].DN) CTU(Fault_Hr[12],?,?) RES(Fault_Min[12]) ,XIC(Fault_Hr[12].DN) CTU(Fault_Yr[12],?,?) RES(Fault_Hr[12]) ];
+				N: XIC(ErrorNum[13])[CTU(Fault_Counter[13],?,?) ,RTO(Fault_Timer[13],?,?) ,XIC(Fault_Timer[13].DN) CTU(Fault_Min[13],?,?) RES(Fault_Timer[13]) ,XIC(Fault_Min[13].DN) CTU(Fault_Hr[13],?,?) RES(Fault_Min[13]) ,XIC(Fault_Hr[13].DN) CTU(Fault_Yr[13],?,?) RES(Fault_Hr[13]) ];
+				N: XIC(ErrorNum[14])[CTU(Fault_Counter[14],?,?) ,RTO(Fault_Timer[14],?,?) ,XIC(Fault_Timer[14].DN) CTU(Fault_Min[14],?,?) RES(Fault_Timer[14]) ,XIC(Fault_Min[14].DN) CTU(Fault_Hr[14],?,?) RES(Fault_Min[14]) ,XIC(Fault_Hr[14].DN) CTU(Fault_Yr[14],?,?) RES(Fault_Hr[14]) ];
+				N: XIC(ErrorNum[15])[CTU(Fault_Counter[15],?,?) ,RTO(Fault_Timer[15],?,?) ,XIC(Fault_Timer[15].DN) CTU(Fault_Min[15],?,?) RES(Fault_Timer[15]) ,XIC(Fault_Min[15].DN) CTU(Fault_Hr[15],?,?) RES(Fault_Min[15]) ,XIC(Fault_Hr[15].DN) CTU(Fault_Yr[15],?,?) RES(Fault_Hr[15]) ];
+				N: XIC(ErrorNum[16])[CTU(Fault_Counter[16],?,?) ,RTO(Fault_Timer[16],?,?) ,XIC(Fault_Timer[16].DN) CTU(Fault_Min[16],?,?) RES(Fault_Timer[16]) ,XIC(Fault_Min[16].DN) CTU(Fault_Hr[16],?,?) RES(Fault_Min[16]) ,XIC(Fault_Hr[16].DN) CTU(Fault_Yr[16],?,?) RES(Fault_Hr[16]) ];
+				N: XIC(ErrorNum[17])[CTU(Fault_Counter[17],?,?) ,RTO(Fault_Timer[17],?,?) ,XIC(Fault_Timer[17].DN) CTU(Fault_Min[17],?,?) RES(Fault_Timer[17]) ,XIC(Fault_Min[17].DN) CTU(Fault_Hr[17],?,?) RES(Fault_Min[17]) ,XIC(Fault_Hr[17].DN) CTU(Fault_Yr[17],?,?) RES(Fault_Hr[17]) ];
+				N: XIC(ErrorNum[18])[CTU(Fault_Counter[18],?,?) ,RTO(Fault_Timer[18],?,?) ,XIC(Fault_Timer[18].DN) CTU(Fault_Min[18],?,?) RES(Fault_Timer[18]) ,XIC(Fault_Min[18].DN) CTU(Fault_Hr[18],?,?) RES(Fault_Min[18]) ,XIC(Fault_Hr[18].DN) CTU(Fault_Yr[18],?,?) RES(Fault_Hr[18]) ];
+				N: XIC(ErrorNum[19])[CTU(Fault_Counter[19],?,?) ,RTO(Fault_Timer[19],?,?) ,XIC(Fault_Timer[19].DN) CTU(Fault_Min[19],?,?) RES(Fault_Timer[19]) ,XIC(Fault_Min[19].DN) CTU(Fault_Hr[19],?,?) RES(Fault_Min[19]) ,XIC(Fault_Hr[19].DN) CTU(Fault_Yr[19],?,?) RES(Fault_Hr[19]) ];
+				N: XIC(ErrorNum[20])[CTU(Fault_Counter[20],?,?) ,RTO(Fault_Timer[20],?,?) ,XIC(Fault_Timer[20].DN) CTU(Fault_Min[20],?,?) RES(Fault_Timer[20]) ,XIC(Fault_Min[20].DN) CTU(Fault_Hr[20],?,?) RES(Fault_Min[20]) ,XIC(Fault_Hr[20].DN) CTU(Fault_Yr[20],?,?) RES(Fault_Hr[20]) ];
+				N: XIC(ErrorNum[21])[CTU(Fault_Counter[21],?,?) ,RTO(Fault_Timer[21],?,?) ,XIC(Fault_Timer[21].DN) CTU(Fault_Min[21],?,?) RES(Fault_Timer[21]) ,XIC(Fault_Min[21].DN) CTU(Fault_Hr[21],?,?) RES(Fault_Min[21]) ,XIC(Fault_Hr[21].DN) CTU(Fault_Yr[21],?,?) RES(Fault_Hr[21]) ];
+				N: XIC(ErrorNum[22])[CTU(Fault_Counter[22],?,?) ,RTO(Fault_Timer[22],?,?) ,XIC(Fault_Timer[22].DN) CTU(Fault_Min[22],?,?) RES(Fault_Timer[22]) ,XIC(Fault_Min[22].DN) CTU(Fault_Hr[22],?,?) RES(Fault_Min[22]) ,XIC(Fault_Hr[22].DN) CTU(Fault_Yr[22],?,?) RES(Fault_Hr[22]) ];
+				N: XIC(ErrorNum[30])[CTU(Fault_Counter[30],?,?) ,RTO(Fault_Timer[30],?,?) ,XIC(Fault_Timer[30].DN) CTU(Fault_Min[30],?,?) RES(Fault_Timer[30]) ,XIC(Fault_Min[30].DN) CTU(Fault_Hr[30],?,?) RES(Fault_Min[30]) ,XIC(Fault_Hr[30].DN) CTU(Fault_Yr[30],?,?) RES(Fault_Hr[30]) ];
+				N: XIC(ErrorNum[31])[CTU(Fault_Counter[31],?,?) ,RTO(Fault_Timer[31],?,?) ,XIC(Fault_Timer[31].DN) CTU(Fault_Min[31],?,?) RES(Fault_Timer[31]) ,XIC(Fault_Min[31].DN) CTU(Fault_Hr[31],?,?) RES(Fault_Min[31]) ,XIC(Fault_Hr[31].DN) CTU(Fault_Yr[31],?,?) RES(Fault_Hr[31]) ];
+				N: XIC(ErrorNum[32])[CTU(Fault_Counter[32],?,?) ,RTO(Fault_Timer[32],?,?) ,XIC(Fault_Timer[32].DN) CTU(Fault_Min[32],?,?) RES(Fault_Timer[32]) ,XIC(Fault_Min[32].DN) CTU(Fault_Hr[32],?,?) RES(Fault_Min[32]) ,XIC(Fault_Hr[32].DN) CTU(Fault_Yr[32],?,?) RES(Fault_Hr[32]) ];
+				N: XIC(ErrorNum[33])[CTU(Fault_Counter[33],?,?) ,RTO(Fault_Timer[33],?,?) ,XIC(Fault_Timer[33].DN) CTU(Fault_Min[33],?,?) RES(Fault_Timer[33]) ,XIC(Fault_Min[33].DN) CTU(Fault_Hr[33],?,?) RES(Fault_Min[33]) ,XIC(Fault_Hr[33].DN) CTU(Fault_Yr[33],?,?) RES(Fault_Hr[33]) ];
+				N: XIC(ErrorNum[34])[CTU(Fault_Counter[34],?,?) ,RTO(Fault_Timer[34],?,?) ,XIC(Fault_Timer[34].DN) CTU(Fault_Min[34],?,?) RES(Fault_Timer[34]) ,XIC(Fault_Min[34].DN) CTU(Fault_Hr[34],?,?) RES(Fault_Min[34]) ,XIC(Fault_Hr[34].DN) CTU(Fault_Yr[34],?,?) RES(Fault_Hr[34]) ];
+				N: XIC(ErrorNum[35])[CTU(Fault_Counter[35],?,?) ,RTO(Fault_Timer[35],?,?) ,XIC(Fault_Timer[35].DN) CTU(Fault_Min[35],?,?) RES(Fault_Timer[35]) ,XIC(Fault_Min[35].DN) CTU(Fault_Hr[35],?,?) RES(Fault_Min[35]) ,XIC(Fault_Hr[35].DN) CTU(Fault_Yr[35],?,?) RES(Fault_Hr[35]) ];
+				N: XIC(ErrorNum[36])[CTU(Fault_Counter[36],?,?) ,RTO(Fault_Timer[36],?,?) ,XIC(Fault_Timer[36].DN) CTU(Fault_Min[36],?,?) RES(Fault_Timer[36]) ,XIC(Fault_Min[36].DN) CTU(Fault_Hr[36],?,?) RES(Fault_Min[36]) ,XIC(Fault_Hr[36].DN) CTU(Fault_Yr[36],?,?) RES(Fault_Hr[36]) ];
+				N: XIC(ErrorNum[37])[CTU(Fault_Counter[37],?,?) ,RTO(Fault_Timer[37],?,?) ,XIC(Fault_Timer[37].DN) CTU(Fault_Min[37],?,?) RES(Fault_Timer[37]) ,XIC(Fault_Min[37].DN) CTU(Fault_Hr[37],?,?) RES(Fault_Min[37]) ,XIC(Fault_Hr[37].DN) CTU(Fault_Yr[37],?,?) RES(Fault_Hr[37]) ];
+				N: XIC(ErrorNum[38])[CTU(Fault_Counter[38],?,?) ,RTO(Fault_Timer[38],?,?) ,XIC(Fault_Timer[38].DN) CTU(Fault_Min[38],?,?) RES(Fault_Timer[38]) ,XIC(Fault_Min[38].DN) CTU(Fault_Hr[38],?,?) RES(Fault_Min[38]) ,XIC(Fault_Hr[38].DN) CTU(Fault_Yr[38],?,?) RES(Fault_Hr[38]) ];
+				N: XIC(ErrorNum[39])[CTU(Fault_Counter[39],?,?) ,RTO(Fault_Timer[39],?,?) ,XIC(Fault_Timer[39].DN) CTU(Fault_Min[39],?,?) RES(Fault_Timer[39]) ,XIC(Fault_Min[39].DN) CTU(Fault_Hr[39],?,?) RES(Fault_Min[39]) ,XIC(Fault_Hr[39].DN) CTU(Fault_Yr[39],?,?) RES(Fault_Hr[39]) ];
+				N: XIC(ErrorNum[40])[CTU(Fault_Counter[40],?,?) ,RTO(Fault_Timer[40],?,?) ,XIC(Fault_Timer[40].DN) CTU(Fault_Min[40],?,?) RES(Fault_Timer[40]) ,XIC(Fault_Min[40].DN) CTU(Fault_Hr[40],?,?) RES(Fault_Min[40]) ,XIC(Fault_Hr[40].DN) CTU(Fault_Yr[40],?,?) RES(Fault_Hr[40]) ];
+				N: XIC(ErrorNum[41])[CTU(Fault_Counter[41],?,?) ,RTO(Fault_Timer[41],?,?) ,XIC(Fault_Timer[41].DN) CTU(Fault_Min[41],?,?) RES(Fault_Timer[41]) ,XIC(Fault_Min[41].DN) CTU(Fault_Hr[41],?,?) RES(Fault_Min[41]) ,XIC(Fault_Hr[41].DN) CTU(Fault_Yr[41],?,?) RES(Fault_Hr[41]) ];
+				N: XIC(ErrorNum[42])[CTU(Fault_Counter[42],?,?) ,RTO(Fault_Timer[42],?,?) ,XIC(Fault_Timer[42].DN) CTU(Fault_Min[42],?,?) RES(Fault_Timer[42]) ,XIC(Fault_Min[42].DN) CTU(Fault_Hr[42],?,?) RES(Fault_Min[42]) ,XIC(Fault_Hr[42].DN) CTU(Fault_Yr[42],?,?) RES(Fault_Hr[42]) ];
+		END_ROUTINE
+
+		ROUTINE R09_Outputs 
+				N: [XIO(ShortBlinkTimer.DN) TON(ShortBlinkTimer,?,?) ,GRT(ShortBlinkTimer.ACC,500) OTE(ShortBlink) ];
+				N: [XIO(LongBlinkTimer.DN) TON(LongBlinkTimer,?,?) ,GRT(LongBlinkTimer.ACC,1000) OTE(LongBlink) ];
+				N: [XIO(FlashBlinkTimer.DN) TON(FlashBlinkTimer,?,?) ,GRT(FlashBlinkTimer.ACC,100) OTE(FlashBlink) ];
+				N: [XIC(StartDelayTimer.TT) ,XIC(UnPauseDelayTimer.TT) ][XIO(StartDelayBlinkTImer.DN) TON(StartDelayBlinkTImer,?,?) ,GRT(StartDelayBlinkTImer.ACC,500) OTE(DelayedStartBlink) ];
+				N: [XIC(PML_State.Sts_Aborted) ,XIC(ForceOutputOn3.3) ]XIO(ForceOutputOff3.3)OTE(CustomerSIgnal1);
+				N: [[XIC(PML_State.Sts_Stopped) XIC(LongBlink) ,XIC(MachineRunning) ] ,XIC(ForceOutputOn3.6) ]XIO(ForceOutputOff3.6)OTE(StartButtonLight);
+				N: CPT(GluePressureDecimal,MTR_PhasingBelt2.ActualVelocity/5.2)TOD(GluePressureDecimal,GluePressureBCD);
+		END_ROUTINE
+
+		ROUTINE R10_Recipe 
+				N: XIC(HMI_SaveRecipe)[COP(TempRecipeName,CurrentRecipe.RecipeName,1) ,COP(CurrentRecipe,Recipe[RecipeListSelection],1) ,OTU(HMI_SaveRecipe) ];
+				N: XIC(HMI_LoadRecipe)[COP(CurrentRecipe,PrevRecipe,1) ,COP(Recipe[RecipeListSelection],CurrentRecipe,1) ,MOV(RecipeListSelection,CurrentRecipeNum) ,OTU(HMI_LoadRecipe) ];
+				N: COP(Recipe[RecipeListSelection].RecipeName,CurrentlySelectedRecipe,1);
+				N: XIC(HMI_DeleteRecipe)OTU(HMI_DeleteRecipe)COP(EmptyString,Recipe[RecipeListSelection].RecipeName,1);
+				N: [XIC(CurrentRecipe.DisplayUnitsInch) COP(InchText,UnitsText,1) ,XIO(CurrentRecipe.DisplayUnitsInch) COP(mmText,UnitsText,1) ];
+				N: XIC(NeedToRetractInserter)[XIC(PML_State.Sts_Stopped) ,XIC(PML_State.Sts_Idle) ]OTE(RetractInserterButtonVisable);
+				N: XIC(RemoteRecipeEnable)XIO(MachineRunning)NEQ(ENT_CurrentRecipeNum,PrevRemoteRecipeNum)NEQ(ENT_CurrentRecipeNum,0)[MOV(ENT_CurrentRecipeNum,RecipeListSelection) MOV(ENT_CurrentRecipeNum,PrevRemoteRecipeNum) ,OTL(HMI_LoadRecipe) OTL(FaultPresent) ];
+		END_ROUTINE
+
+		CHILD_PROGRAMS
+		END_CHILD_PROGRAMS

@@ -1,0 +1,226 @@
+This provides the .l5k program export overview of MTR_PhasingBelt1 routine within the PLC from the SIPTU HS5160 machine from Kliklok-Woodman, a conveyor. Use this program to understand the logic so that it can be queried in the future. What will often be asked is information about why a program may not be working, so this document provides the information necessary to answer this.
+(MAIN := "P00_Main",
+	                          MODE := 0,
+	                          DisableFlag := 0,
+	                          UseAsFolder := 0)
+		TAG
+			AverageTorque : REAL (RADIX := Float) := 0.00000000e+000;
+			AverageTorqueAccum : REAL (RADIX := Float) := 4.85586700e+001;
+			AverageTorqueCounter : DINT (RADIX := Decimal) := 173;
+			AxisAccelRate : REAL (RADIX := Float) := 1.00000000e+001;
+			AxisDecelRate : REAL (RADIX := Float) := 1.00000000e+001;
+			AxisExecuteAdjustment : REAL (RADIX := Float) := 5.00000119e-001;
+			AxisExecuteAdjustmentAccelDecel : REAL (RADIX := Float) := 7.04093695e+000;
+			AxisExecuteAdjustmentSpeed : REAL (RADIX := Float) := 7.04093695e+000;
+			AxisMoveDist : REAL (RADIX := Float) := 0.00000000e+000;
+			AxisMoveSpeed : REAL (RADIX := Float) := 4.00000000e+001;
+			Axis_Cam_Length : DINT (RADIX := Decimal) := 2;
+			Axis_CAM_MAS : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			Axis_Cam_Pending : CAM[10]  := [[0.00000000e+000,0.00000000e+000,0],[1.00000000e+000,1.00000000e+000,0],[0.00000000e+000,0.00000000e+000
+					,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000
+					,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000
+					,0],[0.00000000e+000,0.00000000e+000,0]];
+			Axis_Enable : MOTION_INSTRUCTION  := [536870912,0,0,1,0,0,0,0,0];
+			Axis_InitialCamProfile : CAM_PROFILE[10]  := [[2,0,0,0,0,0,0,0,1072693248,0,0,0,0,0],[2,1071644672,0,1071644672,0,0,0,0,1072693248,0,0,0,0,0],[0,1071644672,0,1071644672
+					,0,0,0,0,0,0,0,0,0,0],[0,1071644672,0,1071644672,0,0,0,0,0,0,0,0,0,0],[0,1071644672,0,1071644672,0,0,0,0,0,0,0,0,0,0],[0,1071644672
+					,0,1071644672,0,0,0,0,0,0,0,0,0,0],[0,1071644672,0,1071644672,0,0,0,0,0,0,0,0,0,0],[0,1071644672,0,1071644672,0,0,0,0,0,0
+					,0,0,0,0],[0,1071644672,0,1071644672,0,0,0,0,0,0,0,0,0,0],[0,1071644672,0,1071644672,0,0,0,0,0,0,0,0,0,0]];
+			Axis_Initial_MAPC : MOTION_INSTRUCTION  := [570425344,0,0,0,0,0,0,0,0];
+			Axis_Initial_MCCP : MOTION_INSTRUCTION  := [570425344,0,0,0,0,0,0,0,0];
+			Axis_Jog : MOTION_INSTRUCTION  := [570425344,0,0,0,0,0,0,0,0];
+			Axis_MAFR : MOTION_INSTRUCTION  := [536870912,0,0,1,0,0,0,0,0];
+			Axis_MAFR2 : MOTION_INSTRUCTION  := [570425344,0,0,1,0,0,0,0,0];
+			Axis_MASD : MOTION_INSTRUCTION  := [570425344,0,2,1,0,0,0,0,0];
+			Axis_MASD2 : MOTION_INSTRUCTION  := [570425344,0,2,1,0,0,0,0,0];
+			Axis_MASR : MOTION_INSTRUCTION  := [536870912,0,0,1,0,0,0,0,0];
+			Axis_Pending2CamProfile : CAM_PROFILE[10]  := [[2,0,0,0,0,0,0,0,1072693248,0,0,0,0,0],[2,1071644672,0,1071644672,0,0,0,0,1072693248,0,0,0,0,0],[0,1071644672,0,1071644672
+					,0,0,0,0,0,0,0,0,0,0],[0,1071644672,0,1071644672,0,0,0,0,0,0,0,0,0,0],[0,1071644672,0,1071644672,0,0,0,0,0,0,0,0,0,0],[0,1071644672
+					,0,1071644672,0,0,0,0,0,0,0,0,0,0],[0,1071644672,0,1071644672,0,0,0,0,0,0,0,0,0,0],[0,1071644672,0,1071644672,0,0,0,0,0,0
+					,0,0,0,0],[0,1071644672,0,1071644672,0,0,0,0,0,0,0,0,0,0],[0,1071644672,0,1071644672,0,0,0,0,0,0,0,0,0,0]];
+			Axis_Pending2_MAPC : MOTION_INSTRUCTION  := [33554432,0,0,0,0,0,0,0,0];
+			Axis_Pending2_MCCP : MOTION_INSTRUCTION  := [33554432,0,0,0,0,0,0,0,0];
+			Axis_PendingCamProfile : CAM_PROFILE[10]  := [[2,0,0,0,0,1,0,0,1072693248,0,1066031938,1653035796,-1086395860,-939655348],[2,1077030932,-2147483648
+					,1077123931,1073741824,1,0,0,1072693248,0,0,0,0,0],[0,1077030932,-2147483648,1077123931,1073741824,1
+					,0,0,0,0,0,0,0,0],[0,1077030932,-2147483648,1077123931,1073741824,1,0,0,0,0,0,0,0,0],[0,1077030932,-2147483648
+					,1077123931,1073741824,1,0,0,0,0,0,0,0,0],[0,1077030932,-2147483648,1077123931,1073741824,1,0,0,0,0,0,0,0,0],[0
+					,1077030932,-2147483648,1077123931,1073741824,1,0,0,0,0,0,0,0,0],[0,1077030932,-2147483648,1077123931
+					,1073741824,1,0,0,0,0,0,0,0,0],[0,1077030932,-2147483648,1077123931,1073741824,1,0,0,0,0,0,0,0,0],[0,1077030932
+					,-2147483648,1077123931,1073741824,1,0,0,0,0,0,0,0,0]];
+			Axis_Pending_MAPC : MOTION_INSTRUCTION  := [33554432,0,0,0,0,0,0,0,0];
+			Axis_Pending_MCCP : MOTION_INSTRUCTION  := [33554432,0,0,0,0,0,0,0,0];
+			Axis_Stop_All : MOTION_INSTRUCTION  := [301989888,11,0,0,0,0,0,0,0];
+			Axis_Stop_Jogging : MOTION_INSTRUCTION  := [704643072,0,0,0,0,0,0,0,0];
+			CamCalcState : DINT (RADIX := Decimal) := 10;
+			CamMCCPCommand : MOTION_INSTRUCTION  := [570425344,0,0,0,0,0,0,0,0];
+			CamMCSVCommand : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			CamMRPCommand : MOTION_INSTRUCTION  := [536870912,0,2,3,0,0,0,0,0];
+			CamProfile : CAM_PROFILE[30]  := [[3,0,0,0,0,0,0,0,1068848469,1058828758,0,0,0,0],[2,1071057469,-2147483648,1067366481,-536870912,0,0,0,1068848469
+					,1058828758,0,0,0,0],[0,1071057469,-2147483648,1067366481,-536870912,0,0,0,0,0,0,0,0,0],[0,1071057469,-2147483648
+					,1067366481,-536870912,0,0,0,0,0,0,0,0,0],[0,1071057469,-2147483648,1067366481,-536870912,0,0,0,0,0,0,0,0,0],[0
+					,1071057469,-2147483648,1067366481,-536870912,0,0,0,0,0,0,0,0,0],[0,1071057469,-2147483648,1067366481
+					,-536870912,0,0,0,0,0,0,0,0,0],[0,1071057469,-2147483648,1067366481,-536870912,0,0,0,0,0,0,0,0,0],[0,1071057469
+					,-2147483648,1067366481,-536870912,0,0,0,0,0,0,0,0,0],[0,1071057469,-2147483648,1067366481,-536870912
+					,0,0,0,0,0,0,0,0,0],[0,1071057469,-2147483648,1067366481,-536870912,0,0,0,0,0,0,0,0,0],[0,1071057469,-2147483648
+					,1067366481,-536870912,0,0,0,0,0,0,0,0,0],[0,1071057469,-2147483648,1067366481,-536870912,0,0,0,0,0,0,0,0,0],[0
+					,1071057469,-2147483648,1067366481,-536870912,0,0,0,0,0,0,0,0,0],[0,1071057469,-2147483648,1067366481
+					,-536870912,0,0,0,0,0,0,0,0,0],[0,1071057469,-2147483648,1067366481,-536870912,0,0,0,0,0,0,0,0,0],[0,1071057469
+					,-2147483648,1067366481,-536870912,0,0,0,0,0,0,0,0,0],[0,1071057469,-2147483648,1067366481,-536870912
+					,0,0,0,0,0,0,0,0,0],[0,1071057469,-2147483648,1067366481,-536870912,0,0,0,0,0,0,0,0,0],[0,1071057469,-2147483648
+					,1067366481,-536870912,0,0,0,0,0,0,0,0,0],[0,1071057469,-2147483648,1067366481,-536870912,0,0,0,0,0,0,0,0,0],[0
+					,1071057469,-2147483648,1067366481,-536870912,0,0,0,0,0,0,0,0,0],[0,1071057469,-2147483648,1067366481
+					,-536870912,0,0,0,0,0,0,0,0,0],[0,1071057469,-2147483648,1067366481,-536870912,0,0,0,0,0,0,0,0,0],[0,1071057469
+					,-2147483648,1067366481,-536870912,0,0,0,0,0,0,0,0,0],[0,1071057469,-2147483648,1067366481,-536870912
+					,0,0,0,0,0,0,0,0,0],[0,1071057469,-2147483648,1067366481,-536870912,0,0,0,0,0,0,0,0,0],[0,1071057469,-2147483648
+					,1067366481,-536870912,0,0,0,0,0,0,0,0,0],[0,1071057469,-2147483648,1067366481,-536870912,0,0,0,0,0,0,0,0,0],[0
+					,1071057469,-2147483648,1067366481,-536870912,0,0,0,0,0,0,0,0,0]];
+			CamTable : CAM[30]  := [[0.00000000e+000,0.00000000e+000,0],[1.20000000e+001,1.20000000e+001,0],[0.00000000e+000,0.00000000e+000
+					,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000
+					,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000
+					,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000
+					,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000
+					,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000
+					,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000
+					,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000
+					,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000
+					,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000
+					,0]];
+			ContactPosition : REAL (RADIX := Float) := 5.61871643e+001;
+			CorrectionCalcState : DINT (RADIX := Decimal) := 0;
+			CorrectionDistance : REAL (RADIX := Float) := 0.00000000e+000;
+			CurrentCorrectionDistance : REAL (RADIX := Float) := 3.31517160e-002;
+			CurrentDistanceToContact : REAL (RADIX := Float) := 1.96068611e+001;
+			CurrentTorque : REAL (RADIX := Float) := 4.36304659e-001;
+			DistanceToContactMOD : REAL (RADIX := Float) := 2.61657715e-001;
+			ExecuteMAMControl : MOTION_INSTRUCTION  := [33554432,0,0,0,0,0,0,0,0];
+			ExecuteState : DINT (RADIX := Decimal) := 0;
+			FeederNegTolerance : REAL (RADIX := Float) := 0.00000000e+000;
+			FeederPosTolerance : REAL (RADIX := Float) := 0.00000000e+000;
+			FirstTorque : REAL (RADIX := Float) := 4.92561340e-001;
+			Hoiming_MASR_Command : MOTION_INSTRUCTION  := [536870912,0,0,0,0,0,0,0,0];
+			HomePositionTemp : REAL (RADIX := Float) := 0.00000000e+000;
+			HomeSequence : DINT (RADIX := Decimal) := 40;
+			HomeTimer : TIMER  := [1802982,2000,0];
+			HomingMASDCommand : MOTION_INSTRUCTION  := [33554432,0,0,0,0,0,0,0,0];
+			HomingMASRCommand : MOTION_INSTRUCTION  := [33554432,0,0,0,0,0,0,0,0];
+			HomingOneshot : BOOL (RADIX := Decimal) := 0;
+			Homing_MASD_Command : MOTION_INSTRUCTION  := [536870912,0,2,1,0,0,0,0,0];
+			InitializeTimer : TIMER  := [3754994,3000,0];
+			JogAccel : REAL (RADIX := Float) := 1.33333337e+000;
+			JogDecel : REAL (RADIX := Float) := 2.00000000e+000;
+			JogSpeed : REAL (RADIX := Float) := 1.66666663e+000;
+			Jog_Direction : DINT (RADIX := Decimal) := 0;
+			MAG_Command : MOTION_INSTRUCTION  := [637534209,0,0,0,0,0,0,0,0];
+			MAH_command : MOTION_INSTRUCTION  := [-2080374784,0,2,2,0,0,0,0,0];
+			MAJ_command : MOTION_INSTRUCTION  := [33554432,0,0,0,0,0,0,0,0];
+			MAM_command : MOTION_INSTRUCTION  := [704643072,0,0,0,0,0,0,0,0];
+			ManualMode_MAS_command : MOTION_INSTRUCTION  := [33554432,0,0,0,0,0,0,0,0];
+			MAPCCommand : MOTION_INSTRUCTION  := [637534208,0,0,0,0,0,0,0,0];
+			MARCommand : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			MASCommand : MOTION_INSTRUCTION  := [570425344,0,0,0,0,0,0,0,0];
+			MASD_Command : MOTION_INSTRUCTION  := [536870912,0,2,1,1,0,0,0,0];
+			MASR_command : MOTION_INSTRUCTION  := [536870912,0,0,0,0,0,0,0,0];
+			MasterAxis OF ENT_Pusher_Chain ;
+			MasterEndPosition : REAL (RADIX := Float) := 1.81878128e+001;
+			MAS_command : MOTION_INSTRUCTION  := [301989888,7,0,0,0,0,0,0,0];
+			MODFeederPosition : REAL (RADIX := Float) := 0.00000000e+000;
+			MSF_Command : MOTION_INSTRUCTION  := [536870912,0,2,1,0,0,0,0,0];
+			MSO_command : MOTION_INSTRUCTION  := [536870912,0,0,1,0,0,0,0,0];
+			PositionSequence : DINT (RADIX := Decimal) := 0;
+			PrefoldTriggerFIFO : REAL[5] (RADIX := Float) := [0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000];
+			PrefoldTriggerFIFOControl : CONTROL  := [0,5,0];
+			PrevAxisOffset : REAL (RADIX := Float) := 0.00000000e+000;
+			RetryTimer : TIMER  := [3031930,100,0];
+			Retry_MSO : TIMER  := [610855,1000,0];
+			ServoAxis OF MTR_PhasingBelt1 ;
+			ServoAxis_CMD OF PhasingBelt1_CMD ;
+			ServoAxis_Status OF PhasingBelt1_Status ;
+			ServoAxis_Tags OF PhasingBelt1_Tags ;
+			Servo_MAH_command : MOTION_INSTRUCTION  := [33554432,0,0,0,0,0,0,0,0];
+			SlaveAxisDerivative : REAL (RADIX := Float) := 0.00000000e+000;
+			SlaveAxisSlope : REAL (RADIX := Float) := 0.00000000e+000;
+			SlaveEndPosition : REAL (RADIX := Float) := 1.96068611e+001;
+			StateCamTimer : TIMER  := [357235,20000,0];
+			State_Cam : DINT (RADIX := Decimal) := 0;
+			State_Homing : DINT (RADIX := Decimal) := 0;
+			State_Initialize : DINT (RADIX := Decimal) := 0;
+			State_Jog : DINT (RADIX := Decimal) := 0;
+			State_Stop : DINT (RADIX := Decimal) := 0;
+			StopOverrideTimer : TIMER  := [0,0,0];
+			TargetSlavePosition : REAL (RADIX := Float) := 0.00000000e+000;
+			TorqueFIFOArray : REAL[100] (RADIX := Float) := [4.64384675e-001,5.29461265e-001,5.04593730e-001,5.17862022e-001,5.13722777e-001,4.89713907e-001
+					,4.57994998e-001,5.47147036e-001,4.75424051e-001,4.69756186e-001,5.41938245e-001,5.19702256e-001
+					,4.45101500e-001,5.12966037e-001,5.06596625e-001,4.74893481e-001,4.71603960e-001,5.25016900e-001
+					,4.48225081e-001,5.06645441e-001,5.13028562e-001,5.04313588e-001,5.06872535e-001,4.45592254e-001
+					,4.84391481e-001,4.88467932e-001,5.11423886e-001,5.11346579e-001,4.79541361e-001,5.27439833e-001
+					,5.12345731e-001,4.75258380e-001,5.02916217e-001,4.90346074e-001,4.59165871e-001,5.35266638e-001
+					,5.02073884e-001,4.88907248e-001,5.27182341e-001,5.34936488e-001,4.84647125e-001,4.47600484e-001
+					,4.97716010e-001,4.63236630e-001,5.11781991e-001,4.58660156e-001,4.55887258e-001,4.84262645e-001
+					,5.23880124e-001,5.00537753e-001,4.82880980e-001,4.46685642e-001,4.70731497e-001,4.73436356e-001
+					,5.15011311e-001,4.89835292e-001,5.14745712e-001,4.77990657e-001,5.46162665e-001,4.06398773e-001
+					,5.35038233e-001,4.89743412e-001,5.03219128e-001,4.71181512e-001,4.78885472e-001,4.73073300e-001
+					,4.70395029e-001,4.72618639e-001,5.14034271e-001,4.59476829e-001,4.64009583e-001,5.20331500e-001
+					,5.06577015e-001,5.51873386e-001,4.36363369e-001,5.16559839e-001,4.85492676e-001,4.66343910e-001
+					,5.20546794e-001,5.17030120e-001,4.85840529e-001,5.02381206e-001,4.77640063e-001,4.70359981e-001
+					,4.45708066e-001,5.08622587e-001,5.36758900e-001,5.83977222e-001,5.27832150e-001,4.90233123e-001
+					,4.38329309e-001,4.77232367e-001,4.97313200e-001,4.68071073e-001,4.97017800e-001,4.66119319e-001
+					,5.00671089e-001,4.62507218e-001,5.10962427e-001,0.00000000e+000];
+			TorqueFIFOControl : CONTROL  := [0,100,99];
+		END_TAG
+
+		ROUTINE P00_Main 
+				N: JSR(R01_Initialize,0);
+				N: JSR(R02_Jog,0);
+				N: JSR(R03_Cam,0);
+				N: JSR(R06_Stop,0);
+				N: JSR(R07_TorqueLimit,0);
+		END_ROUTINE
+
+		ROUTINE R01_Initialize 
+				N: [XIC(S:FS) ,XIO(ServoAxis_CMD.Initialize) ]MOV(0,State_Initialize);
+				N: EQU(State_Initialize,0)XIC(ServoAxis_CMD.Initialize)MOV(10,State_Initialize);
+				N: EQU(State_Initialize,10)[MASD(ServoAxis,Axis_MASD) ,XIC(Axis_MASD.DN) MOV(20,State_Initialize) ];
+				N: EQU(State_Initialize,20)[MASR(ServoAxis,Axis_MASR) ,XIC(Axis_MASR.DN) MOV(30,State_Initialize) ];
+				N: EQU(State_Initialize,30)[MAFR(ServoAxis,Axis_MAFR) ,XIC(Axis_MAFR.DN) MOV(40,State_Initialize) ];
+				N: EQU(State_Initialize,40)EQU(ServoAxis.AxisFault,0)[MSO(ServoAxis,Axis_Enable) ,XIC(Axis_Enable.ER) TON(Retry_MSO,?,?) XIC(Retry_MSO.DN) MOV(0,State_Initialize) ,XIC(ServoAxis.ServoActionStatus) MOV(50,State_Initialize) ];
+				N: EQU(State_Initialize,40)NEQ(ServoAxis.AxisFault,0)MOV(0,State_Initialize);
+				N: EQU(State_Initialize,50)[OTE(ServoAxis_Status.Initialized) ,XIO(ServoAxis_CMD.Initialize) MOV(0,State_Initialize) ];
+				N: GRT(State_Initialize,0)XIO(ServoAxis_CMD.Initialize)TON(InitializeTimer,?,?)XIC(InitializeTimer.DN)OTL(ServoAxis_Tags.InitializeFault);
+				N: XIC(ClearServoFaults)MAFR(ServoAxis,Axis_MAFR2);
+				N: XIC(ServoAxis_CMD.Abort)[MASD(ServoAxis,Axis_MASD2) ,XIC(Axis_MASD2.DN) OTE(ServoAxis_Status.Aborted) ];
+		END_ROUTINE
+
+		ROUTINE R02_Jog 
+				N: XIC(ServoAxis_Tags.ManualMode)CPT(JogSpeed,JogSpeedHMI/60)CPT(JogAccel,JogSpeed*0.8)CPT(JogDecel,JogSpeed*1.2);
+				N: XIC(ServoAxis_Tags.ManualMode)[XIC(HMI_JogBtn) ,XIC(HMI_JogContinuously) ]MAJ(ServoAxis,Axis_Jog,Jog_Direction,JogSpeed,Units per sec,JogAccel,Units per sec2,JogDecel,Units per sec2,Trapezoidal,100,100,% of Maximum,Disabled,Current,0,None);
+				N: XIC(Axis_Jog.IP)[XIO(HMI_JogContinuously) XIO(HMI_JogBtn) ,XIO(ServoAxis_Tags.ManualMode) ]MAS(ServoAxis,Axis_Stop_Jogging,Jog,Yes,JogDecel,Units per sec2,Yes,100,% of Maximum);
+		END_ROUTINE
+
+		ROUTINE R03_Cam 
+				N: XIC(S:FS)MOV(0,State_Cam);
+				N: EQU(State_Cam,0)[XIC(ServoAxis_CMD.Cam) ,XIC(ServoAxis_CMD.ManualModeCam) ][XIO(ServoAxis.PositionCamStatus) MCCP(CamMCCPCommand,StandardCam[0],2,1,1,CamProfile[0]) [XIC(CamMCCPCommand.DN) MOV(20,State_Cam) ,XIC(CamMCCPCommand.ER) MOV(999,State_Cam) ] ,XIC(ServoAxis.PositionCamStatus) MOV(50,State_Cam) ];
+				N: EQU(State_Cam,20)[MAPC(ServoAxis,MasterAxis,MAPCCommand,0,CamProfile[0],1,1,Continuous,Immediate,0,0,New Cam,Command,Bi-Directional) ,XIC(MAPCCommand.IP) MOV(50,State_Cam) ,XIC(MAPCCommand.ER) MOV(999,State_Cam) ];
+				N: EQU(State_Cam,50)[OTE(ServoAxis_Status.CamEngaged) ,XIO(ServoAxis_CMD.Cam) XIO(ServoAxis_CMD.ManualModeCam) MOV(0,State_Cam) ];
+				N: GRT(State_Cam,0)XIO(ServoAxis_Status.CamEngaged)TON(StateCamTimer,?,?);
+				N: [EQU(State_Cam,999) ,XIC(StateCamTimer.DN) ][OTL(ServoAxis_Tags.CamFault) ,MOV(0,State_Cam) ];
+		END_ROUTINE
+
+		ROUTINE R06_Stop 
+				N: [XIC(S:FS) ,XIO(ServoAxis_CMD.Stop) ]MOV(0,State_Stop);
+				N: EQU(State_Stop,0)XIC(ServoAxis_CMD.Stop)MOV(10,State_Stop);
+				N: EQU(State_Stop,10)[MAS(ServoAxis,MASCommand,All,Yes,5,Units per sec2,Yes,100,% of Maximum) ,[XIC(MASCommand.IP) ,XIC(MASCommand.PC) ] MOV(20,State_Stop) ,XIC(MASCommand.ER) MOV(40,State_Stop) ];
+				N: EQU(State_Stop,20)XIC(MASCommand.PC)OTU(MASCommand.PC)MOV(30,State_Stop);
+				N: EQU(State_Stop,30)OTE(ServoAxis_Status.Stopped);
+				N: EQU(State_Stop,40)TON(RetryTimer,?,?)XIC(RetryTimer.DN)MOV(0,State_Stop);
+		END_ROUTINE
+
+		ROUTINE R07_TorqueLimit 
+				N: MOV(ServoAxis.TorqueReferenceLimited,CurrentTorque)ABS(CurrentTorque,CurrentTorque)GRT(CurrentTorque,ServoAxis_Tags.MaxRecordedTorque)MOV(CurrentTorque,ServoAxis_Tags.MaxRecordedTorque);
+				N: XIC(TorqueResetButtonHMI)MOV(0,ServoAxis_Tags.MaxRecordedTorque);
+				N: [GRT(CurrentTorque,ServoAxis_Tags.MaxAllowedTorque) ,XIC(PML_State.Sts_Starting) GRT(CurrentTorque,80) ]OTL(ServoAxis_Tags.OverTorque_fault);
+				N: XIO(PML_State.Sts_Aborted)[XIO(TorqueFIFOControl.EN) ADD(CurrentTorque,AverageTorqueAccum,AverageTorqueAccum) FFL(CurrentTorque,TorqueFIFOArray[0],TorqueFIFOControl,?,?) ,XIC(TorqueFIFOControl.DN) FFU(TorqueFIFOArray[0],FirstTorque,TorqueFIFOControl,?,?) SUB(AverageTorqueAccum,FirstTorque,AverageTorqueAccum) DIV(AverageTorqueAccum,TorqueFIFOControl.POS,ServoAxis_Tags.AverageTorque) ,XIC(TorqueResetButtonHMI) MOV(0,TorqueFIFOControl.POS) MOV(0,AverageTorqueAccum) MOV(0,ServoAxis_Tags.AverageTorque) ];
+				N: XIC(PML_State.Sts_Aborted)MOV(0,TorqueFIFOControl.POS)MOV(0,AverageTorqueAccum);
+				N: GSV(Axis,ServoAxis,TorqueLimitPositive,ServoAxis_Tags.Drive_Internal_TorqueLimit_POS_IN)GSV(Axis,ServoAxis,TorqueLimitNegative,ServoAxis_Tags.Drive_Internal_TorqueLimit_NEG_IN)MUL(ServoAxis_Tags.MaxAllowedTorque,1.1,ServoAxis_Tags.Drive_Internal_TorqueLimit_POS)MUL(ServoAxis_Tags.MaxAllowedTorque,-1.1,ServoAxis_Tags.Drive_Internal_TorqueLimit_NEG)[NEQ(ServoAxis_Tags.Drive_Internal_TorqueLimit_POS_IN,ServoAxis_Tags.Drive_Internal_TorqueLimit_POS) SSV(Axis,ServoAxis,TorqueLimitPositive,ServoAxis_Tags.Drive_Internal_TorqueLimit_POS) ,NEQ(ServoAxis_Tags.Drive_Internal_TorqueLimit_NEG_IN,ServoAxis_Tags.Drive_Internal_TorqueLimit_NEG) SSV(Axis,ServoAxis,TorqueLimitNegative,ServoAxis_Tags.Drive_Internal_TorqueLimit_NEG) ];
+		END_ROUTINE
+
+		CHILD_PROGRAMS
+		END_CHILD_PROGRAMS

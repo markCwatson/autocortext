@@ -1,0 +1,98 @@
+This provides the .l5k program export overview of VFD_DischargeBelts routine within the PLC from the HS5160 machine from Kliklok-Woodman, a Enterprise Endload Cartoner. Use this program to understand the logic so that it can be queried in the future. What will often be asked is information about why a program may not be working, so this document provides the information necessary to answer this.
+(MAIN := "P00_Main",
+	                            MODE := 0,
+	                            DisableFlag := 0,
+	                            UseAsFolder := 0)
+		TAG
+			Axis_Cam : CAM[10]  := [[0.00000000e+000,0.00000000e+000,0],[1.00000000e+001,0.00000000e+000,1],[1.80000000e+002,9.00000000e+000
+					,0],[3.60000000e+002,9.00000000e+000,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000
+					,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000,0],[0.00000000e+000,0.00000000e+000
+					,0],[0.00000000e+000,0.00000000e+000,0]];
+			Axis_Cam_Length : DINT (RADIX := Decimal) := 0;
+			Axis_CAM_MAS : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			Axis_Enable : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			Axis_InitialCamProfile : CAM_PROFILE[10]  := [[2,0,0,0,0,0,0,0,0,0,0,0,0,0],[2,1076101120,0,0,0,1,0,0,0,0,1062116635,-1709664491,-1093747753,1904877878],[2,1080459264
+					,0,1075970048,0,0,0,0,0,0,0,0,0,0],[2,1081507840,0,1075970048,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0
+					],[0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0]];
+			Axis_Initial_MAPC : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			Axis_Initial_MCCP : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			Axis_Jog : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			Axis_MAFR : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			Axis_MASD : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			Axis_MASR : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			Axis_PendingCamProfile : CAM_PROFILE[10]  := [[2,0,0,0,0,0,0,0,0,0,0,0,0,0],[2,1076101120,0,0,0,1,0,0,0,0,1062116635,-1709664491,-1093747753,1904877878],[2,1080459264
+					,0,1075970048,0,0,0,0,0,0,0,0,0,0],[2,1081507840,0,1075970048,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0
+					],[0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0]];
+			Axis_Pending_MAPC : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			Axis_Pending_MCCP : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			Axis_Stop_All : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			Axis_Stop_Jogging : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			CamMAMCommand : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			CamMRPCommand : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			Hoiming_MASR_Command : MOTION_INSTRUCTION  := [536870912,0,0,0,0,0,0,0,0];
+			HomePositionTemp : REAL (RADIX := Float) := 0.00000000e+000;
+			HomeSequence : DINT (RADIX := Decimal) := 40;
+			HomingMASDCommand : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			HomingMASRCommand : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			HomingOneshot : BOOL (RADIX := Decimal) := 0;
+			Homing_MASD_Command : MOTION_INSTRUCTION  := [536870912,0,2,1,0,0,0,0,0];
+			InitializeTimer : TIMER  := [347965,3000,0];
+			JogAccel : DINT (RADIX := Decimal) := 6;
+			JogDecel : DINT (RADIX := Decimal) := 40;
+			JogSpeed : REAL (RADIX := Float) := 5.00000000e+000;
+			JogVFD : BOOL (RADIX := Decimal) := 0;
+			Jog_Direction : DINT (RADIX := Decimal) := 0;
+			MAG_Command : MOTION_INSTRUCTION  := [570425345,0,0,0,0,0,0,0,0];
+			MAH_command : MOTION_INSTRUCTION  := [-2080374784,0,2,2,0,0,0,0,0];
+			MAJ_command : MOTION_INSTRUCTION  := [33554432,0,0,0,0,0,0,0,0];
+			MAM_command : MOTION_INSTRUCTION  := [704643072,0,0,0,0,0,0,0,0];
+			ManualMode_MAS_command : MOTION_INSTRUCTION  := [33554432,0,0,0,0,0,0,0,0];
+			MASD_Command : MOTION_INSTRUCTION  := [536870912,0,2,1,1,0,0,0,0];
+			MASR_command : MOTION_INSTRUCTION  := [536870912,0,0,0,0,0,0,0,0];
+			MasterAxis OF Virtual_Master ;
+			MAS_command : MOTION_INSTRUCTION  := [301989888,7,0,0,0,0,0,0,0];
+			MSF_Command : MOTION_INSTRUCTION  := [536870912,0,2,1,0,0,0,0,0];
+			MSO_command : MOTION_INSTRUCTION  := [536870912,0,0,1,0,0,0,0,0];
+			PositionSequence : DINT (RADIX := Decimal) := 0;
+			Retry_MSO : TIMER  := [0,1000,0];
+			ServoAxis_CMD OF DischargeBelts_CMD ;
+			ServoAxis_Status OF DischargeBelts_Status ;
+			Servo_MAH_command : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			State_Cam : DINT (RADIX := Decimal) := 0;
+			State_Homing : DINT (RADIX := Decimal) := 0;
+			State_Initialize : DINT (RADIX := Decimal) := 0;
+			State_Jog : DINT (RADIX := Decimal) := 0;
+			StopOverrideTimer : TIMER  := [0,0,0];
+			VFDAxisInputs OF VFD_DischargeBelts:I ;
+			VFDAxisOutputs OF VFD_DischargeBelts:O ;
+			VFDAxis_Tags OF DischargeBelts_Tags ;
+			VFDSpeedFactor : REAL (RADIX := Float) := 6.00000000e+001;
+		END_TAG
+
+		ROUTINE P00_Main 
+				N: JSR(R01_Initialize,0);
+				N: JSR(R02_Jog,0);
+				N: JSR(R03_Run,0);
+		END_ROUTINE
+
+		ROUTINE R01_Initialize 
+				N: XIO(ServoAxis_CMD.Initialize)MOV(0,State_Initialize);
+				N: EQU(State_Initialize,0)XIC(ServoAxis_CMD.Initialize)MOV(10,State_Initialize);
+				N: [EQU(State_Initialize,10) ,XIC(ClearServoFaults) ][OTE(VFDAxisOutputs.ClearFaults) ,XIO(ClearServoFaults) XIC(VFDAxisInputs.Ready) MOV(20,State_Initialize) ];
+				N: EQU(State_Initialize,20)OTE(ServoAxis_Status.Initialized);
+				N: [GRT(State_Initialize,0) XIO(ServoAxis_CMD.Initialize) ,XIC(MCRIinput) XIO(VFDAxisInputs.Ready) ]TON(InitializeTimer,?,?)XIC(InitializeTimer.DN)OTL(VFDAxis_Tags.InitializeFault);
+		END_ROUTINE
+
+		ROUTINE R02_Jog 
+				N: [XIC(VFDAxis_Tags.ManualMode) ,XIC(ManualModeAllAxes) ]CPT(VFDAxisOutputs.FreqCommand,JogSpeedHMI*VFDSpeedFactor);
+				N: [XIC(VFDAxis_Tags.ManualMode) ,XIC(ManualModeAllAxes) ][XIC(HMI_JogBtn) ,XIC(JogBtn) ,XIC(HMI_JogContinuously) ]OTE(JogVFD);
+		END_ROUTINE
+
+		ROUTINE R03_Run 
+				N: XIO(VFDAxis_Tags.ManualMode)XIO(ManualModeAllAxes)MUL(40,VFDSpeedMultiplierHMI,VFDSpeedFactor)CPT(VFDAxisOutputs.FreqCommand,CurrentRecipe.MachineSpeed_CPM*VFDSpeedFactor);
+				N: [XIC(PML_State.Sts_Execute) ,XIC(PML_State.Sts_UnSuspending) ,XIC(PML_State.Sts_Stopping) ,XIC(JogVFD) ]XIO(VFDAxisInputs.AtReference)OTE(VFDAxisOutputs.Start);
+				N: XIO(PML_State.Sts_Execute)XIO(PML_State.Sts_UnSuspending)XIO(PML_State.Sts_Stopping)XIO(JogVFD)OTE(VFDAxisOutputs.Stop);
+		END_ROUTINE
+
+		CHILD_PROGRAMS
+		END_CHILD_PROGRAMS

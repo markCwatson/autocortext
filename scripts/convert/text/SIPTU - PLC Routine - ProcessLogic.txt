@@ -1,0 +1,37 @@
+This provides the .l5k program export overview of ProcessLogic routine within the PLC from the SIPTU HS5160 machine from Kliklok-Woodman, a conveyor. Use this program to understand the logic so that it can be queried in the future. What will often be asked is information about why a program may not be working, so this document provides the information necessary to answer this.
+(MAIN := "R00_Main",
+	                      MODE := 0,
+	                      DisableFlag := 0,
+	                      UseAsFolder := 0)
+		TAG
+			MisplacedProductDetected : BOOL (RADIX := Decimal) := 0;
+			MisplacedProductShiftBSL : CONTROL  := [0,32,0];
+			MisplacedProductShiftRegister : DINT[2] (RADIX := Decimal) := [0,0];
+			RTSDischargeSolenoidSensor_GateLowered OF Local:2:I.Data.3 (RADIX := Decimal);
+			RTSDischargeSolenoid_PassThru OF Local:3:O.Data.8 (RADIX := Decimal);
+			RTSDischargeSolenoid_RaiseGate OF Local:3:O.Data.9 (RADIX := Decimal);
+			RTSInfeedSolenoidSensor_GateLowered OF Local:2:I.Data.1 (RADIX := Decimal);
+			RTSInfeedSolenoidSensor_GateRaised OF Local:2:I.Data.0 (RADIX := Decimal);
+			RTSPositionMod : REAL (RADIX := Float) := 9.07309651e-002;
+			ShiftRegisterOneShot1 : BOOL (RADIX := Decimal) := 1;
+			Sol1OffTimer : TIMER  := [65008,400,0];
+			Sol1OffTimer2 : TIMER  := [0,100,0];
+			Sol2OffTimer : TIMER  := [1051917,400,0];
+			Sol2OffTimer2 : TIMER  := [0,100,0];
+			Sol3OffTimer : TIMER  := [165178,400,0];
+			Sol3OffTimer2 : TIMER  := [0,100,0];
+			Sol4OffTimer : TIMER  := [1051693,400,0];
+			Sol4OffTimer2 : TIMER  := [0,100,0];
+			SolOneshot1 : BOOL (RADIX := Decimal) := 0;
+			SolOneshot2 : BOOL (RADIX := Decimal) := 0;
+			SolOneshot3 : BOOL (RADIX := Decimal) := 0;
+			SolOneshot4 : BOOL (RADIX := Decimal) := 1;
+			testRTO : TIMER  := [2361605,2000,242];
+		END_TAG
+
+		ROUTINE R00_Main 
+				N: NOP();
+		END_ROUTINE
+
+		CHILD_PROGRAMS
+		END_CHILD_PROGRAMS

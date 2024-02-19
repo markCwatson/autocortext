@@ -1,0 +1,110 @@
+This provides the .l5k program export overview of Glue routine within the PLC from the HS5160 machine from Kliklok-Woodman, a Enterprise Endload Cartoner. Use this program to understand the logic so that it can be queried in the future. What will often be asked is information about why a program may not be working, so this document provides the information necessary to answer this.
+(MAIN := "P00_Main",
+	              MODE := 0,
+	              DisableFlag := 0,
+	              UseAsFolder := 0)
+		TAG
+			CartonsOutCountState : DINT (RADIX := Decimal) := 0;
+			CartonsOutOneshot : BOOL (RADIX := Decimal) := 0;
+			CharGlueInput : DINT (RADIX := Decimal) := 0;
+			CharGluePosition : REAL (RADIX := Float) := 0.00000000e+000;
+			ForceLoadSideGlueOffTimer : TIMER  := [280730,2000,0];
+			ForceNonLoadSideGlueOffTimer : TIMER  := [0,3000,0];
+			ForceTuckGlueOffTimer : TIMER  := [892369,3000,0];
+			GlueAxisArmPosition : REAL (RADIX := Float) := 7.38534975e+000;
+			GlueCamArmPosition : REAL (RADIX := Float) := 0.00000000e+000;
+			GlueEndPosition : REAL (RADIX := Float) := 1.20000000e+001;
+			GlueMAOC : MOTION_INSTRUCTION  := [570425344,0,0,0,0,0,0,0,0];
+			GlueMDOC : MOTION_INSTRUCTION  := [-1577058304,0,0,0,0,0,0,0,0];
+			GlueOutputCam : OUTPUT_CAM[21]  := [[0,3,4,1.20000000e+000,9.50000000e+000,0.00000000e+000,0,0],[0,3,4,0.00000000e+000,0.00000000e+000
+					,0.00000000e+000,0,2],[0,3,4,0.00000000e+000,0.00000000e+000,0.00000000e+000,0,2],[0,3,4,0.00000000e+000
+					,0.00000000e+000,0.00000000e+000,0,2],[0,3,4,0.00000000e+000,0.00000000e+000,0.00000000e+000,0
+					,2],[0,3,4,0.00000000e+000,0.00000000e+000,0.00000000e+000,0,2],[0,3,4,0.00000000e+000,0.00000000e+000
+					,0.00000000e+000,0,2],[0,3,4,0.00000000e+000,0.00000000e+000,0.00000000e+000,0,2],[0,3,4,0.00000000e+000
+					,0.00000000e+000,0.00000000e+000,0,2],[0,3,4,0.00000000e+000,0.00000000e+000,0.00000000e+000,0
+					,2],[1,3,4,1.10000000e+000,3.79999995e+000,0.00000000e+000,0,1],[1,3,4,6.80000019e+000,9.30000019e+000
+					,0.00000000e+000,0,1],[1,3,4,0.00000000e+000,0.00000000e+000,0.00000000e+000,0,2],[1,3,4,0.00000000e+000
+					,0.00000000e+000,0.00000000e+000,0,2],[1,3,4,0.00000000e+000,0.00000000e+000,0.00000000e+000,0
+					,2],[1,3,4,0.00000000e+000,0.00000000e+000,0.00000000e+000,0,2],[1,3,4,0.00000000e+000,0.00000000e+000
+					,0.00000000e+000,0,2],[1,3,4,0.00000000e+000,0.00000000e+000,0.00000000e+000,0,2],[1,3,4,0.00000000e+000
+					,0.00000000e+000,0.00000000e+000,0,2],[1,3,4,0.00000000e+000,0.00000000e+000,0.00000000e+000,0
+					,2],[0,0,0,0.00000000e+000,0.00000000e+000,0.00000000e+000,0,0]];
+			GlueOutputCompensation : OUTPUT_COMPENSATION[10]  := [[0.00000000e+000,1.49999997e-002,2.50000000e-002,0,0.00000000e+000,0.00000000e+000],[0.00000000e+000
+					,1.49999997e-002,2.50000000e-002,0,0.00000000e+000,0.00000000e+000],[0.00000000e+000,0.00000000e+000
+					,0.00000000e+000,0,0.00000000e+000,0.00000000e+000],[0.00000000e+000,0.00000000e+000,0.00000000e+000
+					,0,0.00000000e+000,0.00000000e+000],[0.00000000e+000,0.00000000e+000,0.00000000e+000,0,0.00000000e+000
+					,0.00000000e+000],[0.00000000e+000,0.00000000e+000,0.00000000e+000,0,0.00000000e+000,0.00000000e+000
+					],[0.00000000e+000,0.00000000e+000,0.00000000e+000,0,0.00000000e+000,0.00000000e+000],[0.00000000e+000
+					,0.00000000e+000,0.00000000e+000,0,0.00000000e+000,0.00000000e+000],[0.00000000e+000,0.00000000e+000
+					,0.00000000e+000,0,0.00000000e+000,0.00000000e+000],[0.00000000e+000,0.00000000e+000,0.00000000e+000
+					,0,0.00000000e+000,0.00000000e+000]];
+			GlueStartPosition : REAL (RADIX := Float) := 0.00000000e+000;
+			GlueState : DINT (RADIX := Decimal) := 0;
+			LiftOverheadConfiner : BOOL (RADIX := Decimal) := 0;
+			LoadSideBeadNum : DINT (RADIX := Decimal) := 10;
+			LoadSideGlueMAR : MOTION_INSTRUCTION  := [268435456,3,2,0,0,0,0,0,0];
+			LoadSideGluePatternState : DINT (RADIX := Decimal) := 0;
+			LoadSideLoadAxisArmPosition : REAL (RADIX := Float) := 0.00000000e+000;
+			NonLoadSideBeadNum : DINT (RADIX := Decimal) := 20;
+			NonLoadSideGlueAxisArmPosition : REAL (RADIX := Float) := 0.00000000e+000;
+			NonLoadSideGlueCamArmPosition : REAL (RADIX := Float) := 0.00000000e+000;
+			NonLoadSideGlueEndPosition : REAL (RADIX := Float) := 0.00000000e+000;
+			NonLoadSideGlueMAOC : MOTION_INSTRUCTION  := [33554432,0,0,0,0,0,0,0,0];
+			NonLoadSideGlueMAR : MOTION_INSTRUCTION  := [671088640,0,0,1,1,0,0,0,0];
+			NonLoadSideGlueMDOC : MOTION_INSTRUCTION  := [-1845493760,11,0,0,0,0,0,0,0];
+			NonLoadSideGlueOutputCompensation : OUTPUT_COMPENSATION[10]  := [[0.00000000e+000,0.00000000e+000,0.00000000e+000,0,0.00000000e+000,0.00000000e+000],[0.00000000e+000
+					,0.00000000e+000,0.00000000e+000,0,0.00000000e+000,0.00000000e+000],[0.00000000e+000,0.00000000e+000
+					,0.00000000e+000,0,0.00000000e+000,0.00000000e+000],[0.00000000e+000,0.00000000e+000,0.00000000e+000
+					,0,0.00000000e+000,0.00000000e+000],[0.00000000e+000,0.00000000e+000,0.00000000e+000,0,0.00000000e+000
+					,0.00000000e+000],[0.00000000e+000,0.00000000e+000,0.00000000e+000,0,0.00000000e+000,0.00000000e+000
+					],[0.00000000e+000,0.00000000e+000,0.00000000e+000,0,0.00000000e+000,0.00000000e+000],[0.00000000e+000
+					,0.00000000e+000,0.00000000e+000,0,0.00000000e+000,0.00000000e+000],[0.00000000e+000,0.00000000e+000
+					,0.00000000e+000,0,0.00000000e+000,0.00000000e+000],[0.00000000e+000,0.00000000e+000,0.00000000e+000
+					,0,0.00000000e+000,0.00000000e+000]];
+			NonLoadSideGluePatternState : DINT (RADIX := Decimal) := 0;
+			NonLoadSideGluePosition : REAL (RADIX := Float) := 0.00000000e+000;
+			NonLoadSideGlueStartPosition : REAL (RADIX := Float) := 0.00000000e+000;
+			NonLoadSideGlueState : DINT (RADIX := Decimal) := 0;
+			Temp : DINT (RADIX := Decimal) := 325;
+		END_TAG
+
+		ROUTINE P00_Main 
+				N: JSR(R01_Glue,0);
+				N: XIC(UpdateLoadSidePattern)JSR(R02_LoadSideGluePattern,0);
+				N: XIC(UpdateNonLoadSidePattern)JSR(R03_NonLoadSideGluePattern,0);
+				N: JSR(R04_PatternChangeCheck,0);
+		END_ROUTINE
+
+		ROUTINE R01_Glue 
+				N: EQU(GlueState,0)XIC(MachineRunning)MOV(5,GlueState);
+				N: [XIC(CurrentRecipe.LoadSideGlue.GunEnabled) ,XIC(CurrentRecipe.NonLoadSideGlue.GunEnabled) ]EQU(GlueState,5)LIM(GlueSensorWindowStart,MTR_RetardChain.ActualPosition,GlueSensorWindowEnd)XIC(GlueSensor)[EQU(MachinePitch,12) [XIC(CartonInchShiftRegister[3].6) ,XIC(CartonInchShiftRegister[3].7) ,XIC(CartonInchShiftRegister[3].8) ,XIC(CartonInchShiftRegister[3].9) ,XIC(CartonInchShiftRegister[3].10) ,XIC(CartonInchShiftRegister[3].11) ,XIC(CartonInchShiftRegister[3].12) ,XIC(CartonInchShiftRegister[3].13) ] ,EQU(MachinePitch,9) [XIC(CartonInchShiftRegister[3].7) ,XIC(CartonInchShiftRegister[3].8) ,XIC(CartonInchShiftRegister[3].9) ,XIC(CartonInchShiftRegister[3].10) ,XIC(CartonInchShiftRegister[3].11) ] ]MOV(10,GlueState);
+				N: EQU(GlueState,10)ADD(GlueAxisArmPosition,1,GlueAxisArmPosition2)MOD(GlueAxisArmPosition2,MachinePitch,GlueAxisArmPosition2)LIM(GlueAxisArmPosition,MTR_RetardChain.ActualPosition,GlueAxisArmPosition2)[XIC(CurrentRecipe.LoadSideGlue.GunEnabled) OTL(GlueEnable.0) ,XIC(CurrentRecipe.NonLoadSideGlue.GunEnabled) OTL(GlueEnable.1) ]MOV(20,GlueState);
+				N: EQU(GlueState,20)CPT(DisableGlueWindowStart,GlueSensorWindowStart+CurrentRecipe.CartonLength+GlueGunOffset)MOD(DisableGlueWindowStart,MachinePitch,DisableGlueWindowStart)ADD(DisableGlueWindowStart,1,DisableGlueWindowEnd)MOD(DisableGlueWindowEnd,MachinePitch,DisableGlueWindowEnd)MOV(30,GlueState);
+				N: MOV(Ist_calcd,Test_calc2)CPT(Glue_stop_t.PRE,CurrentRecipe.MachineSpeed_CPM*2.75*Test_calc2);
+				N: [EQU(GlueState,30) LIM(DisableGlueWindowStart,MTR_RetardChain.ActualPosition,DisableGlueWindowEnd) ,[XIC(PML_State.Sts_Stopped) ,XIC(PML_State.Sts_Aborted) ,XIC(PML_State.Sts_Aborting) ] ]XIO(GlueSensor)OTU(GlueEnable.0)OTU(GlueEnable.1)MOV(0,GlueState);
+				N: XIC(MachineRunning)MAOC(MTR_RetardChain,0,GlueMAOC,GlueOutputs,GlueEnable,GlueOutputCam[0],GlueStartPosition,GlueEndPosition,GlueOutputCompensation[0],Continuous,Forward Only,GlueAxisArmPosition,GlueCamArmPosition,Actual);
+				N: XIO(GlueMAOC.IP)OTU(GlueEnable.0)OTU(GlueEnable.1)OTU(GlueOutputs.0)OTU(GlueOutputs.1)MOV(0,GlueState);
+				N: [XIO(MachineRunning) ,[XIC(LoadSideGlueGun) ,XIC(NonLoadSideGlueGun) ] TON(ForceLoadSideGlueOffTimer,?,?) XIC(ForceLoadSideGlueOffTimer.DN) ,XIO(CurrentRecipe.LoadSideGlue.GunEnabled) XIO(CurrentRecipe.NonLoadSideGlue.GunEnabled) ][MDOC(MTR_RetardChain,0,GlueMDOC,All) ,OTU(CharGlueInput.0) OTU(CharGlueInput.1) ,OTU(GlueOutputs.0) OTU(GlueOutputs.1) ,MOV(0,GlueState) ];
+				N: XIC(PML_State.Sts_Aborted)MOV(MachinePitch,GlueEndPosition)SUB(GlueSensorWindowEnd,GlueGunOnDelayComp,GlueAxisArmPosition)CPT(GlueAxisArmPosition,GlueSensorWindowStart+GlueGunOffset-GlueGunOnDelayComp);
+				N: [MOV(GlueOutputCompensation[0].LatchDelay,GlueOutputCompensation[1].LatchDelay) ,MOV(GlueOutputCompensation[0].UnlatchDelay,GlueOutputCompensation[1].UnlatchDelay) ];
+				N: EQU(CartonsOutCountState,0)XIC(MachineRunning)XIC(GlueSensor)LIM(GlueSensorWindowStart,MTR_RetardChain.ActualPosition,GlueSensorWindowEnd)ADD(Stats.CartonsOut,1,Stats.CartonsOut)MOV(10,CartonsOutCountState);
+				N: EQU(CartonsOutCountState,10)LIM(GlueSensorWindowEnd,MTR_RetardChain.ActualPosition,GlueSensorWindowStart)MOV(0,CartonsOutCountState);
+		END_ROUTINE
+
+		ROUTINE R02_LoadSideGluePattern 
+				N: EQU(LoadSideGluePatternState,0)[GRT(CurrentRecipe.LoadSideGlue.GlueLength1,0) MOV(0,GlueOutputCam[0].EnableBit) MOV(CurrentRecipe.LoadSideGlue.GlueStart1,GlueOutputCam[0].Left) MOV(CurrentRecipe.LoadSideGlue.GlueEnd1,GlueOutputCam[0].Right) MOV(1,LoadSideBeadNum) ,EQU(CurrentRecipe.LoadSideGlue.GlueLength1,0) MOV(2,GlueOutputCam[0].EnableBit) MOV(0,LoadSideBeadNum) ,GRT(CurrentRecipe.LoadSideGlue.GlueLength2,0) MOV(0,GlueOutputCam[LoadSideBeadNum].EnableBit) MOV(CurrentRecipe.LoadSideGlue.GlueStart2,GlueOutputCam[LoadSideBeadNum].Left) MOV(CurrentRecipe.LoadSideGlue.GlueEnd2,GlueOutputCam[LoadSideBeadNum].Right) ADD(LoadSideBeadNum,1,LoadSideBeadNum) ,EQU(CurrentRecipe.LoadSideGlue.GlueLength2,0) MOV(2,GlueOutputCam[1].EnableBit) ,GRT(CurrentRecipe.LoadSideGlue.GlueLength3,0) MOV(0,GlueOutputCam[LoadSideBeadNum].EnableBit) MOV(CurrentRecipe.LoadSideGlue.GlueStart3,GlueOutputCam[LoadSideBeadNum].Left) MOV(CurrentRecipe.LoadSideGlue.GlueEnd3,GlueOutputCam[LoadSideBeadNum].Right) ADD(LoadSideBeadNum,1,LoadSideBeadNum) ,EQU(CurrentRecipe.LoadSideGlue.GlueLength3,0) MOV(2,GlueOutputCam[2].EnableBit) ,GRT(CurrentRecipe.LoadSideGlue.GlueLength4,0) MOV(0,GlueOutputCam[LoadSideBeadNum].EnableBit) MOV(CurrentRecipe.LoadSideGlue.GlueStart4,GlueOutputCam[LoadSideBeadNum].Left) MOV(CurrentRecipe.LoadSideGlue.GlueEnd4,GlueOutputCam[LoadSideBeadNum].Right) ADD(LoadSideBeadNum,1,LoadSideBeadNum) ,EQU(CurrentRecipe.LoadSideGlue.GlueLength4,0) MOV(2,GlueOutputCam[3].EnableBit) ,GRT(CurrentRecipe.LoadSideGlue.GlueLength5,0) MOV(0,GlueOutputCam[LoadSideBeadNum].EnableBit) MOV(CurrentRecipe.LoadSideGlue.GlueStart5,GlueOutputCam[LoadSideBeadNum].Left) MOV(CurrentRecipe.LoadSideGlue.GlueEnd5,GlueOutputCam[LoadSideBeadNum].Right) ADD(LoadSideBeadNum,1,LoadSideBeadNum) ,EQU(CurrentRecipe.LoadSideGlue.GlueLength5,0) MOV(2,GlueOutputCam[LoadSideBeadNum].EnableBit) ,MOV(10,LoadSideGluePatternState) ];
+				N: EQU(LoadSideGluePatternState,10)[MOV(0,GlueOutputCam[LoadSideBeadNum].Left) MOV(0,GlueOutputCam[LoadSideBeadNum].Right) ,MOV(3,GlueOutputCam[LoadSideBeadNum].LatchType) MOV(4,GlueOutputCam[LoadSideBeadNum].UnlatchType) ,MOV(0,GlueOutputCompensation[3].Offset) MOV(0,GlueOutputCompensation[3].LatchDelay) MOV(0,GlueOutputCompensation[3].UnlatchDelay) ,MOV(2,GlueOutputCam[LoadSideBeadNum].EnableBit) ,LES(LoadSideBeadNum,10) ADD(LoadSideBeadNum,1,LoadSideBeadNum) ,GEQ(LoadSideBeadNum,10) OTU(UpdateLoadSidePattern) MOV(0,LoadSideGluePatternState) ];
+		END_ROUTINE
+
+		ROUTINE R03_NonLoadSideGluePattern 
+				N: EQU(NonLoadSideGluePatternState,0)[GRT(CurrentRecipe.NonLoadSideGlue.GlueLength1,0) MOV(1,GlueOutputCam[10].EnableBit) MOV(CurrentRecipe.NonLoadSideGlue.GlueStart1,GlueOutputCam[10].Left) MOV(CurrentRecipe.NonLoadSideGlue.GlueEnd1,GlueOutputCam[10].Right) MOV(11,NonLoadSideBeadNum) ,EQU(CurrentRecipe.NonLoadSideGlue.GlueLength1,0) MOV(2,GlueOutputCam[10].EnableBit) MOV(0,NonLoadSideBeadNum) ,GRT(CurrentRecipe.NonLoadSideGlue.GlueLength2,0) MOV(1,GlueOutputCam[NonLoadSideBeadNum].EnableBit) MOV(CurrentRecipe.NonLoadSideGlue.GlueStart2,GlueOutputCam[NonLoadSideBeadNum].Left) MOV(CurrentRecipe.NonLoadSideGlue.GlueEnd2,GlueOutputCam[NonLoadSideBeadNum].Right) ADD(NonLoadSideBeadNum,1,NonLoadSideBeadNum) ,EQU(CurrentRecipe.NonLoadSideGlue.GlueLength2,0) MOV(2,GlueOutputCam[11].EnableBit) ,GRT(CurrentRecipe.NonLoadSideGlue.GlueLength3,0) MOV(1,GlueOutputCam[NonLoadSideBeadNum].EnableBit) MOV(CurrentRecipe.NonLoadSideGlue.GlueStart3,GlueOutputCam[NonLoadSideBeadNum].Left) MOV(CurrentRecipe.NonLoadSideGlue.GlueEnd3,GlueOutputCam[NonLoadSideBeadNum].Right) ADD(NonLoadSideBeadNum,1,NonLoadSideBeadNum) ,EQU(CurrentRecipe.NonLoadSideGlue.GlueLength3,0) MOV(2,GlueOutputCam[12].EnableBit) ,GRT(CurrentRecipe.NonLoadSideGlue.GlueLength4,0) MOV(1,GlueOutputCam[NonLoadSideBeadNum].EnableBit) MOV(CurrentRecipe.NonLoadSideGlue.GlueStart4,GlueOutputCam[NonLoadSideBeadNum].Left) MOV(CurrentRecipe.NonLoadSideGlue.GlueEnd4,GlueOutputCam[NonLoadSideBeadNum].Right) ADD(NonLoadSideBeadNum,1,NonLoadSideBeadNum) ,EQU(CurrentRecipe.NonLoadSideGlue.GlueLength4,0) MOV(2,GlueOutputCam[13].EnableBit) ,GRT(CurrentRecipe.NonLoadSideGlue.GlueLength5,0) MOV(1,GlueOutputCam[NonLoadSideBeadNum].EnableBit) MOV(CurrentRecipe.NonLoadSideGlue.GlueStart5,GlueOutputCam[NonLoadSideBeadNum].Left) MOV(CurrentRecipe.NonLoadSideGlue.GlueEnd5,GlueOutputCam[NonLoadSideBeadNum].Right) ADD(NonLoadSideBeadNum,1,NonLoadSideBeadNum) ,EQU(CurrentRecipe.NonLoadSideGlue.GlueLength5,0) MOV(2,GlueOutputCam[14].EnableBit) ,MOV(10,NonLoadSideGluePatternState) ];
+				N: EQU(NonLoadSideGluePatternState,10)[MOV(0,GlueOutputCam[NonLoadSideBeadNum].Left) MOV(0,GlueOutputCam[NonLoadSideBeadNum].Right) ,MOV(3,GlueOutputCam[NonLoadSideBeadNum].LatchType) MOV(4,GlueOutputCam[NonLoadSideBeadNum].UnlatchType) ,MOV(0,GlueOutputCompensation[3].Offset) MOV(0,GlueOutputCompensation[3].LatchDelay) MOV(0,GlueOutputCompensation[3].UnlatchDelay) ,MOV(2,GlueOutputCam[NonLoadSideBeadNum].EnableBit) ,LES(NonLoadSideBeadNum,20) ADD(NonLoadSideBeadNum,1,NonLoadSideBeadNum) ,GEQ(NonLoadSideBeadNum,20) OTU(UpdateNonLoadSidePattern) MOV(0,NonLoadSideGluePatternState) ];
+		END_ROUTINE
+
+		ROUTINE R04_PatternChangeCheck 
+				N: [SUB(CurrentRecipe.LoadSideGlue.GlueEnd1,CurrentRecipe.LoadSideGlue.GlueStart1,CurrentRecipe.LoadSideGlue.GlueLength1) ,SUB(CurrentRecipe.LoadSideGlue.GlueEnd2,CurrentRecipe.LoadSideGlue.GlueStart2,CurrentRecipe.LoadSideGlue.GlueLength2) ,SUB(CurrentRecipe.LoadSideGlue.GlueEnd3,CurrentRecipe.LoadSideGlue.GlueStart3,CurrentRecipe.LoadSideGlue.GlueLength3) ,SUB(CurrentRecipe.LoadSideGlue.GlueEnd4,CurrentRecipe.LoadSideGlue.GlueStart4,CurrentRecipe.LoadSideGlue.GlueLength4) ,SUB(CurrentRecipe.LoadSideGlue.GlueEnd5,CurrentRecipe.LoadSideGlue.GlueStart5,CurrentRecipe.LoadSideGlue.GlueLength5) ][ADD(CurrentRecipe.LoadSideGlue.GlueLength1,CurrentRecipe.LoadSideGlue.GlueLength2,CurrentRecipe.LoadSideGlue.GlueLengthTotal) ,ADD(CurrentRecipe.LoadSideGlue.GlueLengthTotal,CurrentRecipe.LoadSideGlue.GlueLength3,CurrentRecipe.LoadSideGlue.GlueLengthTotal) ,ADD(CurrentRecipe.LoadSideGlue.GlueLengthTotal,CurrentRecipe.LoadSideGlue.GlueLength4,CurrentRecipe.LoadSideGlue.GlueLengthTotal) ,ADD(CurrentRecipe.LoadSideGlue.GlueLengthTotal,CurrentRecipe.LoadSideGlue.GlueLength5,CurrentRecipe.LoadSideGlue.GlueLengthTotal) ]NEQ(CurrentRecipe.LoadSideGlue.GlueLengthTotal,LoadSideGlueTotalCurrent)GEQ(CurrentRecipe.LoadSideGlue.GlueLengthTotal,0)GEQ(CurrentRecipe.LoadSideGlue.GlueLength1,0)GEQ(CurrentRecipe.LoadSideGlue.GlueLength2,0)GEQ(CurrentRecipe.LoadSideGlue.GlueLength3,0)GEQ(CurrentRecipe.LoadSideGlue.GlueLength4,0)GEQ(CurrentRecipe.LoadSideGlue.GlueLength5,0)MOV(CurrentRecipe.LoadSideGlue.GlueLengthTotal,LoadSideGlueTotalCurrent)OTL(UpdateLoadSidePattern);
+				N: [SUB(CurrentRecipe.NonLoadSideGlue.GlueEnd1,CurrentRecipe.NonLoadSideGlue.GlueStart1,CurrentRecipe.NonLoadSideGlue.GlueLength1) ,SUB(CurrentRecipe.NonLoadSideGlue.GlueEnd2,CurrentRecipe.NonLoadSideGlue.GlueStart2,CurrentRecipe.NonLoadSideGlue.GlueLength2) ,SUB(CurrentRecipe.NonLoadSideGlue.GlueEnd3,CurrentRecipe.NonLoadSideGlue.GlueStart3,CurrentRecipe.NonLoadSideGlue.GlueLength3) ,SUB(CurrentRecipe.NonLoadSideGlue.GlueEnd4,CurrentRecipe.NonLoadSideGlue.GlueStart4,CurrentRecipe.NonLoadSideGlue.GlueLength4) ,SUB(CurrentRecipe.NonLoadSideGlue.GlueEnd5,CurrentRecipe.NonLoadSideGlue.GlueStart5,CurrentRecipe.NonLoadSideGlue.GlueLength5) ][ADD(CurrentRecipe.NonLoadSideGlue.GlueLength1,CurrentRecipe.NonLoadSideGlue.GlueLength2,CurrentRecipe.NonLoadSideGlue.GlueLengthTotal) ,ADD(CurrentRecipe.NonLoadSideGlue.GlueLengthTotal,CurrentRecipe.NonLoadSideGlue.GlueLength3,CurrentRecipe.NonLoadSideGlue.GlueLengthTotal) ,ADD(CurrentRecipe.NonLoadSideGlue.GlueLengthTotal,CurrentRecipe.NonLoadSideGlue.GlueLength4,CurrentRecipe.NonLoadSideGlue.GlueLengthTotal) ,ADD(CurrentRecipe.NonLoadSideGlue.GlueLengthTotal,CurrentRecipe.NonLoadSideGlue.GlueLength5,CurrentRecipe.NonLoadSideGlue.GlueLengthTotal) ]NEQ(CurrentRecipe.NonLoadSideGlue.GlueLengthTotal,NonLoadSideGlueTotalCurrent)GEQ(CurrentRecipe.NonLoadSideGlue.GlueLengthTotal,0)GEQ(CurrentRecipe.NonLoadSideGlue.GlueLength1,0)GEQ(CurrentRecipe.NonLoadSideGlue.GlueLength2,0)GEQ(CurrentRecipe.NonLoadSideGlue.GlueLength3,0)GEQ(CurrentRecipe.NonLoadSideGlue.GlueLength4,0)GEQ(CurrentRecipe.NonLoadSideGlue.GlueLength5,0)MOV(CurrentRecipe.NonLoadSideGlue.GlueLengthTotal,NonLoadSideGlueTotalCurrent)OTL(UpdateNonLoadSidePattern);
+		END_ROUTINE
+
+		CHILD_PROGRAMS
+		END_CHILD_PROGRAMS

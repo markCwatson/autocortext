@@ -1,0 +1,94 @@
+This provides the .l5k program export overview of VirtualMaster routine within the PLC from the HS5160 machine from Kliklok-Woodman, a Enterprise Endload Cartoner. Use this program to understand the logic so that it can be queried in the future. What will often be asked is information about why a program may not be working, so this document provides the information necessary to answer this.
+(MAIN := "R00_Main",
+	                       MODE := 0,
+	                       DisableFlag := 0,
+	                       UseAsFolder := 0)
+		TAG
+			AxisDecel : REAL (RADIX := Float) := 3.75000000e+001;
+			Axis_Accel : REAL (RADIX := Float) := 2.00000000e+001;
+			Axis_Dist : DINT (RADIX := Decimal) := 0;
+			Axis_Finish_Cycle : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			Axis_Jog : MOTION_INSTRUCTION  := [570425344,0,0,0,0,0,0,0,0];
+			Axis_Jog_Stop : MOTION_INSTRUCTION  := [704643072,0,0,0,0,0,0,0,0];
+			Axis_RUN : MOTION_INSTRUCTION  := [570425344,0,0,0,0,0,0,0,0];
+			Axis_Run_x : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			Axis_Speed : REAL (RADIX := Float) := 2.50000000e+001;
+			Axis_Stop_All : MOTION_INSTRUCTION  := [704643072,0,0,0,0,0,0,0,0];
+			Cmd_Jog : BOOL (RADIX := Decimal) := 0;
+			Cmd_Number_of_Cycles : DINT (RADIX := Decimal) := 0;
+			CurrentJoglSpeed : REAL (RADIX := Float) := 8.00000000e+000;
+			EstopDecel : REAL (RADIX := Float) := 7.49999924e+001;
+			JogAccel : DINT (RADIX := Decimal) := 6;
+			JogDecel : DINT (RADIX := Decimal) := 16;
+			JogSpeed : REAL (RADIX := Float) := 8.00000000e+000;
+			Jog_Start_Timer : TIMER  := [0,500,0];
+			MAMStopCommand : MOTION_INSTRUCTION  := [704643072,0,0,0,0,0,0,0,0];
+			MASCommand : MOTION_INSTRUCTION  := [704643072,0,0,0,0,0,0,0,0];
+			MASCommand2 : MOTION_INSTRUCTION  := [704643072,0,0,0,0,0,0,0,0];
+			Retry_MAJ : TIMER  := [1683117,1000,0];
+			ROTARY_POSITIVE : DINT (RADIX := Decimal) := 3;
+			ServoAxis OF Virtual_Master ;
+			ServoAxis_CMD OF VirtualMaster_CMD ;
+			ServoAxis_Status OF VirtualMaster_Status ;
+			ServoAxis_Tags : UDT_Servo_Tags  := [0,0.00000000e+000,0,0,0,0,0,0,0,0.00000000e+000,0.00000000e+000,0,0.00000000e+000,0.00000000e+000
+					,0,0.00000000e+000,0.00000000e+000,0,0,0.00000000e+000,0.00000000e+000,0.00000000e+000,0.00000000e+000
+					];
+			Start_timer : TIMER  := [0,500,0];
+			State_AutoMode : DINT (RADIX := Decimal) := 0;
+			State_EStop : DINT (RADIX := Decimal) := 0;
+			State_Jog : DINT (RADIX := Decimal) := 0;
+			State_Run : DINT (RADIX := Decimal) := 0;
+			State_Stop : DINT (RADIX := Decimal) := 0;
+			StopDecel : REAL (RADIX := Float) := 4.99999962e+001;
+			Virtual_MCD_command : MOTION_INSTRUCTION  := [570425344,0,0,0,0,0,0,0,0];
+		END_TAG
+
+		ROUTINE R00_Main 
+				N: JSR(R01_Jog,0);
+				N: JSR(R02_Run,0);
+				N: JSR(R03_Stop,0);
+				N: JSR(R04_AutoMode,0);
+				N: JSR(R05_EStop,0);
+		END_ROUTINE
+
+		ROUTINE R01_Jog 
+				N: XIC(ManualModeAllAxes)CPT(JogSpeed,JogSpeedHMI/60*MachinePitch)CPT(JogAccel,JogSpeed*0.8)CPT(JogDecel,JogSpeed*2);
+				N: XIC(ManualModeAllAxes)[XIC(JogBtn) ,XIC(HMI_JogBtn) ,XIC(HMI_JogContinuously) ,XIC(RobotSignal_Jog) ]XIO(Axis_Jog.IP)MAJ(ServoAxis,Axis_Jog,0,JogSpeed,Units per sec,JogAccel,Units per sec2,JogDecel,Units per sec2,S-Curve,50,50,% of Time,Disabled,Programmed,0,None);
+				N: [XIO(ManualModeAllAxes) ,XIO(JogBtn) XIO(HMI_JogBtn) XIO(HMI_JogContinuously) XIO(RobotSignal_Jog) ]XIC(Axis_Jog.IP)MAS(ServoAxis,Axis_Jog_Stop,Jog,Yes,JogDecel,Units per sec2,No,50,% of Time);
+				N: XIC(Axis_Jog.IP)NEQ(JogSpeed,CurrentJoglSpeed)MCD(ServoAxis,Virtual_MCD_command,Jog,Yes,JogSpeed,Yes,20,Yes,20,Yes,100.0,Yes,100.0,Units per sec,Units per sec2,Units per sec2,% of Maximum)MOV(JogSpeed,CurrentJoglSpeed);
+		END_ROUTINE
+
+		ROUTINE R02_Run 
+				N: [XIC(S:FS) ,XIO(ServoAxis_CMD.Run) ]MOV(0,State_Run);
+				N: EQU(State_Run,0)XIC(ServoAxis_CMD.Run)MOV(10,State_Run);
+				N: EQU(State_Run,10)CPT(Axis_Speed,ActualMachineSpeed)CPT(Axis_Accel,Axis_Speed*0.8)CPT(AxisDecel,Axis_Speed*1.5)MOV(20,State_Run);
+				N: EQU(State_Run,20)[MAJ(ServoAxis,Axis_RUN,0,Axis_Speed,Units per sec,Axis_Accel,Units per sec2,AxisDecel,Units per sec2,S-Curve,50,50,% of Time,Enabled,Programmed,0,None) ,XIC(Axis_RUN.IP) MOV(30,State_Run) ,XIC(Axis_RUN.ER) TON(Retry_MAJ,?,?) XIC(Retry_MAJ.DN) MOV(0,State_Run) ];
+				N: EQU(State_Run,30)OTE(ServoAxis_Status.Running);
+		END_ROUTINE
+
+		ROUTINE R03_Stop 
+				N: [XIC(S:FS) ,XIO(ServoAxis_CMD.Stop) ]MOV(0,State_Stop);
+				N: EQU(State_Stop,0)XIC(ServoAxis_CMD.Stop)ADD(CurrentRecipe.StopPosition,1,StopPositionEnd)MOD(StopPositionEnd,MachinePitch,StopPositionEnd)MOV(10,State_Stop);
+				N: EQU(State_Stop,10)[LIM(CurrentRecipe.StopPosition,ServoAxis.ActualPosition,StopPositionEnd) MOV(20,State_Stop) ,EQU(ServoAxis.ActualVelocity,0) MOV(45,State_Stop) ];
+				N: EQU(State_Stop,20)LIM(StopPositionEnd,ServoAxis.ActualPosition,CurrentRecipe.StopPosition)MUL(ServoAxis.ActualVelocity,2,StopDecel)OTU(MAMStopCommand.PC)MOV(30,State_Stop);
+				N: EQU(State_Stop,30)[MAM(ServoAxis,MAMStopCommand,3,CurrentRecipe.StopPosition,ServoAxis.ActualVelocity,Units per sec,StopDecel,Units per sec2,StopDecel,Units per sec2,Trapezoidal,100,100,% of Maximum,Enabled,Programmed,0,None,0,0) ,[XIC(MAMStopCommand.IP) ,XIC(MAMStopCommand.PC) ] MOV(40,State_Stop) ,XIC(MAMStopCommand.ER) MOV(60,State_Stop) ];
+				N: EQU(State_Stop,40)XIC(MAMStopCommand.PC)TON(VirtualStopTimer,?,?)XIC(VirtualStopTimer.DN)MOV(45,State_Stop);
+				N: [EQU(State_Stop,45) ,[XIC(PML_State.Sts_Stopped) ,XIC(PML_State.Sts_Idle) ] XIC(Axis_RUN.IP) ][MAS(ServoAxis,MASCommand,All,Yes,AxisDecel,Units per sec2,Yes,100,% of Maximum) ,[XIC(MASCommand.IP) ,XIC(MASCommand.PC) ] MOV(50,State_Stop) ,XIC(MASCommand.ER) MOV(60,State_Stop) ];
+				N: EQU(State_Stop,50)XIC(MASCommand.PC)MOV(60,State_Stop);
+				N: EQU(State_Stop,60)[OTE(ServoAxis_Status.Stopped) ,XIO(CMD_Stop) MOV(0,State_Stop) ];
+		END_ROUTINE
+
+		ROUTINE R04_AutoMode 
+				N: [XIC(MachineRunning) NEQ(ActualMachineSpeed,CurrentVirtualSpeed) MCD(ServoAxis,Virtual_MCD_command,Jog,Yes,ActualMachineSpeed,Yes,20,Yes,20,Yes,100.0,Yes,100.0,Units per sec,Units per sec2,Units per sec2,% of Maximum) ,XIO(MachineRunning) ]MOV(ActualMachineSpeed,CurrentVirtualSpeed);
+		END_ROUTINE
+
+		ROUTINE R05_EStop 
+				N: [XIC(S:FS) ,XIO(PML_State.Sts_Aborting) ]MOV(0,State_EStop);
+				N: EQU(State_EStop,0)XIC(PML_State.Sts_Aborting)OTU(MASCommand2.PC)MOV(10,State_EStop);
+				N: EQU(State_EStop,10)MUL(ServoAxis.ActualVelocity,3,EstopDecel)[MAS(ServoAxis,MASCommand2,Jog,Yes,EstopDecel,Units per sec2,Yes,100,% of Maximum) ,[XIC(MASCommand2.IP) ,XIC(MASCommand2.PC) ] MOV(20,State_EStop) ,XIC(MASCommand2.ER) MOV(30,State_EStop) ];
+				N: EQU(State_EStop,20)XIC(MASCommand2.PC)MOV(30,State_EStop);
+				N: EQU(State_EStop,30)OTE(ServoAxis_Status.Aborted);
+		END_ROUTINE
+
+		CHILD_PROGRAMS
+		END_CHILD_PROGRAMS

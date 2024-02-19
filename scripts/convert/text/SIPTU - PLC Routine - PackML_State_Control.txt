@@ -1,0 +1,174 @@
+This provides the .l5k program export overview of PackML_State_Control routine within the PLC from the SIPTU HS5160 machine from Kliklok-Woodman, a conveyor. Use this program to understand the logic so that it can be queried in the future. What will often be asked is information about why a program may not be working, so this document provides the information necessary to answer this.
+(MAIN := "P00_Main",
+	                              MODE := 0,
+	                              DisableFlag := 0,
+	                              UseAsFolder := 0)
+		TAG
+			AllAxesShownOneShot : BOOL (RADIX := Decimal) := 1;
+			Cfg_DisableStates : DINT[32] (RADIX := Decimal) := [0,203776,0,228400,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+			Cfg_ModeNames : String_Short[32]  := [[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[10,'Production$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'
+					],[6,'Manual$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'
+					],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'
+					],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'
+					],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'
+					],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'
+					],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'
+					],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'
+					],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'
+					],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'
+					],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00']];
+			Cfg_ModeTransitions : DINT[32] (RADIX := Decimal) := [4,516,0,516,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+			jrltest : BOOL (RADIX := Decimal) := 1;
+			Machine_running_output OF Local:3:O.Data.2 (RADIX := Decimal);
+			pmlCountHr_StoppingMode : COUNTER  := [0,60,0];
+			pmlCountMin_StoppingMode : COUNTER  := [0,60,0];
+			pmlTimer_StoppingMode : TIMER  := [1138893,60000,9035];
+			ResetDurationTimer : TIMER  := [2985313,3000,0];
+			State_Aborting : DINT (RADIX := Decimal) := 0;
+			State_Clearing : DINT (RADIX := Decimal) := 0;
+			State_Execute : DINT (RADIX := Decimal) := 10;
+			State_Resetting : DINT (RADIX := Decimal) := 0;
+			State_Starting : DINT (RADIX := Decimal) := 0;
+			State_Stopping : DINT (RADIX := Decimal) := 0;
+			State_Suspending : DINT (RADIX := Decimal) := 0;
+			State_Unsuspending : DINT (RADIX := Decimal) := 10;
+			StopDelayTimer : TIMER  := [1479115,6000,0];
+			StoppingTimer : TIMER  := [1138893,3000,0];
+			Sts_Aborting_Complete : BOOL (RADIX := Decimal) := 0;
+			Sts_Clearing_Complete : BOOL (RADIX := Decimal) := 0;
+			Sts_ModeCurrentName : String_Short  := [10,'Production$00$00'];
+			Sts_Resetting_Complete : BOOL (RADIX := Decimal) := 0;
+			Sts_Starting_Complete : BOOL (RADIX := Decimal) := 0;
+			Sts_StateCurrentName : String_Short  := [7,'Execute$00$00$00$00$00'];
+			Sts_Stopping_Complete : BOOL (RADIX := Decimal) := 0;
+			Sts_Suspending_Complete : BOOL (RADIX := Decimal) := 0;
+			Sts_Unsuspending_Complete : BOOL (RADIX := Decimal) := 1;
+			TestActive : BOOL (RADIX := Decimal) := 0;
+			VirtualMRPCommand : MOTION_INSTRUCTION  := [570425344,0,0,0,0,0,0,0,0];
+			VirtualMRPPosition : REAL (RADIX := Float) := 0.00000000e+000;
+		END_TAG
+
+		ROUTINE P00_Main 
+				N: JSR(R01_Machine_State_Control,0);
+				N: JSR(R02_Resetting,0);
+				N: JSR(R03_Starting,0);
+				N: JSR(R04_Execute,0);
+				N: JSR(R05_Clearing,0);
+				N: JSR(R06_Aborting,0);
+				N: JSR(R07_Stopping,0);
+				N: JSR(R08_Suspending,0);
+				N: JSR(R09_Unsuspending,0);
+				N: JSR(R98_Manual_Mode,0);
+				N: JSR(R99_PMLStatistics,0);
+		END_ROUTINE
+
+		ROUTINE R01_Machine_State_Control 
+				N: XIC(PML_State.Sts_Stopped)[XIC(StartButtonPressed) OTL(StartingMachine) ,XIC(ManualModeActive) ,XIC(RequestHomeHMI) ]OTE(PML_State.Cmd_Reset);
+				N: XIC(PML_State.Sts_Idle)XIC(AutoModeActive)[XIC(StartButtonPressed) ,XIC(StartingMachine) ][XIO(DownstreamInterlockEnabledHMI) ,XIC(DownstreamInterlockEnabledHMI) XIC(DownstreamInterlock) ]OTE(PML_State.Cmd_Start);
+				N: [XIC(PML_State.Sts_Execute) ,XIC(PML_State.Sts_Suspended) ,XIC(PML_State.Sts_Suspending) ,XIC(PML_State.Sts_UnSuspending) ,XIC(PML_State.Sts_Idle) ][XIO(StopPB) ,XIC(StopButtonHMI) ,XIC(DownstreamInterlockEnabledHMI) XIO(DownstreamInterlock) TON(InterlockDelayTimer,?,?) XIC(InterlockDelayTimer.DN) ]OTE(PML_State.Cmd_Stop);
+				N: XIC(FaultPresent)XIO(PML_State.Sts_Aborting)XIO(PML_State.Sts_Aborted)XIO(PML_State.Sts_Clearing)OTE(PML_State.Cmd_Abort);
+				N: XIC(PML_State.Sts_Aborted)[XIC(ResetButtonPressed) ,XIC(testReset) ]OTE(PML_State.Cmd_Clear)OTU(testReset);
+				N: XIC(PML_State.Sts_Execute)XIC(SuspendBtnHMI)OTE(PML_State.Cmd_Suspend);
+				N: XIC(PML_State.Sts_Suspended)[XIO(InterlockPauseActive) [XIC(StartButtonHMI) ,XIC(StartPB) ] ,XIC(InterlockPauseActive) XIC(UnPauseCMD) ]OTU(InterlockPauseActive)OTE(PML_State.Cmd_UnSuspend);
+				N: [XIC(PML_State.Sts_Resetting) XIC(Sts_Resetting_Complete) ,XIC(PML_State.Sts_Starting) XIC(Sts_Starting_Complete) ,XIC(PML_State.Sts_Stopping) XIC(Sts_Stopping_Complete) ,XIC(PML_State.Sts_Clearing) XIC(Sts_Clearing_Complete) ,XIC(PML_State.Sts_Aborting) XIC(Sts_Aborting_Complete) ,XIC(PML_State.Sts_Suspending) XIC(Sts_Suspending_Complete) ,XIC(PML_State.Sts_UnSuspending) XIC(Sts_Unsuspending_Complete) ]OTL(PML_State.Cmd_StateComplete);
+				N: XIO(PML_State.Sts_Resetting)XIO(PML_State.Sts_Starting)XIO(PML_State.Sts_Stopped)XIO(PML_State.Sts_Idle)OTU(StartingMachine);
+				N: PackML_StateModel_AOI(PML_State,Cfg_ModeTransitions,Cfg_DisableStates,Cfg_ModeNames,Sts_StateCurrentName,Sts_ModeCurrentName)OTU(PML_State.Cmd_StateComplete);
+				N: XIC(MeteringBelt_Tags.Stopped)XIC(PhasingBelt2_Tags.Stopped)XIC(PhasingBelt3_Tags.Stopped)XIC(PhasingBelt4_Tags.Stopped)XIC(AccelBelt_Tags.Stopped)XIC(PhasingBelt1_Tags.Stopped)OTE(All_Axes_Stopped);
+				N: XIC(MTR_MeteringBelt.ShutdownStatus)XIC(MTR_PhasingBelt2.ShutdownStatus)XIC(MTR_PhasingBelt3.ShutdownStatus)XIC(MTR_PhasingBelt4.ShutdownStatus)XIC(MTR_AccelBelt.ShutdownStatus)XIC(MTR_PhasingBelt1.ShutdownStatus)XIC(VirtualMaster.ShutdownStatus)OTE(AllAxesShutdown);
+				N: XIC(MeteringBelt_Tags.Synced)XIC(PhasingBelt2_Tags.Synced)XIC(PhasingBelt3_Tags.Synced)XIC(PhasingBelt4_Tags.Synced)XIC(AccelBelt_Tags.Synced)XIC(PhasingBelt1_Tags.Synced)XIC(PhasingBelt4_Tags.Synced)OTE(All_Axes_Synced);
+				N: [[XIC(PML_State.Sts_Starting) ,XIC(PML_State.Sts_Execute) ,XIC(PML_State.Sts_Stopping) ,XIC(PML_State.Sts_Suspended) ,XIC(PML_State.Sts_Suspending) ,XIC(PML_State.Sts_UnSuspending) ] ,XIC(ForceOutputOn3.2) ][OTE(MachineRunning) ,XIO(ForceOutputOff3.2) OTE(Machine_running_output) ];
+				N: [XIC(StartPB) ,XIC(StartButtonHMI) ][XIC(StartDelayEnabledHMI) TON(StartDelayTimer,?,?) XIC(StartDelayTimer.DN) ,XIO(StartDelayEnabledHMI) ]OTE(StartButtonPressed);
+				N: XIC(ResetPB)[XIC(ResetDelayEnabledHMI) TON(ResetDelayTimer,?,?) XIC(ResetDelayTimer.DN) ,XIO(ResetDelayEnabledHMI) ]OTE(ResetButtonPressed);
+				N: XIC(InterlockPauseActive)[XIC(DownstreamInterlock) ,XIO(DownstreamInterlockEnabledHMI) ][XIC(StartDelayEnabledHMI) TON(UnPauseDelayTimer,?,?) XIC(UnPauseDelayTimer.DN) ,XIO(StartDelayEnabledHMI) ]OTL(UnPauseCMD);
+				N: [XIC(PML_State.Sts_Execute) ,XIC(PML_State.Sts_Stopped) OTU(InterlockPauseActive) ]OTU(UnPauseCMD);
+		END_ROUTINE
+
+		ROUTINE R02_Resetting 
+				N: XIO(PML_State.Sts_Resetting)MOV(0,State_Resetting);
+				N: EQU(State_Resetting,0)XIC(PML_State.Sts_Resetting)MOV(10,State_Resetting);
+				N: EQU(State_Resetting,10)[OTE(MeteringBelt_CMD.Initialize) OTE(PhasingBelt1_CMD.Initialize) OTE(PhasingBelt2_CMD.Initialize) OTE(PhasingBelt3_CMD.Initialize) OTE(PhasingBelt4_CMD.Initialize) OTE(AccelBelt_CMD.Initialize) OTE(VirtualMaster_CMD.Initialize) ,XIC(MeteringBelt_Status.Initialized) XIC(PhasingBelt1_Status.Initialized) XIC(PhasingBelt2_Status.Initialized) XIC(PhasingBelt3_Status.Initialized) XIC(PhasingBelt4_Status.Initialized) XIC(AccelBelt_Status.Initialized) XIC(VirtualMaster_Status.Initialized) MOV(20,State_Resetting) ];
+				N: EQU(State_Resetting,20)OTE(Sts_Resetting_Complete);
+		END_ROUTINE
+
+		ROUTINE R03_Starting 
+				N: XIO(PML_State.Sts_Starting)MOV(0,State_Starting);
+				N: EQU(State_Starting,0)XIC(PML_State.Sts_Starting)MRP(VirtualMaster,VirtualMRPCommand,Absolute,Actual,ENT_Pusher_Chain_Pitch_Pos)XIC(VirtualMRPCommand.DN)MOV(10,State_Starting);
+				N: EQU(State_Starting,10)XIC(jrltest)MOV(20,State_Starting);
+				N: EQU(State_Starting,20)[OTE(AccelBelt_CMD.Cam) OTE(MeteringBelt_CMD.Cam) OTE(PhasingBelt1_CMD.Cam) OTE(PhasingBelt2_CMD.Cam) OTE(PhasingBelt3_CMD.Cam) OTE(PhasingBelt4_CMD.Cam) XIO(TestActive) OTE(VirtualMaster_CMD.Cam) ,XIC(AccelBelt_Status.CamEngaged) XIC(MeteringBelt_Status.CamEngaged) XIC(PhasingBelt1_Status.CamEngaged) XIC(PhasingBelt2_Status.CamEngaged) XIC(PhasingBelt3_Status.CamEngaged) XIC(PhasingBelt4_Status.CamEngaged) [XIC(VirtualMaster_Status.CamEngaged) ,XIC(TestActive) ] MOV(50,State_Starting) ];
+				N: EQU(State_Starting,50)[XIO(ManualModeCam) OTE(Sts_Starting_Complete) ,XIC(ManualModeCam) OTE(ManualModeCamEngaged) ];
+		END_ROUTINE
+
+		ROUTINE R04_Execute 
+				N: XIO(PML_State.Sts_Execute)MOV(0,State_Execute);
+				N: EQU(State_Execute,0)XIC(PML_State.Sts_Execute)MOV(10,State_Execute);
+				N: EQU(State_Execute,10)XIC(TestActive)[OTE(VirtualMaster_CMD.Run) ,XIC(VirtualMaster_Status.Running) MOV(20,State_Execute) ];
+		END_ROUTINE
+
+		ROUTINE R05_Clearing 
+				N: XIO(PML_State.Sts_Clearing)MOV(0,State_Clearing);
+				N: EQU(State_Clearing,0)XIC(PML_State.Sts_Clearing)MOV(10,State_Clearing);
+				N: EQU(State_Clearing,10)OTE(ResetActive)[XIC(MCRIinput) XIO(FaultPresent) ,TON(ResetDurationTimer,?,?) XIC(ResetDurationTimer.DN) ]MOV(20,State_Clearing);
+				N: EQU(State_Clearing,20)OTE(Sts_Clearing_Complete);
+		END_ROUTINE
+
+		ROUTINE R06_Aborting 
+				N: XIO(PML_State.Sts_Aborting)MOV(0,State_Aborting);
+				N: EQU(State_Aborting,0)XIC(PML_State.Sts_Aborting)MOV(10,State_Aborting);
+				N: EQU(State_Aborting,10)[OTE(VirtualMaster_CMD.Abort) ,XIC(VirtualMaster_Status.Aborted) MOV(20,State_Aborting) ];
+				N: EQU(State_Aborting,20)[OTE(MeteringBelt_CMD.Abort) OTE(AccelBelt_CMD.Abort) OTE(PhasingBelt1_CMD.Abort) OTE(PhasingBelt2_CMD.Abort) OTE(PhasingBelt3_CMD.Abort) OTE(PhasingBelt4_CMD.Abort) OTE(RTS_CMD.Abort) ,XIC(AccelBelt_Status.Aborted) XIC(MeteringBelt_Status.Aborted) XIC(PhasingBelt1_Status.Aborted) XIC(PhasingBelt2_Status.Aborted) XIC(PhasingBelt3_Status.Aborted) XIC(PhasingBelt4_Status.Aborted) XIC(RTS_Status.Aborted) MOV(30,State_Aborting) ];
+				N: [XIC(AllAxesShutdown) ,XIC(AbortingTimer.DN) ]OTE(Sts_Aborting_Complete);
+				N: GRT(State_Aborting,0)TON(AbortingTimer,?,?);
+		END_ROUTINE
+
+		ROUTINE R07_Stopping 
+				N: XIO(PML_State.Sts_Stopping)XIO(ManualModeState_Stopping)MOV(0,State_Stopping);
+				N: EQU(State_Stopping,0)[XIC(PML_State.Sts_Stopping) ,XIC(ManualModeState_Stopping) ]CPT(StopDelayTimer.PRE,15/ActualMachineSpeed*1000)MOV(10,State_Stopping);
+				N: EQU(State_Stopping,10)[OTE(VirtualMaster_CMD.Stop) ,XIC(VirtualMaster_Status.Stopped) MOV(20,State_Stopping) ];
+				N: EQU(State_Stopping,20)[OTE(AccelBelt_CMD.Stop) OTE(MeteringBelt_CMD.Stop) OTE(PhasingBelt1_CMD.Stop) OTE(PhasingBelt2_CMD.Stop) OTE(PhasingBelt3_CMD.Stop) OTE(PhasingBelt4_CMD.Stop) OTE(RTS_CMD.Stop) ,XIC(MeteringBelt_Status.Stopped) XIC(AccelBelt_Status.Stopped) XIC(PhasingBelt1_Status.Stopped) XIC(PhasingBelt2_Status.Stopped) XIC(PhasingBelt3_Status.Stopped) XIC(PhasingBelt4_Status.Stopped) XIC(RTS_Status.Stopped) MOV(30,State_Stopping) ];
+				N: EQU(State_Stopping,30)OTE(Sts_Stopping_Complete)OTU(GotoStoppedState);
+				N: GRT(State_Stopping,10)TON(StoppingTimer,?,?)XIC(StoppingTimer.DN)MOV(30,State_Stopping);
+		END_ROUTINE
+
+		ROUTINE R08_Suspending 
+				N: XIO(PML_State.Sts_Suspending)MOV(0,State_Suspending);
+				N: EQU(State_Suspending,0)XIC(PML_State.Sts_Suspending)MOV(10,State_Suspending);
+				N: EQU(State_Suspending,10)OTE(Sts_Suspending_Complete);
+		END_ROUTINE
+
+		ROUTINE R09_Unsuspending 
+				N: XIO(PML_State.Sts_UnSuspending)MOV(0,State_Resetting);
+				N: EQU(State_Unsuspending,0)XIC(PML_State.Sts_UnSuspending)MOV(10,State_Unsuspending);
+				N: EQU(State_Unsuspending,10)OTE(Sts_Unsuspending_Complete);
+		END_ROUTINE
+
+		ROUTINE R98_Manual_Mode 
+				N: XIC(HMIBtn_ManualMode)[XIC(PML_State.Sts_Idle) ,XIC(PML_State.Sts_Stopped) ][OTL(ManualModeActive) ,OTU(AutoModeActive) ];
+				N: XIC(PML_State.Sts_Idle)XIC(ManualModeActive)XIO(ManualModeAllAxes)[XIC(HMIBTN_MeteringBeltManualMode) OTE(MeteringBelt_Tags.ManualMode) ,XIC(HMIBTN_PhasingBelt2ManualMode) OTE(PhasingBelt2_Tags.ManualMode) ,XIC(HMIBTN_PhasingBelt4ManualMode) OTE(PhasingBelt4_Tags.ManualMode) ,XIC(HMIBTN_PhasingBelt3ManualMode) OTE(PhasingBelt3_Tags.ManualMode) ,XIC(HMIBTN_AccelBeltManualMode) OTE(AccelBelt_Tags.ManualMode) ,XIC(HMIBTN_PhasingBelt1ManualMode) OTE(PhasingBelt1_Tags.ManualMode) ,XIC(HMIBTN_InfeedBeltsManualMode) OTE(InfeedBelts_Tags.ManualMode) ];
+				N: EQU(State_ManualModeAllAxis,0)XIC(PML_State.Sts_Idle)XIC(HMI_ManualModeAllAxes_Button)XIO(ManualModeAllAxes)MOV(10,State_ManualModeAllAxis);
+				N: EQU(State_ManualModeAllAxis,10)[OTE(ManualModeCam) ,XIC(ManualModeCamEngaged) MOV(20,State_ManualModeAllAxis) ];
+				N: EQU(State_ManualModeAllAxis,20)OTE(ManualModeAllAxes);
+				N: [XIO(HMI_ManualModeAllAxes_Button) ,XIO(ManualModeActive) ][MOV(0,State_ManualModeAllAxis) ,ONS(ManualModeStoppingOneShot) OTL(ManualModeState_Stopping) ];
+				N: XIC(ManualModeState_Stopping)[XIC(All_Axes_Stopped) ,TON(ManualModeStoppingTImer,?,?) XIC(ManualModeStoppingTImer.DN) ]OTU(ManualModeState_Stopping);
+				N: [XIO(ManualModeActive) ,XIO(StopPB) XIC(ManualModeActive) ]ONS(ManualModeOneShot)[OTL(UnLatchManualModeAllAxisBTN) ,OTL(UnlatchHMI_JogContinuously) ,OTU(HMI_JogContinuously) ,OTU(HMIBTN_MeteringBeltManualMode) ,OTU(HMIBTN_PhasingBelt2ManualMode) ,OTU(HMIBTN_PhasingBelt3ManualMode) ,OTU(HMIBTN_PhasingBelt4ManualMode) ,OTU(HMIBTN_PhasingBelt1ManualMode) ,OTU(HMIBTN_AccelBeltManualMode) ,OTU(HMI_ManualModeAllAxes_Button) ];
+				N: [XIC(PML_State.Sts_Aborted) ,XIC(HMIBtn_AutolMode) ,NEQ(HMIActiveDisplay,111) ,XIC(ManualModeActive) XIC(PML_State.Sts_Stopped) TON(ManualModeResetTimer,?,?) XIC(ManualModeResetTimer.DN) ][OTU(ManualModeActive) ,OTL(AutoModeActive) ];
+				N: [XIO(HMI_JogContinuously) OTU(UnlatchHMI_JogContinuously) ,XIO(HMI_ManualModeAllAxes_Button) OTU(UnLatchManualModeAllAxisBTN) ];
+				N: XIO(AllAxisShown_HMI)ONS(AllAxesShownOneShot)[OTU(HMIBTN_PhasingBelt2ManualMode) ,OTU(HMIBTN_PhasingBelt3ManualMode) ,OTU(HMIBTN_PhasingBelt4ManualMode) ];
+				N: XIC(PML_State.Sts_Aborted)OTU(AllAxisShown_HMI);
+		END_ROUTINE
+
+		ROUTINE R99_PMLStatistics 
+				N: [RTO(pmlTimer_PermOn,?,?) ,XIC(pmlTimer_PermOn.DN) CTU(OnHourCounter,?,?) RES(pmlTimer_PermOn) ];
+				N: [RTO(pmlTimer_On,?,?) ,XIC(pmlTimer_On.DN) CTU(pmlCountMin_On,?,?) MOV(pmlCountMin_On.ACC,Stats.OnTimeMin) RES(pmlTimer_On) ,XIC(pmlCountMin_On.DN) CTU(pmlCountHr_On,?,?) MOV(pmlCountHr_On.ACC,Stats.OnTimeHour) RES(pmlCountMin_On) ];
+				N: XIC(PML_State.Sts_Stopped)[RTO(pmlTimer_StoppedMode,?,?) ,XIC(pmlTimer_StoppedMode.DN) CTU(pmlCountMin_StoppedMode,?,?) MOV(pmlCountMin_StoppedMode.ACC,Stats.StoppedMin) RES(pmlTimer_StoppedMode) ,XIC(pmlCountMin_StoppedMode.DN) CTU(pmlCountHr_StoppedMode,?,?) MOV(pmlCountHr_StoppedMode.ACC,Stats.StoppedHours) RES(pmlCountMin_StoppedMode) ];
+				N: XIC(PML_State.Sts_Stopping)[RTO(pmlTimer_StoppingMode,?,?) ,XIC(pmlTimer_StoppedMode.DN) CTU(pmlCountMin_StoppingMode,?,?) MOV(pmlCountMin_StoppingMode.ACC,Stats.StoppingMn) RES(pmlTimer_StoppingMode) ,XIC(pmlCountMin_StoppedMode.DN) CTU(pmlCountHr_StoppingMode,?,?) MOV(pmlCountHr_StoppingMode.ACC,Stats.StoppingHours) RES(pmlCountMin_StoppingMode) ];
+				N: XIC(PML_State.Sts_Starting)[RTO(pmlTimer_StartingMode,?,?) ,XIC(pmlTimer_StartingMode.DN) CTU(pmlCountMin_StartingMode,?,?) MOV(pmlCountMin_StoppingMode.ACC,Stats.StartingMin) RES(pmlTimer_StartingMode) ,XIC(pmlCountMin_StartingMode.DN) CTU(pmlCountHr_StartingMode,?,?) MOV(pmlCountMin_StoppingMode.ACC,Stats.StartingHours) RES(pmlCountMin_StartingMode) ];
+				N: XIC(PML_State.Sts_Idle)[RTO(pmlTimer_IdleMode,?,?) ,XIC(pmlTimer_IdleMode.DN) CTU(pmlCountMin_IdleMode,?,?) MOV(pmlCountMin_IdleMode.ACC,Stats.IdleMin) RES(pmlTimer_IdleMode) ,XIC(pmlCountMin_IdleMode.DN) CTU(pmlCountHr_IdleMode,?,?) MOV(pmlCountMin_IdleMode.ACC,Stats.IdleHours) RES(pmlCountMin_IdleMode) ];
+				N: XIC(PML_State.Sts_Execute)[RTO(pmlTimer_ExecuteMode,?,?) ,XIC(pmlTimer_ExecuteMode.DN) CTU(pmlCountMin_ExecuteMode,?,?) MOV(pmlCountMin_ExecuteMode.ACC,Stats.ExecuteMin) RES(pmlTimer_ExecuteMode) ,XIC(pmlCountMin_ExecuteMode.DN) CTU(pmlCountHr_ExecuteMode,?,?) MOV(pmlCountHr_ExecuteMode.ACC,Stats.ExecuteHours) RES(pmlCountMin_ExecuteMode) ];
+				N: XIC(PML_State.Sts_Aborting)[RTO(pmlTimer_AbortingMode,?,?) ,XIC(pmlTimer_AbortingMode.DN) CTU(pmlCountMin_AbortingMode,?,?) MOV(pmlCountMin_AbortingMode.ACC,Stats.AbortingMin) RES(pmlTimer_AbortingMode) ,XIC(pmlCountMin_AbortingMode.DN) CTU(pmlCountHr_AbortingMode,?,?) MOV(pmlCountHr_AbortingMode.ACC,Stats.AbortingHours) RES(pmlCountMin_AbortingMode) ];
+				N: XIC(PML_State.Sts_Aborted)[RTO(pmlTimer_AbortedMode,?,?) ,XIC(pmlTimer_AbortedMode.DN) CTU(pmlCountMin_AbortedMode,?,?) MOV(pmlCountMin_AbortedMode.ACC,Stats.AbortedMin) RES(pmlTimer_AbortedMode) ,XIC(pmlCountMin_AbortedMode.DN) CTU(pmlCountHr_AbortedMode,?,?) MOV(pmlCountMin_AbortedMode.ACC,Stats.AbortedHours) RES(pmlCountMin_AbortedMode) ];
+				N: XIC(PML_State.Sts_Suspended)[RTO(pmlTimer_SuspendedMode,?,?) ,XIC(pmlTimer_SuspendedMode.DN) CTU(pmlCountMin_SuspendedMode,?,?) MOV(pmlCountMin_SuspendedMode.ACC,Stats.SuspendedMIn) RES(pmlTimer_SuspendedMode) ,XIC(pmlCountMin_SuspendedMode.DN) CTU(pmlCountHr_SuspendedMode,?,?) MOV(pmlCountHr_SuspendedMode.ACC,Stats.SuspendedHours) RES(pmlCountMin_SuspendedMode) ];
+				N: XIC(ClearStats)[RES(pmlTimer_On) RES(pmlCountMin_On) RES(pmlCountHr_On) MOV(0,Stats.OnTimeMin) MOV(0,Stats.OnTimeHour) ,RES(pmlTimer_StoppedMode) RES(pmlCountMin_StoppedMode) RES(pmlCountHr_StoppedMode) MOV(0,Stats.StoppedMin) MOV(0,Stats.StoppedHours) ,RES(pmlTimer_StoppingMode) RES(pmlCountMin_StoppingMode) RES(pmlCountHr_StoppingMode) MOV(0,Stats.StoppingMn) MOV(0,Stats.StoppingHours) ,RES(pmlTimer_StartingMode) RES(pmlCountMin_StartingMode) RES(pmlCountHr_StartingMode) MOV(0,Stats.StartingMin) MOV(0,Stats.StartingHours) ,RES(pmlTimer_IdleMode) RES(pmlCountMin_IdleMode) RES(pmlCountHr_IdleMode) MOV(0,Stats.IdleMin) MOV(0,Stats.IdleHours) ,RES(pmlTimer_ExecuteMode) RES(pmlCountMin_ExecuteMode) RES(pmlCountHr_ExecuteMode) MOV(0,Stats.ExecuteMin) MOV(0,Stats.ExecuteHours) ,RES(pmlTimer_AbortingMode) RES(pmlCountMin_AbortingMode) RES(pmlCountHr_AbortingMode) MOV(0,Stats.AbortingMin) MOV(0,Stats.AbortingHours) ,RES(pmlTimer_AbortedMode) RES(pmlCountMin_AbortedMode) RES(pmlCountHr_AbortedMode) MOV(0,Stats.AbortedMin) MOV(0,Stats.AbortedHours) ,RES(pmlTimer_SuspendedMode) RES(pmlCountMin_SuspendedMode) RES(pmlCountHr_SuspendedMode) MOV(0,Stats.SuspendedMIn) MOV(0,Stats.SuspendedHours) ,MOV(0,Stats.CartonsIn) MOV(0,Stats.CartonsOut) MOV(0,Stats.CartonRejects) ,OTU(ClearStats) ];
+		END_ROUTINE
+
+		CHILD_PROGRAMS
+		END_CHILD_PROGRAMS

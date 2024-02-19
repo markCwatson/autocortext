@@ -1,0 +1,367 @@
+This provides the .l5k program export overview of PackML_State_Control routine within the PLC from the HS5160 machine from Kliklok-Woodman, a Enterprise Endload Cartoner. Use this program to understand the logic so that it can be queried in the future. What will often be asked is information about why a program may not be working, so this document provides the information necessary to answer this.
+(MAIN := "P00_Main",
+	                              MODE := 0,
+	                              DisableFlag := 0,
+	                              UseAsFolder := 0)
+		TAG
+			AllAxesShownOneShot : BOOL (RADIX := Decimal) := 1;
+			Cfg_DisableStates : DINT[32] (RADIX := Decimal) := [0,203776,0,228400,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+			Cfg_ModeNames : String_Short[32]  := [[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[10,'Production$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'
+					],[6,'Manual$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'
+					],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'
+					],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'
+					],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'
+					],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'
+					],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'
+					],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'
+					],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'
+					],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'
+					],[0,'$00$00$00$00$00$00$00$00$00$00$00$00'],[0,'$00$00$00$00$00$00$00$00$00$00$00$00']];
+			Cfg_ModeTransitions : DINT[32] (RADIX := Decimal) := [4,516,0,516,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+			ChangeJogScreenOneShot : BOOL (RADIX := Decimal) := 0;
+			ChangeJogScreenOneShot2 : BOOL (RADIX := Decimal) := 0;
+			jrltest : BOOL (RADIX := Decimal) := 0;
+			pmlCountHr_StoppingMode : COUNTER  := [0,60,0];
+			pmlCountMin_StoppingMode : COUNTER  := [0,60,0];
+			pmlTimer_StoppingMode : TIMER  := [0,60000,0];
+			ResetDurationTimer : TIMER  := [426645,5000,0];
+			ResetStateDurationTimer : TIMER  := [426645,1000,0];
+			State_Aborting : DINT (RADIX := Decimal) := 0;
+			State_Clearing : DINT (RADIX := Decimal) := 0;
+			State_Execute : DINT (RADIX := Decimal) := 0;
+			State_Resetting : DINT (RADIX := Decimal) := 0;
+			State_Starting : DINT (RADIX := Decimal) := 0;
+			State_Stopping : DINT (RADIX := Decimal) := 0;
+			State_Suspending : DINT (RADIX := Decimal) := 0;
+			State_Unsuspending : DINT (RADIX := Decimal) := 10;
+			StopDelayTimer : TIMER  := [1479115,600,0];
+			StoppingTimer : TIMER  := [649853,3000,0];
+			Sts_Aborting_Complete : BOOL (RADIX := Decimal) := 1;
+			Sts_Clearing_Complete : BOOL (RADIX := Decimal) := 0;
+			Sts_ModeCurrentName : String_Short  := [10,'Production$00$00'];
+			Sts_Resetting_Complete : BOOL (RADIX := Decimal) := 0;
+			Sts_Starting_Complete : BOOL (RADIX := Decimal) := 0;
+			Sts_StateCurrentName : String_Short  := [7,'Aborted$00$00$00$00$00'];
+			Sts_Stopping_Complete : BOOL (RADIX := Decimal) := 0;
+			Sts_Suspending_Complete : BOOL (RADIX := Decimal) := 0;
+			Sts_Unsuspending_Complete : BOOL (RADIX := Decimal) := 0;
+			VirtualMRPCommand : MOTION_INSTRUCTION  := [570425344,0,0,0,0,0,0,0,0];
+			VirtualMRPPosition : REAL (RADIX := Float) := 8.85854340e+000;
+		END_TAG
+
+		ROUTINE P00_Main 
+				N: JSR(R01_Machine_State_Control,0);
+				N: JSR(R02_Resetting,0);
+				N: JSR(R03_Starting,0);
+				N: JSR(R04_Execute,0);
+				N: JSR(R05_Clearing,0);
+				N: JSR(R06_Aborting,0);
+				N: JSR(R07_Stopping,0);
+				N: JSR(R08_Suspending,0);
+				N: JSR(R09_Unsuspending,0);
+				N: XIC(CalculatePositions)JSR(R10_Position_Calc,0);
+				N: JSR(R98_Manual_Mode,0);
+				N: JSR(R99_PMLStatistics,0);
+		END_ROUTINE
+
+		ROUTINE R01_Machine_State_Control 
+				N: XIC(PML_State.Sts_Stopped)TON(IdleDelayTImer,?,?)XIC(IdleDelayTImer.DN)[XIC(StartButtonPressed) OTL(StartingMachine) ,XIC(ManualModeActive) ,XIC(RequestHomeHMI) ]OTE(PML_State.Cmd_Reset);
+				N: XIC(KliklokPLC_Comm_From_CapwayPLC.BOOL_Data[0])TOF(DelayInterlockOffSignal,?,?);
+				N: XIC(DelayInterlockOffSignal.DN)OTE(DownstreamInterlock);
+				N: XIC(PML_State.Sts_Idle)XIC(AutoModeActive)[XIC(StartButtonPressed) ,XIC(StartingMachine) ][XIC(HMICoderPresent) XIC(CoderReadySignal) ,XIO(HMICoderPresent) ][XIO(DownstreamInterlockEnabledHMI) ,XIC(DownstreamInterlockEnabledHMI) XIC(DownstreamInterlock) ][XIO(UpstreamInterlockEnabledHMI) ,XIC(UpstreamInterlockEnabledHMI) XIC(aaRIOComm:6:I.3) ,XIC(StartButtonPressed) ][XIO(CheckListEnabled) XIO(NeedToRetractInserter) ,XIO(CheckListStartInhibitEnabled) ]OTE(PML_State.Cmd_Start);
+				RC: "One Shot Stop From Capway. ";
+				N: XIO(KliklokPLC_Comm_From_CapwayPLC.BOOL_Data[0])[TON(OneShotStopTimer,?,?) ,XIC(OneShotStopTimer.TT) OTE(InterlockStop) ];
+				N: [XIC(PML_State.Sts_Execute) ,XIC(PML_State.Sts_Suspended) ,XIC(PML_State.Sts_Suspending) ,XIC(PML_State.Sts_UnSuspending) ,XIC(PML_State.Sts_Idle) ][XIO(StopPB) ,XIC(StopButtonHMI) ,XIC(OpenFlapCartonRegistrationSensor) ,XIO(ManualModeActive) [XIC(DownstreamInterlockEnabledHMI) XIO(DownstreamInterlock) ,XIC(UpstreamInterlockEnabledHMI) XIO(StartButtonPressed) XIO(aaRIOComm:6:I.3) ,XIC(HMICoderPresent) XIO(CoderReadySignal) ] TON(InterlockDelayTimer,?,?) XIC(InterlockDelayTimer.DN) ,XIC(GotoStoppedState) ]OTE(PML_State.Cmd_Stop);
+				N: XIC(FaultPresent)XIO(PML_State.Sts_Aborting)XIO(PML_State.Sts_Aborted)XIO(PML_State.Sts_Clearing)OTE(PML_State.Cmd_Abort);
+				N: XIC(PML_State.Sts_Aborted)[XIC(ResetButtonPressed) ,XIC(testReset) ]OTE(PML_State.Cmd_Clear)OTU(testReset);
+				N: XIC(PML_State.Sts_Execute)XIC(SuspendBtnHMI)OTE(PML_State.Cmd_Suspend);
+				N: XIC(PML_State.Sts_Suspended)[XIO(InterlockPauseActive) [XIC(StartButtonHMI) ,XIC(StartPB) ] ,XIC(InterlockPauseActive) XIC(UnPauseCMD) ]OTU(InterlockPauseActive)OTE(PML_State.Cmd_UnSuspend);
+				N: [XIC(PML_State.Sts_Resetting) XIC(Sts_Resetting_Complete) ,XIC(PML_State.Sts_Starting) XIC(Sts_Starting_Complete) ,XIC(PML_State.Sts_Stopping) XIC(Sts_Stopping_Complete) ,XIC(PML_State.Sts_Clearing) XIC(Sts_Clearing_Complete) ,XIC(PML_State.Sts_Aborting) XIC(Sts_Aborting_Complete) ,XIC(PML_State.Sts_Suspending) XIC(Sts_Suspending_Complete) ,XIC(PML_State.Sts_UnSuspending) XIC(Sts_Unsuspending_Complete) ]OTL(PML_State.Cmd_StateComplete);
+				N: XIO(PML_State.Sts_Idle)XIO(PML_State.Sts_Resetting)XIO(PML_State.Sts_Starting)XIO(PML_State.Sts_Stopped)OTU(StartingMachine);
+				N: PackML_StateModel_AOI(PML_State,Cfg_ModeTransitions,Cfg_DisableStates,Cfg_ModeNames,Sts_StateCurrentName,Sts_ModeCurrentName)OTU(PML_State.Cmd_StateComplete);
+				N: XIC(Feeder_Tags.Stopped)XIC(PusherChain_Tags.Stopped)[XIC(ArticleBucketPusher_Tags.Stopped) ,XIO(ArticleBucketPresent) ]XIC(RetardChain_Tags.Stopped)XIC(LoadSideTucker_Tags.Stopped)XIC(NonLoadSideTucker_Tags.Stopped)OTE(All_Axes_Stopped);
+				N: XIC(MTR_Feeder.ShutdownStatus)XIC(MTR_PusherChain.ShutdownStatus)[XIC(MTR_ArticleBucket_Pusher.ShutdownStatus) ,XIO(ArticleBucketPresent) ][XIC(MTR_OverheadConfiner.ShutdownStatus) ,XIO(OverheadConfinerPresent) ]XIC(MTR_RetardChain.ShutdownStatus)XIC(MTR_LoadSideTucker.ShutdownStatus)XIC(MTR_NonLoadSideTucker.ShutdownStatus)XIO(Virtual_Master.JogStatus)OTE(AllAxesShutdown);
+				N: XIC(MTR_Feeder.PositionCamStatus)XIC(MTR_PusherChain.PositionCamStatus)[XIC(ArticleBucketPusher_Tags.Synced) ,XIO(ArticleBucketPresent) ]XIC(MTR_RetardChain.PositionCamStatus)XIC(MTR_LoadSideTucker.PositionCamStatus)XIC(MTR_NonLoadSideTucker.PositionCamStatus)XIC(MTR_OverheadConfiner.PositionCamStatus)OTE(All_Axes_Synced);
+				N: [XIC(PML_State.Sts_Starting) ,XIC(PML_State.Sts_Execute) ,XIC(PML_State.Sts_Stopping) ,XIC(PML_State.Sts_Suspended) ,XIC(PML_State.Sts_Suspending) ,XIC(PML_State.Sts_UnSuspending) ]OTE(MachineRunning);
+				N: [XIC(StartPB) ,XIC(StartButtonHMI) ,XIC(DoorInterlock_NLSOpenFlap) ][XIC(StartDelayEnabledHMI) TON(StartDelayTimer,?,?) XIC(StartDelayTimer.DN) ,XIO(StartDelayEnabledHMI) ]OTE(StartButtonPressed);
+				N: [XIC(ResetPB) ,XIC(Test_A_E.0) ][XIC(ResetDelayEnabledHMI) TON(ResetDelayTimer,?,?) XIC(ResetDelayTimer.DN) ,XIO(ResetDelayEnabledHMI) ]OTE(ResetButtonPressed);
+				RC: "This section controls the Interlock Pause logic";
+				N: XIC(InterlockPauseActive)[XIC(DownstreamInterlock) ,XIO(DownstreamInterlockEnabledHMI) ][XIC(aaRIOComm:5:I.3) ,XIO(UpstreamInterlockEnabledHMI) ][XIC(StartDelayEnabledHMI) TON(UnPauseDelayTimer,?,?) XIC(UnPauseDelayTimer.DN) ,XIO(StartDelayEnabledHMI) ]OTL(UnPauseCMD);
+				N: [XIC(PML_State.Sts_Execute) ,XIC(PML_State.Sts_Stopped) OTU(InterlockPauseActive) ]OTU(UnPauseCMD);
+		END_ROUTINE
+
+		ROUTINE R02_Resetting 
+				N: XIO(PML_State.Sts_Resetting)MOV(0,State_Resetting);
+				N: EQU(State_Resetting,0)XIC(PML_State.Sts_Resetting)MOV(10,State_Resetting);
+				N: EQU(State_Resetting,10)[[OTE(Feeder_CMD.Initialize) OTE(PusherChain_CMD.Initialize) OTE(RetardChain_CMD.Initialize) OTE(LoadSideTucker_CMD.Initialize) OTE(NonLoadSideTucker_CMD.Initialize) OTE(DischargeBelts_CMD.Initialize) ,XIC(ArticleBucketPresent) OTE(ArticleBucketPusher_CMD.Initialize) OTE(ArticleBucketRetard_CMD.Initialize) ,XIC(NonLoadSideTucker2Present) OTE(NonLoadSideTucker2_CMD.Initialize) ,XIC(AbortBeltPresent) OTE(AbortBelt_CMD.Initialize) ,XIC(OverheadConfinerPresent) XIC(OverheadConfinerEnabled_HMI) OTE(OverheadConfiner_CMD.Initialize) ] ,XIC(Feeder_Status.Initialized) XIC(PusherChain_Status.Initialized) [XIC(ArticleBucketPusher_Status.Initialized) XIC(ArticleBucketRetard_Status.Initialized) ,XIO(ArticleBucketPresent) ] [XIC(OverheadConfiner_Status.Initialized) ,XIO(OverheadConfinerPresent) ,XIO(OverheadConfinerEnabled_HMI) ] XIC(RetardChain_Status.Initialized) XIC(LoadSideTucker_Status.Initialized) XIC(NonLoadSideTucker_Status.Initialized) [XIC(NonLoadSideTucker2_Status.Initialized) ,XIO(NonLoadSideTucker2Present) ] XIC(DischargeBelts_Status.Initialized) [XIC(AbortBelt_Status.Initialized) ,XIO(AbortBeltPresent) ] [XIC(INT_01_Station_Present) XIC(INT_01_HMIEnable) MOV(20,State_Resetting) ,[XIO(INT_01_Station_Present) ,XIO(INT_01_HMIEnable) ] MOV(30,State_Resetting) ] ];
+				N: EQU(State_Resetting,20)[OTE(INT_Infeed_Belt_CMD.Initialize) OTE(INT_Accel_Belt_CMD.Initialize) OTE(INT_Launch_Belt_CMD.Initialize) OTE(MTR_INT_Phasing_Belt_CMD.Initialize) OTE(MTR_INT_Left_Rotor_CMD.Initialize) OTE(MTR_INT_Right_Rotor_CMD.Initialize) ,XIC(INT_Infeed_Belt_Status.Initialized) XIC(INT_Accel_Belt_Status.Initialized) XIC(INT_Launch_Belt_Status.Initialized) XIC(MTR_INT_Phasing_Belt_Status.Initialized) XIC(MTR_INT_Left_Rotor_Status.Initialized) XIC(MTR_INT_Right_Rotor_Status.Initialized) MOV(30,State_Resetting) ];
+				N: EQU(State_Resetting,30)OTE(Sts_Resetting_Complete);
+		END_ROUTINE
+
+		ROUTINE R03_Starting 
+				N: XIO(PML_State.Sts_Starting)XIO(ManualModeCam)MOV(0,State_Starting);
+				N: EQU(State_Starting,0)[XIC(PML_State.Sts_Starting) ,XIC(ManualModeCam) ]OTU(VirtualMRPCommand.DN)MOV(10,State_Starting);
+				N: EQU(State_Starting,10)ADD(Virtual_Master.ActualPosition,0.3,VirtualMRPPosition)MOD(VirtualMRPPosition,MachinePitch,VirtualMRPPosition)MRP(Virtual_Master,VirtualMRPCommand,Absolute,Actual,VirtualMRPPosition)XIC(VirtualMRPCommand.DN)MOV(20,State_Starting);
+				N: EQU(State_Starting,20)OTL(CalculatePositions)MOV(30,State_Starting);
+				N: EQU(State_Starting,30)XIO(CalculatePositions)[XIC(LiftOverheadConfiner) TON(OverheadDelayTimer,?,?) XIC(OverheadDelayTimer.DN) ,XIO(LiftOverheadConfiner) ]MOV(40,State_Starting);
+				N: EQU(State_Starting,40)[XIC(INT_01_Station_Present) XIC(INT_01_HMIEnable) OTE(MTR_INT_Right_Rotor_CMD.MoveTo) ,[XIC(MTR_INT_Right_Rotor_Tags.In_position) ,XIO(INT_01_Station_Present) ,XIO(INT_01_HMIEnable) ] MOV(50,State_Starting) ];
+				N: EQU(State_Starting,50)[[[XIO(TestHighSpeed) OTE(Feeder_CMD.Cam) ,XIC(TestHighSpeed) ] OTE(PusherChain_CMD.Cam) OTE(RetardChain_CMD.Cam) [XIO(PICInfeedPresent) OTE(ArticleBucketRetard_CMD.Cam) OTE(ArticleBucketPusher_CMD.Cam) ,XIC(PICInfeedPresent) ] [XIC(OverheadConfinerPresent) XIC(OverheadConfinerEnabled_HMI) OTE(OverheadConfiner_CMD.Cam) ,XIO(OverheadConfinerPresent) ,XIO(OverheadConfinerEnabled_HMI) ] OTE(LoadSideTucker_CMD.Cam) OTE(NonLoadSideTucker_CMD.Cam) ,XIC(NonLoadSideTucker2Present) OTE(NonLoadSideTucker2_CMD.Cam) ] ,[XIO(TestHighSpeed) XIC(Feeder_Status.CamEngaged) ,XIC(TestHighSpeed) ] XIC(PusherChain_Status.CamEngaged) XIC(RetardChain_Status.CamEngaged) [XIC(ArticleBucketPusher_Status.CamEngaged) XIC(ArticleBucketRetard_Status.CamEngaged) ,XIC(PICInfeedPresent) ] [XIC(OverheadConfiner_Status.CamEngaged) ,XIO(OverheadConfinerPresent) ,XIO(OverheadConfinerEnabled_HMI) ] XIC(LoadSideTucker_Status.CamEngaged) XIC(NonLoadSideTucker_Status.CamEngaged) [XIC(NonLoadSideTucker2_Status.CamEngaged) ,XIO(NonLoadSideTucker2Present) ] OTU(LiftOverheadConfiner) [XIO(ManualModeCam) XIC(INT_01_Station_Present) XIC(INT_01_HMIEnable) MOV(60,State_Starting) ,[XIO(INT_01_Station_Present) ,XIO(INT_01_HMIEnable) ,XIC(ManualModeCam) ] MOV(70,State_Starting) ] ];
+				N: EQU(State_Starting,60)[OTE(MTR_INT_Phasing_Belt_CMD.Cam) OTE(MTR_INT_Left_Rotor_CMD.Gear) ,XIC(MTR_INT_Phasing_Belt_Status.CamEngaged) XIC(MTR_INT_Left_Rotor_Status.GearEngaged) [XIO(INT_01_ByPassModeActive) OTL(INT_01_StartUp_Index) ,XIC(INT_01_ByPassModeActive) ] MOV(70,State_Starting) ];
+				N: EQU(State_Starting,70)[XIC(LiftOverheadConfiner) TON(OverheadLowerDelay,?,?) XIC(OverheadLowerDelay.DN) ,XIO(LiftOverheadConfiner) ]MOV(80,State_Starting);
+				N: EQU(State_Starting,80)[XIO(ManualModeCam) OTE(Sts_Starting_Complete) ,XIC(ManualModeCam) OTE(ManualModeCamEngaged) ];
+		END_ROUTINE
+
+		ROUTINE R04_Execute 
+				N: XIO(PML_State.Sts_Execute)MOV(0,State_Execute);
+				N: EQU(State_Execute,0)XIC(PML_State.Sts_Execute)MOV(10,State_Execute);
+				N: EQU(State_Execute,10)[OTE(VirtualMaster_CMD.Run) ,XIC(VirtualMaster_Status.Running) MOV(20,State_Execute) ];
+		END_ROUTINE
+
+		ROUTINE R05_Clearing 
+				N: XIO(PML_State.Sts_Clearing)MOV(0,State_Clearing);
+				N: EQU(State_Clearing,0)XIC(PML_State.Sts_Clearing)MOV(10,State_Clearing);
+				N: EQU(State_Clearing,10)OTE(ResetActive)[XIC(MCRIinput) XIO(FaultPresent) TON(ResetStateDurationTimer,?,?) XIC(ResetStateDurationTimer.DN) ,TON(ResetDurationTimer,?,?) XIC(ResetDurationTimer.DN) ]MOV(20,State_Clearing);
+				N: EQU(State_Clearing,20)OTE(Sts_Clearing_Complete);
+		END_ROUTINE
+
+		ROUTINE R06_Aborting 
+				N: XIO(PML_State.Sts_Aborting)MOV(0,State_Aborting);
+				N: EQU(State_Aborting,0)XIC(PML_State.Sts_Aborting)MOV(10,State_Aborting);
+				N: EQU(State_Aborting,10)[OTE(VirtualMaster_CMD.Abort) ,XIC(VirtualMaster_Status.Aborted) MOV(20,State_Aborting) ];
+				N: EQU(State_Aborting,20)[[OTE(PusherChain_CMD.Abort) OTE(Feeder_CMD.Abort) OTE(RetardChain_CMD.Abort) OTE(LoadSideTucker_CMD.Abort) OTE(NonLoadSideTucker_CMD.Abort) ,XIC(OverheadConfinerPresent) OTE(OverheadConfiner_CMD.Abort) ,XIC(ArticleBucketPresent) OTE(ArticleBucketRetard_CMD.Abort) OTE(ArticleBucketPusher_CMD.Abort) ,XIC(NonLoadSideTucker2Present) OTE(NonLoadSideTucker2_CMD.Abort) ] ,XIC(PusherChain_Status.Aborted) XIC(Feeder_Status.Aborted) XIC(RetardChain_Status.Aborted) XIC(LoadSideTucker_Status.Aborted) XIC(NonLoadSideTucker_Status.Aborted) [XIC(NonLoadSideTucker2_Status.Aborted) ,XIO(NonLoadSideTucker2Present) ] [XIC(OverheadConfiner_Status.Aborted) ,XIO(OverheadConfinerPresent) ] [XIC(ArticleBucketPusher_Status.Aborted) XIC(ArticleBucketRetard_Status.Aborted) ,XIO(ArticleBucketPresent) ] MOV(30,State_Aborting) ];
+				N: [XIC(AllAxesShutdown) ,XIC(AbortingTimer.DN) ]OTE(Sts_Aborting_Complete);
+				N: GRT(State_Aborting,0)TON(AbortingTimer,?,?);
+		END_ROUTINE
+
+		ROUTINE R07_Stopping 
+				N: XIO(PML_State.Sts_Stopping)XIO(ManualModeState_Stopping)MOV(0,State_Stopping);
+				N: EQU(State_Stopping,0)[XIC(PML_State.Sts_Stopping) ,XIC(ManualModeState_Stopping) ][XIC(CycleStopDelayEnable) TON(CycleStopDelay,?,?) XIC(CycleStopDelay.DN) ,XIO(CycleStopDelayEnable) ]CPT(StopDelayTimer.PRE,15/ActualMachineSpeed*1000)MOV(10,State_Stopping);
+				N: EQU(State_Stopping,10)[OTE(VirtualMaster_CMD.Stop) ,XIC(VirtualMaster_Status.Stopped) MOV(20,State_Stopping) ];
+				N: EQU(State_Stopping,20)[OTE(Feeder_CMD.Stop) OTE(PusherChain_CMD.Stop) OTE(RetardChain_CMD.Stop) OTE(LoadSideTucker_CMD.Stop) OTE(NonLoadSideTucker_CMD.Stop) ,XIC(ArticleBucketPresent) OTE(ArticleBucketRetard_CMD.Stop) OTE(ArticleBucketPusher_CMD.Stop) ,XIC(OverheadConfinerPresent) OTE(OverheadConfiner_CMD.Stop) ,XIC(NonLoadSideTucker2Present) OTE(NonLoadSideTucker2_CMD.Stop) ,XIC(Feeder_Status.Stopped) [XIC(ArticleBucketPusher_Status.Stopped) XIC(ArticleBucketRetard_Status.Stopped) ,XIO(ArticleBucketPresent) ] XIC(PusherChain_Status.Stopped) XIC(RetardChain_Status.Stopped) XIC(LoadSideTucker_Status.Stopped) XIC(NonLoadSideTucker_Status.Stopped) [XIC(NonLoadSideTucker2_Status.Stopped) ,XIO(NonLoadSideTucker2Present) ] [XIC(OverheadConfiner_Status.Stopped) ,XIO(OverheadConfinerPresent) ] MOV(30,State_Stopping) ];
+				N: [EQU(State_Stopping,30) ,XIC(PML_State.Sts_Stopped) ]OTE(Sts_Stopping_Complete)OTU(GotoStoppedState);
+				N: GRT(State_Stopping,10)TON(StoppingTimer,?,?)XIC(StoppingTimer.DN)MOV(30,State_Stopping);
+		END_ROUTINE
+
+		ROUTINE R08_Suspending 
+				N: XIO(PML_State.Sts_Suspending)MOV(0,State_Suspending);
+				N: EQU(State_Suspending,0)XIC(PML_State.Sts_Suspending)MOV(10,State_Suspending);
+				N: EQU(State_Suspending,10)EQU(VFD_DischargeBelts:I.OutputFreq,0)OTE(Sts_Suspending_Complete);
+		END_ROUTINE
+
+		ROUTINE R09_Unsuspending 
+				N: XIO(PML_State.Sts_UnSuspending)MOV(0,State_Resetting);
+				N: EQU(State_Unsuspending,0)XIC(PML_State.Sts_UnSuspending)MOV(10,State_Unsuspending);
+				N: EQU(State_Unsuspending,10)XIC(VFD_DischargeBelts:I.AtReference)OTE(Sts_Unsuspending_Complete);
+		END_ROUTINE
+
+		ST_ROUTINE R10_Position_Calc 
+			'(*-------------------------------------Flight Chains---------------------------------------------)
+			'(*First we find the Retard flight chain required position.*)
+			'RetardChain_ReqPos := Virtual_Master.ActualPosition+CurrentRecipe.RetardOffset;
+			'Modulo(ModCMD, RetardChain_ReqPos, MachinePitch, RetardChain_ReqPos);
+			'
+			'(*Next we find the Pusher flight chain required position*)
+			'PusherChain_ReqPos := RetardChain_ReqPos - CurrentRecipe.CartonLength - CurrentRecipe.ChainSpacing;
+			'if PusherChain_ReqPos < 0 then
+			'	PusherChain_ReqPos := PusherChain_ReqPos + MachinePitch;
+			'end_if;
+			'
+			'(*Now that we have the future position of the axes, we need to find the actual distance the chains need to move*)
+			'If RetardChain_ReqPos >= MTR_RetardChain.ActualPosition then
+			'	RetardChainCorrection := RetardChain_ReqPos - MTR_RetardChain.ActualPosition;
+			'else
+			'	RetardChainCorrection := (RetardChain_ReqPos + MachinePitch) - MTR_RetardChain.ActualPosition;
+			'end_if;
+			'
+			'If PusherChain_ReqPos >= MTR_PusherChain.ActualPosition then
+			'	PusherChainCorrection := PusherChain_ReqPos - MTR_PusherChain.ActualPosition;
+			'else
+			'	PusherChainCorrection := (PusherChain_ReqPos + MachinePitch) - MTR_PusherChain.ActualPosition;
+			'end_if;
+			'if NOT PICInfeedPresent then
+			'(*Next we find out the current distance between chains.*)
+			'	if(MTR_RetardChain.ActualPosition > MTR_PusherChain.ActualPosition) then
+			'		FlightChainPocketGap := MTR_RetardChain.ActualPosition - MTR_PusherChain.ActualPosition - 5.6;
+			'	Else 
+			'		FlightChainPocketGap := MTR_RetardChain.ActualPosition + MachinePitch - MTR_PusherChain.ActualPosition - 5.6;
+			'	end_if;
+			'
+			'	RetardToPusherDistance := MachinePitch - 5.6 - FlightChainPocketGap - 3;
+			'else
+			'(*Next we find out the current distance between chains.*)
+			'	if(MTR_RetardChain.ActualPosition > MTR_PusherChain.ActualPosition) then
+			'		FlightChainPocketGap := MTR_RetardChain.ActualPosition - MTR_PusherChain.ActualPosition;
+			'	Else 
+			'		FlightChainPocketGap := MTR_RetardChain.ActualPosition + MachinePitch - MTR_PusherChain.ActualPosition;
+			'	end_if;
+			'
+			'	RetardToPusherDistance := MachinePitch - FlightChainPocketGap;
+			'end_if;
+			'
+			'(*Now we need to know if the pusher chain will hit the retard chain when it does it's move.  If so, we need to move the retard chain and extra flight length*)
+			'if RetardChainCorrection < PusherChainCorrection then
+			'	FlightChainsMoveDelta := PusherChainCorrection - RetardChainCorrection;
+			'	if FlightChainsMoveDelta > FlightChainPocketGap then
+			'		RetardChainCorrection := RetardChainCorrection + MachinePitch;
+			'	end_if;
+			'end_if;
+			'
+			'(* Now we do the same for the retard chain.  If it is going to hit the pusher chain, then we add a flight length to the pusher chain move*)
+			'if  PusherChainCorrection < RetardChainCorrection then
+			'	FlightChainsMoveDelta :=  RetardChainCorrection - PusherChainCorrection;
+			'	if FlightChainsMoveDelta > RetardToPusherDistance then
+			'		PusherChainCorrection := PusherChainCorrection + MachinePitch;
+			'	end_if;
+			'end_if;
+			'
+			'(*----------------------------------Article Bucket Chains--------------------------------------*)
+			'
+			'(*First we find the Article Retard flight chain required position.*)
+			'ArticleRetardChain_ReqPos := RetardChain_ReqPos + (CurrentRecipe.ArticleRetardOffset) + ArticleBucketOffset;
+			'Modulo(ModCMD, ArticleRetardChain_ReqPos, MachinePitch, ArticleRetardChain_ReqPos);
+			'
+			'(*Next we find the Article Pusher flight chain required position*)
+			'ArticlePusherChain_ReqPos := PusherChain_ReqPos + (CurrentRecipe.ArticlePusherOffset) + ArticleBucketOffset;
+			'if ArticlePusherChain_ReqPos < 0 then
+			'	ArticlePusherChain_ReqPos := ArticlePusherChain_ReqPos + MachinePitch;
+			'end_if;
+			'
+			'(*Now that we have the future position of the axes, we need to find the actual distance the chains need to move*)
+			'If ArticleRetardChain_ReqPos >= MTR_ArticleBucket_Retard.ActualPosition then
+			'	ArticleRetardChainCorrection := ArticleRetardChain_ReqPos - MTR_ArticleBucket_Retard.ActualPosition;
+			'else
+			'	ArticleRetardChainCorrection := (ArticleRetardChain_ReqPos + MachinePitch) - MTR_ArticleBucket_Retard.ActualPosition;
+			'end_if;
+			'
+			'If ArticlePusherChain_ReqPos >= MTR_ArticleBucket_Pusher.ActualPosition then
+			'	ArticlePusherChainCorrection := ArticlePusherChain_ReqPos - MTR_ArticleBucket_Pusher.ActualPosition;
+			'else
+			'	ArticlePusherChainCorrection := (ArticlePusherChain_ReqPos + MachinePitch) - MTR_ArticleBucket_Pusher.ActualPosition;
+			'end_if;
+			'
+			'(*Next we find out the current distance between chains.*)
+			'if(MTR_ArticleBucket_Retard.ActualPosition > MTR_ArticleBucket_Pusher.ActualPosition) then
+			'	ArticleChainPocketGap := MTR_ArticleBucket_Retard.ActualPosition - MTR_ArticleBucket_Pusher.ActualPosition - 5.15;
+			'Else 
+			'	ArticleChainPocketGap := MTR_ArticleBucket_Retard.ActualPosition + MachinePitch - MTR_ArticleBucket_Pusher.ActualPosition - 5.15;
+			'end_if;
+			'ArticleRetardToPusherDistance := MachinePitch - 5.6 - ArticleChainPocketGap - 3;
+			'
+			'(*Now we need to know if the pusher chain will hit the retard chain when it does it's move.  If so, we need to move the retard chain and extra flight length*)
+			'if ArticleRetardChainCorrection < ArticlePusherChainCorrection then
+			'	ArticleChainsMoveDelta := ArticlePusherChainCorrection - ArticleRetardChainCorrection;
+			'	if ArticleChainsMoveDelta > ArticleChainPocketGap then
+			'		ArticleRetardChainCorrection := ArticleRetardChainCorrection + MachinePitch;
+			'	end_if;
+			'end_if;
+			'
+			'(* Now we do the same for the retard chain.  If it is going to hit the pusher chain, then we add a flight length to the pusher chain move*)
+			'if  ArticlePusherChainCorrection < ArticleRetardChainCorrection then
+			'	ArticleChainsMoveDelta :=  ArticleRetardChainCorrection - ArticlePusherChainCorrection;
+			'	if ArticleChainsMoveDelta > ArticleRetardToPusherDistance then
+			'		ArticlePusherChainCorrection := ArticlePusherChainCorrection + MachinePitch;
+			'	end_if;
+			'end_if;
+			'
+			'(*----------------------------------Overhead Confiner--------------------------------------*)
+			'
+			'(*First we find the Overhead Confiner required position.*)
+			'OverheadConfiner_ReqPos := ArticlePusherChain_ReqPos + CurrentRecipe.OverheadConfinerOffset;
+			'
+			'(*Now that we have the future position of the axis, we need to find the actual distance the chains need to move*)
+			'If OverheadConfiner_ReqPos >= MTR_OverheadConfiner.ActualPosition then
+			'	OverheadConfinerCorrection := OverheadConfiner_ReqPos - MTR_OverheadConfiner.ActualPosition;
+			'else
+			'	OverheadConfinerCorrection := (OverheadConfiner_ReqPos + MachinePitch) - MTR_OverheadConfiner.ActualPosition;
+			'end_if;
+			'
+			'(*Now we need to know if the Overhead Confiner will hit the article buckets when it does it's move.  If so, we need to raise the overhead confiner*)
+			'ArticleMoveWindowLow := ArticlePusherChainCorrection - 0.25;
+			'ArticleMoveWindowHigh := ArticlePusherChainCorrection + 0.25;
+			'if ArticleMoveWindowLow < 0 then
+			'	ArticleMoveWindowLow := ArticleMoveWindowLow + MachinePitch;
+			'end_if;
+			'Modulo(ModCMD, ArticleMoveWindowHigh, MachinePitch, ArticleMoveWindowHigh);
+			'Limit(LimitCMD,ArticleMoveWindowHigh,OverheadConfinerCorrection,ArticleMoveWindowLow,LimitPass);
+			'if LimitPass then
+			'	LiftOverheadConfiner := 1;
+			'end_if;
+			'
+			'ArticleMoveWindowLow := ArticleRetardChainCorrection - 0.25;
+			'ArticleMoveWindowHigh := ArticleRetardChainCorrection + 0.25;
+			'if ArticleMoveWindowLow < 0 then
+			'	ArticleMoveWindowLow := ArticleMoveWindowLow + MachinePitch;
+			'end_if;
+			'Modulo(ModCMD, ArticleMoveWindowHigh, MachinePitch, ArticleMoveWindowHigh);
+			'Limit(LimitCMD,ArticleMoveWindowHigh,OverheadConfinerCorrection,ArticleMoveWindowLow,LimitPass);
+			'(*if LimitPass then*)
+			'	LiftOverheadConfiner := 1;
+			'(*end_if;*)
+			'
+			'(*----------------------------------Load Side Tucker--------------------------------------*)
+			'LoadSideTucker_ReqPos := PusherChain_ReqPos + CurrentRecipe.LoadSideTuckerOffset;
+			'Modulo(ModCMD, LoadSideTucker_ReqPos, MachinePitch, LoadSideTucker_ReqPos);
+			'
+			'(*----------------------------------Non-Load Side Tucker--------------------------------------*)
+			'if not CurrentRecipe.ParkNLSTucker then
+			'NonLoadSideTucker_ReqPos := PusherChain_ReqPos + CurrentRecipe.NonLoadSideTuckerOffset;
+			'Modulo(ModCMD, NonLoadSideTucker_ReqPos, MachinePitch, NonLoadSideTucker_ReqPos);
+			'else
+			'NonLoadSideTucker_ReqPos := 0.0;
+			'end_if;
+			'
+			'
+			'(*----------------------------------Non-Load Side Tucker 2--------------------------------------*)
+			'If NonLoadSideTucker2Present then
+			'	NonLoadSideTucker2_ReqPos := PusherChain_ReqPos + CurrentRecipe.NonLoadSideTucker2Offset;
+			'	Modulo(ModCMD, NonLoadSideTucker2_ReqPos, MachinePitch, NonLoadSideTucker2_ReqPos);
+			'	if CurrentRecipe.ParkNLSTucker then
+			'	NonLoadSideTucker2_CAMLocPos := NonLoadSideTucker2_ReqPos;
+			'	else
+			'	NonLoadSideTucker2_CAMLocPos := NonLoadSideTucker2_ReqPos;
+			'	end_if;
+			'end_if;
+			'
+			'(*----------------------------------End Routine--------------------------------------*)
+			'CalculatePositions := 0;
+			'
+		END_ST_ROUTINE
+
+		ROUTINE R98_Manual_Mode 
+				N: [XIC(HMIBtn_ManualMode) ,XIC(HMI_RetractInserter) ,XIC(RobotSignal_Jog) ][XIC(PML_State.Sts_Idle) ,XIC(PML_State.Sts_Stopped) ][OTL(ManualModeActive) ,OTU(AutoModeActive) ];
+				N: XIC(PML_State.Sts_Idle)XIC(ManualModeActive)XIO(ManualModeAllAxes)[[XIC(HMIBTN_FeederManualMode) ,XIC(HMI_RetractInserter) ] OTE(Feeder_Tags.ManualMode) ,[XIC(HMIBTN_PusherChainManualMode) ,XIC(HMIBTN_ChainManualMode) ,XIC(HMI_RetractInserter) ] OTE(PusherChain_Tags.ManualMode) ,[XIC(HMIBTN_RetardChainManualMode) ,XIC(HMIBTN_ChainManualMode) ,XIC(HMI_RetractInserter) ] OTE(RetardChain_Tags.ManualMode) ,[XIC(HMIBTN_ArticleBucketPusherManualMode) ,XIC(HMIBTN_ArticleManualMode) ,XIC(HMI_RetractInserter) ] OTE(ArticleBucketPusher_Tags.ManualMode) ,[XIC(HMIBTN_ArticleBucketRetardManualMode) ,XIC(HMIBTN_ArticleManualMode) ,XIC(HMI_RetractInserter) ] OTE(ArticleBucketRetard_Tags.ManualMode) ,XIC(HMIBTN_LoadSideTuckerManualMode) OTE(LoadSideTucker_Tags.ManualMode) ,XIC(HMIBTN_NonLoadSideTuckerManualMode) OTE(NonLoadSideTucker_Tags.ManualMode) ,XIC(HMIBTN_NonLoadSideTucker2ManualMode) OTE(NonLoadSideTucker2_Tags.ManualMode) ,[XIC(HMIBTN_OverheadConfinerManualMode) ,XIC(HMI_RetractInserter) ] OTE(OverheadConfiner_Tags.ManualMode) ,XIC(HMIBTN_DischargeBeltsManualMode) OTE(DischargeBelts_Tags.ManualMode) ,XIC(HMIBTN_AbortBeltManualMode) OTE(AbortBelt_Tags.ManualMode) ,XIC(HMIBTN_HopperManualMode) OTE(HopperBelts_Tags.ManualMode) ,XIC(HMIBTN_AbortBeltManualMode) OTE(AbortBelt_Tags.ManualMode) ,XIC(HMIBTN_PhasingtBeltManualMode) OTE(MTR_INT_Phasing_Belt_Tags.ManualMode) ,XIC(HMIBTN_INT_01_LeftRotorManualMode) OTE(MTR_INT_Left_Rotor_Tags.ManualMode) ,XIC(HMIBTN_INT_01_RightRotorManualMode) OTE(MTR_INT_Right_Rotor_Tags.ManualMode) ,XIC(HMIBTN_InfeedBeltManualMode) OTE(INT_Infeed_Belt_Tags.ManualMode) ,XIC(HMIBTN_AccelBeltManualMode) OTE(INT_Accel_Belt_Tags.ManualMode) ,XIC(HMIBTN_LaunchBeltManualMode) OTE(INT_Launch_Belt_Tags.ManualMode) ];
+				N: EQU(State_ManualModeAllAxis,0)XIC(PML_State.Sts_Idle)[XIC(HMI_ManualModeAllAxes_Button) ,XIC(RobotSignal_Jog) ]XIO(ManualModeAllAxes)MOV(10,State_ManualModeAllAxis);
+				N: EQU(State_ManualModeAllAxis,10)[OTE(ManualModeCam) ,XIC(ManualModeCamEngaged) MOV(20,State_ManualModeAllAxis) ];
+				N: EQU(State_ManualModeAllAxis,20)OTE(ManualModeAllAxes);
+				N: [XIO(HMI_ManualModeAllAxes_Button) XIO(RobotSignal_Jog) ,XIO(ManualModeActive) ][MOV(0,State_ManualModeAllAxis) ,ONS(ManualModeStoppingOneShot) OTL(ManualModeState_Stopping) ];
+				N: XIC(ManualModeState_Stopping)[XIC(All_Axes_Stopped) ,TON(ManualModeStoppingTImer,?,?) XIC(ManualModeStoppingTImer.DN) ]OTU(ManualModeState_Stopping);
+				N: [XIO(ManualModeActive) ,XIO(StopPB) XIC(ManualModeActive) ]ONS(ManualModeOneShot)[OTL(UnLatchManualModeAllAxisBTN) ,OTL(UnlatchHMI_JogContinuously) ,OTU(HMI_JogContinuously) ,OTU(HMIBTN_FeederManualMode) ,OTU(HMIBTN_PusherChainManualMode) ,OTU(HMIBTN_ArticleBucketPusherManualMode) ,OTU(HMIBTN_ArticleBucketRetardManualMode) ,OTU(HMIBTN_RetardChainManualMode) ,OTU(HMIBTN_ChainManualMode) ,OTU(HMIBTN_ArticleManualMode) ,OTU(HMIBTN_NonLoadSideTuckerManualMode) ,OTU(HMIBTN_NonLoadSideTucker2ManualMode) ,OTU(HMIBTN_LoadSideTuckerManualMode) ,OTU(HMIBTN_OverheadConfinerManualMode) ,OTU(HMI_ManualModeAllAxes_Button) ];
+				N: [XIC(PML_State.Sts_Aborted) ,XIC(HMIBtn_AutolMode) ,NEQ(HMIActiveDisplay,111) NEQ(HMIActiveDisplay,152) XIO(HMI_RetractInserter) ][OTU(ManualModeActive) ,OTL(AutoModeActive) ];
+				N: EQU(HMIActiveDisplay,152)XIC(ManualModeActive)ONS(ChangeJogScreenOneShot)[OTL(UnLatchManualModeAllAxisBTN) ,OTL(UnlatchHMI_JogContinuously) ,OTU(HMI_JogContinuously) ,OTU(HMIBTN_FeederManualMode) ,OTU(HMIBTN_PusherChainManualMode) ,OTU(HMIBTN_ArticleBucketPusherManualMode) ,OTU(HMIBTN_ArticleBucketRetardManualMode) ,OTU(HMIBTN_RetardChainManualMode) ,OTU(HMIBTN_ChainManualMode) ,OTU(HMIBTN_ArticleManualMode) ,OTU(HMIBTN_NonLoadSideTuckerManualMode) ,OTU(HMIBTN_NonLoadSideTucker2ManualMode) ,OTU(HMIBTN_LoadSideTuckerManualMode) ,OTU(HMIBTN_OverheadConfinerManualMode) ,OTU(HMI_ManualModeAllAxes_Button) ,OTU(HMIBTN_HopperManualMode) ,OTU(HMIBTN_DischargeBeltsManualMode) ,OTU(HMIBTN_AbortBeltManualMode) ];
+				N: EQU(HMIActiveDisplay,111)XIC(ManualModeActive)ONS(ChangeJogScreenOneShot2)[OTL(UnLatchManualModeAllAxisBTN) ,OTL(UnlatchHMI_JogContinuously) ,OTU(HMI_JogContinuously) ,OTU(HMIBTN_INT_01_LeftRotorManualMode) ,OTU(HMIBTN_INT_01_RightRotorManualMode) ,OTU(HMIBTN_AccelBeltManualMode) ,OTU(HMIBTN_PhasingtBeltManualMode) ,OTU(HMIBTN_LaunchBeltManualMode) ,OTU(HMIBTN_InfeedBeltManualMode) ];
+				N: [XIO(HMI_JogContinuously) OTU(UnlatchHMI_JogContinuously) ,XIO(HMI_ManualModeAllAxes_Button) OTU(UnLatchManualModeAllAxisBTN) ];
+				N: XIO(AllAxisShown_HMI)ONS(AllAxesShownOneShot)[OTU(HMIBTN_PusherChainManualMode) ,OTU(HMIBTN_ArticleBucketPusherManualMode) ,OTU(HMIBTN_RetardChainManualMode) ];
+				N: XIC(ManualModeActive)XIC(StartPB)XIO(StopPB)TON(ShowAxesButtonTimer,?,?)XIC(ShowAxesButtonTimer.DN)OTL(AllAxisShown_HMI);
+				N: XIC(PML_State.Sts_Aborted)OTU(AllAxisShown_HMI);
+				N: XIC(HMI_RetractInserter)XIC(ManualModeActive)TON(RetractDelayTimer,?,?)XIC(RetractDelayTimer.DN)OTL(InserterRetractJog);
+				N: XIC(InserterRetractJog)LIM(LoadAbortActuateWindowStart,MTR_PusherChain.ActualPosition,LoadAbortActuateWindowEnd)CTU(InserterCounter,?,?);
+				N: [XIC(InserterCounter.DN) OTU(NeedToRetractInserter) ,XIC(PML_State.Sts_Aborted) ]OTU(InserterRetractJog)OTU(HMI_RetractInserter)RES(InserterCounter);
+		END_ROUTINE
+
+		ROUTINE R99_PMLStatistics 
+				N: XIC(ClearTotalValues)RES(OnHourCounter)MOV(0,TotalCartonsProcessed);
+				N: [RTO(pmlTimer_PermOn,?,?) ,XIC(pmlTimer_PermOn.DN) CTU(OnHourCounter,?,?) RES(pmlTimer_PermOn) ];
+				N: [RTO(pmlTimer_On,?,?) ,XIC(pmlTimer_On.DN) CTU(pmlCountMin_On,?,?) MOV(pmlCountMin_On.ACC,Stats.OnTimeMin) RES(pmlTimer_On) ,XIC(pmlCountMin_On.DN) CTU(pmlCountHr_On,?,?) MOV(pmlCountHr_On.ACC,Stats.OnTimeHour) RES(pmlCountMin_On) ];
+				N: XIC(PML_State.Sts_Stopped)[RTO(pmlTimer_StoppedMode,?,?) ,XIC(pmlTimer_StoppedMode.DN) CTU(pmlCountMin_StoppedMode,?,?) MOV(pmlCountMin_StoppedMode.ACC,Stats.StoppedMin) RES(pmlTimer_StoppedMode) ,XIC(pmlCountMin_StoppedMode.DN) CTU(pmlCountHr_StoppedMode,?,?) MOV(pmlCountHr_StoppedMode.ACC,Stats.StoppedHours) RES(pmlCountMin_StoppedMode) ];
+				N: XIC(PML_State.Sts_Stopping)[RTO(pmlTimer_StoppingMode,?,?) ,XIC(pmlTimer_StoppedMode.DN) CTU(pmlCountMin_StoppingMode,?,?) MOV(pmlCountMin_StoppingMode.ACC,Stats.StoppingMn) RES(pmlTimer_StoppingMode) ,XIC(pmlCountMin_StoppedMode.DN) CTU(pmlCountHr_StoppingMode,?,?) MOV(pmlCountHr_StoppingMode.ACC,Stats.StoppingHours) RES(pmlCountMin_StoppingMode) ];
+				N: XIC(PML_State.Sts_Starting)[RTO(pmlTimer_StartingMode,?,?) ,XIC(pmlTimer_StartingMode.DN) CTU(pmlCountMin_StartingMode,?,?) MOV(pmlCountMin_StoppingMode.ACC,Stats.StartingMin) RES(pmlTimer_StartingMode) ,XIC(pmlCountMin_StartingMode.DN) CTU(pmlCountHr_StartingMode,?,?) MOV(pmlCountHr_StartingMode.ACC,Stats.StartingHours) RES(pmlCountMin_StartingMode) ];
+				N: XIC(PML_State.Sts_Idle)[RTO(pmlTimer_IdleMode,?,?) ,XIC(pmlTimer_IdleMode.DN) CTU(pmlCountMin_IdleMode,?,?) MOV(pmlCountMin_IdleMode.ACC,Stats.IdleMin) RES(pmlTimer_IdleMode) ,XIC(pmlCountMin_IdleMode.DN) CTU(pmlCountHr_IdleMode,?,?) MOV(pmlCountHr_IdleMode.ACC,Stats.IdleHours) RES(pmlCountMin_IdleMode) ];
+				N: XIC(PML_State.Sts_Execute)[RTO(pmlTimer_ExecuteMode,?,?) ,XIC(pmlTimer_ExecuteMode.DN) CTU(pmlCountMin_ExecuteMode,?,?) MOV(pmlCountMin_ExecuteMode.ACC,Stats.ExecuteMin) RES(pmlTimer_ExecuteMode) ,XIC(pmlCountMin_ExecuteMode.DN) CTU(pmlCountHr_ExecuteMode,?,?) MOV(pmlCountHr_ExecuteMode.ACC,Stats.ExecuteHours) RES(pmlCountMin_ExecuteMode) ];
+				N: XIC(PML_State.Sts_Aborting)[RTO(pmlTimer_AbortingMode,?,?) ,XIC(pmlTimer_AbortingMode.DN) CTU(pmlCountMin_AbortingMode,?,?) MOV(pmlCountMin_AbortingMode.ACC,Stats.AbortingMin) RES(pmlTimer_AbortingMode) ,XIC(pmlCountMin_AbortingMode.DN) CTU(pmlCountHr_AbortingMode,?,?) MOV(pmlCountHr_AbortingMode.ACC,Stats.AbortingHours) RES(pmlCountMin_AbortingMode) ];
+				N: XIC(PML_State.Sts_Aborted)[RTO(pmlTimer_AbortedMode,?,?) ,XIC(pmlTimer_AbortedMode.DN) CTU(pmlCountMin_AbortedMode,?,?) MOV(pmlCountMin_AbortedMode.ACC,Stats.AbortedMin) RES(pmlTimer_AbortedMode) ,XIC(pmlCountMin_AbortedMode.DN) CTU(pmlCountHr_AbortedMode,?,?) MOV(pmlCountHr_AbortedMode.ACC,Stats.AbortedHours) RES(pmlCountMin_AbortedMode) ];
+				N: XIC(PML_State.Sts_Suspended)[RTO(pmlTimer_SuspendedMode,?,?) ,XIC(pmlTimer_SuspendedMode.DN) CTU(pmlCountMin_SuspendedMode,?,?) MOV(pmlCountMin_SuspendedMode.ACC,Stats.SuspendedMIn) RES(pmlTimer_SuspendedMode) ,XIC(pmlCountMin_SuspendedMode.DN) CTU(pmlCountHr_SuspendedMode,?,?) MOV(pmlCountHr_SuspendedMode.ACC,Stats.SuspendedHours) RES(pmlCountMin_SuspendedMode) ];
+				N: XIC(ClearStats)[RES(pmlTimer_On) RES(pmlCountMin_On) RES(pmlCountHr_On) MOV(0,Stats.OnTimeMin) MOV(0,Stats.OnTimeHour) ,RES(pmlTimer_StoppedMode) RES(pmlCountMin_StoppedMode) RES(pmlCountHr_StoppedMode) MOV(0,Stats.StoppedMin) MOV(0,Stats.StoppedHours) ,RES(pmlTimer_StoppingMode) RES(pmlCountMin_StoppingMode) RES(pmlCountHr_StoppingMode) MOV(0,Stats.StoppingMn) MOV(0,Stats.StoppingHours) ,RES(pmlTimer_StartingMode) RES(pmlCountMin_StartingMode) RES(pmlCountHr_StartingMode) MOV(0,Stats.StartingMin) MOV(0,Stats.StartingHours) ,RES(pmlTimer_IdleMode) RES(pmlCountMin_IdleMode) RES(pmlCountHr_IdleMode) MOV(0,Stats.IdleMin) MOV(0,Stats.IdleHours) ,RES(pmlTimer_ExecuteMode) RES(pmlCountMin_ExecuteMode) RES(pmlCountHr_ExecuteMode) MOV(0,Stats.ExecuteMin) MOV(0,Stats.ExecuteHours) ,RES(pmlTimer_AbortingMode) RES(pmlCountMin_AbortingMode) RES(pmlCountHr_AbortingMode) MOV(0,Stats.AbortingMin) MOV(0,Stats.AbortingHours) ,RES(pmlTimer_AbortedMode) RES(pmlCountMin_AbortedMode) RES(pmlCountHr_AbortedMode) MOV(0,Stats.AbortedMin) MOV(0,Stats.AbortedHours) ,RES(pmlTimer_SuspendedMode) RES(pmlCountMin_SuspendedMode) RES(pmlCountHr_SuspendedMode) MOV(0,Stats.SuspendedMIn) MOV(0,Stats.SuspendedHours) ,MOV(0,Stats.CartonsIn) MOV(0,Stats.CartonsOut) MOV(0,Stats.CartonRejects) ,OTU(ClearStats) ];
+		END_ROUTINE
+
+		CHILD_PROGRAMS
+		END_CHILD_PROGRAMS

@@ -1,0 +1,82 @@
+This provides the .l5k program export overview of Phasing_Belt_2 routine within the PLC from the SIPTU HS5160 machine from Kliklok-Woodman, a conveyor. Use this program to understand the logic so that it can be queried in the future. What will often be asked is information about why a program may not be working, so this document provides the information necessary to answer this.
+(MAIN := "P05_Auto_Mode",
+	                        MODE := 0,
+	                        DisableFlag := 0,
+	                        UseAsFolder := 0)
+		TAG
+			ABS_sync_Delta : REAL (RADIX := Float) := 1.47411346e-001;
+			BeltStartPOS : REAL (RADIX := Float) := 7.71814346e-001;
+			BeltStopPOS : REAL (RADIX := Float) := 3.14112900e-001;
+			CalcMoveError : BOOL (RADIX := Decimal) := 1;
+			collisionOneshot : BOOL (RADIX := Decimal) := 0;
+			CollisionState : DINT (RADIX := Decimal) := 10;
+			CollisionWarning : BOOL (RADIX := Decimal) := 1;
+			CollisionWarningTimer : TIMER  := [1940337,10,0];
+			CorrectionCam : CAM[2]  := [[0.00000000e+000,0.00000000e+000,1],[9.42818737e+000,6.53846145e-001,0]];
+			CorrectionCamProfile : CAM_PROFILE[2]  := [[2,0,0,0,0,1,0,0,1068848469,1610612736,-1083033213,202714807,1060413022,-1327355896],[2,1076026171,1610612736
+					,1071967310,-1073741824,0,0,0,1068848469,1610612736,0,0,0,0]];
+			CorrectionCAM_MCCP : MOTION_INSTRUCTION  := [33554432,0,0,0,0,0,0,0,0];
+			CorrectionMove_MAPC : MOTION_INSTRUCTION  := [33554432,0,0,0,0,0,0,0,0];
+			Distance_to_wait : REAL (RADIX := Float) := 0.00000000e+000;
+			EncoderStartPos : REAL (RADIX := Float) := 7.02588677e-001;
+			EncoderStopPos : REAL (RADIX := Float) := 2.94057399e-001;
+			HMICorrectionDisplay OF CorrectionMoveArray[2,0] (RADIX := Float);
+			MAG_Command_virtual : MOTION_INSTRUCTION  := [0,0,0,0,0,0,0,0,0];
+			MARCommand : MOTION_INSTRUCTION  := [33554432,0,0,0,0,0,0,0,0];
+			MasterAxis OF ENT_Pusher_Chain ;
+			MDRCommand : MOTION_INSTRUCTION  := [570425344,0,0,0,0,0,0,0,0];
+			MoveComplete OF MoveComplete2 (RADIX := Decimal);
+			moveError : REAL (RADIX := Float) := 5.23149967e-004;
+			PhaseDistance : REAL (RADIX := Float) := -1.07664347e-001;
+			Phase_Virtual_MRP : MOTION_INSTRUCTION  := [33554432,0,0,0,0,0,0,0,0];
+			PhasingBelFFL : CONTROL  := [0,5,2];
+			PhasingBeltCorrectionFactor OF PhasingBelt2CorrectionFactor (RADIX := Float);
+			PhasingState : DINT (RADIX := Decimal) := 0;
+			PhotoeyeDebounce : BOOL (RADIX := Decimal) := 1;
+			ProductEntryPosition : REAL (RADIX := Float) := 2.74095833e-001;
+			ProductEntryPositionLocal : REAL (RADIX := Float) := 1.63187800e+000;
+			ProductExitPosition : REAL (RADIX := Float) := 5.89681435e+000;
+			productexitPositionMax : REAL (RADIX := Float) := 9.46814537e-001;
+			Product_Photoeye OF MTR_PhasingBelt2.Registration1InputStatus (RADIX := Decimal);
+			reset_Oneshot : BOOL (RADIX := Decimal) := 0;
+			SafePosition : REAL (RADIX := Float) := 1.24095917e-001;
+			SafePositionCounter : COUNTER  := [536870912,0,185];
+			SafePositionWindow : REAL (RADIX := Float) := 2.24095911e-001;
+			ServoAxis OF MTR_PhasingBelt2 ;
+			Servo_Axis OF MTR_PhasingBelt2 ;
+			Servo_Axis_Tags OF PhasingBelt2_Tags ;
+			StandardCAM_MCCP : MOTION_INSTRUCTION  := [33554432,0,0,0,0,0,0,0,0];
+			StandardMove_MAPC : MOTION_INSTRUCTION  := [33554432,0,0,0,0,0,0,0,0];
+			Sync_Delta : REAL (RADIX := Float) := -3.95904183e-001;
+			Sync_Delta_Fraction : REAL (RADIX := Float) := -1.31836100e-001;
+			Sync_Delta_Fraction_Temp : REAL (RADIX := Float) := 7.85682261e-001;
+			tempCalc : REAL (RADIX := Float) := 5.14112949e-001;
+			tempCalc2 : REAL (RADIX := Float) := 3.16124976e-001;
+			tempFIFO : REAL (RADIX := Float) := -3.64635177e-002;
+			test3 : BOOL (RADIX := Decimal) := 0;
+			TotalBeltDistance : REAL (RADIX := Float) := 5.58960676e-001;
+			TotalEncoderDist : REAL (RADIX := Float) := 6.66625023e-001;
+		END_TAG
+
+		ROUTINE P05_Auto_Mode 
+				N: EQU(PhasingState,0)XIC(MachineRunning)GRT(MasterAxis.ActualVelocity,0.05)[XIO(MARCommand.IP) MAR(Servo_Axis,MARCommand,Positive_Edge,Disabled,0,0,1) XIC(MARCommand.IP) ,XIC(MARCommand.IP) ]MOV(5,PhasingState);
+				N: EQU(PhasingState,5)XIC(MARCommand.PC)MOV(10,PhasingState);
+				N: EQU(PhasingState,10)MOV(ENT_Pusher_Chain_Pitch_Pos,ProductEntryPosition)SUB(ProductEntryPosition,CurrentRecipe.PhasingOffsetValue,Sync_Delta)MOV(20,PhasingState);
+				N: EQU(PhasingState,20)[XIO(CollisionWarning) [LES(Sync_Delta,-0.5) ADD(1,Sync_Delta,Sync_Delta) ,GRT(Sync_Delta,0.5) SUB(Sync_Delta,1,Sync_Delta) ,LIM(-0.5,Sync_Delta,0.5) ] ,XIC(CollisionWarning) SUB(Sync_Delta,1,Sync_Delta) OTL(CollisionOccured) ]MOV(30,PhasingState);
+				N: EQU(PhasingState,30)[LES(Sync_Delta,0) OTL(CollisionWarning) ADD(ProductEntryPosition,0.85,SafePosition) MOD(SafePosition,1,SafePosition) ,GRT(Sync_Delta,0) ]MOV(40,PhasingState);
+				N: EQU(PhasingState,40)MUL(Sync_Delta,PhasingBeltCorrectionFactor,Sync_Delta_Fraction)[MOV(0,CorrectionCam[0].Master) ,MOV(0,CorrectionCam[0].Slave) ][SUB(PhasingBeltCorrectionDistanceFraction,Sync_Delta_Fraction,Sync_Delta_Fraction_Temp) MUL(Sync_Delta_Fraction_Temp,MachinePitch_Inches,CorrectionCam[1].Master) ,MOV(PhasingBeltCorrectionDistanceFraction,CorrectionCam[1].Slave) ]MOV(45,PhasingState);
+				N: EQU(PhasingState,45)[LES(Sync_Delta_Fraction,0.3) ,GRT(Sync_Delta_Fraction,0.3) MOV(0.3,Sync_Delta_Fraction) ]FFL(Sync_Delta_Fraction,PHasingBelt2CorrectionFIFO[0],PhasingBelFFL,?,?)MOV(50,PhasingState);
+				N: EQU(PhasingState,50)MCCP(CorrectionCAM_MCCP,CorrectionCam[0],2,CAM_Slope,CAM_Slope,CorrectionCamProfile[0])XIC(CorrectionCAM_MCCP.DN)MOV(60,PhasingState);
+				N: EQU(PhasingState,60)[MAPC(Servo_Axis,MasterAxis,CorrectionMove_MAPC,0,CorrectionCamProfile[0],1,1,Once,Pending,0,0,New Cam,Command,Forward Only) ,XIC(CorrectionMove_MAPC.IP) MOV(70,PhasingState) ];
+				N: EQU(PhasingState,70)XIO(Servo_Axis.PositionCamPendingStatus)MOV(80,PhasingState);
+				N: EQU(PhasingState,80)[MAPC(Servo_Axis,MasterAxis,StandardMove_MAPC,0,StandardCamProfile[0],1,1,Continuous,Pending,0,0,New Cam,Command,Forward Only) ,XIC(StandardMove_MAPC.IP) MOV(90,PhasingState) ];
+				N: EQU(PhasingState,90)XIO(Servo_Axis.PositionCamPendingStatus)MOV(100,PhasingState);
+				N: [EQU(PhasingState,100) XIO(Product_Photoeye) ,XIO(MachineRunning) ]MOV(0,PhasingState);
+				N: XIO(MachineRunning)MDR(Servo_Axis,MDRCommand,1);
+				N: EQU(CollisionState,0)XIC(CollisionWarning)TON(CollisionWarningTimer,?,?)XIC(CollisionWarningTimer.DN)ADD(SafePosition,0.1,SafePositionWindow)MOD(SafePositionWindow,1,SafePositionWindow)LIM(SafePositionWindow,ENT_Pusher_Chain_Pitch_Pos,SafePosition)MOV(10,CollisionState);
+				N: EQU(CollisionState,10)LIM(SafePosition,ENT_Pusher_Chain_Pitch_Pos,SafePositionWindow)OTU(CollisionWarning)MOV(0,CollisionState);
+				N: [XIC(PhasingBelFFL.DN) ,XIO(PhasingBelFFL.EM) XIC(ClearResetPB) XIC(FlashBlink) ]FFU(PHasingBelt2CorrectionFIFO[0],tempFIFO,PhasingBelFFL,?,?);
+		END_ROUTINE
+
+		CHILD_PROGRAMS
+		END_CHILD_PROGRAMS
