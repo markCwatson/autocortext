@@ -13,12 +13,21 @@ class NotificationService {
     return !!notification;
   }
 
-  static async list(companyId: string): Promise<NotificationModel[]> {
-    return NotificationRepository.list(new ObjectId(companyId));
+  static async list(
+    companyId: string,
+    userId: string,
+  ): Promise<NotificationModel[]> {
+    return NotificationRepository.list(
+      new ObjectId(companyId),
+      new ObjectId(userId),
+    );
   }
 
-  static async markAsRead(id: string): Promise<boolean> {
-    return NotificationRepository.markAsRead(new ObjectId(id));
+  static async markAsRead(id: string, userId: string): Promise<boolean> {
+    return NotificationRepository.markAsRead(
+      new ObjectId(id),
+      new ObjectId(userId),
+    );
   }
 }
 

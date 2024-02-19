@@ -31,13 +31,16 @@ class NotificationRepository {
     }
   }
 
-  static async list(companyId: ObjectId): Promise<NotificationModel[]> {
+  static async list(
+    companyId: ObjectId,
+    userId: ObjectId,
+  ): Promise<NotificationModel[]> {
     const client = await Database.getClient();
     try {
       return client
         .db()
         .collection('notifications')
-        .find({ companyId, isRead: false })
+        .find({ companyId, isReadBy: { $ne: userId } })
         .toArray() as Promise<NotificationModel[]>;
     } catch (error: MongoServerError | any) {
       throw new ApiError({
@@ -48,13 +51,13 @@ class NotificationRepository {
     }
   }
 
-  static async markAsRead(id: ObjectId): Promise<boolean> {
+  static async markAsRead(id: ObjectId, userId: ObjectId): Promise<boolean> {
     const client = await Database.getClient();
     try {
       const result = await client
         .db()
         .collection('notifications')
-        .updateOne({ _id: id }, { $set: { isRead: true } });
+        .updateOne({ _id: id }, { $push: { isReadBy: userId } });
       return result.modifiedCount === 1;
     } catch (error: MongoServerError | any) {
       throw new ApiError({

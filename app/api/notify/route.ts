@@ -34,25 +34,30 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const companyId = url.searchParams.get('companyId');
-  if (!companyId) {
+  const userId = url.searchParams.get('userId');
+  if (!companyId || !userId) {
     return NextResponse.json(
-      { error: 'companyId is required' },
+      { error: 'companyId and userId are required' },
       { status: 400 },
     );
   }
 
-  const notifications = await NotificationService.list(companyId);
+  const notifications = await NotificationService.list(companyId, userId);
   return NextResponse.json(notifications);
 }
 
 export async function PUT(req: NextRequest) {
   const url = new URL(req.url);
   const id = url.searchParams.get('id');
-  if (!id) {
-    return NextResponse.json({ error: 'id is required' }, { status: 400 });
+  const userId = url.searchParams.get('userId');
+  if (!id || !userId) {
+    return NextResponse.json(
+      { error: 'id and userId are required' },
+      { status: 400 },
+    );
   }
 
-  const result = await NotificationService.markAsRead(id);
+  const result = await NotificationService.markAsRead(id, userId);
   if (!result) {
     return NextResponse.json(
       { error: 'Failed to mark notification as read' },

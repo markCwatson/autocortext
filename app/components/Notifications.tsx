@@ -29,7 +29,7 @@ export default function Notifications() {
 
   const fetchNotifications = async () => {
     const response = await fetch(
-      `/api/notify?companyId=${userValue.user.companyId}`,
+      `/api/notify?companyId=${userValue.user.companyId}&userId=${userValue.user.id}`,
     );
     if (!response.ok) {
       toast({
@@ -58,9 +58,12 @@ export default function Notifications() {
   };
 
   const markNotificationAsRead = async (id: string) => {
-    const response = await fetch(`/api/notify?id=${id}`, {
-      method: 'PUT',
-    });
+    const response = await fetch(
+      `/api/notify?id=${id}&userId=${userValue.user.id}`,
+      {
+        method: 'PUT',
+      },
+    );
     if (!response.ok) {
       toast({
         title: 'Error',
