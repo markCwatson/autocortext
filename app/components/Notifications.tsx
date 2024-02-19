@@ -77,15 +77,10 @@ export default function Notifications() {
   };
 
   return (
-    <Menu
-      as="div"
-      className={
-        'relative inline-block text-center hover:opacity-70 cursor-pointer'
-      }
-    >
+    <Menu as="div" className={'relative inline-block text-center'}>
       <div>
         <Menu.Button className={'flex items-center'}>
-          <BellAlertIcon className="h-6 w-6" />
+          <BellAlertIcon className="h-6 w-6 hover:opacity-70 cursor-pointer" />
           {notifications.length > 0 && (
             <div className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 flex items-center justify-center bg-red-500 rounded-full h-4 w-4">
               <span className="text-xs text-white">{notifications.length}</span>

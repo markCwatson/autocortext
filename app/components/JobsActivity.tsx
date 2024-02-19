@@ -473,7 +473,7 @@ export default function JobsActivity({
                       className="relative mt-3 h-6 w-6 flex-none rounded-full bg-gray-50"
                     />
                   ) : activityItem.person?.name === 'Auto Cortext' ? (
-                    <LogoBrainSvg className="w-6 h-6 flex-shrink-0 animate-pulse" />
+                    <LogoBrainSvg className="w-6 h-6 flex-shrink-0" />
                   ) : (
                     activityItem.person?.img || (
                       <UserCircleIcon className="w-6 h-6 flex-shrink-0" />

@@ -22,7 +22,7 @@ const NotificationCard = React.forwardRef<
               {props.title === 'Auto Cortext trained' ? (
                 <div className="flex gap-2">
                   <div>
-                    <LogoBrainSvg className="w-6 h-6 animate-pulse" />
+                    <LogoBrainSvg className="w-6 h-6" />
                   </div>
                   <span>{props.title}</span>
                 </div>
