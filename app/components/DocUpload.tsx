@@ -102,6 +102,7 @@ export default function DocUpload({
                 title: `${userValue.user.name} uploaded a file`,
                 description: `${userValue.user.name} uploaded the file ${name} to ${parentPath}`,
                 recipientId: null,
+                dateTime: `${new Date().toISOString().split('.')[0]}Z`,
               }),
               headers: {
                 'Content-Type': 'application/json',

@@ -142,6 +142,7 @@ export default function JobsActivity({
           title: `${userValue.user.name} mentioned you`,
           description: `${userValue.user.name} mentioned you on job Ref# ${jobRefNumber}`,
           recipientId: selectedSuggestion?.id,
+          dateTime: `${new Date().toISOString().split('.')[0]}Z`,
         }),
       },
     );

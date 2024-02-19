@@ -17,7 +17,7 @@ class NotificationRepository {
       const { insertedId } = await client
         .db()
         .collection('notifications')
-        .insertOne({ ...model, companyId, isRead: false });
+        .insertOne({ ...model, companyId, isReadBy: [] });
       return client
         .db()
         .collection('notifications')

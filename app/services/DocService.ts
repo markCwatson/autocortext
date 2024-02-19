@@ -2,6 +2,7 @@ import DocRepository, { DocModel } from '@/repos/DocRepository';
 import { ObjectId } from 'mongodb';
 import { FOLDER, FILE } from '@/lib/constants';
 import { Doc } from '@/types';
+import ApiError from '@/errors/ApiError';
 
 // Define a type for the data structure holding the file system docs (i.e. files/folders)
 type FileSystemData = {
@@ -91,12 +92,21 @@ class DocService {
     companyId: string;
     docId: string;
     type: typeof FILE | typeof FOLDER;
-  }): Promise<boolean> {
+  }): Promise<Doc | undefined> {
     const docs = await DocRepository.getAllByCompanyId(companyId);
     const fsData = DocService.convertDocModelsToFileSystemData(docs);
 
+    // cannot delete root folder
+    if (type === FOLDER && fsData[docId].parentId === null) {
+      throw new ApiError({
+        message: 'Cannot delete root folder',
+        explanation: 'The root folder cannot be deleted',
+        code: 400,
+      });
+    }
+
     await DocService.deleteDoc(fsData, docId);
-    return true;
+    return docs.find((doc) => doc._id.toString() === docId);
   }
 
   static async getCompanyIdByFilename(filename: string): Promise<string> {

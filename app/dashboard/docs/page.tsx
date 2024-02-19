@@ -226,8 +226,9 @@ export default function Documentation() {
           method: 'POST',
           body: JSON.stringify({
             title: `${userValue.user.name} deleted a file`,
-            description: `${userValue.user.name} deleted the file ${data.name} from ${data.path}`,
+            description: `${userValue.user.name} deleted the file ${data.name} from ${data.parentPath}`,
             recipientId: null,
+            dateTime: `${new Date().toISOString().split('.')[0]}Z`,
           }),
           headers: {
             'Content-Type': 'application/json',

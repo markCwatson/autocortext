@@ -98,8 +98,11 @@ export default function Notifications() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute -left-0 transform -translate-x-3/4 z-50 mt-2 w-72 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="max-h-[500px] overflow-scroll absolute -left-0 transform -translate-x-3/4 z-50 mt-2 w-72 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="p-2">
+            <div className="text-center text-my-color8 text-sm border-b">
+              <div className="font-semibold pb-2">Notifications</div>
+            </div>
             {notifications.length > 0 ? (
               notifications.map((item, index) => (
                 <Menu.Item key={item._id!.toString()}>
@@ -107,6 +110,7 @@ export default function Notifications() {
                     <NotificationCard
                       title={item.title}
                       description={item.description}
+                      dateTime={item.dateTime}
                       onClick={() => {
                         markNotificationAsRead(item._id!.toString());
                       }}
