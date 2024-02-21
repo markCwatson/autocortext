@@ -232,7 +232,7 @@ const Feedback: React.FC = () => {
                 </button>
               </div>
               {selectedFeedback ? (
-                <>
+                <div className="m-4">
                   <p>
                     <strong>Name:</strong> {selectedFeedback.name}
                   </p>
@@ -242,10 +242,10 @@ const Feedback: React.FC = () => {
                   <p>
                     <strong>Company:</strong> {selectedFeedback.company}
                   </p>
-                  <p>
+                  <p className="mt-2">
                     <strong>Message:</strong> {selectedFeedback.message}
                   </p>
-                </>
+                </div>
               ) : (
                 <div className="flex flex-col col-span-3 mt-10 justify-center items-center">
                   <PencilLineIcon
