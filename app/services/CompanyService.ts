@@ -15,7 +15,7 @@ class CompanyService {
     const { name } = body;
 
     // generate index for Pinecone
-    let index = name.toLowerCase().replace(' ', '-');
+    let index = name.toLowerCase().replace(/[^a-z0-9]/g, '-');
     index = `${index}-${Math.floor(Math.random() * 100000)}`;
     let company = await CompanyRepository.selectByIndex(index);
     if (company) {
