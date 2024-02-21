@@ -252,7 +252,7 @@ const Feedback: React.FC = () => {
               ) : (
                 <div className="flex flex-col col-span-3 mt-10 justify-center items-center">
                   <PencilLineIcon
-                    className="h-6 w-6 text-green-600 animate-ping mb-4"
+                    className="h-6 w-6 text-green-600 animate-bounce mb-4"
                     aria-hidden="true"
                   />
                   Select an entry to view feedback details
