@@ -59,6 +59,7 @@ function CreateEmbeddings() {
           message: 'Error uploading file to database',
           type: 'error',
         });
+        return;
       }
 
       toast({
