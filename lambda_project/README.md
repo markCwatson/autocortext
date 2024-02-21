@@ -22,10 +22,11 @@ Activate the virtual environment
 source venv/bin/activate
 ```
 
-Install PyPDF2
+Install PyPDF2 and chardet
 
 ```python
 pip install PyPDF2
+pip install chardet
 ```
 
 Deactivate the virtual environment
@@ -34,15 +35,16 @@ Deactivate the virtual environment
 deactivate
 ```
 
-Prepare the deployment package
+Prepare the deployment package (assuming pyhton 3.10 is being used)
+
 ```python
-cd venv/lib/python3.x/site-packages/ Replace python3.x with your Python version, e.g., python3.8
+cd venv/lib/python3.10/site-packages/
 zip -r9 ${OLDPWD}/my-deployment-package.zip .
 ```
 
 Go back to previous location
 
-```python
+```pythoncd 
 cd -
 ```
 

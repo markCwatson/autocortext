@@ -9,9 +9,73 @@ import { useUserContext } from '@/providers/UserProvider';
 import { toast } from '@/components/Toast';
 import { ArrowPathIcon } from '@heroicons/react/20/solid';
 import { mainContainerStyle } from '@/lib/mainContainerStyle';
+import { uploadFileToS3 } from '@/lib/s3';
 
 function CreateEmbeddings() {
+  const userValue = useUserContext();
+
   const [loading, setLoading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleButton = () => {
+    fileInputRef.current?.click();
+  };
+
+  const addFileToDatabase = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): Promise<void> => {
+    setLoading(true);
+
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+    const file = files[0];
+
+    try {
+      const { success, name } = await uploadFileToS3(file);
+      if (!success) {
+        toast({
+          title: 'Error',
+          message: 'Error uploading file to s3',
+          type: 'error',
+        });
+        return;
+      }
+
+      const response = await fetch(
+        `/api/doc?companyId=${userValue.user.companyId}&type=file`,
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            parentId: '65cff453c606335be2a8836c', // id of root folder
+            parentPath: '/',
+            name,
+          }),
+        },
+      );
+
+      if (!response.ok) {
+        toast({
+          title: 'Error',
+          message: 'Error uploading file to database',
+          type: 'error',
+        });
+      }
+
+      toast({
+        title: 'Success',
+        message: 'File uploaded successfully',
+        type: 'success',
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Error',
+        message: `Error uploading file: ${error.message}`,
+        type: 'error',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   async function createIndexAndEmbeddings() {
     setLoading(true);
@@ -46,13 +110,23 @@ function CreateEmbeddings() {
           />
         </div>
       ) : (
-        <Button
-          className="w-[400px] mt-2"
-          variant="outline"
-          onClick={createIndexAndEmbeddings}
-        >
-          Create index and embeddings
-        </Button>
+        <>
+          <input
+            ref={fileInputRef}
+            id="file"
+            type="file"
+            accept=".txt"
+            style={{ display: 'none' }}
+            onChange={addFileToDatabase}
+          />
+          <Button
+            className="w-[400px] mt-2"
+            variant="outline"
+            onClick={handleButton}
+          >
+            Create index and embeddings
+          </Button>
+        </>
       )}
     </>
   );
