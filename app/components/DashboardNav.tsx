@@ -6,13 +6,10 @@ import { useEffect, Fragment, useState } from 'react';
 import { VariantProps, cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { Dialog, Transition } from '@headlessui/react';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import {
-  Bars3Icon,
-  DocumentDuplicateIcon,
   HomeIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline';
-import {
+  DocumentDuplicateIcon,
   BugAntIcon,
   ClockIcon,
   UserCircleIcon,
