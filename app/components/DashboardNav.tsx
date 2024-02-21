@@ -23,6 +23,7 @@ import { toast } from './Toast';
 import { useSession } from 'next-auth/react';
 import LogoSvg from './LogoSvg';
 import classNames from '@/lib/classNames';
+import { PencilLineIcon } from 'lucide-react';
 
 export const dashboardVariants = cva(
   'w-full text-stone-700 dark:text-stone-300',
@@ -224,10 +225,11 @@ const Dashboard = React.forwardRef<HTMLDivElement, DashboardProps>(
             </button>
           </div>
 
-          <div className="flex flex-row ">
+          <div className="flex flex-row h-full">
             {/* Static sidebar for desktop */}
             <div className="hidden md:z-1 md:flex md:w-56 md:flex-col md:flex-grow">
               <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-my-color8 px-6">
+                {/** User info */}
                 <div className="flex mt-4">
                   <a
                     href="#"
@@ -248,7 +250,9 @@ const Dashboard = React.forwardRef<HTMLDivElement, DashboardProps>(
                     </span>
                   </a>
                 </div>
-                <nav className="flex flex-1 flex-col">
+
+                {/** Navigation */}
+                <nav className="flex flex-1 flex-co">
                   <ul role="list" className="flex flex-1 flex-col gap-y-7">
                     <li>
                       <ul role="list" className="-mx-2 space-y-1">
@@ -275,6 +279,23 @@ const Dashboard = React.forwardRef<HTMLDivElement, DashboardProps>(
                     </li>
                   </ul>
                 </nav>
+
+                {/** Feedback */}
+                <div className="">
+                  <a
+                    href="/dashboard/feedback"
+                    className={classNames(
+                      path === '/dashboard/feedback'
+                        ? 'bg-my-color9 text-my-color2'
+                        : 'text-my-color2 hover:opacity-70 cursor-pointer',
+                      'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
+                    )}
+                  >
+                    <span className="sr-only">Feedback</span>
+                    <PencilLineIcon className="w-6 h-6" />
+                    {'Feedback'}
+                  </a>
+                </div>
               </div>
             </div>
           </div>

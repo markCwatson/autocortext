@@ -13,7 +13,7 @@ const NotificationCard = React.forwardRef<
   return (
     <div
       ref={ref}
-      className="bg-white rounded-lg border shadow-md shadow-my-color7 m-2"
+      className="bg-white rounded-lg border shadow-sm shadow-my-color5 m-2"
     >
       <div className="p-2">
         <div className="flex items-center justify-between">

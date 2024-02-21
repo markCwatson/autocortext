@@ -58,3 +58,10 @@ export type Notification = {
   recipientId?: string;
   dateTime: string;
 };
+
+export type Feedback = {
+  name: string;
+  email: string;
+  message: string;
+  company: string;
+};
