@@ -123,7 +123,7 @@ export default function JobsActivity({
     }));
     setSuggestions((prev) => [
       {
-        name: '@autocortext',
+        name: '@Auto Cortext',
         id: null,
       },
       ...users,
@@ -240,7 +240,7 @@ export default function JobsActivity({
       await sendNotificationToMentionedUser();
     }
 
-    const isTaggedAi = comment.includes('@autocortext');
+    const isTaggedAi = comment.includes('@Auto Cortext');
     setComment('');
     const newActivities = activities
       ? [...activities, newActivity]
