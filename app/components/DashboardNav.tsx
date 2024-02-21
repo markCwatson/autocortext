@@ -24,6 +24,7 @@ import { useSession } from 'next-auth/react';
 import LogoSvg from './LogoSvg';
 import classNames from '@/lib/classNames';
 import { PencilLineIcon } from 'lucide-react';
+import { DocumentArrowUpIcon } from '@heroicons/react/24/solid';
 
 export const dashboardVariants = cva(
   'w-full text-stone-700 dark:text-stone-300',
@@ -279,6 +280,23 @@ const Dashboard = React.forwardRef<HTMLDivElement, DashboardProps>(
                     </li>
                   </ul>
                 </nav>
+
+                {/** Embed */}
+                <div className="">
+                  <a
+                    href="/dashboard/embed"
+                    className={classNames(
+                      path === '/dashboard/embed'
+                        ? 'bg-my-color9 text-my-color2'
+                        : 'text-my-color2 hover:opacity-70 cursor-pointer',
+                      'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
+                    )}
+                  >
+                    <span className="sr-only">Embed</span>
+                    <DocumentArrowUpIcon className="w-6 h-6" />
+                    {'Embed'}
+                  </a>
+                </div>
 
                 {/** Feedback */}
                 <div className="">
