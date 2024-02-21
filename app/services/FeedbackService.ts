@@ -17,7 +17,7 @@ class FeedbackService {
     await NotificationService.create(
       process.env.NEXT_ASCEND_ENGINEERING_COMPANY_ID!,
       {
-        title: `New feedback from ${name} at ${company}`,
+        title: `New feedback submitted`,
         description: `A new feedback has been submitted by ${name} <${email}> from ${company}.`,
         dateTime: `${new Date().toISOString().split('.')[0]}Z`,
       },
