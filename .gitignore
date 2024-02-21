@@ -40,3 +40,5 @@ google.json
 google.cors.json
 
 /lambda_project/venv
+
+.DS_Store
