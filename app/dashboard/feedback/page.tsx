@@ -145,6 +145,11 @@ const Feedback: React.FC = () => {
 
   const handleMarkFeedbackAsRead = async () => {
     if (!selectedFeedback) {
+      toast({
+        title: 'Error',
+        message: 'No feedback selected',
+        type: 'error',
+      });
       return;
     }
 
@@ -225,8 +230,6 @@ const Feedback: React.FC = () => {
                       ? 'bg-blue-500 text-white hover:bg-blue-600'
                       : 'bg-gray-300 text-gray-400'
                   }`}
-                  disabled={selectedFeedback !== null}
-                  aria-disabled={selectedFeedback !== null}
                 >
                   {'Mark as Read'}
                 </button>
