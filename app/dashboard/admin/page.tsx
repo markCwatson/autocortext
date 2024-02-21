@@ -1,9 +1,7 @@
 'use client';
 
 import React, { CSSProperties, useEffect, useState } from 'react';
-import DropdownButton from '@/components/DropdownButton';
 import Table, { TableColumn } from '@/components/Table';
-import { NAV_BAR_HEIGHT } from '@/lib/constants';
 import { ArrowPathIcon } from '@heroicons/react/20/solid';
 import { Button } from '@/components/Button';
 import { Building2Icon, UserCheck2 } from 'lucide-react';
@@ -13,17 +11,10 @@ import { useUserContext } from '@/providers/UserProvider';
 import { Company } from '@/services/CompanyService';
 import { User } from 'next-auth';
 import { CompanyModel } from '@/repos/CompanyRepository';
+import { mainContainerStyle } from '@/lib/mainContainerStyle';
 
 const columnStyle: CSSProperties = {
   height: '100%',
-};
-
-const mainContainerStyle: CSSProperties = {
-  height: `calc(100vh - ${NAV_BAR_HEIGHT})`,
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  overflow: 'hidden',
 };
 
 interface ButtonProps {

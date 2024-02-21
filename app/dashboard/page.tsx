@@ -1,13 +1,4 @@
-import { NAV_BAR_HEIGHT } from '@/lib/constants';
-import { CSSProperties } from 'react';
-
-const mainContainerStyle: CSSProperties = {
-  height: `calc(100vh - ${NAV_BAR_HEIGHT})`,
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  overflow: 'hidden',
-};
+import { mainContainerStyle } from '@/lib/mainContainerStyle';
 
 export default async function MainDashboard() {
   return (

@@ -1,27 +1,13 @@
 'use client';
 
-import React, {
-  useState,
-  ChangeEvent,
-  FormEvent,
-  CSSProperties,
-  useEffect,
-} from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { toast } from '@/components/Toast';
-import { NAV_BAR_HEIGHT } from '@/lib/constants';
 import { useUserContext } from '@/providers/UserProvider';
 import Table, { TableColumn } from '@/components/Table';
 import { ArrowPathIcon } from '@heroicons/react/20/solid';
 import { PencilLineIcon } from 'lucide-react';
 import { FeedbackModel } from '@/repos/FeedbackRepository';
-
-const mainContainerStyle: CSSProperties = {
-  height: `calc(100vh - ${NAV_BAR_HEIGHT})`,
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  overflow: 'hidden',
-};
+import { mainContainerStyle } from '@/lib/mainContainerStyle';
 
 const columns: TableColumn[] = [
   {

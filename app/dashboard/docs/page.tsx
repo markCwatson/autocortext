@@ -13,6 +13,7 @@ import { useUserContext } from '@/providers/UserProvider';
 import DialogModal from '@/components/DialogModal';
 import { ExclamationTriangleIcon } from '@heroicons/react/20/solid';
 import { FOLDER, FILE } from '@/lib/constants';
+import { mainContainerStyle } from '@/lib/mainContainerStyle';
 
 const iFrameHeight = '100%';
 const iFrameWidth = '100%';
@@ -26,15 +27,6 @@ const placeholderStyle = {
   alignItems: 'center',
   color: 'black',
   fontSize: '1rem',
-};
-
-const navBarHeight = '170px';
-
-const mainContainerStyle: CSSProperties = {
-  height: `calc(100vh - ${navBarHeight})`,
-  display: 'flex',
-  flexDirection: 'column',
-  overflow: 'auto',
 };
 
 const columnStyle: CSSProperties = {

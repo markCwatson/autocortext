@@ -6,6 +6,7 @@ import { useUserContext } from '@/providers/UserProvider';
 import { ArrowPathIcon } from '@heroicons/react/20/solid';
 import { JobsModel } from '@/repos/JobsRepository';
 import { toast } from '@/components/Toast';
+import { mainContainerStyle } from '@/lib/mainContainerStyle';
 
 export default function TroubleShooting() {
   const userValue = useUserContext();
@@ -40,19 +41,23 @@ export default function TroubleShooting() {
 
   if (!jobs) {
     return (
-      <div className="flex flex-col gap-4 w-full h-full justify-center items-center">
-        <ArrowPathIcon
-          className="h-6 w-6 text-green-600 animate-spin"
-          aria-hidden="true"
-        />
-        Loading jobs...
-      </div>
+      <main className="mx-auto px-4 sm:px-6 lg:px-8" style={mainContainerStyle}>
+        <div className="flex flex-col gap-4 w-full h-full justify-center items-center">
+          <ArrowPathIcon
+            className="h-6 w-6 text-green-600 animate-spin"
+            aria-hidden="true"
+          />
+          Loading jobs...
+        </div>
+      </main>
     );
   }
 
   return (
-    <>
-      <KanbanBoard jobs={jobs} fetchJobs={fetchJobs} />
-    </>
+    <main className="mx-auto px-4 sm:px-6 lg:px-8" style={mainContainerStyle}>
+      <div className="h-full w-full">
+        <KanbanBoard jobs={jobs} fetchJobs={fetchJobs} />
+      </div>
+    </main>
   );
 }

@@ -1,22 +1,14 @@
 'use client';
 
-import React, { CSSProperties } from 'react';
+import React from 'react';
 import { useRef, useState } from 'react';
 import { type PutBlobResult } from '@vercel/blob';
 import { upload } from '@vercel/blob/client';
 import { Button } from '@/components/Button';
 import { useUserContext } from '@/providers/UserProvider';
 import { toast } from '@/components/Toast';
-import { NAV_BAR_HEIGHT } from '@/lib/constants';
 import { ArrowPathIcon } from '@heroicons/react/20/solid';
-
-const mainContainerStyle: CSSProperties = {
-  height: `calc(100vh - ${NAV_BAR_HEIGHT})`,
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  overflow: 'hidden',
-};
+import { mainContainerStyle } from '@/lib/mainContainerStyle';
 
 function CreateEmbeddings() {
   const [loading, setLoading] = useState(false);

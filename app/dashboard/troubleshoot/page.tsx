@@ -18,17 +18,9 @@ import { Button } from '@/components/Button';
 import classNames from '@/lib/classNames';
 import { Activity, Job } from '@/types';
 import LogoBrainSvg from '@/components/LogoBrainSvg';
-import { NAV_BAR_HEIGHT } from '@/lib/constants';
+import { mainContainerStyle } from '@/lib/mainContainerStyle';
 
 // todo: a lot of duplicate code here with docs page. refactor into a component
-
-const mainContainerStyle: CSSProperties = {
-  height: `calc(100vh - ${NAV_BAR_HEIGHT})`,
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  overflow: 'hidden',
-};
 
 const columnStyle: CSSProperties = {
   height: '100%',
@@ -735,8 +727,8 @@ export default function Troubleshoot() {
         <div className="bg-transparent lg:visible lg:col-span-2">
           <div className="w-full h-full pt-14">
             <ul role="list" className="space-y-2 mx-4">
-              {buttons.map((b) => (
-                <li key={b.title}>
+              {buttons.map((b, index) => (
+                <li key={`${b.title}-${index}`}>
                   <Button
                     size={'lg'}
                     onClick={b.handler}
@@ -754,8 +746,8 @@ export default function Troubleshoot() {
             </ul>
             <div className="mt-10">
               <ul role="list" className="space-y-2 mx-4">
-                {issueOptions.map((o) => (
-                  <li>
+                {issueOptions.map((o, index) => (
+                  <li key={`${o.title}-${index}`}>
                     <div className="w-full">
                       <OptionSelector
                         title={o.title}
