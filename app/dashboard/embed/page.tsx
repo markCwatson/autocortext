@@ -176,15 +176,22 @@ function Embed() {
 
   if (userCxt?.user.role !== ASCEND_ADMIN_ROLE) {
     return (
-      <div className="flex flex-col h-full w-full gap-4 justify-center items-center">
-        You do not have access to this page.
-      </div>
+      <main
+        className="mx-auto px-4 sm:px-6 lg:px-8 "
+        style={mainContainerStyle}
+      >
+        <div className="h-full w-full ">
+          <div className="flex flex-col h-full w-full gap-4 justify-center items-center">
+            You do not have access to this page.
+          </div>
+        </div>
+      </main>
     );
   }
 
   return (
-    <main className="mx-auto px-4 sm:px-6 lg:px-8" style={mainContainerStyle}>
-      <div className="h-full w-full">
+    <main className="mx-auto px-4 sm:px-6 lg:px-8 " style={mainContainerStyle}>
+      <div className="h-full w-full ">
         <div className="h-full w-full grid p-2 grid-cols-4 gap-x-4 gap-y-10">
           <div className="bg-transparent col-span-1" />
           <div className="lg:col-span-2">
