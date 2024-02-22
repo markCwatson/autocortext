@@ -236,11 +236,11 @@ export default function JobsActivity({
       duration: 2000,
     });
 
-    if (selectedSuggestion) {
+    const isTaggedAi = comment.includes('@Auto Cortext');
+    if (!isTaggedAi && selectedSuggestion) {
       await sendNotificationToMentionedUser();
     }
 
-    const isTaggedAi = comment.includes('@Auto Cortext');
     setComment('');
     const newActivities = activities
       ? [...activities, newActivity]
