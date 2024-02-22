@@ -11,6 +11,8 @@ const NAV_BAR_HEIGHT = '170px';
 
 const VECTOR_DIMENSION = 3072;
 
+const ASCEND_ADMIN_ROLE = 'AscendAdmin';
+
 export {
   FILE,
   FOLDER,
@@ -20,4 +22,5 @@ export {
   GLOBAL,
   NAV_BAR_HEIGHT,
   VECTOR_DIMENSION,
+  ASCEND_ADMIN_ROLE,
 };

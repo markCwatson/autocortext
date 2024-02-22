@@ -8,6 +8,7 @@ import { ArrowPathIcon } from '@heroicons/react/20/solid';
 import { PencilLineIcon } from 'lucide-react';
 import { FeedbackModel } from '@/repos/FeedbackRepository';
 import { mainContainerStyle } from '@/lib/mainContainerStyle';
+import { ASCEND_ADMIN_ROLE } from '@/lib/constants';
 
 const columns: TableColumn[] = [
   {
@@ -52,7 +53,7 @@ const Feedback: React.FC = () => {
     useState<FeedbackModel | null>(null);
 
   useEffect(() => {
-    if (userValue.user.role === 'AscendAdmin') {
+    if (userValue.user.role === ASCEND_ADMIN_ROLE) {
       fetchFeedback();
     }
   }, []);
@@ -170,7 +171,7 @@ const Feedback: React.FC = () => {
     <main className="mx-auto px-4 sm:px-6 lg:px-8" style={mainContainerStyle}>
       <div className="h-full w-full">
         {/** Only AscendAdmin can view feedback */}
-        {userValue.user.role === 'AscendAdmin' ? (
+        {userValue.user.role === ASCEND_ADMIN_ROLE ? (
           <div className="h-full w-full grid p-2 grid-cols-8 gap-x-4 gap-y-10">
             <div className="bg-transparent col-span-1" />
             <div className="lg:col-span-3 bg-my-color7 border rounded-md overflow-scroll">

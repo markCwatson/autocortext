@@ -36,7 +36,7 @@ export default async function DashboardLayout({
     );
   }
 
-  // if (user.role !== 'AscendAdmin') {
+  // if (user.role !== ASCEND_ADMIN_ROLE) {
   //   return (
   //     <DialogModal
   //       icon={

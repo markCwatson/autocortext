@@ -12,6 +12,7 @@ import { Company } from '@/services/CompanyService';
 import { User } from 'next-auth';
 import { CompanyModel } from '@/repos/CompanyRepository';
 import { mainContainerStyle } from '@/lib/mainContainerStyle';
+import { ASCEND_ADMIN_ROLE } from '@/lib/constants';
 
 const columnStyle: CSSProperties = {
   height: '100%',
@@ -40,7 +41,7 @@ const userColumns: TableColumn[] = [
     accessor: 'user',
     render: (user: User) => {
       const statusColor =
-        user.role === 'AscendAdmin'
+        user.role === ASCEND_ADMIN_ROLE
           ? 'text-green-400 bg-green-400/10'
           : 'text-rose-400 bg-rose-400/10';
 
@@ -90,32 +91,63 @@ export default function Dashboard() {
   });
 
   useEffect(() => {
-    fetchUsers();
-    fetchCompanies();
-
-    if (userValue.user.role !== 'AscendAdmin') {
+    if (userValue.user.role !== ASCEND_ADMIN_ROLE) {
       setSelectedCompany({
         companyId: userValue.user.companyId as string,
         companyName: userValue.user.companyName,
       });
+    } else {
+      fetchCompanies();
     }
+  }, []);
+
+  useEffect(() => {
+    fetchUsers();
   }, [selectedCompany]);
 
   const fetchUsers = async () => {
     if (!selectedCompany.companyId) return;
+    let res;
 
-    const res = await fetch(
-      `/api/company/users?companyId=${selectedCompany.companyId as string}`,
-    );
-    if (!res.ok) {
+    try {
+      res = await fetch(
+        `/api/company/users?companyId=${selectedCompany.companyId as string}`,
+      );
+      if (!res?.ok) {
+        toast({
+          title: 'Error',
+          message: 'Error fetching users',
+          type: 'error',
+          duration: 2000,
+        });
+        return;
+      }
+    } catch (error) {
+      console.log('error on page:', error);
       toast({
         title: 'Error',
-        message: 'Error fetching users',
+        message: 'Something went wrong while fetching users',
+        type: 'error',
+        duration: 2000,
+      });
+    }
+
+    if (!res) {
+      toast({
+        title: 'Error',
+        message: 'Error fetching users. No response.',
         type: 'error',
         duration: 2000,
       });
       return;
     }
+
+    toast({
+      title: 'Success',
+      message: 'Users fetched!',
+      type: 'success',
+      duration: 2000,
+    });
 
     const data = await res.json();
     setUsers(data);
@@ -225,61 +257,84 @@ export default function Dashboard() {
     }
   };
 
-  const buttons: ButtonProps[] = [
-    {
-      title: 'Create company',
-      icon: Building2Icon,
-      handler: createCompany,
-    },
-    {
-      title: 'Create account',
-      icon: UserCheck2,
-      handler: createUser,
-    },
-  ];
+  const buttons: ButtonProps[] =
+    userValue.user.role === ASCEND_ADMIN_ROLE
+      ? [
+          {
+            title: 'Create company',
+            icon: Building2Icon,
+            handler: createCompany,
+          },
+          {
+            title: 'Create account',
+            icon: UserCheck2,
+            handler: createUser,
+          },
+        ]
+      : [
+          {
+            title: 'Create account',
+            icon: UserCheck2,
+            handler: createUser,
+          },
+        ];
 
   return (
     <main className="mx-auto px-4 sm:px-6 lg:px-8 " style={mainContainerStyle}>
       <div
-        className="grid pt-2 grid-cols-1 lg:grid-cols-12 gap-x-4 gap-y-10 "
+        className={`grid pt-2 grid-cols-1 lg:grid-cols-12 gap-x-4 gap-y-10`}
         style={columnStyle}
       >
         {/* Left empty div */}
-        <div className="bg-transparent lg:visible lg:col-span-1" />
+        <div
+          className={`bg-transparent lg:visible ${
+            userValue.user.role === ASCEND_ADMIN_ROLE
+              ? 'lg:col-span-1'
+              : 'lg:col-span-3'
+          }`}
+        />
         {/** Companies */}
-        <div className="lg:col-span-3 bg-my-color8 border rounded overflow-visible">
-          {/* <DropdownButton
+        {userValue.user.role === ASCEND_ADMIN_ROLE && (
+          <div className="lg:col-span-3 bg-my-color8 border rounded overflow-visible">
+            {/* <DropdownButton
             selection="Filter by name"
             listItems={['Coming soon']}
             color="ghost"
           /> */}
-          {/* todo: overflow-visible required here to allow summary popover.
+            {/* todo: overflow-visible required here to allow summary popover.
             This causes history list to grow. Consider doing something else. */}
-          <div className="flex flex-col gap-2 w-full h-full overflow-visible pt-4">
-            {companies.length > 0 ? (
-              <Table
-                data={companies}
-                columns={companyColumns}
-                onSelect={(selected: CompanyModel) =>
-                  setSelectedCompany({
-                    companyId: selected._id ? selected._id.toString() : null,
-                    companyName: selected.name,
-                  })
-                }
-              />
-            ) : (
-              <div className="flex flex-col py-24 w-full h-full items-center">
-                <ArrowPathIcon
-                  className="h-6 w-6 text-green-600 animate-spin"
-                  aria-hidden="true"
+            <div className="flex flex-col gap-2 w-full h-full overflow-visible pt-4">
+              {companies.length > 0 ? (
+                <Table
+                  data={companies}
+                  columns={companyColumns}
+                  onSelect={(selected: CompanyModel) =>
+                    setSelectedCompany({
+                      companyId: selected._id ? selected._id.toString() : null,
+                      companyName: selected.name,
+                    })
+                  }
                 />
-                Loading companies...
-              </div>
-            )}
+              ) : (
+                <div className="flex flex-col py-24 w-full h-full items-center">
+                  <ArrowPathIcon
+                    className="h-6 w-6 text-green-600 animate-spin"
+                    aria-hidden="true"
+                  />
+                  Loading companies...
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        )}
         {/* Users */}
-        <div className="lg:col-span-5 pb-8 bg-my-color8 border rounded overflow-scroll">
+        <div
+          className={`${
+            userValue.user.role === ASCEND_ADMIN_ROLE
+              ? 'lg:col-span-5'
+              : 'lg:col-span-5'
+          } pb-8 bg-my-color8 border rounded overflow-scroll`}
+        >
           {/* <DropdownButton
             selection="Filter by role"
             listItems={['All users', 'Admin', 'Users', 'Guests']}
@@ -331,7 +386,13 @@ export default function Dashboard() {
           </div>
         </div>
         {/* Right empty div */}
-        <div className="bg-transparent lg:visible lg:col-span-1" />
+        <div
+          className={`bg-transparent lg:visible ${
+            userValue.user.role === ASCEND_ADMIN_ROLE
+              ? 'lg:col-span-1'
+              : 'lg:col-span-2'
+          }`}
+        />
       </div>
     </main>
   );

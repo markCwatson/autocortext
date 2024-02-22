@@ -10,6 +10,7 @@ import { toast } from '@/components/Toast';
 import { ArrowPathIcon } from '@heroicons/react/20/solid';
 import { mainContainerStyle } from '@/lib/mainContainerStyle';
 import { uploadFileToS3 } from '@/lib/s3';
+import { ASCEND_ADMIN_ROLE } from '@/lib/constants';
 
 function CreateEmbeddings() {
   const userValue = useUserContext();
@@ -173,7 +174,7 @@ function UploadPdf() {
 function Embed() {
   const userCxt = useUserContext();
 
-  if (userCxt?.user.role !== 'AscendAdmin') {
+  if (userCxt?.user.role !== ASCEND_ADMIN_ROLE) {
     return (
       <div className="flex flex-col h-full w-full gap-4 justify-center items-center">
         You do not have access to this page.
