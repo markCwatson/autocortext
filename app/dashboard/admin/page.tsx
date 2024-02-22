@@ -24,6 +24,7 @@ interface ButtonProps {
     | React.ForwardRefExoticComponent<any>
     | React.FC<React.SVGProps<SVGSVGElement>>;
   handler: () => void;
+  disabled: boolean;
 }
 
 const userColumns: TableColumn[] = [
@@ -211,6 +212,43 @@ export default function Dashboard() {
     }
   };
 
+  const deleteCompany = async (companyId: string) => {
+    if (!confirm('Are you sure you want to delete this company?')) return;
+
+    try {
+      const res = await fetch(`/api/company/${companyId}`, {
+        method: 'DELETE',
+      });
+
+      if (!res.ok) {
+        toast({
+          title: 'Error',
+          message: 'Error deleting company',
+          type: 'error',
+          duration: 2000,
+        });
+        return;
+      }
+
+      toast({
+        title: 'Success',
+        message: 'Company deleted!',
+        type: 'success',
+        duration: 2000,
+      });
+
+      fetchCompanies();
+    } catch (error) {
+      console.log('error on page:', error);
+      toast({
+        title: 'Error',
+        message: 'Something went wrong while deleting company',
+        type: 'error',
+        duration: 2000,
+      });
+    }
+  };
+
   const createUser = async () => {
     const name = prompt('Enter user name');
     if (!name) return;
@@ -264,11 +302,13 @@ export default function Dashboard() {
             title: 'Create company',
             icon: Building2Icon,
             handler: createCompany,
+            disabled: false,
           },
           {
             title: 'Create account',
             icon: UserCheck2,
             handler: createUser,
+            disabled: !selectedCompany.companyId,
           },
         ]
       : [
@@ -276,6 +316,7 @@ export default function Dashboard() {
             title: 'Create account',
             icon: UserCheck2,
             handler: createUser,
+            disabled: !selectedCompany.companyId,
           },
         ];
 
@@ -376,6 +417,7 @@ export default function Dashboard() {
                       'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
                       'w-full px-10 justify-start',
                     )}
+                    disabled={b.disabled}
                   >
                     <b.icon className="h-4 w-4 shrink-0" aria-hidden="true" />
                     {b.title}
