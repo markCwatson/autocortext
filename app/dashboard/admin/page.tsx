@@ -83,10 +83,10 @@ export default function Dashboard() {
       render: (user: User) => (
         <div className="flex items-center gap-x-4">
           <TrashIcon
-            className={`h-4 w-4 text-white cursor-pointer opacity-20 ${
+            className={`h-4 w-4 text-white opacity-20 ${
               userValue.user.id === user.id!
                 ? 'cursor-not-allowed'
-                : 'hover:opacity-100'
+                : 'cursor-pointer hover:opacity-100'
             }`}
             onClick={() => deleteUser(user.id!)}
           />
