@@ -6,7 +6,9 @@ import { Loader2 } from 'lucide-react';
 interface AiPromptChatProps {
   isLoading: boolean;
   callback: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    event:
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+      | React.KeyboardEvent<HTMLInputElement>,
     newMessage: AiMessage,
   ) => void;
 }
@@ -18,7 +20,11 @@ export default function AiPromptChat({
   const [inputValue, setInputValue] = useState('');
   const { messages, setMessages } = useQueryContext();
 
-  function handleSubmit(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+  function handleSubmit(
+    e:
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+      | React.KeyboardEvent<HTMLInputElement>,
+  ) {
     e.preventDefault();
     if (inputValue.trim()) {
       const newMessage: AiMessage = {
@@ -39,6 +45,11 @@ export default function AiPromptChat({
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         placeholder="Enter query here..."
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleSubmit(e);
+          }
+        }}
       />
       <Button
         onClick={(e) => {
