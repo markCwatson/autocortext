@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 interface OptionProps {
-  key?: string;
   title: string;
   options: string[];
   handler: (option: string) => void;
@@ -9,7 +8,6 @@ interface OptionProps {
 }
 
 export default function OptionSelector({
-  key,
   title,
   options,
   handler,
@@ -44,7 +42,7 @@ export default function OptionSelector({
         onChange={handleSelectionChange}
       >
         {options.map((option, index) => (
-          <option key={`${key}-options`} value={option}>
+          <option key={`${option}-${index}`} value={option}>
             {option}
           </option>
         ))}

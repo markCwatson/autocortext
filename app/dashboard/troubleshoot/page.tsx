@@ -821,11 +821,13 @@ export default function Troubleshoot() {
               animate={!selectedHistoryIndex && animate}
               animationTextDelay={12}
             />
-            {machine !== 'None Selected' && (
-              <div className="w-full px-4">
-                <AiPromptChat callback={sendQuery} isLoading={isLoading} />
-              </div>
-            )}
+            {machine !== 'None Selected' &&
+              issueType !== 'None Selected' &&
+              !selectedHistoryIndex && (
+                <div className="w-full px-4">
+                  <AiPromptChat callback={sendQuery} isLoading={isLoading} />
+                </div>
+              )}
           </div>
         </div>
         {/* Buttons */}
@@ -855,10 +857,11 @@ export default function Troubleshoot() {
                   <li key={`${o.title}-${index}`}>
                     <div className="w-full">
                       <OptionSelector
-                        key={`${o.title}-${index}-selector`}
                         title={o.title}
-                        options={o.options}
-                        handler={o.handler}
+                        options={
+                          selectedHistoryIndex ? ['From history'] : o.options
+                        }
+                        handler={selectedHistoryIndex ? () => null : o.handler}
                         trigger={newChat}
                       />
                     </div>
