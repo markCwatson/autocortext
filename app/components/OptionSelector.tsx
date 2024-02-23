@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 
 interface OptionProps {
-  key: string;
+  key?: string;
   title: string;
   options: string[];
   handler: (option: string) => void;
-  trigger: boolean;
+  trigger?: boolean;
 }
 
 export default function OptionSelector({
