@@ -10,7 +10,12 @@ import { AiMessageList } from '@/components/AiMessageList';
 import AiPromptChat from '@/components/AiPromptChat';
 import OptionSelector from '@/components/OptionSelector';
 import { machines } from '@/lib/machines';
-import { ArrowPathIcon, ClockIcon, TrashIcon } from '@heroicons/react/20/solid';
+import {
+  ArrowPathIcon,
+  ClockIcon,
+  EllipsisHorizontalIcon,
+  TrashIcon,
+} from '@heroicons/react/20/solid';
 import { HistoryModel } from '@/repos/HistoryRepository';
 import DialogModal from '@/components/DialogModal';
 import Summary from '@/components/Summary';
@@ -71,7 +76,41 @@ export default function Troubleshoot() {
     messages: AiMessage[];
   } | null>(null);
 
+  const [isEditingTitle, setIsEditingTitle] = useState('');
+  const [newTitle, setNewTitle] = useState({
+    id: '',
+    title: '',
+  });
+  const [newChat, setNewChat] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
+    if (isEditingTitle === id) {
+      setNewTitle({ ...newTitle, title: e.target.value });
+    }
+  };
+
   const buttons: ButtonProps[] = [
+    {
+      title: 'New Chat',
+      icon: ArrowPathIcon,
+      handler: () => {
+        setMessages([
+          {
+            id: `1`,
+            content: `Auto Cortext: Hello ${session.data!.user.name}.
+
+          I am ready to assist you in troubleshooting problems with your equipment. If you explain the issue, I will suggest a solution.
+
+          What machine are you having trouble with?`,
+            role: 'assistant',
+          },
+        ]);
+        setMachine('None Selected');
+        setIssueType('None Selected');
+        setSelectedHistoryIndex(null);
+        setNewChat(!newChat);
+      },
+    },
     {
       title: 'Create Job',
       icon: ClockIcon,
@@ -115,7 +154,7 @@ export default function Troubleshoot() {
     }
   }, [session]);
 
-  useEffect(() => {}, [history]);
+  useEffect(() => {}, [isEditingTitle]);
 
   async function fetchHistory() {
     const companyId = session.data?.user.companyId;
@@ -437,6 +476,37 @@ export default function Troubleshoot() {
     ]);
   }
 
+  async function updateTitle(id: string) {
+    setIsEditingTitle('');
+    if (newTitle.title === '') return;
+    if (id === '') return;
+
+    const response = await fetch(`/api/history?id=${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ title: newTitle.title }),
+    });
+
+    if (!response.ok) {
+      toast({
+        title: 'Error',
+        message: 'Error updating title',
+        type: 'error',
+      });
+      return;
+    }
+
+    toast({
+      title: 'Success',
+      message: 'Title updated',
+      type: 'success',
+    });
+
+    fetchHistory();
+  }
+
   // Function to parse the input string using regex
   function parseInput(input: string): {
     title: string;
@@ -636,9 +706,9 @@ export default function Troubleshoot() {
         style={columnStyle}
       >
         {/* Left empty div */}
-        <div className="bg-transparent lg:visible lg:col-span-2" />
+        <div className="bg-transparent lg:visible lg:col-span-1" />
         {/** History */}
-        <div className="lg:col-span-3 bg-my-color7 border rounded overflow-visible">
+        <div className="lg:col-span-4 bg-my-color7 border rounded overflow-visible">
           <div
             style={{
               display: 'flex',
@@ -665,29 +735,64 @@ export default function Troubleshoot() {
               history.map((item, index) => {
                 return (
                   <div
+                    key={index}
                     className={`flex justify-between items-center px-4 hover:bg-my-color5 hover:rounded pl-4 ${
                       selectedHistoryIndex === index ? 'bg-my-color5' : ''
                     }`}
                   >
-                    <div className="flex items-center gap-2 ">
+                    <div className="flex justify-start items-center gap-2 ">
                       <Summary messages={item.messages} />
                       <button
                         onClick={(e) => hanldeSelectHistory(e, index)}
                         className="text-left"
                       >
-                        <div key={index} className="text-left">
-                          <p className="text-left">{item.title}</p>
+                        <div className="text-left">
+                          {isEditingTitle === item._id.toString() ? (
+                            <input
+                              type="text"
+                              className="bg-my-color1 text-my-color10 broder"
+                              value={newTitle.title}
+                              onChange={(e) =>
+                                handleChange(e, item._id.toString())
+                              }
+                              onBlur={() => setIsEditingTitle('')}
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                  updateTitle(item._id.toString());
+                                }
+                              }}
+                              autoFocus
+                            />
+                          ) : (
+                            <p className="text-left">{item.title}</p>
+                          )}
                         </div>
                       </button>
                     </div>
-                    <TrashIcon
-                      className={`w-4 h-4 cursor-pointer hover:opacity-100 ${
-                        selectedHistoryIndex === index
-                          ? 'opacity-100'
-                          : 'opacity-5'
-                      }`}
-                      onClick={() => deleteHistoryItem(item._id.toString())}
-                    />
+                    <div className="flex justify-end">
+                      <EllipsisHorizontalIcon
+                        className={`w-4 h-4 cursor-pointer hover:opacity-100 mr-2 ${
+                          selectedHistoryIndex === index
+                            ? 'opacity-100'
+                            : 'opacity-25'
+                        }`}
+                        onClick={() => {
+                          setIsEditingTitle(item._id.toString());
+                          setNewTitle({
+                            id: item._id.toString(),
+                            title: item.title,
+                          });
+                        }}
+                      />
+                      <TrashIcon
+                        className={`w-4 h-4 cursor-pointer hover:opacity-100 ${
+                          selectedHistoryIndex === index
+                            ? 'opacity-100'
+                            : 'opacity-5'
+                        }`}
+                        onClick={() => deleteHistoryItem(item._id.toString())}
+                      />
+                    </div>
                   </div>
                 );
               })
@@ -703,7 +808,7 @@ export default function Troubleshoot() {
           </div>
         </div>
         {/* Chat Window */}
-        <div className="lg:col-span-4 pb-8 bg-my-color7 border rounded overflow-hidden">
+        <div className="lg:col-span-5 pb-8 bg-my-color7 border rounded overflow-hidden">
           <AiHeader
             messages={messages}
             machine={machine}
@@ -750,9 +855,11 @@ export default function Troubleshoot() {
                   <li key={`${o.title}-${index}`}>
                     <div className="w-full">
                       <OptionSelector
+                        key={`${o.title}-${index}-selector`}
                         title={o.title}
                         options={o.options}
                         handler={o.handler}
+                        trigger={newChat}
                       />
                     </div>
                   </li>
@@ -761,8 +868,6 @@ export default function Troubleshoot() {
             </div>
           </div>
         </div>
-        {/* Right empty div */}
-        <div className="bg-transparent lg:visible lg:col-span-1" />
       </div>
     </main>
   );

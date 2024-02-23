@@ -1,17 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface OptionProps {
+  key: string;
   title: string;
   options: string[];
   handler: (option: string) => void;
+  trigger: boolean;
 }
 
 export default function OptionSelector({
+  key,
   title,
   options,
   handler,
+  trigger,
 }: OptionProps) {
   const [selectedOption, setSelectedOption] = useState(options[0]);
+
+  useEffect(() => {
+    setSelectedOption(options[0]);
+  }, [trigger]);
 
   const handleSelectionChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -36,7 +44,7 @@ export default function OptionSelector({
         onChange={handleSelectionChange}
       >
         {options.map((option, index) => (
-          <option key={`${option}-${index}`} value={option}>
+          <option key={`${key}-options`} value={option}>
             {option}
           </option>
         ))}

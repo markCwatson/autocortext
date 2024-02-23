@@ -35,6 +35,41 @@ class HistoryRepository {
     }
   }
 
+  static async update(
+    _id: ObjectId,
+    title: string,
+  ): Promise<HistoryModel | null> {
+    const client = await Database.getClient();
+    try {
+      const history = (await client
+        .db()
+        .collection('history')
+        .findOne({ _id })) as HistoryModel | null;
+
+      if (!history) {
+        throw new ApiError({
+          code: 404,
+          message: 'History item not found',
+          explanation:
+            'The history item you are trying to update does not exist.',
+        });
+      }
+
+      await client
+        .db()
+        .collection('history')
+        .updateOne({ _id }, { $set: { title } });
+
+      return { ...history, title };
+    } catch (error: any) {
+      throw new ApiError({
+        code: 500,
+        message: error.message,
+        explanation: null,
+      });
+    }
+  }
+
   static async getHistoryByCompanyId(
     companyId: ObjectId,
   ): Promise<HistoryModel[] | null> {

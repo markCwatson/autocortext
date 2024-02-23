@@ -16,6 +16,13 @@ class HistoryService {
     return HistoryRepository.getHistoryByCompanyId(new ObjectId(companyId));
   }
 
+  static async update(
+    _id: string,
+    title: string,
+  ): Promise<HistoryModel | null> {
+    return HistoryRepository.update(new ObjectId(_id), title);
+  }
+
   static async delete(_id: string, companyId: string): Promise<HistoryModel> {
     return HistoryRepository.delete(new ObjectId(_id), new ObjectId(companyId));
   }
