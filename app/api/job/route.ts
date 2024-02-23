@@ -22,11 +22,7 @@ export async function GET(req: NextRequest) {
   const count = url.searchParams.get('count');
   if (count === 'true') {
     let count = await JobsService.countJobsByCompanyId(companyId);
-    if (!count) {
-      return new Response('Job count not found', { status: 404 });
-    }
-
-    return NextResponse.json(count);
+    return NextResponse.json(count ? count : 0);
   }
 
   let jobs = await JobsService.getJobsByCompanyId(companyId);

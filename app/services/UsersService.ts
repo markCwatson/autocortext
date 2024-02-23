@@ -1,6 +1,7 @@
 import { ObjectId } from 'mongodb';
 import AuthService from '@/services/AuthService';
 import UsersRepository, { UserModel } from '@/repos/UsersRepository';
+import NotificationService from './NotificationService';
 
 interface CreateUserInput {
   password: string;
@@ -43,10 +44,12 @@ class UsersService {
     return UsersRepository.selectByCompanyId(new ObjectId(companyId));
   }
 
-  static async delete(id: ObjectId): Promise<Boolean> {
-    const user = await UsersRepository.selectById(id);
+  static async delete(id: string): Promise<Boolean> {
+    const user = await UsersRepository.selectById(new ObjectId(id));
     if (!user) return false;
-    return UsersRepository.delete(id);
+    await UsersRepository.delete(new ObjectId(id));
+    await NotificationService.deleteByUserId(id);
+    return true;
   }
 
   static async deleteByCompanyId(companyId: string): Promise<Boolean> {

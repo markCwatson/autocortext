@@ -5,6 +5,7 @@ import Table, { TableColumn } from '@/components/Table';
 import { ArrowPathIcon } from '@heroicons/react/20/solid';
 import { Button } from '@/components/Button';
 import { Building2Icon, UserCheck2 } from 'lucide-react';
+import { TrashIcon } from '@heroicons/react/20/solid';
 import classNames from '@/lib/classNames';
 import { toast } from '@/components/Toast';
 import { useUserContext } from '@/providers/UserProvider';
@@ -75,6 +76,22 @@ export default function Dashboard() {
       render: (user: User) => {
         return <div className="hidden text-white sm:block">{user.email}</div>;
       },
+    },
+    {
+      header: '',
+      accessor: 'user',
+      render: (user: User) => (
+        <div className="flex items-center gap-x-4">
+          <TrashIcon
+            className={`h-4 w-4 text-white cursor-pointer opacity-20 ${
+              userValue.user.id === user.id!
+                ? 'cursor-not-allowed'
+                : 'hover:opacity-100'
+            }`}
+            onClick={() => deleteUser(user.id!)}
+          />
+        </div>
+      ),
     },
   ];
 
@@ -318,7 +335,49 @@ export default function Dashboard() {
     } catch (error) {
       console.log('error on page:', error);
       toast({
-        title: 'Error resigering',
+        title: 'Error creating account',
+        message: `${error}`,
+        type: 'error',
+      });
+    }
+  };
+
+  const deleteUser = async (userId: string) => {
+    if (userValue.user.id === userId) {
+      toast({
+        title: 'Error deleting account',
+        message: 'You cannot delete your own account',
+        type: 'error',
+      });
+      return;
+    }
+
+    if (!confirm('Are you sure you want to delete this user?')) return;
+
+    try {
+      const response = await fetch(`/api/user?userId=${userId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        toast({
+          title: 'Error deleting account',
+          message: 'Please try again later.',
+          type: 'error',
+        });
+        return;
+      }
+
+      toast({
+        title: 'Success',
+        message: 'Account deleted!',
+      });
+
+      fetchUsers();
+    } catch (error) {
+      console.log('error on page:', error);
+      toast({
+        title: 'Error deleting account',
         message: `${error}`,
         type: 'error',
       });

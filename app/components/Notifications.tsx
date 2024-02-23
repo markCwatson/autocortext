@@ -46,11 +46,12 @@ export default function Notifications() {
     }
 
     // if there is a recipientId, only show notifications for the current user
+    // todo: currently doing client-side filter. consider doing server-side filter instead
     const displayedNotifications = data.filter(
       (notification: NotificationModel) => {
         return (
           !notification.recipientId ||
-          notification.recipientId === userValue.user.id
+          notification.recipientId.toString() === userValue.user.id
         );
       },
     );

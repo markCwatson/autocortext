@@ -8,7 +8,12 @@ class NotificationService {
   static async create(companyId: string, data: Notification): Promise<boolean> {
     const notification = await NotificationRepository.create(
       new ObjectId(companyId),
-      data,
+      {
+        title: data.title,
+        description: data.description,
+        recipientId: new ObjectId(data.recipientId),
+        dateTime: data.dateTime,
+      },
     );
     return !!notification;
   }
@@ -32,6 +37,10 @@ class NotificationService {
 
   static async deleteByCompanyId(id: string): Promise<boolean> {
     return NotificationRepository.deleteByCompanyId(new ObjectId(id));
+  }
+
+  static async deleteByUserId(id: string): Promise<boolean> {
+    return NotificationRepository.deleteByUserId(new ObjectId(id));
   }
 }
 

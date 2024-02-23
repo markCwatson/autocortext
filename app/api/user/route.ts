@@ -28,3 +28,20 @@ export async function GET(req: NextRequest) {
     name: person.name,
   });
 }
+
+export async function DELETE(req: NextRequest) {
+  const url = new URL(req.url);
+  const userId = url.searchParams.get('userId');
+  if (!userId) {
+    return new Response('User ID is required', { status: 400 });
+  }
+
+  const person = await UsersService.delete(userId);
+  if (!person) {
+    return new Response('User not found', { status: 404 });
+  }
+
+  return NextResponse.json({
+    message: 'User deleted successfully',
+  });
+}
