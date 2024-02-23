@@ -1,13 +1,12 @@
 'use client';
 
-import { useState, Fragment, useRef } from 'react';
+import { useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { FileIcon, FolderClosed, Loader2 } from 'lucide-react';
 import { toast } from '@/components/Toast';
 import { FILE, FOLDER } from '@/lib/constants';
 import DocCreateFolder from '@/components/DocCreateFolder';
 import DocTypeSelector from '@/components/DocTypeSelector';
-import { Button } from './Button';
 
 type Props = {
   show: boolean;

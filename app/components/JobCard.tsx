@@ -9,7 +9,7 @@ import {
   ChevronUpIcon,
   TrashIcon,
 } from '@heroicons/react/20/solid';
-import JobModal from './JobModal';
+import JobModal from '@/components/JobModal';
 import { JobsModel } from '@/repos/JobsRepository';
 
 interface Props {

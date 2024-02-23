@@ -9,7 +9,7 @@ import {
   ChevronUpIcon,
   LinkIcon,
 } from '@heroicons/react/20/solid';
-import OptionSelector from './OptionSelector';
+import OptionSelector from '@/components/OptionSelector';
 import { machines } from '@/lib/machines';
 
 const team = [

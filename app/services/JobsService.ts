@@ -1,7 +1,7 @@
 import JobsRepository, { JobsModel } from '@/repos/JobsRepository';
 import { Job } from '@/types';
 import { ObjectId } from 'mongodb';
-import CompanyService from './CompanyService';
+import CompanyService from '@/services/CompanyService';
 
 class JobsService {
   static async create(model: JobsModel): Promise<JobsModel | null> {

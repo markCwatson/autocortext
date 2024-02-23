@@ -20,10 +20,10 @@ import ColumnContainer from '@/components/ColumnContainer';
 import { isClientCtx } from '@/providers/ClientCtxProvider';
 import CreateJob from '@/components/CreateJob';
 import { useUserContext } from '@/providers/UserProvider';
-import { toast } from './Toast';
-import { JobsModel } from '@/repos/JobsRepository';
-import DropdownButton from './DropdownButton';
+import { toast } from '@/components/Toast';
+import DropdownButton from '@/components/DropdownButton';
 import { machines } from '@/lib/machines';
+import { JobsModel } from '@/repos/JobsRepository';
 
 const defaultCols: Column[] = [
   {

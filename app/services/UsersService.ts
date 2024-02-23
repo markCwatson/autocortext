@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 import AuthService from '@/services/AuthService';
 import UsersRepository, { UserModel } from '@/repos/UsersRepository';
-import NotificationService from './NotificationService';
+import NotificationService from '@/services/NotificationService';
 
 interface CreateUserInput {
   password: string;

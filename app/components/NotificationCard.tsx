@@ -1,6 +1,6 @@
 import React from 'react';
 import { Notification } from '@/types';
-import LogoBrainSvg from './LogoBrainSvg';
+import LogoBrainSvg from '@/components/LogoBrainSvg';
 
 interface NotificationCardProps extends Notification {
   onClick: () => void;

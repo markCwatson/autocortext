@@ -16,9 +16,9 @@ import {
   UserGroupIcon,
 } from '@heroicons/react/20/solid';
 import { usePathname } from 'next/navigation';
-import { toast } from './Toast';
+import { toast } from '@/components/Toast';
 import { useSession } from 'next-auth/react';
-import LogoSvg from './LogoSvg';
+import LogoSvg from '@/components/LogoSvg';
 import classNames from '@/lib/classNames';
 import { PencilLineIcon } from 'lucide-react';
 import { DocumentArrowUpIcon } from '@heroicons/react/24/solid';

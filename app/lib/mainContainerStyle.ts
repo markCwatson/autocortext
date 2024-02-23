@@ -1,5 +1,5 @@
 import { CSSProperties } from 'react';
-import { NAV_BAR_HEIGHT } from './constants';
+import { NAV_BAR_HEIGHT } from '@/lib/constants';
 
 export const mainContainerStyle: CSSProperties = {
   height: `calc(100vh - ${NAV_BAR_HEIGHT})`,

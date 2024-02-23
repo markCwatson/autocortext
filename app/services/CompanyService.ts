@@ -1,12 +1,12 @@
 import { ObjectId } from 'mongodb';
 import CompanyRepository, { CompanyModel } from '@/repos/CompanyRepository';
 import UsersService, { User } from '@/services/UsersService';
-import DocService from './DocService';
 import { FOLDER } from '@/lib/constants';
-import NotificationService from './NotificationService';
-import ActivitiesService from './ActivitiesService';
-import HistoryService from './HistoryService';
-import JobsService from './JobsService';
+import DocService from '@/services/DocService';
+import NotificationService from '@/services/NotificationService';
+import ActivitiesService from '@/services/ActivitiesService';
+import HistoryService from '@/services/HistoryService';
+import JobsService from '@/services/JobsService';
 import { deletePineconeIndex } from '@/lib/pinecone';
 import { Pinecone } from '@pinecone-database/pinecone';
 import { DeleteObjectCommand, S3Client } from '@aws-sdk/client-s3';

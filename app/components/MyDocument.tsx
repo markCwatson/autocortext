@@ -1,6 +1,6 @@
 import React from 'react';
 import { Page, Text, Document, StyleSheet } from '@react-pdf/renderer';
-import { AiMessage } from '../providers/AiMessagesProvider';
+import { AiMessage } from '@/providers/AiMessagesProvider';
 
 const styles = StyleSheet.create({
   body: {

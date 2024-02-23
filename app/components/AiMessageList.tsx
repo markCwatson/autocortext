@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import React from 'react';
-import AnimatedText from './AnimatedText';
+import AnimatedText from '@/components/AnimatedText';
 import { AiMessage } from '@/providers/AiMessagesProvider';
 import { UserCircleIcon } from '@heroicons/react/20/solid';
 import LogoBrainSvg from '@/components/LogoBrainSvg';
