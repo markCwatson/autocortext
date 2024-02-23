@@ -67,6 +67,23 @@ class NotificationRepository {
       });
     }
   }
+
+  static async deleteByCompanyId(companyId: ObjectId): Promise<boolean> {
+    const client = await Database.getClient();
+    try {
+      const result = await client
+        .db()
+        .collection('notifications')
+        .deleteMany({ companyId });
+      return result.deletedCount === 1;
+    } catch (error: MongoServerError | any) {
+      throw new ApiError({
+        code: 500,
+        message: error.message,
+        explanation: null,
+      });
+    }
+  }
 }
 
 export default NotificationRepository;

@@ -86,6 +86,19 @@ class HistoryRepository {
       });
     }
   }
+
+  static async deleteByCompanyId(companyId: ObjectId): Promise<void> {
+    const client = await Database.getClient();
+    try {
+      await client.db().collection('history').deleteMany({ companyId });
+    } catch (error: any) {
+      throw new ApiError({
+        code: 500,
+        message: error.message,
+        explanation: null,
+      });
+    }
+  }
 }
 
 export default HistoryRepository;

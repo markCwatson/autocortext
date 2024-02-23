@@ -29,3 +29,20 @@ export async function GET(req: NextRequest) {
     name: company.name,
   });
 }
+
+export async function DELETE(req: NextRequest, res: NextResponse) {
+  const url = new URL(req.url);
+  const companyId = url.searchParams.get('companyId');
+  if (!companyId) {
+    return new Response('Company ID is required', { status: 400 });
+  }
+
+  const company = await CompanyService.delete(companyId);
+  if (!company) {
+    return new Response('Company not found', { status: 404 });
+  }
+
+  return NextResponse.json({
+    message: 'Company deleted',
+  });
+}

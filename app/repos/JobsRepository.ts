@@ -9,7 +9,10 @@ export interface JobsModel extends Job {
 }
 
 class JobsRepository {
-  static async create(model: JobsModel, jobCount: number): Promise<JobsModel | null> {
+  static async create(
+    model: JobsModel,
+    jobCount: number,
+  ): Promise<JobsModel | null> {
     const client = await Database.getClient();
     const newJob = {
       ...model,
@@ -124,6 +127,20 @@ class JobsRepository {
 
       // Return the deleted job
       return job;
+    } catch (error: MongoServerError | any) {
+      throw new ApiError({
+        code: 500,
+        message: error.message,
+        explanation: null,
+      });
+    }
+  }
+
+  static async deleteByCompanyId(companyId: ObjectId): Promise<void> {
+    const client = await Database.getClient();
+
+    try {
+      await client.db().collection('jobs').deleteMany({ companyId });
     } catch (error: MongoServerError | any) {
       throw new ApiError({
         code: 500,

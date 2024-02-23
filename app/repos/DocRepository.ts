@@ -82,6 +82,19 @@ class DocRepository {
     }
   }
 
+  static async deleteAllByCompanyId(companyId: ObjectId): Promise<void> {
+    const client = await Database.getClient();
+    try {
+      await client.db().collection('docs').deleteMany({ companyId: companyId });
+    } catch (error: MongoServerError | any) {
+      throw new ApiError({
+        code: 500,
+        message: error.message,
+        explanation: null,
+      });
+    }
+  }
+
   static async updateOne(
     docId: ObjectId,
     update: Partial<Doc>,

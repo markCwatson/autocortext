@@ -29,14 +29,12 @@ export const queryPineconeVectorStoreAndQueryLLM = async ({
   question,
 }: QueryPineconeVectorStoreAndQueryLLMParams) => {
   const index = client.Index(indexName);
-  
+
   // Create query embedding
-  const queryEmbedding = await new OpenAIEmbeddings(
-    {
-      modelName: "text-embedding-3-large",
-    }
-  ).embedQuery(question);
-  
+  const queryEmbedding = await new OpenAIEmbeddings({
+    modelName: 'text-embedding-3-large',
+  }).embedQuery(question);
+
   // Query Pinecone index and return top 10 matches
   let queryResponse = await index.query({
     topK: 10,
@@ -63,7 +61,6 @@ export const queryPineconeVectorStoreAndQueryLLM = async ({
       input_documents: [new Document({ pageContent: concatenatedPageContent })],
       question: question,
     });
-
 
     return result.text;
   } else {
@@ -94,7 +91,9 @@ export const createPineconeIndex = async ({
     });
 
     // Wait for index initialization
-    console.log('Waiting for index to initialize... Please be patient. This may take a few minutes.');
+    console.log(
+      'Waiting for index to initialize... Please be patient. This may take a few minutes.',
+    );
     await new Promise((resolve) => setTimeout(resolve, 180000));
   } else {
     console.log(`"${indexName}" already exists.`);
@@ -113,25 +112,23 @@ export const updatePinecone = async ({
     console.log(`Processing document: ${doc.metadata.source}`);
     const txtPath = doc.metadata.source;
     const text = doc.pageContent;
-    
+
     // Create RecursiveCharacterTextSplitter instance
     const textSplitter = new RecursiveCharacterTextSplitter({
       chunkSize: 1000,
     });
-        
+
     // Split text into chunks (documents)
     const chunks = await textSplitter.createDocuments([text]);
     console.log(`Text split into ${chunks.length} chunks`);
     console.log(
       `Calling OpenAI's Embedding endpoint documents with ${chunks.length} text chunks ...`,
     );
-    
+
     // Create OpenAI embeddings for documents
-    const embeddingsArrays = await new OpenAIEmbeddings(
-      {
-        modelName: "text-embedding-3-large",
-      }
-    ).embedDocuments(
+    const embeddingsArrays = await new OpenAIEmbeddings({
+      modelName: 'text-embedding-3-large',
+    }).embedDocuments(
       chunks.map((chunk) => chunk.pageContent.replace(/\n/g, ' ')),
     );
 
@@ -170,4 +167,18 @@ export const updatePinecone = async ({
   }
 
   console.log(`Pinecone index updated with all ${docs.length} documents`);
+};
+
+export const deletePineconeIndex = async (
+  client: Pinecone,
+  indexName: string,
+) => {
+  const { indexes } = await client.listIndexes();
+  const indexExists = indexes?.some((index) => index.name === indexName);
+  if (indexExists) {
+    console.log(`Deleting index "${indexName}"...`);
+    await client.deleteIndex(indexName);
+  } else {
+    console.log(`"${indexName}" does not exist.`);
+  }
 };

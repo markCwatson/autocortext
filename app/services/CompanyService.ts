@@ -3,6 +3,13 @@ import CompanyRepository, { CompanyModel } from '@/repos/CompanyRepository';
 import UsersService, { User } from '@/services/UsersService';
 import DocService from './DocService';
 import { FOLDER } from '@/lib/constants';
+import NotificationService from './NotificationService';
+import ActivitiesService from './ActivitiesService';
+import HistoryService from './HistoryService';
+import JobsService from './JobsService';
+import { deletePineconeIndex } from '@/lib/pinecone';
+import { Pinecone } from '@pinecone-database/pinecone';
+import { DeleteObjectCommand, S3Client } from '@aws-sdk/client-s3';
 
 interface CreateCompanyInput {
   name: string;
@@ -41,10 +48,49 @@ class CompanyService {
     return company;
   }
 
-  static async delete(id: ObjectId): Promise<Boolean> {
-    const company = await CompanyRepository.selectById(id);
+  static async delete(id: string): Promise<Boolean> {
+    const company = await CompanyRepository.selectById(new ObjectId(id));
     if (!company) return false;
-    return CompanyRepository.delete(id);
+
+    await CompanyRepository.delete(new ObjectId(id));
+
+    // delete files from s3
+    const client = new S3Client({
+      region: process.env.NEXT_AWS_S3_REGION!,
+      credentials: {
+        accessKeyId: process.env.NEXT_AWS_S3_ACCESS_KEY_ID!,
+        secretAccessKey: process.env.NEXT_AWS_S3_SECRET_ACCESS_KEY!,
+      },
+    });
+
+    const docs = await DocService.getAllByCompanyId(id);
+    for (const doc of docs) {
+      if (doc.type === 'file') {
+        await client.send(
+          new DeleteObjectCommand({
+            Bucket: process.env.NEXT_AWS_S3_BUCKET_NAME,
+            Key: doc.name,
+          }),
+        );
+      }
+    }
+
+    await ActivitiesService.deleteByCompanyId(id);
+    await DocService.deleteByCompanyId(id);
+    await HistoryService.deleteByCompanyId(id);
+    await JobsService.deleteByCompanyId(id);
+    await NotificationService.deleteByCompanyId(id);
+    await UsersService.deleteByCompanyId(id);
+
+    // send request to delete index on pinecone
+    await deletePineconeIndex(
+      new Pinecone({
+        apiKey: process.env.PINECONE_API_KEY!,
+      }),
+      company.index,
+    );
+
+    return true;
   }
 
   static async getUsers(companyId: string): Promise<User[] | null> {

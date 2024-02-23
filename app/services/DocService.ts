@@ -152,6 +152,10 @@ class DocService {
     return root as Doc[];
   }
 
+  static async deleteByCompanyId(companyId: string): Promise<void> {
+    return DocRepository.deleteAllByCompanyId(new ObjectId(companyId));
+  }
+
   private static convertDocModelsToFileSystemData(
     docModels: DocModel[],
   ): FileSystemData {

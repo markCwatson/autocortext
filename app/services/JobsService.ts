@@ -5,7 +5,9 @@ import CompanyService from './CompanyService';
 
 class JobsService {
   static async create(model: JobsModel): Promise<JobsModel | null> {
-    const company = await CompanyService.incrementJobCountByCompanyId(model.companyId);
+    const company = await CompanyService.incrementJobCountByCompanyId(
+      model.companyId,
+    );
     if (!company) {
       return null;
     }
@@ -20,6 +22,10 @@ class JobsService {
 
   static async delete(id: number, companyId: string): Promise<Job> {
     return JobsRepository.delete(id, new ObjectId(companyId));
+  }
+
+  static async deleteByCompanyId(companyId: string): Promise<void> {
+    return JobsRepository.deleteByCompanyId(new ObjectId(companyId));
   }
 
   static async update(job: JobsModel): Promise<JobsModel> {

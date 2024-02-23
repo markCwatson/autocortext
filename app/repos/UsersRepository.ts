@@ -63,6 +63,23 @@ class UsersRepository {
     }
   }
 
+  static async deleteByCompanyId(companyId: ObjectId): Promise<Boolean> {
+    const client = await Database.getClient();
+    try {
+      const result = await client
+        .db()
+        .collection('users')
+        .deleteMany({ companyId });
+      return result.deletedCount > 0;
+    } catch (error: MongoServerError | any) {
+      throw new ApiError({
+        code: 500,
+        message: error.message,
+        explanation: null,
+      });
+    }
+  }
+
   static async selectByEmail(email: string): Promise<UserModel | null> {
     const mongo = await Database.getClient();
     try {

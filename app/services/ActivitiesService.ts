@@ -21,6 +21,10 @@ class ActivitiesService {
   static async delete(jobId: string): Promise<void> {
     return ActivitiesRepository.delete(new ObjectId(jobId));
   }
+
+  static async deleteByCompanyId(companyId: string): Promise<void> {
+    return ActivitiesRepository.deleteByCompanyId(new ObjectId(companyId));
+  }
 }
 
 export default ActivitiesService;

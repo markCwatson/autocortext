@@ -13,6 +13,7 @@ import { User } from 'next-auth';
 import { CompanyModel } from '@/repos/CompanyRepository';
 import { mainContainerStyle } from '@/lib/mainContainerStyle';
 import { ASCEND_ADMIN_ROLE } from '@/lib/constants';
+import DropdownButton from '@/components/DropdownButton';
 
 const columnStyle: CSSProperties = {
   height: '100%',
@@ -27,58 +28,6 @@ interface ButtonProps {
   disabled: boolean;
 }
 
-const userColumns: TableColumn[] = [
-  {
-    header: 'User',
-    accessor: 'user',
-    render: (user: User) => (
-      <div className="text-sm font-medium leading-6 text-white">
-        {user.name}
-      </div>
-    ),
-  },
-  {
-    header: 'Role',
-    accessor: 'user',
-    render: (user: User) => {
-      const statusColor =
-        user.role === ASCEND_ADMIN_ROLE
-          ? 'text-green-400 bg-green-400/10'
-          : 'text-rose-400 bg-rose-400/10';
-
-      return (
-        <div className="flex items-center justify-end gap-x-2 sm:justify-start">
-          <div className={statusColor + ' flex-none rounded-full p-1'}>
-            <div className="h-1.5 w-1.5 rounded-full bg-current" />
-          </div>
-          <div className="hidden text-white sm:block">{user.role}</div>
-        </div>
-      );
-    },
-  },
-  {
-    header: 'Email',
-    accessor: 'user',
-    render: (user: User) => {
-      return <div className="hidden text-white sm:block">{user.email}</div>;
-    },
-  },
-];
-
-const companyColumns: TableColumn[] = [
-  {
-    header: 'Company name',
-    accessor: 'company',
-    render: (company: Company) => (
-      <div className="flex items-center gap-x-4">
-        <div className="truncate text-sm font-medium leading-6 text-white">
-          {company.name}
-        </div>
-      </div>
-    ),
-  },
-];
-
 export default function Dashboard() {
   const userValue = useUserContext();
   const [users, setUsers] = useState<User[] | null>(null);
@@ -90,6 +39,74 @@ export default function Dashboard() {
     companyId: null,
     companyName: '',
   });
+
+  const userColumns: TableColumn[] = [
+    {
+      header: 'User',
+      accessor: 'user',
+      render: (user: User) => (
+        <div className="text-sm font-medium leading-6 text-white">
+          {user.name}
+        </div>
+      ),
+    },
+    {
+      header: 'Role',
+      accessor: 'user',
+      render: (user: User) => {
+        const statusColor =
+          user.role === ASCEND_ADMIN_ROLE
+            ? 'text-green-400 bg-green-400/10'
+            : 'text-rose-400 bg-rose-400/10';
+
+        return (
+          <div className="flex items-center justify-end gap-x-2 sm:justify-start">
+            <div className={statusColor + ' flex-none rounded-full p-1'}>
+              <div className="h-1.5 w-1.5 rounded-full bg-current" />
+            </div>
+            <div className="hidden text-white sm:block">{user.role}</div>
+          </div>
+        );
+      },
+    },
+    {
+      header: 'Email',
+      accessor: 'user',
+      render: (user: User) => {
+        return <div className="hidden text-white sm:block">{user.email}</div>;
+      },
+    },
+  ];
+
+  const companyColumns: TableColumn[] = [
+    {
+      header: 'Company name',
+      accessor: 'company',
+      render: (company: Company) => (
+        <div className="flex items-center gap-x-4">
+          <div className="truncate text-sm font-medium leading-6 text-white">
+            {company.name}
+          </div>
+        </div>
+      ),
+    },
+    {
+      header: '',
+      accessor: 'company',
+      render: (company: Company) => (
+        <div className="flex items-center gap-x-4">
+          <DropdownButton
+            selection={''}
+            listItems={['delete']}
+            color="ghost"
+            handler={(item) =>
+              item === 'delete' && deleteCompany(company._id!.toString())
+            }
+          />
+        </div>
+      ),
+    },
+  ];
 
   useEffect(() => {
     if (userValue.user.role !== ASCEND_ADMIN_ROLE) {
@@ -213,10 +230,22 @@ export default function Dashboard() {
   };
 
   const deleteCompany = async (companyId: string) => {
-    if (!confirm('Are you sure you want to delete this company?')) return;
+    if (
+      !confirm(
+        'Are you sure you want to delete this company? This action will delete ALL data associated with this company and CANNOT be undone.',
+      )
+    )
+      return;
+
+    if (
+      !confirm(
+        'Are you 100% sure? Again, this deletes EVERYTHING, and FOREVER.',
+      )
+    )
+      return;
 
     try {
-      const res = await fetch(`/api/company/${companyId}`, {
+      const res = await fetch(`/api/company?companyId=${companyId}`, {
         method: 'DELETE',
       });
 
@@ -238,6 +267,7 @@ export default function Dashboard() {
       });
 
       fetchCompanies();
+      fetchUsers();
     } catch (error) {
       console.log('error on page:', error);
       toast({
@@ -337,11 +367,6 @@ export default function Dashboard() {
         {/** Companies */}
         {userValue.user.role === ASCEND_ADMIN_ROLE && (
           <div className="lg:col-span-3 bg-my-color8 border rounded overflow-visible">
-            {/* <DropdownButton
-            selection="Filter by name"
-            listItems={['Coming soon']}
-            color="ghost"
-          /> */}
             {/* todo: overflow-visible required here to allow summary popover.
             This causes history list to grow. Consider doing something else. */}
             <div className="flex flex-col gap-2 w-full h-full overflow-visible pt-4">
@@ -376,11 +401,6 @@ export default function Dashboard() {
               : 'lg:col-span-5'
           } pb-8 bg-my-color8 border rounded overflow-scroll`}
         >
-          {/* <DropdownButton
-            selection="Filter by role"
-            listItems={['All users', 'Admin', 'Users', 'Guests']}
-            color="ghost"
-          /> */}
           <div className="flex flex-col gap-2 w-full h-full overflow-visible pt-4">
             {users ? (
               <Table data={users} columns={userColumns} />

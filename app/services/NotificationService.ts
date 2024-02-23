@@ -29,6 +29,10 @@ class NotificationService {
       new ObjectId(userId),
     );
   }
+
+  static async deleteByCompanyId(id: string): Promise<boolean> {
+    return NotificationRepository.deleteByCompanyId(new ObjectId(id));
+  }
 }
 
 export default NotificationService;

@@ -49,6 +49,10 @@ class UsersService {
     return UsersRepository.delete(id);
   }
 
+  static async deleteByCompanyId(companyId: string): Promise<Boolean> {
+    return UsersRepository.deleteByCompanyId(new ObjectId(companyId));
+  }
+
   static async selectByEmail(email: string): Promise<User | null> {
     return UsersRepository.selectByEmail(email);
   }
