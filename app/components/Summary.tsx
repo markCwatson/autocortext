@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { AiMessage } from '@/providers/AiMessagesProvider';
@@ -18,6 +18,15 @@ export default function Summary({ messages }: SummaryProps) {
     ? summaryMessage.content.replace('Auto Cortext: Summary:', 'Summary:')
     : 'No summary available';
 
+  const summaryTextWithBreaks = summaryText
+    .split('\n')
+    .map((line, index, array) => (
+      <React.Fragment key={index}>
+        {line}
+        {index < array.length - 1 && <br />}
+      </React.Fragment>
+    ));
+
   return (
     <Popover className="relative">
       <Popover.Button className="text-my-color1">
@@ -34,11 +43,11 @@ export default function Summary({ messages }: SummaryProps) {
         leaveTo="opacity-0 translate-y-1"
       >
         <Popover.Panel className="absolute z-50 left-1/2 transform -translate-x-1/4  px-2">
-          <div className="w-screen max-w-md flex-auto overflow-hidden rounded-sm bg-my-color1 text-sm leading-6 shadow-lg ring-1 ring-my-color10/5">
+          <div className="w-screen max-w-md flex-auto overflow-scroll rounded-sm bg-my-color1 text-sm leading-6 shadow-lg ring-1 ring-my-color10/5">
             <div className="p-2">
               <div className="group relative flex gap-x-6 rounded-lg p-2">
                 <div>
-                  <p className="text-my-color10">{summaryText}</p>
+                  <p className="text-my-color10">{summaryTextWithBreaks}</p>
                 </div>
               </div>
             </div>

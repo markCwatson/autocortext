@@ -99,9 +99,11 @@ export default function Troubleshoot() {
             id: `1`,
             content: `Auto Cortext: Hello ${session.data!.user.name}.
 
-          I am ready to assist you in troubleshooting problems with your equipment. If you explain the issue, I will suggest a solution.
+            Today's date is ${
+              new Date().toISOString().split('T')[0]
+            }, and the local time is ${new Date().toLocaleTimeString()}.
 
-          What machine are you having trouble with?`,
+            What machine are you having trouble with?`,
             role: 'assistant',
           },
         ]);
@@ -144,7 +146,11 @@ export default function Troubleshoot() {
           id: `${prevMessages.length + 1}`,
           content: `Auto Cortext: Hello ${session.data.user.name}.
 
-        What machine are you having trouble with? Please select a machine from the side menu.`,
+          Today's date is ${
+            new Date().toISOString().split('T')[0]
+          }, and the local time is ${new Date().toLocaleTimeString()}.
+
+          What machine are you having trouble with? Please select a machine from the side menu.`,
           role: 'assistant',
         },
       ]);
@@ -468,9 +474,11 @@ export default function Troubleshoot() {
         id: `1`,
         content: `Auto Cortext: Hello ${session.data!.user.name}.
 
-      I am ready to assist you in troubleshooting problems with your equipment. If you explain the issue, I will suggest a solution.
+        Today's date is ${
+          new Date().toISOString().split('T')[0]
+        }, and the local time is ${new Date().toLocaleTimeString()}.
 
-      What machine are you having trouble with?`,
+        What machine are you having trouble with?`,
         role: 'assistant',
       },
     ]);
@@ -700,7 +708,7 @@ export default function Troubleshoot() {
   }
 
   return (
-    <main className="mx-auto px-4 sm:px-6 lg:px-8 " style={mainContainerStyle}>
+    <main className="mx-auto px-4 sm:px-6 lg:px-8" style={mainContainerStyle}>
       <div
         className="grid pt-2 grid-cols-1 lg:grid-cols-12 gap-x-4 gap-y-10 "
         style={columnStyle}
@@ -740,7 +748,7 @@ export default function Troubleshoot() {
                       selectedHistoryIndex === index ? 'bg-my-color5' : ''
                     }`}
                   >
-                    <div className="flex justify-start items-center gap-2 ">
+                    <div className="flex justify-start items-center gap-2">
                       <Summary messages={item.messages} />
                       <button
                         onClick={(e) => hanldeSelectHistory(e, index)}

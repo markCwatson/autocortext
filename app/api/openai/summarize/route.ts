@@ -18,6 +18,7 @@ export async function POST(request: Request) {
 }
 
 function generatePrompt(conversation: string): string {
-  return `Summarize the following conversation into a few sentences:\n\n
-  Conversation: ${conversation}`;
+  return `Summarize the following conversation into a few sentences. Split it up into the following sections, each on a new line: \n\n
+  Date, Time, Name, Description, Actions, Conclusion, Recommendations, \n\n
+  Here is the conversation: ${conversation}`;
 }

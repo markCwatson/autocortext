@@ -6,5 +6,5 @@ export const mainContainerStyle: CSSProperties = {
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
-  overflow: 'hidden',
+  overflow: 'scroll',
 };
