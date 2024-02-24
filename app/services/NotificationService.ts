@@ -11,7 +11,7 @@ class NotificationService {
       {
         title: data.title,
         description: data.description,
-        recipientId: new ObjectId(data.recipientId),
+        recipientId: !data.recipientId ? null : new ObjectId(data.recipientId),
         dateTime: data.dateTime,
       },
     );

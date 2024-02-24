@@ -13,7 +13,7 @@ import { Company } from '@/services/CompanyService';
 import { User } from 'next-auth';
 import { CompanyModel } from '@/repos/CompanyRepository';
 import { mainContainerStyle } from '@/lib/mainContainerStyle';
-import { ASCEND_ADMIN_ROLE } from '@/lib/constants';
+import { ASCEND_ADMIN_ROLE, ADMIN_ROLE } from '@/lib/constants';
 import DropdownButton from '@/components/DropdownButton';
 
 const columnStyle: CSSProperties = {
@@ -56,9 +56,9 @@ export default function Dashboard() {
       accessor: 'user',
       render: (user: User) => {
         const statusColor =
-          user.role === ASCEND_ADMIN_ROLE
+          user.role === ASCEND_ADMIN_ROLE || user.role === ADMIN_ROLE
             ? 'text-green-400 bg-green-400/10'
-            : 'text-rose-400 bg-rose-400/10';
+            : 'text-blue-400 bg-blue-400/10';
 
         return (
           <div className="flex items-center justify-end gap-x-2 sm:justify-start">

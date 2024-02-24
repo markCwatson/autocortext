@@ -55,7 +55,7 @@ export type Doc = {
 export type Notification = {
   title: string;
   description: string;
-  recipientId?: string | ObjectId;
+  recipientId?: string | ObjectId | null;
   dateTime: string;
 };
 

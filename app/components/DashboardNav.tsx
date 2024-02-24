@@ -40,6 +40,11 @@ export const dashboardVariants = cva(
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
   {
+    name: 'Admin',
+    href: '/dashboard/admin',
+    icon: UserGroupIcon,
+  },
+  {
     name: 'Docs',
     href: '/dashboard/docs',
     icon: DocumentDuplicateIcon,
@@ -53,11 +58,6 @@ const navigation = [
     name: 'Jobs',
     href: '/dashboard/jobs',
     icon: ClockIcon,
-  },
-  {
-    name: 'Admin',
-    href: '/dashboard/admin',
-    icon: UserGroupIcon,
   },
 ];
 
