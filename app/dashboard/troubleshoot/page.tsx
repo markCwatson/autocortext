@@ -410,35 +410,7 @@ export default function Troubleshoot() {
     let messagesCopy = messages;
 
     if (summarize) {
-      const res = await fetch('/api/openai/summarize', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ conversation: messages.map((m) => m.content) }),
-      });
-
-      if (res.ok) {
-        const { summary } = await res.json();
-
-        messagesCopy.push({
-          id: `${messagesCopy.length + 1}`,
-          content: `Auto Cortext: Summary: ${summary}`,
-          role: 'assistant',
-        });
-
-        toast({
-          title: 'Success',
-          message: 'Summary generated.',
-          type: 'success',
-        });
-      } else {
-        toast({
-          title: 'Failed to generate summary.',
-          message: 'Please try again.',
-          type: 'error',
-        });
-      }
+      await summarizeMessages();
     }
 
     const res = await fetch('/api/history', {
@@ -668,7 +640,7 @@ export default function Troubleshoot() {
       duration: 2000,
     });
 
-    handleSave({ summarize: false });
+    handleSave({ summarize: true });
     router.push('/dashboard/jobs');
   }
 
