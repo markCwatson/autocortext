@@ -504,9 +504,11 @@ export default function Troubleshoot() {
     const severityMatch = input.match(severityPattern);
 
     // Extract matched groups if matches are found, otherwise use empty strings
-    const title = titleMatch ? titleMatch[1].trim() : '';
-    const description = descriptionMatch ? descriptionMatch[1].trim() : '';
-    const severity = severityMatch ? severityMatch[1].trim() : '';
+    const title = titleMatch ? titleMatch[1].trim() : 'Enter title here';
+    const description = descriptionMatch
+      ? descriptionMatch[1].trim()
+      : 'Could not automatically generate title, description, and severity level. Please set manually.';
+    const severity = severityMatch ? severityMatch[1].trim() : 'Medium';
 
     return { title, description, severity };
   }
@@ -541,16 +543,6 @@ export default function Troubleshoot() {
 
     const { job } = await resp.json();
     const { title, description, severity } = parseInput(job);
-
-    if (!title || !description || !severity) {
-      toast({
-        title: 'Error',
-        message: 'Error parsing job',
-        type: 'error',
-        duration: 2000,
-      });
-      return;
-    }
 
     let severityFormatted =
       severity.charAt(0).toUpperCase() + severity.slice(1).toLowerCase();
