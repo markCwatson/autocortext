@@ -47,6 +47,7 @@ export const queryPineconeVectorStoreAndQueryLLM = async ({
     // Create an OpenAI instance and load the QAStuffChain
     const llm = new OpenAI({
       modelName: 'gpt-4-0125-preview',
+      temperature: 0.6,
     });
 
     const chain = loadQAStuffChain(llm);

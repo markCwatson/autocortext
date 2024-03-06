@@ -24,6 +24,7 @@ import classNames from '@/lib/classNames';
 import { Activity, Job } from '@/types';
 import LogoBrainSvg from '@/components/LogoBrainSvg';
 import { mainContainerStyle } from '@/lib/mainContainerStyle';
+import { Loader2 } from 'lucide-react';
 
 // todo: a lot of duplicate code here with docs page. refactor into a component
 
@@ -82,6 +83,7 @@ export default function Troubleshoot() {
     title: '',
   });
   const [newChat, setNewChat] = useState(false);
+  const [busyButtonIndex, setBusyButtonIndex] = useState(-1);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
     if (isEditingTitle === id) {
@@ -371,6 +373,18 @@ export default function Troubleshoot() {
       return;
     }
 
+    buttons.map((b, index) => {
+      if (b.title === 'Summarize') {
+        setBusyButtonIndex(index);
+      }
+    });
+
+    toast({
+      title: 'Please wait...',
+      message: 'Summary is being generated.',
+      type: 'success',
+    });
+
     const res = await fetch('/api/openai/summarize', {
       method: 'POST',
       headers: {
@@ -403,14 +417,70 @@ export default function Troubleshoot() {
         type: 'error',
       });
     }
+
+    setBusyButtonIndex(-1);
   }
 
   async function handleSave({ summarize }: { summarize: boolean }) {
     setShowModal(false);
+
     let messagesCopy = messages;
 
+    setMessages([
+      {
+        id: `1`,
+        content: `Auto Cortext: Hello ${session.data!.user.name}.
+
+        Today's date is ${
+          new Date().toISOString().split('T')[0]
+        }, and the local time is ${new Date().toLocaleTimeString()}.
+
+        What machine are you having trouble with?`,
+        role: 'assistant',
+      },
+    ]);
+
     if (summarize) {
-      await summarizeMessages();
+      toast({
+        title: 'Please wait...',
+        message: 'Summary is being generated.',
+        type: 'success',
+      });
+
+      const res = await fetch('/api/openai/summarize', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          conversation: messagesCopy.map((m) => m.content),
+        }),
+      });
+
+      if (res.ok) {
+        const { summary } = await res.json();
+
+        messagesCopy = [
+          ...messagesCopy,
+          {
+            id: `${messagesCopy.length + 1}`,
+            content: `Auto Cortext: Summary: ${summary}`,
+            role: 'assistant',
+          },
+        ];
+
+        toast({
+          title: 'Success',
+          message: 'Summary generated.',
+          type: 'success',
+        });
+      } else {
+        toast({
+          title: 'Failed to generate summary.',
+          message: 'Please try again.',
+          type: 'error',
+        });
+      }
     }
 
     const res = await fetch('/api/history', {
@@ -440,20 +510,6 @@ export default function Troubleshoot() {
     }
 
     fetchHistory();
-
-    setMessages([
-      {
-        id: `1`,
-        content: `Auto Cortext: Hello ${session.data!.user.name}.
-
-        Today's date is ${
-          new Date().toISOString().split('T')[0]
-        }, and the local time is ${new Date().toLocaleTimeString()}.
-
-        What machine are you having trouble with?`,
-        role: 'assistant',
-      },
-    ]);
   }
 
   async function updateTitle(id: string) {
@@ -522,6 +578,12 @@ export default function Troubleshoot() {
       });
       return;
     }
+
+    buttons.map((b, index) => {
+      if (b.title === 'Create Job') {
+        setBusyButtonIndex(index);
+      }
+    });
 
     const resp = await fetch('/api/openai/create-job', {
       method: 'POST',
@@ -633,6 +695,7 @@ export default function Troubleshoot() {
     });
 
     handleSave({ summarize: true });
+    setBusyButtonIndex(-1);
     router.push('/dashboard/jobs');
   }
 
@@ -817,8 +880,20 @@ export default function Troubleshoot() {
                       'w-full px-10 justify-start',
                     )}
                   >
-                    <b.icon className="h-4 w-4 shrink-0" aria-hidden="true" />
-                    {b.title}
+                    {busyButtonIndex !== index ? (
+                      <>
+                        <b.icon
+                          className="h-4 w-4 shrink-0"
+                          aria-hidden="true"
+                        />
+                        {b.title}
+                      </>
+                    ) : (
+                      <div className="flex items-center gap-x-2">
+                        <Loader2 className="h-4 w-4 animate-spin text-green-600" />
+                        <p>Processing...</p>
+                      </div>
+                    )}
                   </Button>
                 </li>
               ))}
