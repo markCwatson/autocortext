@@ -15,7 +15,7 @@
     "@dnd-kit/sortable": "^8.0.0",
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
-    "@pinecone-database/pinecone": "^2.0.1",
+    "@pinecone-database/pinecone": "^2.1.0",
     "@react-pdf/renderer": "^3.1.17",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",

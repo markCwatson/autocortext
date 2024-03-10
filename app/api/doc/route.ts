@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import DocService from '@/services/DocService';
 import { FILE, FOLDER } from '@/lib/constants';
+import { Pinecone } from '@pinecone-database/pinecone';
+import { deletePineconeVectors } from '@/lib/pinecone';
 
 export async function POST(req: NextRequest) {
   const url = new URL(req.url);
@@ -100,6 +102,7 @@ export async function DELETE(req: NextRequest) {
   }
 
   if (type === FILE) {
+    // delete file from S3
     const s3Client = new S3Client({
       region: process.env.NEXT_AWS_S3_REGION!,
       credentials: {
@@ -108,12 +111,26 @@ export async function DELETE(req: NextRequest) {
       },
     });
 
-    const params = {
-      Bucket: process.env.NEXT_AWS_S3_BUCKET_NAME,
-      Key: doc.name,
-    };
+    await s3Client.send(
+      new DeleteObjectCommand({
+        Bucket: process.env.NEXT_AWS_S3_BUCKET_NAME,
+        Key: doc.name,
+      }),
+    );
 
-    await s3Client.send(new DeleteObjectCommand(params));
+    // delete indexes from Pinecone
+    const client = new Pinecone({
+      apiKey: process.env.PINECONE_API_KEY || '',
+    });
+
+    const indexName = await DocService.getIndexByDocName(doc.name);
+    if (indexName) {
+      await deletePineconeVectors({
+        client,
+        indexName,
+        prefix: doc.name,
+      });
+    }
   }
 
   const deleted = await DocService.delete({

@@ -3,7 +3,12 @@ import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { OpenAI } from 'langchain/llms/openai';
 import { loadQAStuffChain } from 'langchain/chains';
 import { Document } from 'langchain/document';
-import { type Pinecone } from '@pinecone-database/pinecone';
+import {
+  RecordMetadata,
+  type Pinecone,
+  Index,
+} from '@pinecone-database/pinecone';
+import { ListResponse } from '@pinecone-database/pinecone/dist/pinecone-generated-ts-fetch';
 
 interface QueryPineconeVectorStoreAndQueryLLMParams {
   client: Pinecone;
@@ -170,16 +175,49 @@ export const updatePinecone = async ({
   console.log(`Pinecone index updated with all ${docs.length} documents`);
 };
 
-export const deletePineconeIndex = async (
-  client: Pinecone,
+export const deletePineconeVectors = async ({
+  client,
+  indexName,
+  prefix,
+}: {
+  client: Pinecone;
+  indexName: string;
+  prefix: string;
+}) => {
+  const index = client.index(indexName).namespace('');
+  let results = await index.listPaginated({ prefix });
+
+  if (!results.vectors || !results.vectors.length) {
+    console.log(`No vectors found with prefix ${prefix} in index ${indexName}`);
+    return;
+  }
+
+  await deleteVectors(index, results, prefix, indexName);
+};
+
+// recursive function to delete vectors
+const deleteVectors = async (
+  index: Index<RecordMetadata>,
+  results: ListResponse,
+  prefix: string,
   indexName: string,
 ) => {
-  const { indexes } = await client.listIndexes();
-  const indexExists = indexes?.some((index) => index.name === indexName);
-  if (indexExists) {
-    console.log(`Deleting index "${indexName}"...`);
-    await client.deleteIndex(indexName);
-  } else {
-    console.log(`"${indexName}" does not exist.`);
+  if (!results || !results.vectors || !results.vectors.length) {
+    return;
+  }
+
+  const ids = results.vectors!.map((vector) => vector.id);
+  await index.deleteMany(ids);
+  console.log(
+    `Deleted ${ids.length} vectors with prefix ${prefix} in index ${indexName}`,
+  );
+
+  if (results.pagination?.next) {
+    results = await index.listPaginated({
+      prefix,
+      paginationToken: results.pagination.next,
+    });
+
+    deleteVectors(index, results, prefix, indexName);
   }
 };
