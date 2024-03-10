@@ -175,6 +175,20 @@ export const updatePinecone = async ({
   console.log(`Pinecone index updated with all ${docs.length} documents`);
 };
 
+export const deletePineconeIndex = async (
+  client: Pinecone,
+  indexName: string,
+) => {
+  const { indexes } = await client.listIndexes();
+  const indexExists = indexes?.some((index) => index.name === indexName);
+  if (indexExists) {
+    console.log(`Deleting index "${indexName}"...`);
+    await client.deleteIndex(indexName);
+  } else {
+    console.log(`"${indexName}" does not exist.`);
+  }
+};
+
 export const deletePineconeVectors = async ({
   client,
   indexName,
