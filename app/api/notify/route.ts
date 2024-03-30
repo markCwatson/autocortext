@@ -48,16 +48,21 @@ export async function GET(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   const url = new URL(req.url);
-  const id = url.searchParams.get('id');
   const userId = url.searchParams.get('userId');
-  if (!id || !userId) {
+  if (!userId) {
+    return NextResponse.json({ error: 'userId is required' }, { status: 400 });
+  }
+
+  const data = await req.json();
+  const ids = data.ids;
+  if (!ids || !Array.isArray(ids)) {
     return NextResponse.json(
-      { error: 'id and userId are required' },
+      { error: 'ids must be an array of strings' },
       { status: 400 },
     );
   }
 
-  const result = await NotificationService.markAsRead(id, userId);
+  const result = await NotificationService.markAsRead(userId, ids);
   if (!result) {
     return NextResponse.json(
       { error: 'Failed to mark notification as read' },

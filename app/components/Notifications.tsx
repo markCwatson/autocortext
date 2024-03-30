@@ -58,13 +58,18 @@ export default function Notifications() {
     setNotifications(displayedNotifications);
   };
 
-  const markNotificationAsRead = async (id: string) => {
-    const response = await fetch(
-      `/api/notify?id=${id}&userId=${userValue.user.id}`,
-      {
-        method: 'PUT',
+  const markNotificationsAsRead = async (ids: string[]) => {
+    if (ids.length === 0) {
+      return;
+    }
+
+    const response = await fetch(`/api/notify?userId=${userValue.user.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    );
+      body: JSON.stringify({ ids }),
+    });
     if (!response.ok) {
       toast({
         title: 'Error',
@@ -103,9 +108,22 @@ export default function Notifications() {
           <div className="p-2">
             {notifications.length > 0 ? (
               <>
-                <div className="text-center text-my-color8 text-sm border-b">
-                  <div className="font-semibold pb-2">Notifications</div>
+                <div className="flex justify-between items-center text-my-color8 text-sm border-b">
+                  <div className="flex-1 flex justify-center font-semibold ml-10">
+                    Notifications
+                  </div>
+                  <button
+                    className="text-my-color8 text-xs"
+                    onClick={() => {
+                      markNotificationsAsRead(
+                        notifications.map((n) => n._id!.toString()),
+                      );
+                    }}
+                  >
+                    Clear All
+                  </button>
                 </div>
+
                 {notifications.map((item, index) => (
                   <Menu.Item key={item._id!.toString()}>
                     {({ active }) => (
@@ -114,7 +132,7 @@ export default function Notifications() {
                         description={item.description}
                         dateTime={item.dateTime}
                         onClick={() => {
-                          markNotificationAsRead(item._id!.toString());
+                          markNotificationsAsRead([item._id!.toString()]);
                         }}
                       />
                     )}

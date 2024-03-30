@@ -8,16 +8,13 @@ export interface NotificationModel extends Notification {
 }
 
 class NotificationRepository {
-  static async create(
-    companyId: ObjectId,
-    model: Notification,
-  ): Promise<NotificationModel> {
+  static async create(model: Notification): Promise<NotificationModel> {
     const client = await Database.getClient();
     try {
       const { insertedId } = await client
         .db()
         .collection('notifications')
-        .insertOne({ ...model, companyId, isReadBy: [] });
+        .insertOne(model);
       return client
         .db()
         .collection('notifications')
@@ -51,14 +48,14 @@ class NotificationRepository {
     }
   }
 
-  static async markAsRead(id: ObjectId, userId: ObjectId): Promise<boolean> {
+  static async markAsRead(userId: ObjectId, ids: ObjectId[]): Promise<boolean> {
     const client = await Database.getClient();
     try {
       const result = await client
         .db()
-        .collection('notifications')
-        .updateOne({ _id: id }, { $push: { isReadBy: userId } });
-      return result.modifiedCount === 1;
+        .collection<NotificationModel>('notifications')
+        .updateMany({ _id: { $in: ids } }, { $push: { isReadBy: userId } });
+      return result.modifiedCount === ids.length;
     } catch (error: MongoServerError | any) {
       throw new ApiError({
         code: 500,

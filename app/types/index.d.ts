@@ -57,6 +57,8 @@ export type Notification = {
   description: string;
   recipientId?: string | ObjectId | null;
   dateTime: string;
+  isReadBy?: ObjectId[];
+  companyId?: string | ObjectId;
 };
 
 export type Feedback = {

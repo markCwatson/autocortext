@@ -6,15 +6,14 @@ import { ObjectId } from 'mongodb';
 
 class NotificationService {
   static async create(companyId: string, data: Notification): Promise<boolean> {
-    const notification = await NotificationRepository.create(
-      new ObjectId(companyId),
-      {
-        title: data.title,
-        description: data.description,
-        recipientId: !data.recipientId ? null : new ObjectId(data.recipientId),
-        dateTime: data.dateTime,
-      },
-    );
+    const notification = await NotificationRepository.create({
+      title: data.title,
+      description: data.description,
+      recipientId: !data.recipientId ? null : new ObjectId(data.recipientId),
+      dateTime: data.dateTime,
+      isReadBy: [],
+      companyId: new ObjectId(companyId),
+    });
     return !!notification;
   }
 
@@ -28,10 +27,10 @@ class NotificationService {
     );
   }
 
-  static async markAsRead(id: string, userId: string): Promise<boolean> {
+  static async markAsRead(userId: string, ids: string[]): Promise<boolean> {
     return NotificationRepository.markAsRead(
-      new ObjectId(id),
       new ObjectId(userId),
+      ids.map((id) => new ObjectId(id)),
     );
   }
 
