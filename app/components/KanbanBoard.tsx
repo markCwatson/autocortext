@@ -251,12 +251,15 @@ export default function KanbanBoard(props: KanbanBoardProps) {
         body: JSON.stringify(editedActivity),
       });
 
-      toast({
-        title: 'Success',
-        message: 'Job updated',
-        type: 'success',
-        duration: 2000,
-      });
+      if (process.env.NODE_ENV === 'development') {
+        // too many notifications
+        toast({
+          title: 'Success',
+          message: 'Job updated',
+          type: 'success',
+          duration: 2000,
+        });
+      }
     }
 
     props.fetchJobs(userValue.user.companyId as string);
