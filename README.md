@@ -1,8 +1,8 @@
-# Auto Cortext by Ascend Engineering
+# Auto Cortext by Ascend Technologies
 
 ## Getting Started
 
-To run locally, or to contribute to this project, you have to follow these setup instructions. 
+To run locally, or to contribute to this project, you have to follow these setup instructions.
 
 ## Node
 
@@ -23,6 +23,7 @@ nvm install v19.1.0
 ```
 
 ### nvm (Mac and Linux)
+
 Install `nvm` to manage node versions, and make sure `v19.1.0` is one of the versions installed. Run this to setup your node environment.
 
 ```shell

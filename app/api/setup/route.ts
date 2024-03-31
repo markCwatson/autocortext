@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     apiKey: process.env.PINECONE_API_KEY || '',
   });
 
-  // this is thw index name for ascend engineering (as of Feb 2024)
+  // this is thw index name for ascend technologies (as of Feb 2024)
   const indexName = 'auto-cortext';
   const vectorDimension = 3072;
 
