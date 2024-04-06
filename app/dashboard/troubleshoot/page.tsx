@@ -382,7 +382,7 @@ export default function Troubleshoot() {
     toast({
       title: 'Please wait...',
       message: 'Summary is being generated.',
-      type: 'success',
+      type: 'info',
     });
 
     const res = await fetch('/api/openai/summarize', {
@@ -444,7 +444,7 @@ export default function Troubleshoot() {
       toast({
         title: 'Please wait...',
         message: 'Summary is being generated.',
-        type: 'success',
+        type: 'info',
       });
 
       const res = await fetch('/api/openai/summarize', {

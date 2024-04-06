@@ -173,7 +173,7 @@ export default function DocUpload({
       toast({
         title: 'Info',
         message: 'Upload in progress. Please wait...',
-        type: 'success',
+        type: 'info',
       });
       return;
     }
