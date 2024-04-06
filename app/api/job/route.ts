@@ -1,4 +1,4 @@
-import JobsService from '@/services/JobsService';
+import JobsService, { personInfoModel } from '@/services/JobsService';
 import { NextRequest, NextResponse } from 'next/server';
 import { JobsModel } from '@/repos/JobsRepository';
 import CompanyService from '@/services/CompanyService';
@@ -34,13 +34,22 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const data = (await req.json()) as JobsModel;
-  if (!data.companyId) {
+  const {
+    job,
+    person,
+  }: {
+    job: JobsModel;
+    person: personInfoModel;
+  } = await req.json();
+  if (!job || !person) {
+    return new Response('Job and person info are required', { status: 400 });
+  }
+  if (!job.companyId) {
     return new Response('Company ID is required', { status: 400 });
   }
 
-  const job = await JobsService.create(data);
-  return NextResponse.json(job);
+  const createdJob = await JobsService.create(job, person);
+  return NextResponse.json(createdJob);
 }
 
 export async function DELETE(req: NextRequest) {

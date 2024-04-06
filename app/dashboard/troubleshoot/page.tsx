@@ -21,7 +21,7 @@ import DialogModal from '@/components/DialogModal';
 import Summary from '@/components/Summary';
 import { Button } from '@/components/Button';
 import classNames from '@/lib/classNames';
-import { Activity, Job } from '@/types';
+import { Job } from '@/types';
 import LogoBrainSvg from '@/components/LogoBrainSvg';
 import { mainContainerStyle } from '@/lib/mainContainerStyle';
 import { Loader2 } from 'lucide-react';
@@ -642,7 +642,13 @@ export default function Troubleshoot() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(newJob),
+      body: JSON.stringify({
+        job: newJob,
+        person: {
+          name: session.data?.user.name!,
+          img: session.data?.user.image || '',
+        },
+      }),
     });
 
     if (!res.ok) {
@@ -652,38 +658,6 @@ export default function Troubleshoot() {
         type: 'error',
         duration: 2000,
       });
-      return;
-    }
-
-    const createdJob = await res.json();
-
-    const createdActivity: Activity = {
-      id: 1,
-      type: 'created',
-      person: {
-        name: session.data?.user.name!,
-        img: session.data?.user.image || '',
-      },
-      dateTime: new Date().toISOString(),
-      jobId: createdJob._id,
-    };
-
-    res = await fetch('/api/activity', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(createdActivity),
-    });
-
-    if (!res.ok) {
-      toast({
-        title: 'Error',
-        message: "Error creating 'created' action",
-        type: 'error',
-        duration: 2000,
-      });
-
       return;
     }
 

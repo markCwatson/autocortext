@@ -1,17 +1,45 @@
 import JobsRepository, { JobsModel } from '@/repos/JobsRepository';
-import { Job } from '@/types';
+import { Activity, Job } from '@/types';
 import { ObjectId } from 'mongodb';
 import CompanyService from '@/services/CompanyService';
+import ActivitiesService from './ActivitiesService';
+
+export interface personInfoModel {
+  name: string;
+  img: string;
+}
 
 class JobsService {
-  static async create(model: JobsModel): Promise<JobsModel | null> {
+  static async create(
+    model: JobsModel,
+    personInfo: personInfoModel,
+  ): Promise<JobsModel | null> {
     const company = await CompanyService.incrementJobCountByCompanyId(
       model.companyId,
     );
     if (!company) {
       return null;
     }
-    return JobsRepository.create(model, company.jobCount);
+
+    const createdJob = await JobsRepository.create(model, company.jobCount);
+    if (!createdJob) {
+      return null;
+    }
+
+    const createdActivity: Activity = {
+      id: 1,
+      type: 'created',
+      person: {
+        name: personInfo.name!,
+        img: personInfo.img || '',
+      },
+      dateTime: new Date().toISOString(),
+      jobId: createdJob._id,
+    };
+
+    await ActivitiesService.create(createdActivity);
+
+    return createdJob;
   }
 
   static async getJobsByCompanyId(
