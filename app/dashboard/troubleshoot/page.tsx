@@ -436,13 +436,13 @@ export default function Troubleshoot() {
   async function handleSave({ summarize }: { summarize: boolean }) {
     setShowModal(false);
 
-    toast({
-      title: 'Please wait...',
-      message: `The conversation is being saved${
-        summarize ? ' with a summary' : ''
-      }.`,
-      type: 'info',
-    });
+    if (summarize) {
+      toast({
+        title: 'Please wait...',
+        message: 'The conversation is being summarized then saved.',
+        type: 'info',
+      });
+    }
 
     const res = await fetch('/api/history', {
       method: 'POST',
@@ -514,110 +514,32 @@ export default function Troubleshoot() {
     fetchHistory();
   }
 
-  // Function to parse the input string using regex
-  function parseInput(input: string): {
-    title: string;
-    description: string;
-    severity: string;
-  } {
-    // Define regex patterns for matching title, description, and severity
-    const titlePattern = /(?:job title|title):\s*(.+)/i;
-    const descriptionPattern = /description:\s*(.+)/i;
-    const severityPattern = /severity:\s*(.+)/i;
-
-    // Use regex to find matches
-    const titleMatch = input.match(titlePattern);
-    const descriptionMatch = input.match(descriptionPattern);
-    const severityMatch = input.match(severityPattern);
-
-    // Extract matched groups if matches are found, otherwise use empty strings
-    const title = titleMatch ? titleMatch[1].trim() : 'Enter title here';
-    const description = descriptionMatch
-      ? descriptionMatch[1].trim()
-      : 'Could not automatically generate title, description, and severity level. Please set manually.';
-    const severity = severityMatch ? severityMatch[1].trim() : 'Medium';
-
-    return { title, description, severity };
-  }
-
   async function createJob() {
-    if (messages.length === 0) {
-      toast({
-        title: 'Error',
-        message: 'No messages to create job from.',
-        type: 'error',
-      });
-      return;
-    }
-
     buttons.map((b, index) => {
       if (b.title === 'Create Job') {
         setBusyButtonIndex(index);
       }
     });
 
-    const resp = await fetch('/api/openai/create-job', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ conversation: messages.map((m) => m.content) }),
+    toast({
+      title: 'Please wait...',
+      message: 'Job is being created.',
+      type: 'info',
     });
 
-    if (!resp.ok) {
-      toast({
-        title: 'Error',
-        message: 'Error creating job',
-        type: 'error',
-        duration: 2000,
-      });
-      return;
-    }
-
-    const { job } = await resp.json();
-    const { title, description, severity } = parseInput(job);
-
-    let severityFormatted =
-      severity.charAt(0).toUpperCase() + severity.slice(1).toLowerCase();
-    if (!['Severe', 'High', 'Medium', 'Low'].includes(severityFormatted)) {
-      severityFormatted = 'Medium';
-    }
-
-    const response = await fetch(
-      `/api/job?companyId=${session.data?.user.companyId}&count=true`,
-    );
-    if (!response.ok) {
-      toast({
-        title: 'Error',
-        message: 'Error creating job',
-        type: 'error',
-        duration: 2000,
-      });
-      return;
-    }
-    const count = await response.json();
-
-    const newJob: Job = {
-      id: count + 1,
-      columnId: 'todo',
-      title,
-      description,
-      severity: severityFormatted as 'Severe' | 'High' | 'Medium' | 'Low',
-      machine,
-      creatorId: session.data?.user.id!,
-      companyId: session.data?.user.companyId as string,
-    };
-
-    let res = await fetch('/api/job', {
+    let res = await fetch('/api/job/conversation', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        job: newJob,
-        person: {
+        conversation: messages.map((m) => m.content),
+        meta: {
           name: session.data?.user.name!,
           img: session.data?.user.image || '',
+          creatorId: session.data?.user.id!,
+          companyId: session.data?.user.companyId as string,
+          machine: machine,
         },
       }),
     });

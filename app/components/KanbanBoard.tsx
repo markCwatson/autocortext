@@ -82,59 +82,31 @@ export default function KanbanBoard(props: KanbanBoardProps) {
     severity: 'Severe' | 'High' | 'Medium' | 'Low';
     machine: string;
   }) {
-    const newJob: Job = {
-      columnId: 'todo',
-      title,
-      description,
-      severity,
-      machine,
-      creatorId: userValue.user.id!,
-      companyId: userValue.user.companyId as string,
-    };
-
     let res = await fetch('/api/job', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(newJob),
+      body: JSON.stringify({
+        details: {
+          title,
+          description,
+          severity,
+        },
+        meta: {
+          name: userValue.user.name,
+          img: userValue.user.image || '',
+          companyId: userValue.user.companyId as string,
+          creatorId: userValue.user.id!,
+          machine,
+        },
+      }),
     });
 
     if (!res.ok) {
       toast({
         title: 'Error',
         message: 'Error creating job',
-        type: 'error',
-        duration: 2000,
-      });
-      return;
-    }
-
-    const createdJob = await res.json();
-
-    const createdActivity: Activity = {
-      id: 1,
-      type: 'created',
-      person: {
-        name: userValue.user.name,
-        img: userValue.user.image || '',
-      },
-      dateTime: new Date().toISOString(),
-      jobId: createdJob._id,
-    };
-
-    res = await fetch('/api/activity', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(createdActivity),
-    });
-
-    if (!res.ok) {
-      toast({
-        title: 'Error',
-        message: "Error creating 'created' action",
         type: 'error',
         duration: 2000,
       });

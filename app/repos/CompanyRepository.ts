@@ -118,6 +118,33 @@ class CompanyRepository {
       });
     }
   }
+
+  static async decrementJobCountByCompanyId(
+    companyId: string,
+  ): Promise<CompanyModel | null> {
+    const client = await Database.getClient();
+    try {
+      await client
+        .db()
+        .collection('companies')
+        .updateOne(
+          { _id: new ObjectId(companyId) },
+          { $inc: { jobCount: -1 } },
+        );
+      return client
+        .db()
+        .collection('companies')
+        .findOne({
+          _id: new ObjectId(companyId),
+        }) as Promise<CompanyModel | null>;
+    } catch (error: MongoServerError | any) {
+      throw new ApiError({
+        code: 500,
+        message: error.message,
+        explanation: null,
+      });
+    }
+  }
 }
 
 export default CompanyRepository;

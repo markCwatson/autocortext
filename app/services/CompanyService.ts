@@ -107,8 +107,17 @@ class CompanyService {
 
   static async incrementJobCountByCompanyId(
     companyId: string,
+  ): Promise<number | null> {
+    const company = await CompanyRepository.incrementJobCountByCompanyId(
+      companyId,
+    );
+    return company?.jobCount || null;
+  }
+
+  static async decrementJobCountByCompanyId(
+    companyId: string,
   ): Promise<CompanyModel | null> {
-    return CompanyRepository.incrementJobCountByCompanyId(companyId);
+    return CompanyRepository.decrementJobCountByCompanyId(companyId);
   }
 
   static async getIndexByCompanyId(companyId: string): Promise<string | null> {

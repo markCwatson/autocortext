@@ -9,23 +9,19 @@ export interface JobsModel extends Job {
 }
 
 class JobsRepository {
-  static async create(
-    model: JobsModel,
-    jobCount: number,
-  ): Promise<JobsModel | null> {
+  static async create(newJob: Job): Promise<JobsModel | null> {
     const client = await Database.getClient();
-    const newJob = {
-      ...model,
-      id: jobCount,
-      companyId: new ObjectId(model.companyId),
-      creatorId: new ObjectId(model.creatorId),
+    const job = {
+      ...newJob,
+      companyId: new ObjectId(newJob.companyId),
+      creatorId: new ObjectId(newJob.creatorId),
     };
 
     try {
       const { insertedId } = await client
         .db()
         .collection('jobs')
-        .insertOne(newJob);
+        .insertOne(job);
       return client
         .db()
         .collection('jobs')

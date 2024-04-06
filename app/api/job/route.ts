@@ -1,7 +1,9 @@
-import JobsService, { personInfoModel } from '@/services/JobsService';
+import JobsService, {
+  jobDetailsModel,
+  metaDataModel,
+} from '@/services/JobsService';
 import { NextRequest, NextResponse } from 'next/server';
 import { JobsModel } from '@/repos/JobsRepository';
-import CompanyService from '@/services/CompanyService';
 
 interface DeleteSchema {
   id: number;
@@ -10,6 +12,26 @@ interface DeleteSchema {
 
 interface UpdateSchema {
   job: JobsModel;
+}
+
+export async function POST(req: NextRequest) {
+  const {
+    details,
+    meta,
+  }: {
+    details: jobDetailsModel;
+    meta: metaDataModel;
+  } = await req.json();
+  if (!details || !meta) {
+    return new Response('details and meta data are required', { status: 400 });
+  }
+
+  const createdJob = await JobsService.create(details, meta);
+  if (!createdJob) {
+    return new Response('Failed to create job', { status: 500 });
+  }
+
+  return NextResponse.json({ success: 'OK' });
 }
 
 export async function GET(req: NextRequest) {
@@ -31,25 +53,6 @@ export async function GET(req: NextRequest) {
   }
 
   return NextResponse.json(jobs);
-}
-
-export async function POST(req: NextRequest) {
-  const {
-    job,
-    person,
-  }: {
-    job: JobsModel;
-    person: personInfoModel;
-  } = await req.json();
-  if (!job || !person) {
-    return new Response('Job and person info are required', { status: 400 });
-  }
-  if (!job.companyId) {
-    return new Response('Company ID is required', { status: 400 });
-  }
-
-  const createdJob = await JobsService.create(job, person);
-  return NextResponse.json(createdJob);
 }
 
 export async function DELETE(req: NextRequest) {
