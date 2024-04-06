@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 import ApiError from '@/errors/ApiError';
 import Database from '@/lib/db';
-import { History } from '@/types';
+import { AiMessage, History } from '@/types';
 
 export interface HistoryModel extends History {
   _id: ObjectId;
@@ -11,7 +11,7 @@ export interface HistoryModel extends History {
 class HistoryRepository {
   static async create(
     machine: string,
-    messages: string[],
+    messages: AiMessage[],
     companyId: ObjectId,
   ): Promise<HistoryModel | null> {
     const title = `${new Date().toISOString().split('T')[0]} - ${machine}`;

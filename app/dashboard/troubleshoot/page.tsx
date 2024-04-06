@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import AiHeader from '@/components/AiHeader';
 import { toast } from '@/components/Toast';
-import { AiMessage, useQueryContext } from '@/providers/AiMessagesProvider';
+import { useQueryContext } from '@/providers/AiMessagesProvider';
 import { AiMessageList } from '@/components/AiMessageList';
 import AiPromptChat from '@/components/AiPromptChat';
 import OptionSelector from '@/components/OptionSelector';
@@ -21,7 +21,7 @@ import DialogModal from '@/components/DialogModal';
 import Summary from '@/components/Summary';
 import { Button } from '@/components/Button';
 import classNames from '@/lib/classNames';
-import { Job } from '@/types';
+import { AiMessage, Job } from '@/types';
 import LogoBrainSvg from '@/components/LogoBrainSvg';
 import { mainContainerStyle } from '@/lib/mainContainerStyle';
 import { Loader2 } from 'lucide-react';
@@ -429,7 +429,35 @@ export default function Troubleshoot() {
   async function handleSave({ summarize }: { summarize: boolean }) {
     setShowModal(false);
 
-    let messagesCopy = messages;
+    toast({
+      title: 'Please wait...',
+      message: `The conversation is being saved${
+        summarize ? ' with a summary' : ''
+      }.`,
+      type: 'info',
+    });
+
+    const res = await fetch('/api/history', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        machine,
+        messages,
+        companyId,
+        summarize,
+      }),
+    });
+
+    if (!res.ok) {
+      toast({
+        title: 'Failed to save report!',
+        message: 'Please try again.',
+        type: 'error',
+      });
+      return;
+    }
 
     setMessages([
       {
@@ -445,74 +473,11 @@ export default function Troubleshoot() {
       },
     ]);
 
-    if (summarize) {
-      toast({
-        title: 'Please wait...',
-        message: 'Summary is being generated.',
-        type: 'info',
-      });
-
-      const res = await fetch('/api/openai/summarize', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          conversation: messagesCopy.map((m) => m.content),
-        }),
-      });
-
-      if (res.ok) {
-        const { summary } = await res.json();
-
-        messagesCopy = [
-          ...messagesCopy,
-          {
-            id: `${messagesCopy.length + 1}`,
-            content: `Auto Cortext: Summary: ${summary}`,
-            role: 'assistant',
-          },
-        ];
-
-        toast({
-          title: 'Success',
-          message: 'Summary generated.',
-          type: 'success',
-        });
-      } else {
-        toast({
-          title: 'Failed to generate summary.',
-          message: 'Please try again.',
-          type: 'error',
-        });
-      }
-    }
-
-    const res = await fetch('/api/history', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        machine,
-        messages: messagesCopy,
-        companyId,
-      }),
+    toast({
+      title: 'Report saved!',
+      message: 'The report was saved successfully.',
+      type: 'success',
     });
-
-    if (res.ok) {
-      toast({
-        title: 'Success',
-        message: 'Report saved.',
-        type: 'success',
-      });
-    } else {
-      toast({
-        title: 'Failed to save report.',
-        message: 'Please try again.',
-        type: 'error',
-      });
-    }
 
     fetchHistory();
   }

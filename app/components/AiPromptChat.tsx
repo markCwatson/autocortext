@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/Button';
-import { AiMessage, useQueryContext } from '@/providers/AiMessagesProvider';
+import { useQueryContext } from '@/providers/AiMessagesProvider';
 import { Loader2 } from 'lucide-react';
+import { AiMessage } from '@/types';
 
 interface AiPromptChatProps {
   isLoading: boolean;

@@ -4,7 +4,7 @@ import React, { useEffect, useState, CSSProperties } from 'react';
 import Search from '@/components/Search';
 import DocStructure from '@/components/DocStructure';
 import AiHeader from '@/components/AiHeader';
-import { AiMessage, useQueryContext } from '@/providers/AiMessagesProvider';
+import { useQueryContext } from '@/providers/AiMessagesProvider';
 import { toast } from '@/components/Toast';
 import AiPromptChat from '@/components/AiPromptChat';
 import { AiMessageList } from '@/components/AiMessageList';
@@ -14,6 +14,7 @@ import DialogModal from '@/components/DialogModal';
 import { ExclamationTriangleIcon } from '@heroicons/react/20/solid';
 import { FOLDER, FILE } from '@/lib/constants';
 import { mainContainerStyle } from '@/lib/mainContainerStyle';
+import { AiMessage } from '@/types';
 
 const iFrameHeight = '100%';
 const iFrameWidth = '100%';

@@ -9,9 +9,9 @@ import {
 } from '@heroicons/react/20/solid';
 import MyDocument from '@/components/MyDocument';
 import { toast } from '@/components/Toast';
-import { AiMessage } from '@/providers/AiMessagesProvider';
 import { isClientCtx } from '@/providers/ClientCtxProvider';
 import { Button } from '@/components/Button';
+import { AiMessage } from '@/types';
 
 interface AiHeaderProps {
   messages: AiMessage[];

@@ -1,13 +1,33 @@
 import HistoryRepository, { HistoryModel } from '@/repos/HistoryRepository';
 import { ObjectId } from 'mongodb';
+import OpenAiService from './OpenAiService';
+import { AiMessage } from '@/types';
 
 class HistoryService {
   static async create(
     machine: string,
-    messages: string[],
+    messages: AiMessage[],
     companyId: string,
+    summarize: boolean,
   ): Promise<HistoryModel | null> {
-    return HistoryRepository.create(machine, messages, new ObjectId(companyId));
+    let messagesCopy = messages;
+    if (summarize) {
+      const summary = await OpenAiService.summarize(JSON.stringify(messages));
+      messagesCopy = [
+        ...messagesCopy,
+        {
+          id: `${messagesCopy.length + 1}`,
+          content: `Auto Cortext: Summary: ${summary}`,
+          role: 'assistant',
+        },
+      ];
+    }
+
+    return HistoryRepository.create(
+      machine,
+      messagesCopy,
+      new ObjectId(companyId),
+    );
   }
 
   static async getHistoryByCompanyId(

@@ -1,12 +1,7 @@
 'use client';
 
+import { AiMessage } from '@/types';
 import React, { createContext, useState, useContext, ReactNode } from 'react';
-
-export interface AiMessage {
-  id: string;
-  content: string;
-  role: string;
-}
 
 interface QueryContextValue {
   messages: AiMessage[];

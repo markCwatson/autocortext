@@ -67,3 +67,9 @@ export type Feedback = {
   message: string;
   company: string;
 };
+
+export interface AiMessage {
+  id: string;
+  content: string;
+  role: string;
+}

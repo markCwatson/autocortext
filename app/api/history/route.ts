@@ -2,12 +2,12 @@ import HistoryService from '@/services/HistoryService';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  const { machine, messages, companyId } = await req.json();
-  if (!messages) {
+  const { machine, messages, companyId, summarize } = await req.json();
+  if (!messages || !machine || !companyId || summarize === undefined) {
     return NextResponse.json({ success: false });
   }
 
-  await HistoryService.create(machine, messages, companyId);
+  await HistoryService.create(machine, messages, companyId, summarize);
   return NextResponse.json({ success: true });
 }
 
