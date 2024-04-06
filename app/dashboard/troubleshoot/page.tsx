@@ -639,7 +639,7 @@ export default function Troubleshoot() {
       duration: 2000,
     });
 
-    handleSave({ summarize: true });
+    handleSave({ summarize: false });
     setBusyButtonIndex(-1);
     router.push('/dashboard/jobs');
   }
