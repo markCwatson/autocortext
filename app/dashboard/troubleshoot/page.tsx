@@ -280,6 +280,13 @@ export default function Troubleshoot() {
     if (!messages) return;
     if (!session.data) return;
 
+    toast({
+      title: 'Please wait...',
+      message: 'Your query is being processed.',
+      type: 'info',
+      duration: 3000,
+    });
+
     const context = [...messages, newMessage]
       .map((message) => message.content)
       .join('\n');
