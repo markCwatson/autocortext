@@ -116,12 +116,6 @@ const Feedback: React.FC = () => {
       return;
     }
 
-    toast({
-      title: 'Success',
-      message: 'Feedback fetched successfully',
-      type: 'success',
-    });
-
     const data = await res.json();
     setFeedback(data);
   };

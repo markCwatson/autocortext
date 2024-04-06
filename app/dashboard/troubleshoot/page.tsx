@@ -169,12 +169,17 @@ export default function Troubleshoot() {
     if (!companyId) return;
 
     const response = await fetch(`/api/history?companyId=${companyId}`);
-    if (response.ok) {
-      const data = await response.json();
-      setHistory(data);
+    if (!response.ok) {
+      toast({
+        title: 'Error',
+        message: 'Failed to fetch history',
+        type: 'error',
+      });
+      return;
     }
 
-    return;
+    const data = await response.json();
+    setHistory(data);
   }
 
   async function deleteHistoryItem(_id: string) {
@@ -533,12 +538,6 @@ export default function Troubleshoot() {
       });
       return;
     }
-
-    toast({
-      title: 'Success',
-      message: 'Title updated',
-      type: 'success',
-    });
 
     fetchHistory();
   }
