@@ -199,26 +199,8 @@ function Embed() {
               Instructions
               <ol className="list-decimal list-inside text-left space-y-2 text-sm">
                 <li>
-                  To create vector embeddings from TXT docs, place them in the{' '}
-                  <code className="font-mono px-2 py-1 rounded">
-                    /scripts/convert/text
-                  </code>{' '}
-                  folder.
-                </li>
-                <li>
-                  The text files will be taken from the{' '}
-                  <code className="font-mono px-2 py-1 rounded">
-                    /scripts/convert/text
-                  </code>{' '}
-                  folder, used to create vector embeddings, and uploaded to
-                  Pinecone.
-                </li>
-                <li>
-                  Once the process is completed, move the text file(s) into the{' '}
-                  <code className="font-mono px-2 py-1 rounded">
-                    /scripts/convert/completed
-                  </code>{' '}
-                  folder and compress them.
+                  To create vector embeddings from TXT docs, click the button
+                  below and select the desired TXT file.
                 </li>
                 <li>
                   Pinecone is eventually consistent, meaning there can be a
