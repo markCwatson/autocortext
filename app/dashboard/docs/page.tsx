@@ -388,7 +388,11 @@ export default function Documentation() {
             <div className="flex flex-col justify-center w-full h-full">
               <AiMessageList messages={messages} />
               <div className="w-full px-4">
-                <AiPromptChat callback={sendQuery} isLoading={loading} />
+                <AiPromptChat
+                  callback={sendQuery}
+                  isLoading={loading}
+                  isVerbose={false}
+                />
               </div>
             </div>
           </div>
