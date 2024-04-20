@@ -12,6 +12,7 @@ import OptionSelector from '@/components/OptionSelector';
 import { machines } from '@/lib/machines';
 import {
   ArrowPathIcon,
+  ArrowsPointingOutIcon,
   ClockIcon,
   EllipsisHorizontalIcon,
   TrashIcon,
@@ -21,7 +22,7 @@ import DialogModal from '@/components/DialogModal';
 import Summary from '@/components/Summary';
 import { Button } from '@/components/Button';
 import classNames from '@/lib/classNames';
-import { AiMessage, Job } from '@/types';
+import { AiMessage, VerbosoityModes } from '@/types';
 import LogoBrainSvg from '@/components/LogoBrainSvg';
 import { mainContainerStyle } from '@/lib/mainContainerStyle';
 import { Loader2 } from 'lucide-react';
@@ -84,6 +85,9 @@ export default function Troubleshoot() {
   });
   const [newChat, setNewChat] = useState(false);
   const [busyButtonIndex, setBusyButtonIndex] = useState(-1);
+  const [verbosityMode, setVerbosityMode] = useState<VerbosoityModes>({
+    mode: 'Concise',
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
     if (isEditingTitle === id) {
@@ -125,9 +129,21 @@ export default function Troubleshoot() {
       icon: LogoBrainSvg,
       handler: summarizeMessages,
     },
+    {
+      title: 'Ellaborate',
+      icon: ArrowsPointingOutIcon,
+      handler: elaboratePreviousResponse,
+    },
   ];
 
   const issueOptions: issueOptionsProps[] = [
+    {
+      title: 'Response mode:',
+      options: ['Concise', 'Verbose'],
+      handler: (selected: string) => {
+        setVerbosityMode({ mode: selected as 'Concise' | 'Verbose' });
+      },
+    },
     {
       title: 'Select machine:',
       options: machines,
@@ -433,6 +449,32 @@ export default function Troubleshoot() {
     setBusyButtonIndex(-1);
   }
 
+  async function elaboratePreviousResponse() {
+    if (messages.length === 0) {
+      toast({
+        title: 'Error',
+        message: 'No messages to elaborate.',
+        type: 'error',
+      });
+      return;
+    }
+
+    buttons.map((b, index) => {
+      if (b.title === 'Ellaborate') {
+        setBusyButtonIndex(index);
+      }
+    });
+
+    const newMessage: AiMessage = {
+      id: String(messages.length + 1),
+      content: `User: Can you elaborate on that? Be as detailed as possible.`,
+      role: 'user',
+    };
+
+    await sendQuery(new MouseEvent('click'), newMessage);
+    setBusyButtonIndex(-1);
+  }
+
   async function handleSave({ summarize }: { summarize: boolean }) {
     setShowModal(false);
 
@@ -727,7 +769,11 @@ export default function Troubleshoot() {
               issueType !== 'None Selected' &&
               !selectedHistoryIndex && (
                 <div className="w-full px-4">
-                  <AiPromptChat callback={sendQuery} isLoading={isLoading} />
+                  <AiPromptChat
+                    callback={sendQuery}
+                    isLoading={isLoading}
+                    isVerbose={verbosityMode.mode === 'Verbose'}
+                  />
                 </div>
               )}
           </div>

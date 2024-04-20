@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Button } from '@/components/Button';
 import { useQueryContext } from '@/providers/AiMessagesProvider';
 import { Loader2 } from 'lucide-react';
-import { AiMessage } from '@/types';
+import { AiMessage, VerbosoityModes } from '@/types';
 
 interface AiPromptChatProps {
+  isVerbose: boolean;
   isLoading: boolean;
   callback: (
     event:
@@ -15,6 +16,7 @@ interface AiPromptChatProps {
 }
 
 export default function AiPromptChat({
+  isVerbose,
   isLoading,
   callback,
 }: AiPromptChatProps) {
@@ -28,9 +30,14 @@ export default function AiPromptChat({
   ) {
     e.preventDefault();
     if (inputValue.trim()) {
+      const userInput = isVerbose
+        ? inputValue
+        : inputValue.concat(
+            '*!*. Please be as concise as possible. Keep the response to only a few sentences.',
+          );
       const newMessage: AiMessage = {
         id: String(messages.length + 1),
-        content: `User: ${inputValue}`,
+        content: `User: ${userInput}`,
         role: 'user',
       };
       setMessages((prev) => [...prev, newMessage]);
@@ -45,7 +52,8 @@ export default function AiPromptChat({
         className="col-span-4 rounded border text-black text-sm mr-2"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        placeholder="Enter query here..."
+        placeholder={isLoading ? `Please wait...` : `Enter your query here`}
+        disabled={isLoading}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
             handleSubmit(e);

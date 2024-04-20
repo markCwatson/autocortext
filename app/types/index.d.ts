@@ -73,3 +73,7 @@ export interface AiMessage {
   content: string;
   role: string;
 }
+
+export interface VerbosoityModes {
+  mode: 'Verbose' | 'Concise';
+}

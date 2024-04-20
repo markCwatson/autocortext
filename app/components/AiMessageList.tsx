@@ -48,7 +48,8 @@ export function AiMessageList({
                 )}
               >
                 {message.role === 'user' ? (
-                  <p>{message.content.replace('User: ', '')}</p>
+                  // *!* is a delimiter to hide prompt text from the user input
+                  <p>{message.content.replace('User: ', '').split('*!*', 1)}</p>
                 ) : (
                   <AnimatedText
                     text={message.content.replace('Auto Cortext:', '')}
