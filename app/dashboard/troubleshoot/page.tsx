@@ -23,10 +23,11 @@ import DialogModal from '@/components/DialogModal';
 import Summary from '@/components/Summary';
 import { Button } from '@/components/Button';
 import classNames from '@/lib/classNames';
-import { AiMessage, VerbosoityModes } from '@/types';
+import { AiMessage } from '@/types';
 import LogoBrainSvg from '@/components/LogoBrainSvg';
 import { mainContainerStyle } from '@/lib/mainContainerStyle';
 import { Loader2 } from 'lucide-react';
+import { Switch } from '@headlessui/react';
 
 // todo: a lot of duplicate code here with docs page. refactor into a component
 
@@ -86,9 +87,7 @@ export default function Troubleshoot() {
   });
   const [newChat, setNewChat] = useState(false);
   const [busyButtonIndex, setBusyButtonIndex] = useState(-1);
-  const [verbosityMode, setVerbosityMode] = useState<VerbosoityModes>({
-    mode: 'Concise',
-  });
+  const [isVerbose, setIsVerbose] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
     if (isEditingTitle === id) {
@@ -143,13 +142,6 @@ export default function Troubleshoot() {
   ];
 
   const issueOptions: issueOptionsProps[] = [
-    {
-      title: 'Response mode:',
-      options: ['Concise', 'Verbose'],
-      handler: (selected: string) => {
-        setVerbosityMode({ mode: selected as 'Concise' | 'Verbose' });
-      },
-    },
     {
       title: 'Select machine:',
       options: machines,
@@ -806,7 +798,7 @@ export default function Troubleshoot() {
                   <AiPromptChat
                     callback={sendQuery}
                     isLoading={isLoading}
-                    isVerbose={verbosityMode.mode === 'Verbose'}
+                    isVerbose={isVerbose}
                   />
                 </div>
               )}
@@ -845,6 +837,31 @@ export default function Troubleshoot() {
                 </li>
               ))}
             </ul>
+            <div className="mt-10 w-full flex justify-center">
+              <Switch.Group as="div" className="flex items-center">
+                <Switch
+                  checked={isVerbose}
+                  onChange={setIsVerbose}
+                  className={classNames(
+                    isVerbose ? 'bg-indigo-600' : 'bg-gray-200',
+                    'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2',
+                  )}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={classNames(
+                      isVerbose ? 'translate-x-5' : 'translate-x-0',
+                      'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
+                    )}
+                  />
+                </Switch>
+                <Switch.Label as="span" className="ml-3 text-sm">
+                  <span className="font-medium text-my-color1">
+                    {isVerbose ? 'Verbose mode' : 'Concise mode'}
+                  </span>
+                </Switch.Label>
+              </Switch.Group>
+            </div>
             <div className="mt-10">
               <ul role="list" className="space-y-2 mx-4">
                 {issueOptions.map((o, index) => (
