@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/Button';
 import { useQueryContext } from '@/providers/AiMessagesProvider';
 import { Loader2 } from 'lucide-react';
-import { AiMessage, VerbosoityModes } from '@/types';
+import { AiMessage } from '@/types';
 
 interface AiPromptChatProps {
   isVerbose: boolean;
