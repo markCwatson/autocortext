@@ -467,7 +467,7 @@ export default function Troubleshoot() {
 
     const newMessage: AiMessage = {
       id: String(messages.length + 1),
-      content: `User: Can you elaborate on that? Be as detailed as possible. Do not use markdown format (plain text only)`,
+      content: `User: Can you elaborate on that? Be as detailed as possible. Do not use markdown format (plain text only, but a numbered list is ok).`,
       role: 'user',
     };
 

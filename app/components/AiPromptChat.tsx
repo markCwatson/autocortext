@@ -31,7 +31,9 @@ export default function AiPromptChat({
     e.preventDefault();
     if (inputValue.trim()) {
       const userInput = isVerbose
-        ? inputValue
+        ? inputValue.concat(
+            '*!*. Do not use markdown format (plain text only, but a numbered list is ok).',
+          )
         : inputValue.concat(
             '*!*. Please be as concise as possible. Keep the response to only a few sentences.',
           );
