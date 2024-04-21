@@ -15,6 +15,7 @@ import {
   ArrowsPointingOutIcon,
   ClockIcon,
   EllipsisHorizontalIcon,
+  QuestionMarkCircleIcon,
   TrashIcon,
 } from '@heroicons/react/20/solid';
 import { HistoryModel } from '@/repos/HistoryRepository';
@@ -133,6 +134,11 @@ export default function Troubleshoot() {
       title: 'Ellaborate',
       icon: ArrowsPointingOutIcon,
       handler: elaboratePreviousResponse,
+    },
+    {
+      title: 'Simplify',
+      icon: QuestionMarkCircleIcon,
+      handler: simplifyPreviousResponse,
     },
   ];
 
@@ -465,9 +471,37 @@ export default function Troubleshoot() {
       }
     });
 
+    // Do not add this message ot the messages list to ensure it is not saved in history
     const newMessage: AiMessage = {
       id: String(messages.length + 1),
       content: `User: Can you elaborate on that? Be as detailed as possible. Do not use markdown format (plain text only, but a numbered list is ok).`,
+      role: 'user',
+    };
+
+    await sendQuery(new MouseEvent('click'), newMessage);
+    setBusyButtonIndex(-1);
+  }
+
+  async function simplifyPreviousResponse() {
+    if (messages.length === 0) {
+      toast({
+        title: 'Error',
+        message: 'No messages to simplify.',
+        type: 'error',
+      });
+      return;
+    }
+
+    buttons.map((b, index) => {
+      if (b.title === 'Simplify') {
+        setBusyButtonIndex(index);
+      }
+    });
+
+    // Do not add this message ot the messages list to ensure it is not saved in history
+    const newMessage: AiMessage = {
+      id: String(messages.length + 1),
+      content: `User: Can you simplify that last response for me? Keep the response to only a few sentences and use simply words. Do not use markdown format (plain text only, but a numbered list is ok).`,
       role: 'user',
     };
 
