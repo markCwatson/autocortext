@@ -177,13 +177,6 @@ export default function Dashboard() {
       return;
     }
 
-    toast({
-      title: 'Success',
-      message: 'Users fetched!',
-      type: 'success',
-      duration: 2000,
-    });
-
     const data = await res.json();
     setUsers(data);
   };
