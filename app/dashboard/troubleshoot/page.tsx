@@ -19,7 +19,6 @@ import {
   TrashIcon,
 } from '@heroicons/react/20/solid';
 import { HistoryModel } from '@/repos/HistoryRepository';
-import DialogModal from '@/components/DialogModal';
 import Summary from '@/components/Summary';
 import { Button } from '@/components/Button';
 import classNames from '@/lib/classNames';
@@ -28,6 +27,8 @@ import LogoBrainSvg from '@/components/LogoBrainSvg';
 import { mainContainerStyle } from '@/lib/mainContainerStyle';
 import { Loader2 } from 'lucide-react';
 import { Switch } from '@headlessui/react';
+import { uploadFileToS3 } from '@/lib/s3';
+import { TROUBLESHOOT } from '@/lib/constants';
 
 // todo: a lot of duplicate code here with docs page. refactor into a component
 
@@ -72,7 +73,6 @@ export default function Troubleshoot() {
   const [issueType, setIssueType] = useState('None Selected');
   const [companyId, setCompanyId] = useState('');
   const [animate, setAnimate] = useState(true);
-  const [showModal, setShowModal] = useState(false);
   const [selectedHistoryIndex, setSelectedHistoryIndex] = useState<
     number | null
   >(null);
@@ -501,9 +501,85 @@ export default function Troubleshoot() {
     setBusyButtonIndex(-1);
   }
 
-  async function handleSave({ summarize }: { summarize: boolean }) {
-    setShowModal(false);
+  async function handleEmbed() {
+    if (messages.length === 0) {
+      toast({
+        title: 'Error',
+        message: 'No messages to embed.',
+        type: 'error',
+      });
+      return;
+    }
 
+    toast({
+      title: 'Please wait...',
+      message: 'Training is in progress...',
+      type: 'info',
+    });
+
+    const full_text = messages.map((message) => message.content).join('\n');
+    const file = new File([full_text], `${session.data!.user.name}.txt`);
+
+    const { success, name } = await uploadFileToS3(file);
+    if (!success) {
+      toast({
+        title: 'Error',
+        message: 'Error uploading file.',
+        type: 'error',
+      });
+      return;
+    }
+
+    const response = await fetch(
+      `/api/doc?companyId=${session.data!.user.companyId}&type=${TROUBLESHOOT}`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          name,
+        }),
+      },
+    );
+
+    if (!response.ok) {
+      toast({
+        title: 'Error',
+        message: 'Error uploading file to database',
+        type: 'error',
+      });
+      return;
+    }
+
+    const res = await fetch('/api/setup/aws-lambda', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        doc: [
+          {
+            metadata: { source: name },
+            pageContent: full_text,
+          },
+        ],
+      }),
+    });
+
+    if (!res.ok) {
+      toast({
+        title: 'Training failed.',
+        message: 'Please try again.',
+        type: 'error',
+      });
+    }
+
+    toast({
+      title: 'Success',
+      message: 'Training complete!',
+      type: 'success',
+    });
+  }
+
+  async function handleSave({ summarize }: { summarize: boolean }) {
     if (summarize) {
       toast({
         title: 'Please wait...',
@@ -634,41 +710,6 @@ export default function Troubleshoot() {
     router.push('/dashboard/jobs');
   }
 
-  if (showModal) {
-    return (
-      <DialogModal
-        icon={
-          <LogoBrainSvg
-            className="h-10 w-10 text-my-color10 animate-pulse"
-            aria-hidden="true"
-          />
-        }
-        title={'Do you want to add a summary?'}
-        body={
-          'If you want, Auto Cortext can add a summary of this conversation to this record. This is convenient when reviewing past conversations.'
-        }
-        show={true}
-        onClose={'/dashboard/troubleshoot'}
-        goToButtons={[
-          <button
-            type="button"
-            className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            onClick={() => handleSave({ summarize: false })}
-          >
-            Skip for now
-          </button>,
-          <button
-            type="button"
-            className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            onClick={() => handleSave({ summarize: true })}
-          >
-            Summarize
-          </button>,
-        ]}
-      />
-    );
-  }
-
   return (
     <main className="mx-auto px-4 sm:px-6 lg:px-8" style={mainContainerStyle}>
       <div
@@ -783,7 +824,8 @@ export default function Troubleshoot() {
             messages={messages}
             machine={machine}
             companyId={companyId}
-            onSave={() => setShowModal(true)}
+            onSave={handleSave}
+            onTrain={handleEmbed}
           />
           <div className="flex flex-col justify-center w-full h-full">
             <AiMessageList

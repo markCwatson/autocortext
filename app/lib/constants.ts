@@ -1,5 +1,6 @@
 const FILE = 'file';
 const FOLDER = 'folder';
+const TROUBLESHOOT = 'troubleshoot';
 
 const ADD_ENTRY = '__add_entry__';
 const DELETE_ENTRY = '__delete_entry__';
@@ -17,6 +18,7 @@ const ADMIN_ROLE = 'Admin';
 export {
   FILE,
   FOLDER,
+  TROUBLESHOOT,
   ADD_ENTRY,
   DELETE_ENTRY,
   LOCAL,

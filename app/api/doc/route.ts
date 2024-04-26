@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { S3Client, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import DocService from '@/services/DocService';
-import { FILE, FOLDER } from '@/lib/constants';
+import { FILE, FOLDER, TROUBLESHOOT } from '@/lib/constants';
 import { Pinecone } from '@pinecone-database/pinecone';
 import { deletePineconeVectors } from '@/lib/pinecone';
 
@@ -57,6 +57,51 @@ export async function POST(req: NextRequest) {
     if (!doc) {
       return NextResponse.json(
         { error: 'Error creating folder in the database' },
+        { status: 500 },
+      );
+    }
+
+    return NextResponse.json({ success: true });
+  } else if (type === TROUBLESHOOT) {
+    const { name } = await req.json();
+    if (!name) {
+      return NextResponse.json({ error: 'Name is required' }, { status: 400 });
+    }
+
+    // checkout for /troubleshooting folder (create it if it doesn't exist)
+    const docs = await DocService.getAllByCompanyId(companyId);
+    const rootFolder = docs.find((doc) => doc.parentId === null);
+    let troubleshootingFolder = docs.find(
+      (doc) => doc.name === 'troubleshooting',
+    );
+    if (!troubleshootingFolder) {
+      const doc = await DocService.create({
+        name: 'troubleshooting',
+        companyId: companyId,
+        parentId: rootFolder!._id.toString(),
+        parentPath: '/',
+        type: FOLDER,
+      });
+      if (!doc) {
+        return NextResponse.json(
+          { error: 'Error creating troubleshooting folder in the database' },
+          { status: 500 },
+        );
+      }
+      troubleshootingFolder = doc;
+    }
+
+    // add conversation to /troubleshooting folder
+    const doc = await DocService.create({
+      name: name,
+      parentId: troubleshootingFolder._id.toString(),
+      parentPath: troubleshootingFolder.path,
+      companyId: companyId,
+      type: FILE,
+    });
+    if (!doc) {
+      return NextResponse.json(
+        { error: 'Error creating conversation in the database' },
         { status: 500 },
       );
     }
