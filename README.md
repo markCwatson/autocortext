@@ -1,4 +1,4 @@
-# Auto Cortext by Ascend Technologies
+# Auto Cortext by Ascend AI Solutions
 
 ## Getting Started
 

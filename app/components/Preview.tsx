@@ -12,7 +12,7 @@ export default function Preview({}: Props) {
           <strong className="font-semibold text-red-700">COR</strong>
           <strong className="font-semibold text-my-color6">TEXT </strong>
           <strong className="font-semibold text-my-color10">
-            by Ascend Technologies
+            by Ascend AI Solutions
           </strong>
         </a>
       </p>

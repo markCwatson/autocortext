@@ -47,7 +47,7 @@ export default async function DashboardLayout({
   //       }
   //       title={'Unauthorized!'}
   //       body={
-  //         'This app is only accessible to Ascend Technologies personnel and approved partners.'
+  //         'This app is only accessible to Ascend AI personnel and approved partners.'
   //       }
   //       show={true}
   //       goToText="Return"
