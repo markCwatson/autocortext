@@ -26,6 +26,7 @@ export function AiMessageList({
       style={{ maxHeight: '100%', overflowY: 'scroll' }}
     >
       {messages.map((message) => {
+        if (message.role === 'system') return <></>;
         return (
           <div
             key={message.id}

@@ -29,6 +29,7 @@ import { Loader2 } from 'lucide-react';
 import { Switch } from '@headlessui/react';
 import { uploadFileToS3 } from '@/lib/s3';
 import { TROUBLESHOOT } from '@/lib/constants';
+import { responseTypes } from '@/lib/responseType';
 
 // todo: a lot of duplicate code here with docs page. refactor into a component
 
@@ -62,6 +63,14 @@ interface issueOptionsProps {
   handler: (selected: string) => void;
 }
 
+interface audienceOptionsProps {
+  title: string;
+  options: string[];
+  handler: (selected: string) => void;
+}
+
+type ResponseTypesType = (typeof responseTypes)[number];
+
 export default function Troubleshoot() {
   const session = useSession();
   const { messages, setMessages } = useQueryContext();
@@ -88,12 +97,21 @@ export default function Troubleshoot() {
   const [newChat, setNewChat] = useState(false);
   const [busyButtonIndex, setBusyButtonIndex] = useState(-1);
   const [isVerbose, setIsVerbose] = useState(false);
+  const [audience, setAudience] = useState<ResponseTypesType>(responseTypes[0]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
     if (isEditingTitle === id) {
       setNewTitle({ ...newTitle, title: e.target.value });
     }
   };
+
+  const audienceOptions: audienceOptionsProps[] = [
+    {
+      title: 'AI Response Target:',
+      options: responseTypes,
+      handler: audienceSelectionHandler,
+    },
+  ];
 
   const buttons: ButtonProps[] = [
     {
@@ -154,19 +172,33 @@ export default function Troubleshoot() {
     },
   ];
 
+  const audienceMap: Record<ResponseTypesType, string> = {
+    Technician:
+      'Your target audience is technicians who are responsible for maintaining and repairing machinery. Your responses should be technical but not too detailed, providing step-by-step instructions and explanations.',
+    Engineer:
+      ' Your target audience is engineers who are responsible for process design and technical support to technicians. Your responses should be technical but highly. Use data, science, and statistics whenever possible.',
+    Maintenance:
+      'Your target audience is maintenance personnel. Your responses should be practical and easy to understand, focusing on troubleshooting and repair procedures.',
+  };
+
   useEffect(() => {
     if (session.data?.user.name && messages.length === 0) {
       setMessages((prevMessages) => [
         ...prevMessages,
         {
           id: `${prevMessages.length + 1}`,
-          content: `Auto Cortext: Hello ${session.data.user.name}.
-
-          Today's date is ${
+          role: 'system',
+          content: `You are a tool for troubleshooting issues with manufacturing equipment. ${
+            audienceMap[audience as 'Technician' | 'Engineer']
+          }`,
+        },
+        {
+          id: `${prevMessages.length + 2}`,
+          content: `Auto Cortext: Hello ${
+            session.data.user.name
+          }. Today's date is ${
             new Date().toISOString().split('T')[0]
-          }, and the local time is ${new Date().toLocaleTimeString()}.
-
-          What machine are you having trouble with? Please select a machine from the side menu.`,
+          }, and the local time is ${new Date().toLocaleTimeString()}. What machine are you having trouble with? Please select a machine from the side menu.`,
           role: 'assistant',
         },
       ]);
@@ -287,6 +319,16 @@ export default function Troubleshoot() {
     ]);
 
     setAnimate(true);
+  }
+
+  function audienceSelectionHandler(selectedAudience: string) {
+    setAudience(selectedAudience as ResponseTypesType);
+
+    const copy = [...messages];
+    copy[0].content = `You are a tool for troubleshooting issues with manufacturing equipment. ${
+      audienceMap[selectedAudience as 'Technician' | 'Engineer']
+    }`;
+    setMessages([...copy]);
   }
 
   async function sendQuery(event: any, newMessage: AiMessage) {
@@ -849,6 +891,47 @@ export default function Troubleshoot() {
         {/* Buttons */}
         <div className="bg-transparent lg:visible lg:col-span-2">
           <div className="w-full h-full pt-14">
+            <div className="mb-6">
+              <ul role="list" className="space-y-2 mx-4">
+                {audienceOptions.map((o, index) => (
+                  <li key={`${o.title}-${index}`}>
+                    <div className="w-full">
+                      <OptionSelector
+                        title={o.title}
+                        options={o.options}
+                        handler={o.handler}
+                        trigger={newChat}
+                      />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="mb-6 w-full flex justify-center">
+              <Switch.Group as="div" className="flex items-center">
+                <Switch
+                  checked={isVerbose}
+                  onChange={setIsVerbose}
+                  className={classNames(
+                    isVerbose ? 'bg-indigo-600' : 'bg-gray-200',
+                    'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2',
+                  )}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={classNames(
+                      isVerbose ? 'translate-x-5' : 'translate-x-0',
+                      'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
+                    )}
+                  />
+                </Switch>
+                <Switch.Label as="span" className="ml-3 text-sm">
+                  <span className="font-medium text-my-color1">
+                    {isVerbose ? 'Verbose mode' : 'Concise mode'}
+                  </span>
+                </Switch.Label>
+              </Switch.Group>
+            </div>
             <ul role="list" className="space-y-2 mx-4">
               {buttons.map((b, index) => (
                 <li key={`${b.title}-${index}`}>
@@ -879,32 +962,7 @@ export default function Troubleshoot() {
                 </li>
               ))}
             </ul>
-            <div className="mt-10 w-full flex justify-center">
-              <Switch.Group as="div" className="flex items-center">
-                <Switch
-                  checked={isVerbose}
-                  onChange={setIsVerbose}
-                  className={classNames(
-                    isVerbose ? 'bg-indigo-600' : 'bg-gray-200',
-                    'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2',
-                  )}
-                >
-                  <span
-                    aria-hidden="true"
-                    className={classNames(
-                      isVerbose ? 'translate-x-5' : 'translate-x-0',
-                      'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
-                    )}
-                  />
-                </Switch>
-                <Switch.Label as="span" className="ml-3 text-sm">
-                  <span className="font-medium text-my-color1">
-                    {isVerbose ? 'Verbose mode' : 'Concise mode'}
-                  </span>
-                </Switch.Label>
-              </Switch.Group>
-            </div>
-            <div className="mt-10">
+            <div className="mt-6">
               <ul role="list" className="space-y-2 mx-4">
                 {issueOptions.map((o, index) => (
                   <li key={`${o.title}-${index}`}>
