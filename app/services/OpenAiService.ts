@@ -7,7 +7,7 @@ const openai = new OpenAI({
 class OpenAiService {
   static async summarize(conversation: string) {
     const stream = await openai.chat.completions.create({
-      model: 'gpt-4-turbo-preview',
+      model: 'gpt-4-turbo',
       messages: [
         {
           role: 'system',
@@ -24,7 +24,7 @@ class OpenAiService {
 
   static async generateJobDetails(conversation: string) {
     const stream = await openai.chat.completions.create({
-      model: 'gpt-4-turbo-preview',
+      model: 'gpt-4-turbo',
       messages: [
         {
           role: 'system',

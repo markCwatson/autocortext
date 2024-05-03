@@ -45,30 +45,30 @@ export const runRag = async ({ client, indexName, question }: RunRagParams) => {
     includeValues: true,
   });
 
-  if (queryResponse.matches.length) {
-    // Create an OpenAI instance and load the QAStuffChain
-    const llm = new OpenAI({
-      modelName: 'gpt-4-0125-preview',
-      temperature: 0.3,
-    });
-
-    const chain = loadQAStuffChain(llm);
-
-    // Extract and concatenate page content from matched documents
-    const concatenatedPageContent = queryResponse.matches
-      .map((match) => match?.metadata?.pageContent)
-      .join(' ');
-
-    // Execute the chain with input documents and question
-    const result = await chain.call({
-      input_documents: [new Document({ pageContent: concatenatedPageContent })],
-      question: question,
-    });
-
-    return result.text;
-  } else {
-    console.log('No matching indexes found');
+  if (!queryResponse.matches.length) {
+    return null;
   }
+
+  // Create an OpenAI instance and load the QAStuffChain
+  const llm = new OpenAI({
+    modelName: 'gpt-4-turbo',
+    temperature: 0.3,
+  });
+
+  const chain = loadQAStuffChain(llm);
+
+  // Extract and concatenate page content from matched documents
+  const concatenatedPageContent = queryResponse.matches
+    .map((match) => match?.metadata?.pageContent)
+    .join(' ');
+
+  // Execute the chain with input documents and question
+  const result = await chain.call({
+    input_documents: [new Document({ pageContent: concatenatedPageContent })],
+    question: question,
+  });
+
+  return result.text;
 };
 
 export const createPineconeIndex = async ({
