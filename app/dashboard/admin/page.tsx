@@ -29,7 +29,7 @@ interface ButtonProps {
   disabled: boolean;
 }
 
-export default function Dashboard() {
+export default function Admin() {
   const userValue = useUserContext();
   const [users, setUsers] = useState<User[] | null>(null);
   const [companies, setCompanies] = useState<any[]>([]);

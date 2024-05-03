@@ -120,14 +120,12 @@ export default function Troubleshoot() {
       handler: () => {
         setMessages([
           {
-            id: `1`,
-            content: `Auto Cortext: Hello ${session.data!.user.name}.
-
-            Today's date is ${
+            id: '1',
+            content: `Auto Cortext: Hello ${
+              session.data!.user.name
+            }. Today's date is ${
               new Date().toISOString().split('T')[0]
-            }, and the local time is ${new Date().toLocaleTimeString()}.
-
-            What machine are you having trouble with?`,
+            }, and the local time is ${new Date().toLocaleTimeString()}. What machine are you having trouble with? Please select a machine from the side menu.`,
             role: 'assistant',
           },
         ]);
@@ -655,13 +653,11 @@ export default function Troubleshoot() {
     setMessages([
       {
         id: `1`,
-        content: `Auto Cortext: Hello ${session.data!.user.name}.
-
-        Today's date is ${
+        content: `Auto Cortext: Hello ${
+          session.data!.user.name
+        }. Today's date is ${
           new Date().toISOString().split('T')[0]
-        }, and the local time is ${new Date().toLocaleTimeString()}.
-
-        What machine are you having trouble with?`,
+        }, and the local time is ${new Date().toLocaleTimeString()}. What machine are you having trouble with? Please select a machine from the side menu.`,
         role: 'assistant',
       },
     ]);
