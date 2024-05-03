@@ -378,15 +378,8 @@ export default function Troubleshoot() {
             role: 'assistant',
           },
         ]);
-
-        toast({
-          title: 'Success',
-          message: `Answer received!`,
-          duration: 3000,
-        });
       }
     } catch (err) {
-      console.log('err:', err);
       toast({
         title: 'Error',
         message: 'Error sending query. Please try again later.',
