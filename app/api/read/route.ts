@@ -9,7 +9,6 @@ export const maxDuration = 60;
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  console.log('body ->', body);
   const url = new URL(req.url);
   const companyId = url.searchParams.get('companyId');
   if (!companyId) {
