@@ -10,7 +10,7 @@ import {
 } from '@pinecone-database/pinecone';
 import { ListResponse } from '@pinecone-database/pinecone/dist/pinecone-generated-ts-fetch';
 
-interface QueryPineconeVectorStoreAndQueryLLMParams {
+interface RunRagParams {
   client: Pinecone;
   indexName: string;
   question: string;
@@ -29,11 +29,7 @@ interface UpdatePineconeParams {
 }
 
 // For RAG (Retrieval Augmented Generation)
-export const runRag = async ({
-  client,
-  indexName,
-  question,
-}: QueryPineconeVectorStoreAndQueryLLMParams) => {
+export const runRag = async ({ client, indexName, question }: RunRagParams) => {
   const index = client.Index(indexName);
 
   // Create query embedding
