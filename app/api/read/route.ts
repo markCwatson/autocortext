@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Pinecone } from '@pinecone-database/pinecone';
-import { queryPineconeVectorStoreAndQueryLLM } from '@/lib/pinecone';
+import { runRag } from '@/lib/pinecone';
 import CompanyService from '@/services/CompanyService';
 
 // Vercel's max duration is up to 5 mins.
@@ -28,11 +28,7 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const text = await queryPineconeVectorStoreAndQueryLLM({
-    client,
-    indexName,
-    question: body,
-  });
+  const text = await runRag({ client, indexName, question: body });
 
   return NextResponse.json({
     data: text,

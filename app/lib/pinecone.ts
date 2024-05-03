@@ -28,7 +28,8 @@ interface UpdatePineconeParams {
   docs: any;
 }
 
-export const queryPineconeVectorStoreAndQueryLLM = async ({
+// For RAG (Retrieval Augmented Generation)
+export const runRag = async ({
   client,
   indexName,
   question,
