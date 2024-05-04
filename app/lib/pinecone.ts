@@ -38,14 +38,28 @@ export const runRag = async ({ client, indexName, chat }: RunRagParams) => {
     const history = chat.slice(0, chat.length - 1);
     const question = chat[chat.length - 1];
 
+    let machine;
+    for (const sentence of history) {
+      if (sentence.content.includes('selected the')) {
+        machine = sentence.content.match(/selected the (.+)/)![1];
+      }
+    }
+
+    let system;
+    for (const sentence of history) {
+      if (sentence.content.includes('is having issues with the')) {
+        system = sentence.content.match(/is having issues with the (.+)/)![1];
+      }
+    }
+
     // Create query embedding
     const queryEmbedding = await new OpenAIEmbeddings({
       modelName: 'text-embedding-3-large',
-    }).embedQuery(question.content);
+    }).embedQuery(machine! + ' ' + system! + ' ' + question.content);
 
     // Query Pinecone index and return top k matches
     let queryResponse = await index.query({
-      topK: 10,
+      topK: 20,
       vector: queryEmbedding,
       includeMetadata: true,
       includeValues: true,
