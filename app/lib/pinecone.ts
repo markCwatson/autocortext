@@ -1,7 +1,8 @@
 import { OpenAIEmbeddings, OpenAI } from '@langchain/openai';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
-import { loadQAStuffChain } from 'langchain/chains';
+import { StuffQAChainParams, loadQAStuffChain } from 'langchain/chains';
 import { Document } from 'langchain/document';
+import { PromptTemplate } from '@langchain/core/prompts';
 import {
   RecordMetadata,
   type Pinecone,
@@ -36,26 +37,44 @@ export const runRag = async ({ client, indexName, chat }: RunRagParams) => {
 
     // Extract history and question from chat
     const history = chat.slice(0, chat.length - 1);
-    const question = chat[chat.length - 1];
+    const question = chat.at(-1);
 
-    let machine;
-    for (const sentence of history) {
-      if (sentence.content.includes('selected the')) {
-        machine = sentence.content.match(/selected the (.+)/)![1];
-      }
-    }
+    let machine = '';
+    let system = '';
+    let instructions = '';
 
-    let system;
-    for (const sentence of history) {
-      if (sentence.content.includes('is having issues with the')) {
-        system = sentence.content.match(/is having issues with the (.+)/)![1];
+    // Find instructions, machine, and system in the history
+    history.forEach((sentence) => {
+      if (sentence.role === 'system') {
+        instructions = sentence.content;
       }
+
+      const machineMatch = sentence.content.match(/selected the (.+)/);
+      if (machineMatch) {
+        machine = machineMatch[1];
+      }
+
+      const systemMatch = sentence.content.match(
+        /is having issues with the (.+)/,
+      );
+      if (systemMatch) {
+        system = systemMatch[1];
+      }
+    });
+
+    if (!instructions || !machine || !system) {
+      throw new Error(
+        'System instructions, machine, or system not found in chat history.',
+      );
     }
 
     // Create query embedding
-    const queryEmbedding = await new OpenAIEmbeddings({
+    const embeddingsClient = new OpenAIEmbeddings({
       modelName: 'text-embedding-3-large',
-    }).embedQuery(machine! + ' ' + system! + ' ' + question.content);
+    });
+    const queryEmbedding = await embeddingsClient.embedQuery(
+      `${machine} ${system} ${question!.content}`,
+    );
 
     // Query Pinecone index and return top k matches
     let queryResponse = await index.query({
@@ -75,7 +94,15 @@ export const runRag = async ({ client, indexName, chat }: RunRagParams) => {
       temperature: 0.1,
     });
 
-    const chain = loadQAStuffChain(llm);
+    let inputPrompt: StuffQAChainParams = {
+      prompt: new PromptTemplate({
+        inputVariables: ['instructions', 'chat_history', 'question', 'context'],
+        template:
+          'Instructions: {instructions}\nChat History: {chat_history}\nQuestion: {question}\nContext: {context}',
+      }),
+    };
+
+    const chain = loadQAStuffChain(llm, inputPrompt);
     if (!chain) {
       throw new Error('Failed to load chain.');
     }
@@ -87,9 +114,10 @@ export const runRag = async ({ client, indexName, chat }: RunRagParams) => {
 
     // Execute the chain with input documents and question
     const result = await chain.invoke({
+      instructions: instructions,
       input_documents: [new Document({ pageContent: concatenatedPageContent })],
-      chat_history: history,
-      question: question.content,
+      chat_history: history.map((h) => h.content),
+      question: question!.content,
     });
     if (!result) {
       throw new Error('Invocation of chain failed.');

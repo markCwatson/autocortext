@@ -172,37 +172,55 @@ export default function Troubleshoot() {
 
   const audienceMap: Record<ResponseTypesType, string> = {
     Technician:
-      'Your target audience is technicians who are responsible for maintaining and repairing machinery. Your responses should be technical but not too detailed, providing step-by-step instructions and explanations.',
+      'Your target audience is technicians who are responsible for maintaining and repairing machinery. Your responses should be technical but not too detailed.',
     Engineer:
       ' Your target audience is engineers who are responsible for process design and technical support to technicians. Your responses should be technical but highly. Use data, science, and statistics whenever possible.',
     Maintenance:
       'Your target audience is maintenance personnel. Your responses should be practical and easy to understand, focusing on troubleshooting and repair procedures.',
   };
 
+  const explainVerbose =
+    'Please be as descriptive as possible. Do not use markdown format (plain text only) but a numbered list is ok).';
+  const explainConcise =
+    'Please be as concise as possible. Do not use numbered lists. Keep the response to only 2 or 3 sentences.';
+
+  useEffect(() => {
+    setMessages((prevMessages) =>
+      prevMessages.map((msg) => {
+        if (msg.role === 'system') {
+          // Replace the verbose or concise setting at the end of the system message
+          let content = msg.content.split('... ')[0];
+          content += '. ' + (isVerbose ? explainVerbose : explainConcise);
+          return { ...msg, content: content };
+        }
+        return msg;
+      }),
+    );
+  }, [isVerbose]);
+
   useEffect(() => {
     if (session.data?.user.name && messages.length === 0) {
-      setMessages((prevMessages) => [
-        ...prevMessages,
+      setMessages([
         {
-          id: `${prevMessages.length + 1}`,
+          id: '1',
           role: 'system',
           content: `You are a tool for troubleshooting issues with manufacturing equipment. ${
-            audienceMap[audience as 'Technician' | 'Engineer']
-          }`,
+            audienceMap[audience]
+          }.. ${isVerbose ? explainVerbose : explainConcise}`,
         },
         {
-          id: `${prevMessages.length + 2}`,
+          id: '2',
+          role: 'assistant',
           content: `Auto Cortext: Hello ${
             session.data.user.name
           }. Today's date is ${
             new Date().toISOString().split('T')[0]
           }, and the local time is ${new Date().toLocaleTimeString()}. What machine are you having trouble with? Please select a machine from the side menu.`,
-          role: 'assistant',
         },
       ]);
 
-      setCompanyId(session.data.user.companyId as string);
       fetchHistory();
+      setCompanyId(session.data.user.companyId as string);
     }
   }, [session]);
 
@@ -323,10 +341,10 @@ export default function Troubleshoot() {
     setAudience(selectedAudience as ResponseTypesType);
 
     const copy = [...messages];
-    copy[0].content = `You are a tool for troubleshooting issues with manufacturing equipment. ${
+    (copy[0].content = `You are a tool for troubleshooting issues with manufacturing equipment. ${
       audienceMap[selectedAudience as 'Technician' | 'Engineer']
-    }`;
-    setMessages([...copy]);
+    }.. ${isVerbose ? explainVerbose : explainConcise}`),
+      setMessages([...copy]);
   }
 
   async function sendQuery(event: any, newMessage: AiMessage) {
@@ -866,11 +884,7 @@ export default function Troubleshoot() {
               issueType !== 'None Selected' &&
               !selectedHistoryIndex && (
                 <div className="w-full px-4">
-                  <AiPromptChat
-                    callback={sendQuery}
-                    isLoading={isLoading}
-                    isVerbose={isVerbose}
-                  />
+                  <AiPromptChat callback={sendQuery} isLoading={isLoading} />
                 </div>
               )}
           </div>

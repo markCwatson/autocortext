@@ -5,7 +5,6 @@ import { Loader2 } from 'lucide-react';
 import { AiMessage } from '@/types';
 
 interface AiPromptChatProps {
-  isVerbose: boolean;
   isLoading: boolean;
   callback: (
     event:
@@ -16,7 +15,6 @@ interface AiPromptChatProps {
 }
 
 export default function AiPromptChat({
-  isVerbose,
   isLoading,
   callback,
 }: AiPromptChatProps) {
@@ -30,16 +28,9 @@ export default function AiPromptChat({
   ) {
     e.preventDefault();
     if (inputValue.trim()) {
-      const userInput = isVerbose
-        ? inputValue.concat(
-            '*!*. Do not use markdown format (plain text only, but a numbered list is ok).',
-          )
-        : inputValue.concat(
-            '*!*. Please be as concise as possible. Keep the response to only a few sentences.',
-          );
       const newMessage: AiMessage = {
         id: String(messages.length + 1),
-        content: `User: ${userInput}`,
+        content: `User: ${inputValue}`,
         role: 'user',
       };
       setMessages((prev) => [...prev, newMessage]);
