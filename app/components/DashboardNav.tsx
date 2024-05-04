@@ -88,9 +88,9 @@ const Dashboard = React.forwardRef<HTMLDivElement, DashboardProps>(
         });
 
         if (!res.ok) {
-          toast({
+          return toast({
             title: 'Error',
-            message: 'Error fetching user image.',
+            message: `${res.statusText} [${res.status}]`,
             type: 'error',
           });
           return;

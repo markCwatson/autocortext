@@ -16,7 +16,7 @@ class OpenAiService {
         },
         { role: 'user', content: `${conversation}` },
       ],
-      temperature: 0.3,
+      temperature: 0.1,
     });
 
     return stream.choices[0].message.content;
@@ -68,7 +68,7 @@ class OpenAiService {
         },
         { role: 'user', content: `${conversation}` },
       ],
-      temperature: 0.3,
+      temperature: 0.1,
     });
 
     return stream.choices[0].message.content;

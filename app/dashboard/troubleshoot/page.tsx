@@ -341,9 +341,7 @@ export default function Troubleshoot() {
       duration: 3000,
     });
 
-    const context = [...messages, newMessage]
-      .map((message) => message.content)
-      .join('\n');
+    const context = [...messages, newMessage].map(({ id, ...rest }) => rest);
 
     setIsLoading(true);
     setAnimate(true);
@@ -363,7 +361,7 @@ export default function Troubleshoot() {
       if (!response?.ok) {
         return toast({
           title: 'Error',
-          message: `Server status code: ${response.status}`,
+          message: `${response.statusText} [${response.status}]`,
           type: 'error',
         });
       }

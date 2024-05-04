@@ -275,11 +275,9 @@ export default function Documentation() {
   async function sendQuery(e: any, newMessage: AiMessage) {
     e.preventDefault();
     if (!messages) return;
-    const context = [...messages, newMessage]
-      .map((message) => message.content)
-      .join('\n');
-
     setLoading(true);
+
+    const context = [...messages, newMessage].map(({ id, ...rest }) => rest);
 
     toast({
       title: 'Success',
@@ -299,7 +297,7 @@ export default function Documentation() {
       if (!result?.ok) {
         return toast({
           title: 'Error',
-          message: `Server status code: ${result.status}`,
+          message: `${result.statusText} [${result.status}]`,
           type: 'error',
         });
       }

@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Pinecone } from '@pinecone-database/pinecone';
 import { runRag } from '@/lib/pinecone';
 import CompanyService from '@/services/CompanyService';
-import ApiError from '@/errors/ApiError';
 
 // Vercel's max duration is up to 5 mins.
 // We are getting 15 second timeouts so increasing to 60 seconds.
@@ -13,11 +12,10 @@ export async function POST(req: NextRequest) {
   const url = new URL(req.url);
   const companyId = url.searchParams.get('companyId');
   if (!companyId) {
-    throw new ApiError({
-      code: 400,
-      message: 'Bad Request',
-      explanation: 'No companyId found in the request.',
-    });
+    return NextResponse.json(
+      { error: 'companyId is required.' },
+      { status: 400, statusText: 'Bad request.' },
+    );
   }
 
   const client = new Pinecone({
@@ -26,23 +24,29 @@ export async function POST(req: NextRequest) {
 
   const indexName = await CompanyService.getIndexByCompanyId(companyId);
   if (!indexName) {
-    throw new ApiError({
-      code: 500,
-      message: 'Error',
-      explanation: 'No index found for the given company.',
-    });
+    return NextResponse.json(
+      { error: 'No index found for the given company.' },
+      { status: 404, statusText: 'Index not found.' },
+    );
   }
 
-  const text = await runRag({ client, indexName, question: body });
-  if (!text) {
-    throw new ApiError({
-      code: 500,
-      message: 'Error',
-      explanation: 'No matching documents found.',
-    });
+  let res;
+  try {
+    res = await runRag({ client, indexName, chat: body });
+    if (!res) {
+      return NextResponse.json(
+        { error: 'No response from RAG system.' },
+        { status: 404, statusText: 'Response not found.' },
+      );
+    }
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'RAG failed.' },
+      { status: 500, statusText: `${error}` },
+    );
   }
 
   return NextResponse.json({
-    data: text,
+    data: res,
   });
 }

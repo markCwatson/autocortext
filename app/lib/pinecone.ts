@@ -1,6 +1,5 @@
-import { OpenAIEmbeddings } from 'langchain/embeddings/openai';
+import { OpenAIEmbeddings, OpenAI } from '@langchain/openai';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
-import { OpenAI } from 'langchain/llms/openai';
 import { loadQAStuffChain } from 'langchain/chains';
 import { Document } from 'langchain/document';
 import {
@@ -9,11 +8,12 @@ import {
   Index,
 } from '@pinecone-database/pinecone';
 import { ListResponse } from '@pinecone-database/pinecone/dist/pinecone-generated-ts-fetch';
+import { AiMessage } from '@/types';
 
 interface RunRagParams {
   client: Pinecone;
   indexName: string;
-  question: string;
+  chat: AiMessage[];
 }
 
 interface CreatePineconeIndexParams {
@@ -29,46 +29,62 @@ interface UpdatePineconeParams {
 }
 
 // For RAG (Retrieval Augmented Generation)
-export const runRag = async ({ client, indexName, question }: RunRagParams) => {
-  const index = client.Index(indexName);
+export const runRag = async ({ client, indexName, chat }: RunRagParams) => {
+  try {
+    // Get the index from vector database
+    const index = client.Index(indexName);
 
-  // Create query embedding
-  const queryEmbedding = await new OpenAIEmbeddings({
-    modelName: 'text-embedding-3-large',
-  }).embedQuery(question);
+    // Extract history and question from chat
+    const history = chat.slice(0, chat.length - 1);
+    const question = chat[chat.length - 1];
 
-  // Query Pinecone index and return top 10 matches
-  let queryResponse = await index.query({
-    topK: 10,
-    vector: queryEmbedding,
-    includeMetadata: true,
-    includeValues: true,
-  });
+    // Create query embedding
+    const queryEmbedding = await new OpenAIEmbeddings({
+      modelName: 'text-embedding-3-large',
+    }).embedQuery(question.content);
 
-  if (!queryResponse.matches.length) {
-    return null;
+    // Query Pinecone index and return top k matches
+    let queryResponse = await index.query({
+      topK: 10,
+      vector: queryEmbedding,
+      includeMetadata: true,
+      includeValues: true,
+    });
+
+    if (!queryResponse.matches.length) {
+      throw new Error('No matching embeddings found in vector database.');
+    }
+
+    // Create an OpenAI instance and load the QAStuffChain
+    const llm = new OpenAI({
+      modelName: 'gpt-4-turbo',
+      temperature: 0.1,
+    });
+
+    const chain = loadQAStuffChain(llm);
+    if (!chain) {
+      throw new Error('Failed to load chain.');
+    }
+
+    // Extract and concatenate page content from matched documents
+    const concatenatedPageContent = queryResponse.matches
+      .map((match) => match?.metadata?.pageContent)
+      .join(' ');
+
+    // Execute the chain with input documents and question
+    const result = await chain.invoke({
+      input_documents: [new Document({ pageContent: concatenatedPageContent })],
+      chat_history: history,
+      question: question.content,
+    });
+    if (!result) {
+      throw new Error('Invocation of chain failed.');
+    }
+
+    return result.text;
+  } catch (error) {
+    throw error;
   }
-
-  // Create an OpenAI instance and load the QAStuffChain
-  const llm = new OpenAI({
-    modelName: 'gpt-4-turbo',
-    temperature: 0.3,
-  });
-
-  const chain = loadQAStuffChain(llm);
-
-  // Extract and concatenate page content from matched documents
-  const concatenatedPageContent = queryResponse.matches
-    .map((match) => match?.metadata?.pageContent)
-    .join(' ');
-
-  // Execute the chain with input documents and question
-  const result = await chain.call({
-    input_documents: [new Document({ pageContent: concatenatedPageContent })],
-    question: question,
-  });
-
-  return result.text;
 };
 
 export const createPineconeIndex = async ({
