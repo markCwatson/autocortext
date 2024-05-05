@@ -277,8 +277,6 @@ export default function Documentation() {
     if (!messages) return;
     setLoading(true);
 
-    const context = [...messages, newMessage].map(({ id, ...rest }) => rest);
-
     toast({
       title: 'Success',
       message: `Sending query...`,
@@ -290,7 +288,11 @@ export default function Documentation() {
         `/api/read?companyId=${userValue.user.companyId as string}`,
         {
           method: 'POST',
-          body: JSON.stringify(context),
+          body: JSON.stringify({
+            messages: [...messages, newMessage],
+            verbosity: 'verbose',
+            audience: 'Engineer',
+          }),
         },
       );
 

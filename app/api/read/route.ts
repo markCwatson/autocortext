@@ -8,7 +8,14 @@ import CompanyService from '@/services/CompanyService';
 export const maxDuration = 60;
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
+  const { messages, verbosity, audience } = await req.json();
+  if (!messages || !verbosity || !audience) {
+    return NextResponse.json(
+      { error: 'messages, verbosity, and audience are required.' },
+      { status: 400, statusText: 'Bad request.' },
+    );
+  }
+
   const url = new URL(req.url);
   const companyId = url.searchParams.get('companyId');
   if (!companyId) {
@@ -32,7 +39,13 @@ export async function POST(req: NextRequest) {
 
   let res;
   try {
-    res = await runRag({ client, indexName, chat: body });
+    res = await runRag({
+      client: client,
+      indexName: indexName,
+      chat: messages,
+      verbosity: verbosity,
+      audience: audience,
+    });
     if (!res) {
       return NextResponse.json(
         { error: 'No response from RAG system.' },

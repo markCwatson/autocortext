@@ -10,11 +10,14 @@ import {
 } from '@pinecone-database/pinecone';
 import { ListResponse } from '@pinecone-database/pinecone/dist/pinecone-generated-ts-fetch';
 import { AiMessage } from '@/types';
+import { responseTypes } from '@/lib/responseType';
 
 interface RunRagParams {
   client: Pinecone;
   indexName: string;
   chat: AiMessage[];
+  audience: string;
+  verbosity: string;
 }
 
 interface CreatePineconeIndexParams {
@@ -29,9 +32,21 @@ interface UpdatePineconeParams {
   docs: any;
 }
 
+type ResponseTypesType = (typeof responseTypes)[number];
+
 // For RAG (Retrieval Augmented Generation)
-export const runRag = async ({ client, indexName, chat }: RunRagParams) => {
+export const runRag = async ({
+  client,
+  indexName,
+  chat,
+  audience,
+  verbosity,
+}: RunRagParams) => {
   try {
+    if (!responseTypes.includes(audience)) {
+      throw new Error('Invalid audience.');
+    }
+
     // Get the index from vector database
     const index = client.Index(indexName);
 
@@ -39,16 +54,29 @@ export const runRag = async ({ client, indexName, chat }: RunRagParams) => {
     const history = chat.slice(0, chat.length - 1);
     const question = chat.at(-1);
 
+    const audienceMap: Record<ResponseTypesType, string> = {
+      Technician:
+        'Your target audience is technicians who are responsible for maintaining and repairing machinery. Your responses should be technical but not too detailed.',
+      Engineer:
+        'Your target audience is engineers who are responsible for process design and technical support to technicians. Your responses should be technical but highly. Use data, science, and statistics whenever possible.',
+      Maintenance:
+        'Your target audience is maintenance personnel. Your responses should be practical and easy to understand, focusing on troubleshooting and repair procedures.',
+    };
+
+    const explainVerbose =
+      'Please be as descriptive as possible. Do not use markdown format (use plain text only) but a numbered list is ok.';
+    const explainConcise =
+      'Please be as concise as possible. Do not use numbered lists. Keep the response to only 2 or 3 sentences.';
+
+    const instructions = `${audienceMap[audience]} ${
+      verbosity === 'verbose' ? explainVerbose : explainConcise
+    }`;
+
     let machine = '';
     let system = '';
-    let instructions = '';
 
     // Find instructions, machine, and system in the history
     history.forEach((sentence) => {
-      if (sentence.role === 'system') {
-        instructions = sentence.content;
-      }
-
       const machineMatch = sentence.content.match(/selected the (.+)/);
       if (machineMatch) {
         machine = machineMatch[1];
@@ -62,10 +90,8 @@ export const runRag = async ({ client, indexName, chat }: RunRagParams) => {
       }
     });
 
-    if (!instructions || !machine || !system) {
-      throw new Error(
-        'System instructions, machine, or system not found in chat history.',
-      );
+    if (!machine || !system) {
+      throw new Error('Machine, or system not found in chat history.');
     }
 
     // Create query embedding

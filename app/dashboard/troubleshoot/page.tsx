@@ -170,46 +170,11 @@ export default function Troubleshoot() {
     },
   ];
 
-  const audienceMap: Record<ResponseTypesType, string> = {
-    Technician:
-      'Your target audience is technicians who are responsible for maintaining and repairing machinery. Your responses should be technical but not too detailed.',
-    Engineer:
-      ' Your target audience is engineers who are responsible for process design and technical support to technicians. Your responses should be technical but highly. Use data, science, and statistics whenever possible.',
-    Maintenance:
-      'Your target audience is maintenance personnel. Your responses should be practical and easy to understand, focusing on troubleshooting and repair procedures.',
-  };
-
-  const explainVerbose =
-    'Please be as descriptive as possible. Do not use markdown format (plain text only) but a numbered list is ok).';
-  const explainConcise =
-    'Please be as concise as possible. Do not use numbered lists. Keep the response to only 2 or 3 sentences.';
-
-  useEffect(() => {
-    setMessages((prevMessages) =>
-      prevMessages.map((msg) => {
-        if (msg.role === 'system') {
-          // Replace the verbose or concise setting at the end of the system message
-          let content = msg.content.split('... ')[0];
-          content += '. ' + (isVerbose ? explainVerbose : explainConcise);
-          return { ...msg, content: content };
-        }
-        return msg;
-      }),
-    );
-  }, [isVerbose]);
-
   useEffect(() => {
     if (session.data?.user.name && messages.length === 0) {
       setMessages([
         {
           id: '1',
-          role: 'system',
-          content: `You are a tool for troubleshooting issues with manufacturing equipment. ${
-            audienceMap[audience]
-          }.. ${isVerbose ? explainVerbose : explainConcise}`,
-        },
-        {
-          id: '2',
           role: 'assistant',
           content: `Auto Cortext: Hello ${
             session.data.user.name
@@ -339,12 +304,6 @@ export default function Troubleshoot() {
 
   function audienceSelectionHandler(selectedAudience: string) {
     setAudience(selectedAudience as ResponseTypesType);
-
-    const copy = [...messages];
-    (copy[0].content = `You are a tool for troubleshooting issues with manufacturing equipment. ${
-      audienceMap[selectedAudience as 'Technician' | 'Engineer']
-    }.. ${isVerbose ? explainVerbose : explainConcise}`),
-      setMessages([...copy]);
   }
 
   async function sendQuery(event: any, newMessage: AiMessage) {
@@ -359,8 +318,6 @@ export default function Troubleshoot() {
       duration: 3000,
     });
 
-    const context = [...messages, newMessage].map(({ id, ...rest }) => rest);
-
     setIsLoading(true);
     setAnimate(true);
 
@@ -372,7 +329,11 @@ export default function Troubleshoot() {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(context),
+          body: JSON.stringify({
+            messages: [...messages, newMessage],
+            verbosity: isVerbose ? 'verbose' : 'concise',
+            audience: audience,
+          }),
         },
       );
 
