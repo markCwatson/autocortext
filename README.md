@@ -1,8 +1,58 @@
 # Auto Cortext by Ascend AI Solutions
 
+This was a Proof of Concept (POC) for a failed startup called Ascend AI Solutions (of which I was one of three co-founders... later we grew to a team of five before we shut down). Since it is a POC, I built it very quickly using Next.js - hosted on Vercel - due to the ability for rapid prototyping with this technology stack. Due to the speed of development, some corners were definitely cut. Some parts of the code are worse than others.
+
+The featured product was called AutoCortext: an AI tool used by technicians and maintenance personnel in the manufacturing sector to help troubleshoot machinery and equipment on the shop floor.
+
+Technicians would upload manuals and other technical documentation which would be used to train the AI. AutoCortext would then be used as an interface between the machines and the personnel.
+
+This was a working demo we presented to many people in the manufacturing sector. We had some customers interested, but we ultimately decided not to continue with this venture. I've included some screen recordings below of some features.
+
+Here are some notable technologies and/or features in this project:
+
+- Next-Auth
+- MongoDB
+- Pinecone vector database
+- AWS S3
+- AWS Lambda
+- Tailwind CSS
+- TypeScript
+- LangChain
+- Retrieval Augmented Generation system
+- OpenAI API
+- Custom Kanban-style job board
+- Custom chatbot
+- Simple notification system
+- Simple file system for document management
+- RESTful API
+
+### Login
+
+Next-Auth is used for session management. Accounts were saved to a MongoDB database hosted on Atlas.
+
+![alt-text][1]
+
+### Docs
+
+Users could create a simulated file system and upload and delete documents. When a file is uploaded, it is pushed to an AWS S3 bucket (see `POST /api/doc/s3-upload-ul`) which triggers an AWS Lambda function (see [this other repo](https://github.com/markCwatson/autocortext-lambdas)). The Lambda function fetches the file, converts it to plain text, then pushes it to our server (see `POST /api/setup/aws-lambda`) which breaks it into chunks and passes it through the RAG system (Retrieval Augmented Generation system).
+
+![alt-text][2]
+
+### Troubleshoot
+
+This is where users would interact with AutoCortext to help them troubleshoot issues related to their equipment. The user could save their conversation into history. On save, the user could choose if the conversation should be used to help train the AI (i.e., "fine-tune", but honestly, this didn't work very well). The user could select between concise and verbose modes and choose the target audience. The response would be tailored to these selections.
+
+![alt-text][3]
+
+### Jobs
+
+From the troubleshooting section, a user could create a job and add it to a custom Kanban board. The user could tag other users in the comment section on a job including AutoCortext, which would respond on the ticket.
+
+![alt-text][4]
+
 ## Getting Started
 
-To run locally, or to contribute to this project, you have to follow these setup instructions.
+To run locally, you have to follow these setup instructions.
 
 ## Node
 
@@ -102,3 +152,10 @@ INDEX_HOST=
 curl -X POST "https://$INDEX_HOST/describe_index_stats" \
   -H "Api-Key: $PINECONE_API_KEY" \
 ```
+
+#
+
+[1]: gif/1-login.gif 'Demo of AutoCortext login/out'
+[2]: gif/2-docs.gif 'Demo of AutoCortext docs'
+[3]: gif/3-tshoot.gif 'Demo of AutoCortext troubleshooting'
+[4]: gif/4-jobs.gif 'Demo of AutoCortext jobs'
